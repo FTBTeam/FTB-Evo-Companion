@@ -1,19 +1,19 @@
-# FTB (Modpack Name) Companion
+# FTB Evolution Companion
 
-TODO: Fill me out :D
+The FTB Evolution Companion mod is a bespoke, custom-tailored mod built to work hand-in-hand with the [FTB Evolution](https://go.ftb.team/support-modpack) modpack.
 
 ## About `'Companion'` mods
 
-FTB `{Modpack Name}` Companion mods are custom tailored, bespoke mods designed to work hand-in-hand with a specific FTB Modpack. Although these mores are visible source and released to CurseForge, we **do not** recommend the use of these mods inside other modpacks. 
+FTB Evolution Companion is one of FTB's `'Companion'` mods - custom tailored, bespoke mods designed to work hand-in-hand with a specific FTB Modpack. Although these mods are visible source and released to CurseForge, we **do not** recommend the use of these mods inside other modpacks.
 
-Please feel free to contribute to these projects but **always** open an issue first before opening feature specific pull requests.
+Please feel free to contribute to this project but **always** open an issue first before opening feature specific pull requests.
 
-Companion mods are provided `as is`. If you opt to use these mods inside another modpack. We **will not** provide support and any issues opened regarding problems due to use in another modpack will be closed!
+Companion mods are provided `as is`. If you opt to use this mod inside another modpack we **will not** provide support, and any issues opened regarding problems due to use in another modpack will be closed!
 
 ## Support
 
-- For **Modpack** issues, please go here: https://go.ftb.team/support-modpack
-- For **Mod** issues, please go here: https://go.ftb.team/support-mod-issues
+- For **FTB Evolution** modpack issues, please go here: https://go.ftb.team/support-modpack
+- For **FTB Evolution Companion** mod issues, please go here: https://go.ftb.team/support-mod-issues
 - Just got a question? Check out our Discord: https://go.ftb.team/discord
 
 ## Licence

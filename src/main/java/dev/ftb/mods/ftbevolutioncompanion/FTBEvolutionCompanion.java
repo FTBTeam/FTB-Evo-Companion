@@ -1,4 +1,4 @@
-package dev.ftb.mods.ftbmodpackcompanion;
+package dev.ftb.mods.ftbevolutioncompanion;
 
 import net.minecraft.resources.ResourceLocation;
 
@@ -12,13 +12,13 @@ import net.neoforged.fml.loading.FMLEnvironment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Mod(FTBModpackCompanion.MOD_ID)
-public class FTBModpackCompanion {
-    public static final String MOD_ID = "ftbmodpackcompanion";
+@Mod(FTBEvolutionCompanion.MOD_ID)
+public class FTBEvolutionCompanion {
+    public static final String MOD_ID = "ftbevolutioncompanion";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FTBModpackCompanion.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FTBEvolutionCompanion.class);
 
-    public FTBModpackCompanion(IEventBus eventBus, ModContainer container) {
+    public FTBEvolutionCompanion(IEventBus eventBus, ModContainer container) {
         if (FMLEnvironment.dist == Dist.CLIENT) {
             eventBus.<FMLClientSetupEvent>addListener(event -> clientSetup(event, eventBus));
         }
