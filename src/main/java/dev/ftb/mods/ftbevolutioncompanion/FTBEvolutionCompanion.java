@@ -1,13 +1,12 @@
 package dev.ftb.mods.ftbevolutioncompanion;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +17,8 @@ public class FTBEvolutionCompanion {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FTBEvolutionCompanion.class);
 
-    public FTBEvolutionCompanion(IEventBus eventBus, ModContainer container) {
-        if (FMLEnvironment.dist == Dist.CLIENT) {
+    public FTBEvolutionCompanion(IEventBus eventBus, ModContainer container, Dist dist) {
+        if (dist == Dist.CLIENT) {
             eventBus.<FMLClientSetupEvent>addListener(event -> clientSetup(event, eventBus));
         }
     }
@@ -28,7 +27,7 @@ public class FTBEvolutionCompanion {
         // Client init
     }
 
-    public static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+    public static Identifier id(String path) {
+        return Identifier.fromNamespaceAndPath(MOD_ID, path);
     }
 }

@@ -2,10 +2,10 @@
   "required": true,
   "minVersion": "0.8",
   "package": "dev.ftb.mods.ftbevolutioncompanion.mixin",
-  "compatibilityLevel": "JAVA_21",
-  "client": [
-    "SoundEngineMixin"
-  ],
+  "compatibilityLevel": "JAVA_25",
+  "refmap": "ftbevolutioncompanion.refmap.json",
+  "mixins": [],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
   }
