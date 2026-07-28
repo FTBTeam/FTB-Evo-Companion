@@ -28,3 +28,9 @@ eclipse
 run
 .vscode
 runs
+
+# markdown
+*.md
+!CHANGELOG*.md
+!README*.md
+!LICENSE*.md
