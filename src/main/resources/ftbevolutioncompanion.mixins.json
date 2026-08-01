@@ -4,7 +4,15 @@
   "package": "dev.ftb.mods.ftbevolutioncompanion.mixin",
   "compatibilityLevel": "JAVA_25",
   "refmap": "ftbevolutioncompanion.refmap.json",
-  "mixins": [],
+  "mixins": [
+    "LivingEntityMixin",
+    "MeteoritePlacerMixin",
+    "NetherPortalBlockMixin",
+    "PlayerMixin",
+    "MeteoriteStructureMixin",
+    "PackParserMixin",
+    "RandomSpreadStructurePlacementAccessor"
+  ],
   "client": [],
   "injectors": {
     "defaultRequire": 1

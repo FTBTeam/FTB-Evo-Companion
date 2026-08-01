@@ -1,0 +1,17 @@
+{
+  "attribute.name.ftb.extra_jumps": "Extra Jumps",
+  "attribute.name.ftb.wall_climb": "Wall Climbing",
+  "attribute.name.ftb.air_dash": "Air Dash",
+  "attribute.name.ftb.instant_portals": "Instant Portals",
+  "key.category.ftbevolutioncompanion.athletics": "FTB Evolution Athletics",
+  "key.ftbevolutioncompanion.toggle_extra_jumps": "Toggle Extra Jumps",
+  "key.ftbevolutioncompanion.toggle_wall_climb": "Toggle Wall Climbing",
+  "key.ftbevolutioncompanion.toggle_air_dash": "Toggle Air Dash",
+  "key.ftbevolutioncompanion.air_dash": "Air Dash",
+  "ftbevolutioncompanion.athletics.toggle.extra_jumps.on": "Extra Jumps enabled",
+  "ftbevolutioncompanion.athletics.toggle.extra_jumps.off": "Extra Jumps disabled",
+  "ftbevolutioncompanion.athletics.toggle.wall_climb.on": "Wall Climbing enabled",
+  "ftbevolutioncompanion.athletics.toggle.wall_climb.off": "Wall Climbing disabled",
+  "ftbevolutioncompanion.athletics.toggle.air_dash.on": "Air Dash enabled",
+  "ftbevolutioncompanion.athletics.toggle.air_dash.off": "Air Dash disabled"
+}
