@@ -13,7 +13,9 @@
     "PackParserMixin",
     "RandomSpreadStructurePlacementAccessor"
   ],
-  "client": [],
+  "client": [
+    "IndepentScaleScreenMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
