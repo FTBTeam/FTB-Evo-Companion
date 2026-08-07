@@ -37,6 +37,7 @@ public final class SkillsRegistry {
     public static final DeferredHolder<Attribute, Attribute> FIRST_STRIKE = attr("first_strike", 2.0);
     public static final DeferredHolder<Attribute, Attribute> BOW_DURABILITY = attr("bow_durability", 20.0);
     public static final DeferredHolder<Attribute, Attribute> CROSSBOW_DURABILITY = attr("crossbow_durability", 20.0);
+    public static final DeferredHolder<Attribute, Attribute> HOMING_ARROWS = attr("homing_arrows", 1.0);
 
     public static final DeferredHolder<Attribute, Attribute> UNARMED_RESISTANCE = attr("unarmed_resistance", 1.0);
     public static final DeferredHolder<Attribute, Attribute> UNARMED_KILL_HEAL = attr("unarmed_kill_heal", 1.0);
@@ -93,6 +94,9 @@ public final class SkillsRegistry {
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<CombatState>> COMBAT_STATE =
             ATTACHMENTS.register("skills_combat_state",
                     () -> AttachmentType.builder(CombatState::new).build());
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<HomingState>> HOMING_STATE =
+            ATTACHMENTS.register("homing_state",
+                    () -> AttachmentType.builder(HomingState::new).build());
 
     private SkillsRegistry() {
     }

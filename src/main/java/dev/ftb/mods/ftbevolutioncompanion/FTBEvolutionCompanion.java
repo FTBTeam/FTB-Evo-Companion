@@ -66,6 +66,7 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(CombatTicker::onLivingVisibility);
         NeoForge.EVENT_BUS.addListener(CombatTicker::onAttackEntity);
         NeoForge.EVENT_BUS.addListener(CombatTicker::onLivingDrops);
+        NeoForge.EVENT_BUS.addListener(CombatTicker::onEntityJoin);
         eventBus.addListener(AthleticsPayloads::register);
         NeoForge.EVENT_BUS.addListener(AthleticsAbilities::onPlayerLoggedIn);
         NeoForge.EVENT_BUS.addListener(AthleticsAbilities::onPlayerRespawn);

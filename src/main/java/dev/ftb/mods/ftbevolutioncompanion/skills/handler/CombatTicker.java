@@ -4,6 +4,7 @@ import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.skills.ApothicHooks;
 import dev.ftb.mods.ftbevolutioncompanion.skills.CombatState;
+import dev.ftb.mods.ftbevolutioncompanion.skills.HomingState;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillCooldowns;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
@@ -28,9 +29,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.ThrownTrident;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
@@ -142,8 +146,81 @@ public final class CombatTicker {
         if (event.getProjectile() instanceof AbstractArrow arrow
                 && arrow.getOwner() instanceof ServerPlayer player
                 && event.getRayTraceResult().getType() == HitResult.Type.BLOCK) {
+            if (tryHomingRedirect(arrow, player)) {
+                event.setCanceled(true);
+                return;
+            }
             player.getData(SkillsRegistry.COMBAT_STATE).archerRampStacks = 0;
         }
+    }
+
+    public static void onEntityJoin(EntityJoinLevelEvent event) {
+        if (event.getLevel().isClientSide()
+                || !(event.getEntity() instanceof AbstractArrow arrow)
+                || arrow instanceof ThrownTrident
+                || !(arrow.getOwner() instanceof ServerPlayer shooter)
+                || SkillsHelper.attr(shooter, SkillsRegistry.HOMING_ARROWS) <= 0.0) {
+            return;
+        }
+        LivingEntity target = findHomingTarget(shooter, arrow);
+        if (target != null) {
+            arrow.getData(SkillsRegistry.HOMING_STATE).targetId = target.getUUID();
+        }
+    }
+
+    private static LivingEntity findHomingTarget(ServerPlayer shooter, AbstractArrow arrow) {
+        Vec3 direction = arrow.getDeltaMovement();
+        if (direction.lengthSqr() < 1.0E-4) {
+            direction = shooter.getLookAngle();
+        }
+        direction = direction.normalize();
+        Vec3 start = arrow.position();
+        double range = 48.0;
+        AABB search = arrow.getBoundingBox().expandTowards(direction.scale(range)).inflate(8.0);
+        LivingEntity best = null;
+        double bestDot = 0.9;
+        for (LivingEntity candidate : shooter.level().getEntitiesOfClass(LivingEntity.class, search,
+                entity -> entity != shooter && entity.isAlive() && !entity.isSpectator()
+                        && !(entity instanceof Player other && !shooter.canHarmPlayer(other)))) {
+            Vec3 toCandidate = candidate.getBoundingBox().getCenter().subtract(start);
+            double distance = toCandidate.length();
+            if (distance < 1.0E-4 || distance > range) {
+                continue;
+            }
+            double dot = toCandidate.normalize().dot(direction);
+            if (dot > bestDot) {
+                bestDot = dot;
+                best = candidate;
+            }
+        }
+        return best;
+    }
+
+    private static boolean tryHomingRedirect(AbstractArrow arrow, ServerPlayer player) {
+        if (SkillsHelper.attr(player, SkillsRegistry.HOMING_ARROWS) <= 0.0
+                || !arrow.hasData(SkillsRegistry.HOMING_STATE)
+                || !(arrow.level() instanceof ServerLevel serverLevel)) {
+            return false;
+        }
+        HomingState state = arrow.getData(SkillsRegistry.HOMING_STATE);
+        if (state.targetId == null || state.retargets >= 3) {
+            return false;
+        }
+        if (!(serverLevel.getEntity(state.targetId) instanceof LivingEntity target)
+                || !target.isAlive() || arrow.distanceTo(target) > 64.0) {
+            return false;
+        }
+        state.retargets++;
+        double speed = Math.max(arrow.getDeltaMovement().length(), 1.0);
+        Vec3 toTarget = target.getBoundingBox().getCenter().subtract(arrow.position());
+        double horizontal = Math.sqrt(toTarget.x * toTarget.x + toTarget.z * toTarget.z);
+        Vec3 aimed = new Vec3(toTarget.x, toTarget.y + horizontal * 0.1, toTarget.z);
+        if (aimed.lengthSqr() < 1.0E-4) {
+            return false;
+        }
+        arrow.setDeltaMovement(aimed.normalize().scale(speed));
+        arrow.hurtMarked = true;
+        return true;
     }
 
     public static void onShieldBlock(LivingShieldBlockEvent event) {

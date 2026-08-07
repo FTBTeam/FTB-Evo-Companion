@@ -35,6 +35,7 @@ The attribute stores the final magnitude (a fraction, level count, or point valu
 | `ftb:first_strike` | 0–2 | Bonus arrow damage fraction vs targets at full health (0.2 = +20%) |
 | `ftb:bow_durability` | 0–20 | Virtual Unbreaking levels for bows (no enchantment applied; stacks with real Unbreaking) |
 | `ftb:crossbow_durability` | 0–20 | Same, for crossbows |
+| `ftb:homing_arrows` | 0–1 | 1 = your arrows lock onto the living target you aimed at (closest to your aim within ~25°, up to 48 blocks). An arrow that hits a block instead of the target redirects mid-air toward it, up to 3 times, then flies normally. Applies to bows and crossbows, not tridents |
 
 ### Brawler (unarmed = empty main hand)
 
