@@ -1,0 +1,104 @@
+package dev.ftb.mods.ftbevolutioncompanion.skills.handler;
+
+import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
+import dev.ftb.mods.ftbevolutioncompanion.skills.CombatState;
+import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
+import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
+import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
+
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+
+public final class OutgoingDamage {
+    private OutgoingDamage() {
+    }
+
+    public static void onIncomingDamage(LivingIncomingDamageEvent event) {
+        LivingEntity target = event.getEntity();
+        DamageSource source = event.getSource();
+        if (!(source.getEntity() instanceof ServerPlayer attacker) || attacker == target) {
+            return;
+        }
+
+        CombatState state = attacker.getData(SkillsRegistry.COMBAT_STATE);
+        double mult = 1.0;
+
+        if (source.isDirect() && source.getDirectEntity() == attacker) {
+            ItemStack mainHand = attacker.getMainHandItem();
+            if (attacker.level().isBrightOutside()) {
+                mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.DAY_DAMAGE);
+            }
+            if (SkillsHelper.isSword(mainHand)) {
+                if (attacker.level().isDarkOutside()) {
+                    mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.NIGHT_DAMAGE);
+                }
+                if (SkillsHelper.isBehind(target, attacker)) {
+                    mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.BACKSTAB);
+                }
+                double echo = SkillsHelper.attr(attacker, SkillsRegistry.ECHO_STRIKES);
+                if (echo > 0.0 && attacker.getRandom().nextDouble() < echo) {
+                    mult *= 2.0;
+                    attacker.level().playSound(null, target.getX(), target.getY(), target.getZ(),
+                            SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1.0F, 1.2F);
+                }
+                applyBleed(attacker, target);
+            } else if (SkillsHelper.isAxe(mainHand)) {
+                if (SkillsHelper.healthFraction(target) < CompanionConfig.DEATH_BLOW_THRESHOLD.get()) {
+                    mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.DEATH_BLOW);
+                }
+                if (SkillsHelper.healthFraction(attacker) < CompanionConfig.AXE_FRENZY_THRESHOLD.get()) {
+                    mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.AXE_FRENZY);
+                }
+                if (SkillsHelper.isAxe(attacker.getOffhandItem())) {
+                    mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.DUAL_WIELD);
+                }
+            } else if (SkillsHelper.isUnarmed(attacker)) {
+                if ((state.unarmedHitCounter + 1) % 3 == 0) {
+                    mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.COMBO_PUNCH);
+                }
+                if (state.unarmedRampStacks > 0 && SkillsAbilities.toggles(attacker).unarmedRamp()) {
+                    mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.UNARMED_RAMP) * state.unarmedRampStacks;
+                }
+            }
+        } else if (source.getDirectEntity() instanceof AbstractArrow) {
+            if (target.getHealth() >= target.getMaxHealth()) {
+                mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.FIRST_STRIKE);
+            }
+            int maxStacks = (int) SkillsHelper.attr(attacker, SkillsRegistry.RAMPING_SHOTS);
+            if (maxStacks > 0) {
+                long now = attacker.level().getGameTime();
+                if (now - state.lastArcherHitTime > CompanionConfig.ARCHER_RAMP_TIMEOUT.get()) {
+                    state.archerRampStacks = 0;
+                }
+                if (state.archerRampStacks > 0) {
+                    mult *= 1.0 + CompanionConfig.ARCHER_RAMP_PER_STACK.get()
+                            * Math.min(state.archerRampStacks, maxStacks);
+                }
+            }
+        }
+
+        if (mult != 1.0) {
+            event.setAmount(event.getAmount() * (float) mult);
+        }
+    }
+
+    private static void applyBleed(ServerPlayer attacker, LivingEntity target) {
+        if (SkillsHelper.attr(attacker, SkillsRegistry.BLADEMASTER) <= 0.0
+                || !SkillsAbilities.toggles(attacker).blademaster()) {
+            return;
+        }
+        MobEffectInstance current = target.getEffect(SkillsRegistry.BLEEDING);
+        int amplifier = current == null ? 0
+                : Math.min(current.getAmplifier() + 1, CompanionConfig.BLEED_MAX_STACKS.get() - 1);
+        target.addEffect(new MobEffectInstance(SkillsRegistry.BLEEDING,
+                CompanionConfig.BLEED_DURATION_TICKS.get(), amplifier), attacker);
+    }
+}

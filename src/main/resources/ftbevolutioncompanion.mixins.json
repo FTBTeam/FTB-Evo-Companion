@@ -5,7 +5,11 @@
   "compatibilityLevel": "JAVA_25",
   "refmap": "ftbevolutioncompanion.refmap.json",
   "mixins": [
+    "BlockMixin",
+    "ConduitBundleBlockEntityMixin",
+    "ItemStackMixin",
     "LivingEntityMixin",
+    "ProjectileWeaponItemMixin",
     "MeteoritePlacerMixin",
     "NetherPortalBlockMixin",
     "PlayerMixin",
