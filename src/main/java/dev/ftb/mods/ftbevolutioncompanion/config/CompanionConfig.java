@@ -19,7 +19,12 @@ public final class CompanionConfig {
     public static final ModConfigSpec.IntValue CHEAT_DEATH_COOLDOWN;
     public static final ModConfigSpec.IntValue CHEAT_DEATH_INVULN_TICKS;
     public static final ModConfigSpec.IntValue LIGHTNING_COOLDOWN;
+    public static final ModConfigSpec.DoubleValue MULTISHOT_SPREAD;
+    public static final ModConfigSpec.BooleanValue MULTISHOT_X_PATTERN;
+    public static final ModConfigSpec.DoubleValue EXTRA_JUMP_HEIGHT;
+    public static final ModConfigSpec.IntValue SHIELD_STUN_COOLDOWN;
     public static final ModConfigSpec.IntValue SHADOW_STEP_COOLDOWN;
+    public static final ModConfigSpec.DoubleValue SHADOW_STEP_RANGE;
     public static final ModConfigSpec.IntValue LIGHTS_SHIELD_COOLDOWN;
     public static final ModConfigSpec.IntValue NINJA_COOLDOWN;
     public static final ModConfigSpec.DoubleValue ARCHER_RAMP_PER_STACK;
@@ -108,6 +113,26 @@ public final class CompanionConfig {
         SHADOW_STEP_COOLDOWN = builder
                 .comment("Cooldown in ticks between shadow step teleports.")
                 .defineInRange("shadow_step_cooldown", 200, 0, 1728000);
+
+        SHADOW_STEP_RANGE = builder
+                .comment("Maximum distance in blocks a shadow step can reach a target.")
+                .defineInRange("shadow_step_range", 10.0, 1.0, 64.0);
+
+        MULTISHOT_SPREAD = builder
+                .comment("Maximum fan half-angle in degrees for multishot volleys. Vanilla multishot uses 10.")
+                .defineInRange("multishot_spread", 3.0, 0.0, 45.0);
+
+        MULTISHOT_X_PATTERN = builder
+                .comment("Arrange multishot volleys in an X instead of the vanilla horizontal fan.")
+                .define("multishot_x_pattern", true);
+
+        EXTRA_JUMP_HEIGHT = builder
+                .comment("Height of mid-air extra jumps as a multiple of a normal jump.")
+                .defineInRange("extra_jump_height", 2.0, 0.5, 8.0);
+
+        SHIELD_STUN_COOLDOWN = builder
+                .comment("Cooldown in ticks between shield stun procs, to stop stun locking.")
+                .defineInRange("shield_stun_cooldown", 100, 0, 1728000);
 
         LIGHTS_SHIELD_COOLDOWN = builder
                 .comment("Internal cooldown in ticks for Light's Shield.")

@@ -10,7 +10,6 @@ import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
 
-import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,6 +34,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
@@ -56,7 +56,9 @@ public final class CombatTicker {
 
     public static void onDamagePost(LivingDamageEvent.Post event) {
         DamageSource source = event.getSource();
-        if (!(source.getEntity() instanceof ServerPlayer attacker) || event.getEntity() == attacker) {
+        if (OutgoingDamage.isApplyingEcho()
+                || !(source.getEntity() instanceof ServerPlayer attacker)
+                || event.getEntity() == attacker) {
             return;
         }
         LivingEntity target = event.getEntity();
@@ -93,6 +95,8 @@ public final class CombatTicker {
                 state.lastArcherHitTime = now;
             }
         }
+
+        OutgoingDamage.applyEcho(attacker, target);
     }
 
     private static void resetUnarmed(CombatState state) {
@@ -120,8 +124,17 @@ public final class CombatTicker {
                     EntitySpawnReason.TRIGGERED);
             if (bolt != null) {
                 bolt.setCause(attacker);
+                state.skillLightningBoltId = bolt.getUUID();
             }
             SkillCooldowns.start(attacker, SkillCooldowns.LIGHTNING, CompanionConfig.LIGHTNING_COOLDOWN.get());
+        }
+    }
+
+    public static void onEntityStruckByLightning(EntityStruckByLightningEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player
+                && event.getLightning().getUUID()
+                        .equals(player.getData(SkillsRegistry.COMBAT_STATE).skillLightningBoltId)) {
+            event.setCanceled(true);
         }
     }
 
@@ -229,11 +242,13 @@ public final class CombatTicker {
         }
         double stunChance = SkillsHelper.attr(player, SkillsRegistry.SHIELD_STUN);
         if (stunChance > 0.0
+                && SkillCooldowns.ready(player, SkillCooldowns.SHIELD_STUN)
                 && event.getDamageSource().getDirectEntity() instanceof LivingEntity attacker
                 && attacker != player
                 && player.getRandom().nextDouble() < stunChance) {
             attacker.addEffect(new MobEffectInstance(SkillsRegistry.STUNNED,
                     CompanionConfig.STUN_DURATION_TICKS.get(), 0), player);
+            SkillCooldowns.start(player, SkillCooldowns.SHIELD_STUN, CompanionConfig.SHIELD_STUN_COOLDOWN.get());
         }
     }
 
@@ -372,17 +387,10 @@ public final class CombatTicker {
                 || !SkillCooldowns.ready(serverPlayer, SkillCooldowns.SHADOW_STEP)) {
             return;
         }
-        Vec3 look = target.getLookAngle();
-        Vec3 horizontal = new Vec3(look.x, 0.0, look.z);
-        if (horizontal.lengthSqr() < 1.0E-4) {
-            horizontal = Vec3.directionFromRotation(0.0F, target.getYRot());
+        boolean inMeleeReach = SkillsAbilities.isWithinMeleeReach(serverPlayer, target);
+        if (SkillsAbilities.shadowStep(serverPlayer, target) && !inMeleeReach) {
+            event.setCanceled(true);
         }
-        Vec3 destination = target.position().subtract(horizontal.normalize().scale(1.5));
-        serverPlayer.teleportTo(destination.x, destination.y, destination.z);
-        serverPlayer.lookAt(EntityAnchorArgument.Anchor.EYES, target, EntityAnchorArgument.Anchor.EYES);
-        SkillCooldowns.start(serverPlayer, SkillCooldowns.SHADOW_STEP, CompanionConfig.SHADOW_STEP_COOLDOWN.get());
-        serverPlayer.level().playSound(null, destination.x, destination.y, destination.z,
-                SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
     }
 
     public static void onLivingDrops(LivingDropsEvent event) {

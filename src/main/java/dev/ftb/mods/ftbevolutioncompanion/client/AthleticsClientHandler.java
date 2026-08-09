@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbevolutioncompanion.client;
 
 import dev.ftb.mods.ftbevolutioncompanion.athletics.AthleticsAbilities;
+import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.athletics.network.AthleticsPayloads;
 
 import net.minecraft.client.Minecraft;
@@ -17,6 +18,7 @@ public final class AthleticsClientHandler {
     private static final double SLIDE_SPEED = -0.15;
 
     private static boolean jumpWasDown;
+    private static boolean wasGrounded = true;
     private static int jumpsUsed;
     private static int dashesUsed;
     private static int clingTicks;
@@ -30,6 +32,7 @@ public final class AthleticsClientHandler {
 
         if (player == null) {
             jumpWasDown = false;
+            wasGrounded = true;
             jumpsUsed = 0;
             dashesUsed = 0;
             clingTicks = 0;
@@ -50,7 +53,8 @@ public final class AthleticsClientHandler {
                     new AthleticsPayloads.ToggleAbility(AthleticsAbilities.Ability.AIR_DASH.ordinal()));
         }
 
-        if (isGroundedState(player)) {
+        boolean grounded = isGroundedState(player);
+        if (grounded) {
             jumpsUsed = 0;
             dashesUsed = 0;
             clingTicks = 0;
@@ -63,10 +67,11 @@ public final class AthleticsClientHandler {
         }
 
         boolean jumpDown = mc.options.keyJump.isDown();
-        if (jumpDown && !jumpWasDown) {
+        if (jumpDown && !jumpWasDown && !wasGrounded) {
             tryExtraJump(player);
         }
         jumpWasDown = jumpDown;
+        wasGrounded = grounded;
     }
 
     private static boolean isGroundedState(LocalPlayer player) {
@@ -79,6 +84,7 @@ public final class AthleticsClientHandler {
         }
 
         clingTicks++;
+        jumpsUsed = 0;
         Vec3 delta = player.getDeltaMovement();
         if (clingTicks <= AthleticsAbilities.maxClingTicks(player)) {
             player.setDeltaMovement(delta.x * CLING_GRIP, 0.0, delta.z * CLING_GRIP);
@@ -101,7 +107,15 @@ public final class AthleticsClientHandler {
             return;
         }
         jumpsUsed++;
+        if (AthleticsAbilities.isWallClinging(player)) {
+            clingTicks = 0;
+        }
         player.jumpFromGround();
+        double height = CompanionConfig.EXTRA_JUMP_HEIGHT.get();
+        if (height != 1.0) {
+            Vec3 delta = player.getDeltaMovement();
+            player.setDeltaMovement(delta.x, delta.y * Math.sqrt(height), delta.z);
+        }
         ClientPacketDistributor.sendToServer(
                 new AthleticsPayloads.AbilityAction(AthleticsAbilities.Ability.EXTRA_JUMPS.ordinal()));
     }

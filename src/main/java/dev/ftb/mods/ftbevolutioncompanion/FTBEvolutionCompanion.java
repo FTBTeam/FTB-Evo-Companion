@@ -49,6 +49,7 @@ public class FTBEvolutionCompanion {
         SkillsRegistry.EFFECTS.register(eventBus);
         SkillsRegistry.ATTACHMENTS.register(eventBus);
         eventBus.addListener(SkillsRegistry::onEntityAttributeModification);
+        NeoForge.EVENT_BUS.addListener(AttributePersistence::onPlayerClone);
         eventBus.addListener(SkillsPayloads::register);
         NeoForge.EVENT_BUS.addListener(SkillsAbilities::onPlayerLoggedIn);
         NeoForge.EVENT_BUS.addListener(SkillsAbilities::onPlayerRespawn);
@@ -67,6 +68,7 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(CombatTicker::onAttackEntity);
         NeoForge.EVENT_BUS.addListener(CombatTicker::onLivingDrops);
         NeoForge.EVENT_BUS.addListener(CombatTicker::onEntityJoin);
+        NeoForge.EVENT_BUS.addListener(CombatTicker::onEntityStruckByLightning);
         eventBus.addListener(AthleticsPayloads::register);
         NeoForge.EVENT_BUS.addListener(AthleticsAbilities::onPlayerLoggedIn);
         NeoForge.EVENT_BUS.addListener(AthleticsAbilities::onPlayerRespawn);
@@ -78,6 +80,8 @@ public class FTBEvolutionCompanion {
             NeoForge.EVENT_BUS.addListener(AthleticsClientHandler::onClientTick);
             eventBus.addListener(SkillsKeys::onRegisterKeyMappings);
             NeoForge.EVENT_BUS.addListener(SkillsClientHandler::onClientTick);
+            NeoForge.EVENT_BUS.addListener(SkillsClientHandler::onLeftClickEmpty);
+            NeoForge.EVENT_BUS.addListener(SkillsClientHandler::onLeftClickBlock);
             eventBus.<FMLClientSetupEvent>addListener(event -> clientSetup(event, eventBus));
         }
     }

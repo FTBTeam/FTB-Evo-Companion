@@ -2,13 +2,16 @@ package dev.ftb.mods.ftbevolutioncompanion.client;
 
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillToggles;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
+import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
 import dev.ftb.mods.ftbevolutioncompanion.skills.network.SkillsPayloads;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.player.Player;
 
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public final class SkillsClientHandler {
     private SkillsClientHandler() {
@@ -29,6 +32,24 @@ public final class SkillsClientHandler {
 
         while (SkillsKeys.ACTIVATE_NINJA.consumeClick()) {
             ClientPacketDistributor.sendToServer(new SkillsPayloads.ActivateSkill(SkillsAbilities.ACTIVATE_NINJA));
+        }
+    }
+
+    public static void onLeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event) {
+        trySendShadowStep(event.getEntity());
+    }
+
+    public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
+        if (event.getAction() == PlayerInteractEvent.LeftClickBlock.Action.START) {
+            trySendShadowStep(event.getEntity());
+        }
+    }
+
+    private static void trySendShadowStep(Player player) {
+        if (player.level().isClientSide() && player.isShiftKeyDown()
+                && SkillsHelper.isSword(player.getMainHandItem())
+                && SkillsAbilities.toggles(player).shadowStep()) {
+            ClientPacketDistributor.sendToServer(new SkillsPayloads.ActivateSkill(SkillsAbilities.ACTIVATE_SHADOW_STEP));
         }
     }
 

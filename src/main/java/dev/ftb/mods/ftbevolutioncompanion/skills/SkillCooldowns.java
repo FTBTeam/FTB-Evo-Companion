@@ -20,6 +20,7 @@ public record SkillCooldowns(Map<String, Long> readyAt) {
     public static final String CHEAT_DEATH = "cheat_death";
     public static final String LIGHTNING = "lightning";
     public static final String SHADOW_STEP = "shadow_step";
+    public static final String SHIELD_STUN = "shield_stun";
     public static final String LIGHTS_SHIELD = "lights_shield";
     public static final String NINJA = "ninja";
 

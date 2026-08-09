@@ -14,14 +14,16 @@ Companion mods are provided `as is`. If you opt to use this mod inside another m
 
 All companion attributes are registered under the `ftb:` namespace, attach to players only, default to `0`, and are granted in-game by Puffish Skills tree nodes (`puffish_skills:attribute` rewards with `add_value`). Every mechanic can be tested without a skill tree via `/attribute @s ftb:<name> base set <value>`.
 
-The attribute stores the final magnitude (a fraction, level count, or point value) — the skill tree decides how much each node adds. Conditions, timings, and stack caps live in the mod config (`skills` section of `ftbevolutioncompanion-common.toml`).
+The attribute stores the final magnitude (a fraction, level count, or point value), and the skill tree decides how much each node adds. Conditions, timings, and stack caps live in the mod config (`skills` section of `ftbevolutioncompanion-common.toml`).
+
+Values applied directly to the player survive death. Vanilla only carries permanent attribute modifiers across a respawn when keepInventory is on, so the mod copies every `ftb:` attribute (base value and modifiers) onto the new player itself.
 
 ### Athletics
 
 | Attribute | Range | Effect |
 |---|---|---|
-| `ftb:extra_jumps` | 0–16 | Number of mid-air jumps. Toggle: J |
-| `ftb:wall_climb` | 0–16 | Wall cling while sneaking against a wall; value = seconds of cling before sliding. Toggle: H |
+| `ftb:extra_jumps` | 0–16 | Number of mid-air jumps. Each one carries you twice as high as a ground jump to make up for the fall you are already in (config `extra_jump_height`). Toggle: J |
+| `ftb:wall_climb` | 0–16 | Wall cling while sneaking against a wall; value = seconds of a single hang before you slide. Clinging refills your mid-air jumps and jumping off a cling restarts the hang timer, so you can jump and cling your way up a wall of any height. Toggle: H |
 | `ftb:air_dash` | 0–16 | Number of mid-air dashes (G to dash). Toggle: K |
 | `ftb:instant_portals` | 0–1 | 1 = no portal transition delay (nether portals act instantly) |
 
@@ -30,7 +32,7 @@ The attribute stores the final magnitude (a fraction, level count, or point valu
 | Attribute | Range | Effect |
 |---|---|---|
 | `ftb:arrow_save` | 0–1 | Chance to not consume ammo when firing a bow/crossbow (0.2 = 20%). Works like Infinity for that shot |
-| `ftb:multishot_chance` | 0–1 | Chance a shot fires 3 projectiles instead of 1; extra arrows are free (vanilla Multishot behavior) |
+| `ftb:multishot` | 0–16 | Number of projectiles fired per shot, so a value of 10 fires 10 arrows. Extra arrows are free. The volley forms an X around your crosshair instead of the vanilla horizontal fan (config `multishot_x_pattern`), sized by `multishot_spread` (default 3 degrees out from center, against vanilla Multishot's 10) |
 | `ftb:ramping_shots` | 0–10 | Max stacks of consecutive-hit ramp. Each arrow hit adds a stack; each stack adds +10% arrow damage (config `archer_ramp_per_stack`). Stacks reset when an arrow hits a block or after 10s without a hit |
 | `ftb:first_strike` | 0–2 | Bonus arrow damage fraction vs targets at full health (0.2 = +20%) |
 | `ftb:bow_durability` | 0–20 | Virtual Unbreaking levels for bows (no enchantment applied; stacks with real Unbreaking) |
@@ -56,7 +58,7 @@ The attribute stores the final magnitude (a fraction, level count, or point valu
 | `ftb:cheat_death` | 0–1 | 1 = fatal hits leave you at 1 HP with brief invulnerability + Resistance V instead of dying. 2-minute cooldown (persists across relogs). Toggleable |
 | `ftb:death_blow` | 0–3 | Bonus axe damage vs targets below 25% health |
 | `ftb:dual_wield` | 0–2 | Bonus damage while holding axes in both hands |
-| `ftb:lightning_strikes` | 0–1 | 1 = every 3rd axe hit calls a lightning strike on the target (5s cooldown). Toggle keybind: apostrophe |
+| `ftb:lightning_strikes` | 0–1 | 1 = every 3rd axe hit calls a lightning strike on the target (5s cooldown). The bolt never burns or damages the player who called it. Toggle keybind: apostrophe |
 | `ftb:bloodlust` | 0–100 | Flat HP healed per axe kill (2.0 = 1 heart) |
 | `ftb:axe_durability` | 0–20 | Virtual Unbreaking levels for axes |
 
@@ -64,7 +66,7 @@ The attribute stores the final magnitude (a fraction, level count, or point valu
 
 | Attribute | Range | Effect |
 |---|---|---|
-| `ftb:shield_stun` | 0–1 | Chance to apply `ftb:stunned` (1.5s) to an attacker when blocking their melee hit |
+| `ftb:shield_stun` | 0–1 | Chance to apply `ftb:stunned` (1.5s) to an attacker when blocking their melee hit. 5s cooldown between stuns so a crowd cannot be locked down (config `shield_stun_cooldown`) |
 | `ftb:shield_recovery` | 0–1 | Heals this fraction of max health every 5s while a shield is in the offhand |
 | `ftb:ground_slam` | 0–3 | Falling 4+ blocks damages everything within 4 blocks for value × your fall damage, with knockback. You still take the fall damage |
 | `ftb:lights_shield` | 0–1 | 1 = dropping below 25% health while blocking grants Resistance IV for 5s. 30s internal cooldown |
@@ -77,8 +79,8 @@ The attribute stores the final magnitude (a fraction, level count, or point valu
 | Attribute | Range | Effect |
 |---|---|---|
 | `ftb:backstab` | 0–3 | Bonus sword damage when striking from behind the target |
-| `ftb:shadow_step` | 0–1 | 1 = attacking while sneaking teleports you behind the target facing it, then the hit lands. 10s cooldown. Toggleable |
-| `ftb:echo_strikes` | 0–1 | Chance a sword hit deals double damage (with crit sound) |
+| `ftb:shadow_step` | 0–1 | 1 = attacking while sneaking teleports you behind the target facing it. Reaches any living target you can see up to 10 blocks away (config `shadow_step_range`), and does nothing if there is no clear space behind the target. From melee range the hit still lands as normal; from further out the swing only carries you there and deals no damage, so extra reach cannot be used to hit and teleport at once. 10s cooldown. Toggleable |
+| `ftb:echo_strikes` | 0–1 | Chance a sword hit immediately repeats as a second full strike (with crit sound). The echo ignores the target's invulnerability frames, so both hits land, and each is mitigated by armor separately |
 | `ftb:sword_durability` | 0–20 | Virtual Unbreaking levels for swords |
 | `ftb:stealth` | 0–1 | Passively reduces mob detection range; 1.0 = mobs effectively cannot see you |
 | `ftb:ninja` | 0–60 | Activated skill (V): Invisibility + maximum stealth for this many seconds. 60s cooldown |

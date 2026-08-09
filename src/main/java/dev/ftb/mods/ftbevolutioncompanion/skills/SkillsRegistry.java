@@ -32,7 +32,7 @@ public final class SkillsRegistry {
     private static final List<DeferredHolder<Attribute, Attribute>> PLAYER_ATTRIBUTES = new ArrayList<>();
 
     public static final DeferredHolder<Attribute, Attribute> ARROW_SAVE = attr("arrow_save", 1.0);
-    public static final DeferredHolder<Attribute, Attribute> MULTISHOT_CHANCE = attr("multishot_chance", 1.0);
+    public static final DeferredHolder<Attribute, Attribute> MULTISHOT = attr("multishot", 16.0);
     public static final DeferredHolder<Attribute, Attribute> RAMPING_SHOTS = attr("ramping_shots", 10.0);
     public static final DeferredHolder<Attribute, Attribute> FIRST_STRIKE = attr("first_strike", 2.0);
     public static final DeferredHolder<Attribute, Attribute> BOW_DURABILITY = attr("bow_durability", 20.0);

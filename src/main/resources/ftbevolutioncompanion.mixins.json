@@ -10,6 +10,7 @@
     "ItemStackMixin",
     "LivingEntityMixin",
     "ProjectileWeaponItemMixin",
+    "MultishotPatternMixin",
     "MeteoritePlacerMixin",
     "NetherPortalBlockMixin",
     "PlayerMixin",

@@ -6,6 +6,7 @@ import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -18,10 +19,19 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 public final class OutgoingDamage {
+    private static boolean applyingEcho;
+
     private OutgoingDamage() {
     }
 
+    public static boolean isApplyingEcho() {
+        return applyingEcho;
+    }
+
     public static void onIncomingDamage(LivingIncomingDamageEvent event) {
+        if (applyingEcho) {
+            return;
+        }
         LivingEntity target = event.getEntity();
         DamageSource source = event.getSource();
         if (!(source.getEntity() instanceof ServerPlayer attacker) || attacker == target) {
@@ -30,6 +40,7 @@ public final class OutgoingDamage {
 
         CombatState state = attacker.getData(SkillsRegistry.COMBAT_STATE);
         double mult = 1.0;
+        boolean echoProc = false;
 
         if (source.isDirect() && source.getDirectEntity() == attacker) {
             ItemStack mainHand = attacker.getMainHandItem();
@@ -44,11 +55,7 @@ public final class OutgoingDamage {
                     mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.BACKSTAB);
                 }
                 double echo = SkillsHelper.attr(attacker, SkillsRegistry.ECHO_STRIKES);
-                if (echo > 0.0 && attacker.getRandom().nextDouble() < echo) {
-                    mult *= 2.0;
-                    attacker.level().playSound(null, target.getX(), target.getY(), target.getZ(),
-                            SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1.0F, 1.2F);
-                }
+                echoProc = echo > 0.0 && attacker.getRandom().nextDouble() < echo;
                 applyBleed(attacker, target);
             } else if (SkillsHelper.isAxe(mainHand)) {
                 if (SkillsHelper.healthFraction(target) < CompanionConfig.DEATH_BLOW_THRESHOLD.get()) {
@@ -87,6 +94,44 @@ public final class OutgoingDamage {
 
         if (mult != 1.0) {
             event.setAmount(event.getAmount() * (float) mult);
+        }
+
+        if (echoProc) {
+            state.pendingEchoTarget = target.getUUID();
+            state.pendingEchoAmount = event.getAmount();
+            state.pendingEchoTick = attacker.level().getGameTime();
+        }
+    }
+
+    public static void applyEcho(ServerPlayer attacker, LivingEntity target) {
+        CombatState state = attacker.getData(SkillsRegistry.COMBAT_STATE);
+        if (state.pendingEchoTarget == null
+                || !state.pendingEchoTarget.equals(target.getUUID())
+                || state.pendingEchoTick != attacker.level().getGameTime()) {
+            return;
+        }
+        float amount = state.pendingEchoAmount;
+        state.pendingEchoTarget = null;
+        state.pendingEchoAmount = 0.0F;
+        if (amount <= 0.0F || !target.isAlive() || !(target.level() instanceof ServerLevel level)) {
+            return;
+        }
+
+        int invulnerableTime = target.invulnerableTime;
+        boolean hurt;
+        applyingEcho = true;
+        try {
+            target.invulnerableTime = 0;
+            hurt = target.hurtServer(level, level.damageSources().playerAttack(attacker), amount);
+        } finally {
+            applyingEcho = false;
+        }
+
+        if (hurt) {
+            level.playSound(null, target.getX(), target.getY(), target.getZ(),
+                    SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1.0F, 1.2F);
+        } else {
+            target.invulnerableTime = invulnerableTime;
         }
     }
 
