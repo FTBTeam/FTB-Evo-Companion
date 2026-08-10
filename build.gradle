@@ -88,22 +88,50 @@ repositories {
 	}
 
 	maven {
-		url = "https://maven.ftb.dev/snapshots"
-		content {
-			includeGroup("dev.ftb.mods")
-		}
-	}
-
-	maven {
 		url = "https://maven.architectury.dev"
 		content {
 			includeGroup("dev.architectury")
 		}
 	}
+
+	maven {
+		url = "https://cursemaven.com"
+		content { includeGroup "curse.maven" }
+	}
+
+	maven {
+		url = "https://api.modrinth.com/maven"
+		content { includeGroup "maven.modrinth" }
+	}
+
+	maven {
+		url = "https://maven.createmod.net"
+	}
+
+	maven {
+		url = "https://maven.ryanhcode.dev/releases"
+		content { includeGroup "dev.ryanhcode.sable-companion" }
+	}
 }
 
 dependencies {
 	implementation "dev.ftb.mods:ftb-library-neoforge:${ftb_library_version}"
+
+	compileOnly "dev.ftb.mods:ftb-essentials-neoforge:${ftb_essentials_version}"
+	compileOnly "dev.architectury:architectury-neoforge:${architectury_version}"
+
+	compileOnly "curse.maven:sable-1312371:${sable_file}"
+	compileOnly "dev.ryanhcode.sable-companion:sable-companion-common-${minecraft_version}:${sable_companion_version}"
+
+	compileOnly("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+	compileOnly "net.createmod.ponder:ponder-neoforge:${ponder_version}"
+
+	compileOnly "curse.maven:applied-energistics-2-223794:${ae2_file}"
+	compileOnly "curse.maven:jade-324717:${jade_file}"
+	compileOnly "curse.maven:cyclops-core-232758:${cyclops_core_file}"
+	compileOnly "curse.maven:integrated-dynamics-236307:${integrated_dynamics_file}"
+	compileOnly "curse.maven:ars-nouveau-401955:${ars_nouveau_file}"
+	compileOnly "maven.modrinth:enderio:${enderio_version}"
 }
 
 tasks.register("sourcesJar", Jar) {
