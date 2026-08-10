@@ -14,6 +14,7 @@
     "StructureStartPlaceGuardMixin",
     "TeleportPosShipMixin",
     "compat.ae2.WirelessSignalSubLevelMixin",
+    "compat.biomeswevegone.BoneMealStackConsumptionMixin",
     "compat.compactmachines.RoomHelperCaptureMixin",
     "compat.craftingstationjei.CraftingStationDropGuardMixin",
     "compat.create.AllSoundEventsPrepareMixin",
@@ -23,6 +24,7 @@
     "compat.enderio.RedstoneConduitMixin",
     "compat.functionalstorage.ControllerInventoryHandlerPerfMixin",
     "compat.functionalstorage.DrawerSlotSubLevelMixin",
+    "compat.immersiveengineering.LootBlockStatePredicateChunkLoadMixin",
     "compat.industrialforegoing.TransporterItemTypeExtractAmountMixin",
     "compat.integrateddynamics.BlockEntityCableConnectableInventoryMixin",
     "compat.integrateddynamics.BlockEntityDryingBasinMixin",
@@ -46,7 +48,9 @@
     "compat.simulated.SimAssemblyHelperFrameFlagMixin",
     "compat.simulated.SimAssemblyHelperMoveGuardMixin",
     "compat.simulated.SimAssemblyHelperShipHomeMixin",
-    "compat.titanium.TileEntityLocatorSubLevelMixin"
+    "compat.sophisticatedcore.ContentsPayloadSizeMixin",
+    "compat.titanium.TileEntityLocatorSubLevelMixin",
+    "compat.utilitarian.FlowerDuplicationStackConsumptionMixin"
   ],
   "client": [
     "SoundEngineMixin"
