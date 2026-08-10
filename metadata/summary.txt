@@ -1,0 +1,1 @@
+A bespoke companion mod for the FTB Evolution modpacks. Fixes problems that configs, datapacks and scripts cannot reach in FTB Evolution, and provides the combat and movement skills in FTB Evolution 2. Not supported in other modpacks.
