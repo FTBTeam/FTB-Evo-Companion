@@ -78,5 +78,11 @@
   "ftbevolutioncompanion.skills.cheat_death.triggered": "Undying Rage saves you from death!",
   "ftbevolutioncompanion.skills.ninja.activated": "You melt into the shadows",
   "ftbevolutioncompanion.skills.cooldown": "%s ready in %ss",
-  "ftbevolutioncompanion.skills.unknown_toggle": "Unknown skill toggle: %s"
+  "ftbevolutioncompanion.skills.unknown_toggle": "Unknown skill toggle: %s",
+  "block.ftbevolutioncompanion.odd_berry_bush": "Odd Berry Bush",
+  "block.ftbevolutioncompanion.odd_berry_bush.tended": "Tended: this bush will spread",
+  "block.ftbevolutioncompanion.odd_berry_bush.wild": "Wild: this bush will stay put",
+  "block.ftbevolutioncompanion.odd_berry_bush.tooltip.harvest": "Right click a ripe bush to pick 1-3 odd berries",
+  "block.ftbevolutioncompanion.odd_berry_bush.tooltip.shears": "Shear it to take the whole bush with you",
+  "block.ftbevolutioncompanion.odd_berry_bush.tooltip.spread": "Bushes you plant spread on their own; sneak and right click to stop that"
 }

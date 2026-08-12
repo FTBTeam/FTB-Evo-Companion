@@ -109,6 +109,28 @@ Toggleable skills (Faster Strikes, Flurry, Undying Rage, Storm Caller, Shadow St
 
 Skill-tree nodes that need no companion support: Loot Goblin grants `minecraft:luck`, and arrow armor-piercing grants `apothic_attributes:armor_shred` directly.
 
+## Content
+
+### Odd Berry Bush
+
+`ftbevolutioncompanion:odd_berry_bush` is the pack's source of Roots Classic berries. The pack sets Roots' own `berriesDropChance` to `0`, so berries no longer fall out of every leaf block in the game; you gather them from this bush instead.
+
+| Behavior | Detail |
+|---|---|
+| Growth | Three stages on the vanilla `age` (`AGE_2`) property: sprout, leafy, ripe. Grows in light level 9 or brighter, and bone meal advances a stage |
+| Harvesting | Right click a ripe bush for 1–3 berries picked at random from the `rootsclassic:berries` tag (nightshade, blackcurrant, redcurrant, whitecurrant, elderberry). The bush drops back to the leafy stage and ripens again |
+| Breaking | A ripe bush broken by hand or tool drops the same 1–3 berries; younger bushes drop nothing |
+| Shearing | Drops the bush itself at any stage, so it can be moved and replanted |
+| Placement | Survives on any block in `ftbevolutioncompanion:odd_berry_bush_spreadable` (grass, dirt, podzol, moss, mud, farmland by default) |
+| Tended state | A bush placed by a player is `tended=true` and, once ripe, spreads to nearby valid blocks the way mushrooms do. Sneak and right click to toggle between tended and wild |
+| Worldgen | Ripe, wild bushes in patches through `#ftbevolutioncompanion:has_feature/odd_berry_bush`, at the same rarity and patch size Pantry for Blockheads uses for its grapevines |
+
+The biome tag covers `#minecraft:is_forest` and `#minecraft:is_taiga` (Terralith folds its own forest and taiga biomes into both), plus plains, sunflower plains, meadow, cherry grove, grove, sparse jungle and, optionally, `#terralith:reference/plains`. The plains-side entries matter more than they look: in a Terralith world most surface chunks are plains or Terralith highlands, so a forest-only tag leaves the bush almost unfindable.
+
+Because the block is a `BonemealableBlock` carrying a vanilla `AGE_2` property, Jade's own crop progress provider shows its growth percentage with no Jade plugin or dependency on our side. The item carries a three-line tooltip covering harvesting, shearing and spreading.
+
+Growth rate, spread rate, the nearby-bush cap and the spread toggle are in the `odd_berry_bush` section of `ftbevolutioncompanion-common.toml`. Retargeting worldgen, changing which blocks it spreads onto, or retexturing needs no code: override the biome tag, the block tag or the textures from a pack datapack or resource pack.
+
 ## Support
 
 - For **FTB Evolution 2** modpack issues, please go here: https://go.ftb.team/support-modpack

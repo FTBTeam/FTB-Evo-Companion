@@ -8,6 +8,7 @@ import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsKeys;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsClientHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsKeys;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
+import dev.ftb.mods.ftbevolutioncompanion.content.CompanionContent;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsCommand;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
@@ -40,6 +41,10 @@ public class FTBEvolutionCompanion {
         container.registerConfig(ModConfig.Type.COMMON, CompanionConfig.SPEC);
 
         NeoForge.EVENT_BUS.addListener(MeteoriteSpacing::onServerAboutToStart);
+
+        CompanionContent.BLOCKS.register(eventBus);
+        CompanionContent.ITEMS.register(eventBus);
+        eventBus.addListener(CompanionContent::onBuildCreativeTabs);
 
         AthleticsRegistry.ATTRIBUTES.register(eventBus);
         AthleticsRegistry.ATTACHMENTS.register(eventBus);

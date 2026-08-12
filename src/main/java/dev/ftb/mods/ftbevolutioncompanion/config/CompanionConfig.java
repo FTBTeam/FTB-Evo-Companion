@@ -12,6 +12,11 @@ public final class CompanionConfig {
     public static final ModConfigSpec.IntValue NETHER_METEORITE_MAX_Y;
     public static final ModConfigSpec.BooleanValue NETHER_METEORITE_SUPPRESS_CRATER;
 
+    public static final ModConfigSpec.IntValue ODD_BERRY_BUSH_GROWTH_CHANCE;
+    public static final ModConfigSpec.BooleanValue ODD_BERRY_BUSH_SPREAD;
+    public static final ModConfigSpec.IntValue ODD_BERRY_BUSH_SPREAD_CHANCE;
+    public static final ModConfigSpec.IntValue ODD_BERRY_BUSH_MAX_NEARBY;
+
     public static final ModConfigSpec.DoubleValue AXE_FRENZY_THRESHOLD;
     public static final ModConfigSpec.DoubleValue AXE_LIFESTEAL_THRESHOLD;
     public static final ModConfigSpec.DoubleValue DEATH_BLOW_THRESHOLD;
@@ -76,6 +81,29 @@ public final class CompanionConfig {
                         "AE2 clears every non-bedrock block from the impact site up to the dimension height limit,",
                         "which in the Nether would carve a shaft through the lava sea and the ceiling.")
                 .define("suppress_crater_in_ceiling_dimensions", true);
+
+        builder.pop();
+
+        builder.comment("Odd Berry Bush, the Roots Classic berry source that replaces berries dropping from leaves.",
+                "A bush placed by a player is tended and spreads; right clicking it toggles that off again.").push("odd_berry_bush");
+
+        ODD_BERRY_BUSH_GROWTH_CHANCE = builder
+                .comment("A bush advances one growth stage on 1 in this many random ticks, in light level 9 or brighter.",
+                        "Higher is slower. Bone meal always advances a stage.")
+                .defineInRange("growth_chance", 12, 1, 4096);
+
+        ODD_BERRY_BUSH_SPREAD = builder
+                .comment("Allow tended bushes to spread onto nearby blocks in the",
+                        "ftbevolutioncompanion:odd_berry_bush_spreadable tag.")
+                .define("spread", true);
+
+        ODD_BERRY_BUSH_SPREAD_CHANCE = builder
+                .comment("A tended bush attempts to spread on 1 in this many random ticks. Higher is slower.")
+                .defineInRange("spread_chance", 25, 1, 4096);
+
+        ODD_BERRY_BUSH_MAX_NEARBY = builder
+                .comment("Bushes allowed in the 9x3x9 area around a bush before it stops spreading.")
+                .defineInRange("max_nearby", 5, 1, 256);
 
         builder.pop();
 
