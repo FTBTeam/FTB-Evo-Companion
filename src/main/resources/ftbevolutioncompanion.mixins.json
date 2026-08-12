@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_25",
   "refmap": "ftbevolutioncompanion.refmap.json",
   "mixins": [
+    "BeardifierMixin",
     "BlockMixin",
     "ConduitBundleBlockEntityMixin",
     "ItemStackMixin",
