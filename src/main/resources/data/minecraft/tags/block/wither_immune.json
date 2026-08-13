@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "ftb:nether_bedrock",
+    "ftb:end_bedrock"
+  ]
+}

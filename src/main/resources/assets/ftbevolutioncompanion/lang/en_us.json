@@ -79,6 +79,8 @@
   "ftbevolutioncompanion.skills.ninja.activated": "You melt into the shadows",
   "ftbevolutioncompanion.skills.cooldown": "%s ready in %ss",
   "ftbevolutioncompanion.skills.unknown_toggle": "Unknown skill toggle: %s",
+  "block.ftb.nether_bedrock": "Netherrack",
+  "block.ftb.end_bedrock": "End Stone",
   "block.ftbevolutioncompanion.odd_berry_bush": "Odd Berry Bush",
   "block.ftbevolutioncompanion.odd_berry_bush.tended": "Tended: this bush will spread",
   "block.ftbevolutioncompanion.odd_berry_bush.wild": "Wild: this bush will stay put",

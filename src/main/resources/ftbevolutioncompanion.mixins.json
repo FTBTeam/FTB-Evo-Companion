@@ -6,6 +6,7 @@
   "refmap": "ftbevolutioncompanion.refmap.json",
   "mixins": [
     "BeardifierMixin",
+    "BrokenSpawnerLootModifierMixin",
     "BlockMixin",
     "ConduitBundleBlockEntityMixin",
     "ItemStackMixin",

@@ -44,6 +44,8 @@ public class FTBEvolutionCompanion {
 
         CompanionContent.BLOCKS.register(eventBus);
         CompanionContent.ITEMS.register(eventBus);
+        CompanionContent.FTB_BLOCKS.register(eventBus);
+        CompanionContent.FTB_ITEMS.register(eventBus);
         eventBus.addListener(CompanionContent::onBuildCreativeTabs);
 
         AthleticsRegistry.ATTRIBUTES.register(eventBus);

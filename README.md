@@ -109,6 +109,8 @@ Toggleable skills (Faster Strikes, Flurry, Undying Rage, Storm Caller, Shadow St
 
 Skill-tree nodes that need no companion support: Loot Goblin grants `minecraft:luck`, and arrow armor-piercing grants `apothic_attributes:armor_shred` directly.
 
+## Pack fixes
+
 ## Content
 
 ### Odd Berry Bush
