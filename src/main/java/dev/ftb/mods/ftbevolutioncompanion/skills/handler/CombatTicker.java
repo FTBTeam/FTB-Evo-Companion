@@ -10,6 +10,9 @@ import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
 
+import dev.ftb.mods.ftbevolutioncompanion.mixin.AbstractArrowInvoker;
+
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,7 +31,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.Arrow;
 import net.minecraft.world.entity.projectile.arrow.ThrownTrident;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -84,7 +90,12 @@ public final class CombatTicker {
             } else {
                 state.axeHitCounter = 0;
             }
-        } else if (source.getDirectEntity() instanceof AbstractArrow) {
+            if (SkillsHelper.isSword(attacker.getMainHandItem())) {
+                state.swordHitCounter++;
+            } else {
+                state.swordHitCounter = 0;
+            }
+        } else if (source.getDirectEntity() instanceof AbstractArrow arrow) {
             resetUnarmed(state);
             int maxStacks = (int) SkillsHelper.attr(attacker, SkillsRegistry.RAMPING_SHOTS);
             if (maxStacks > 0) {
@@ -93,6 +104,19 @@ public final class CombatTicker {
                 }
                 state.archerRampStacks = Math.min(state.archerRampStacks + 1, maxStacks);
                 state.lastArcherHitTime = now;
+            }
+            ItemStack weapon = arrow.getWeaponItem();
+            if (weapon != null && SkillsHelper.isCrossbow(weapon) && target.isAlive()) {
+                if (SkillsHelper.attr(attacker, SkillsRegistry.MARKED_FOR_DEATH) > 0.0) {
+                    target.addEffect(new MobEffectInstance(SkillsRegistry.MARKED,
+                            CompanionConfig.MARKED_DURATION_TICKS.get(), 0), attacker);
+                }
+                double rainChance = SkillsHelper.attr(attacker, SkillsRegistry.RAIN_OF_ARROWS);
+                if (rainChance > 0.0 && SkillsAbilities.toggles(attacker).rainOfArrows()
+                        && attacker.getRandom().nextDouble() < rainChance
+                        && target.level() instanceof ServerLevel serverLevel) {
+                    spawnRainOfArrows(serverLevel, attacker, target);
+                }
             }
         }
 
@@ -172,13 +196,68 @@ public final class CombatTicker {
                 || !(event.getEntity() instanceof AbstractArrow arrow)
                 || arrow instanceof ThrownTrident
                 || !(arrow.getOwner() instanceof ServerPlayer shooter)
-                || SkillsHelper.attr(shooter, SkillsRegistry.HOMING_ARROWS) <= 0.0) {
+                || (arrow.hasData(SkillsRegistry.HOMING_STATE)
+                        && arrow.getData(SkillsRegistry.HOMING_STATE).skillSpawned)) {
             return;
         }
-        LivingEntity target = findHomingTarget(shooter, arrow);
-        if (target != null) {
-            arrow.getData(SkillsRegistry.HOMING_STATE).targetId = target.getUUID();
+        ItemStack weapon = arrow.getWeaponItem();
+        if (weapon != null && SkillsHelper.isCrossbow(weapon)) {
+            applyCrossbowPerks(shooter, arrow);
         }
+        if (SkillsHelper.attr(shooter, SkillsRegistry.HOMING_ARROWS) > 0.0) {
+            LivingEntity target = findHomingTarget(shooter, arrow);
+            if (target != null) {
+                arrow.getData(SkillsRegistry.HOMING_STATE).targetId = target.getUUID();
+            }
+        }
+    }
+
+    private static void applyCrossbowPerks(ServerPlayer shooter, AbstractArrow arrow) {
+        CombatState state = shooter.getData(SkillsRegistry.COMBAT_STATE);
+        long now = shooter.level().getGameTime();
+        if (now != state.lastCrossbowShotTick) {
+            state.lastCrossbowShotTick = now;
+            state.crossbowShotCounter++;
+        }
+        if (SkillsHelper.attr(shooter, SkillsRegistry.POWER_SHOT) > 0.0
+                && state.crossbowShotCounter % CompanionConfig.POWER_SHOT_INTERVAL.get() == 0) {
+            arrow.getData(SkillsRegistry.HOMING_STATE).powerShot = true;
+        }
+        int impale = (int) SkillsHelper.attr(shooter, SkillsRegistry.IMPALE);
+        if (impale > 0) {
+            ((AbstractArrowInvoker) arrow).ftbevo$setPierceLevel(
+                    (byte) Math.min(Byte.MAX_VALUE, arrow.getPierceLevel() + impale));
+        }
+        double ballista = SkillsHelper.attr(shooter, SkillsRegistry.BALLISTA);
+        if (ballista > 0.0) {
+            arrow.setDeltaMovement(arrow.getDeltaMovement().scale(1.0 + ballista));
+            arrow.hurtMarked = true;
+        }
+    }
+
+    private static void spawnRainOfArrows(ServerLevel level, ServerPlayer shooter, LivingEntity target) {
+        int count = CompanionConfig.RAIN_OF_ARROWS_COUNT.get();
+        double radius = CompanionConfig.RAIN_OF_ARROWS_RADIUS.get();
+        double height = CompanionConfig.RAIN_OF_ARROWS_HEIGHT.get();
+        Vec3 center = target.getBoundingBox().getCenter();
+        for (int i = 0; i < count; i++) {
+            double angle = Math.PI * 2.0 * i / count;
+            double x = target.getX() + Math.cos(angle) * radius;
+            double y = target.getY() + height;
+            double z = target.getZ() + Math.sin(angle) * radius;
+            Arrow arrow = new Arrow(level, x, y, z, new ItemStack(Items.ARROW), null);
+            arrow.setOwner(shooter);
+            arrow.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
+            arrow.getData(SkillsRegistry.HOMING_STATE).skillSpawned = true;
+            Vec3 direction = center.subtract(x, y, z);
+            if (direction.lengthSqr() < 1.0E-4) {
+                direction = new Vec3(0.0, -1.0, 0.0);
+            }
+            arrow.setDeltaMovement(direction.normalize().scale(1.6));
+            level.addFreshEntity(arrow);
+        }
+        level.playSound(null, target.getX(), target.getY(), target.getZ(),
+                SoundEvents.CROSSBOW_SHOOT, SoundSource.PLAYERS, 1.0F, 0.8F);
     }
 
     private static LivingEntity findHomingTarget(ServerPlayer shooter, AbstractArrow arrow) {
@@ -249,6 +328,22 @@ public final class CombatTicker {
             attacker.addEffect(new MobEffectInstance(SkillsRegistry.STUNNED,
                     CompanionConfig.STUN_DURATION_TICKS.get(), 0), player);
             SkillCooldowns.start(player, SkillCooldowns.SHIELD_STUN, CompanionConfig.SHIELD_STUN_COOLDOWN.get());
+        }
+        if (SkillsHelper.isSword(player.getUseItem())) {
+            player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
+                    SoundEvents.SHIELD_BLOCK, SoundSource.PLAYERS, 1.0F, 1.0F);
+            if (SkillsHelper.attr(player, SkillsRegistry.RIPOSTE) > 0.0
+                    && player.getTicksUsingItem() <= CompanionConfig.RIPOSTE_PARRY_WINDOW.get()
+                    && SkillCooldowns.ready(player, SkillCooldowns.RIPOSTE)
+                    && event.getDamageSource().getDirectEntity() instanceof LivingEntity meleeAttacker
+                    && meleeAttacker != player) {
+                meleeAttacker.addEffect(new MobEffectInstance(SkillsRegistry.STUNNED,
+                        CompanionConfig.STUN_DURATION_TICKS.get(), 0), player);
+                player.getData(SkillsRegistry.COMBAT_STATE).riposteReadyUntil =
+                        player.level().getGameTime() + CompanionConfig.RIPOSTE_BUFF_WINDOW.get();
+                SkillCooldowns.start(player, SkillCooldowns.RIPOSTE, CompanionConfig.RIPOSTE_COOLDOWN.get());
+                player.sendOverlayMessage(Component.translatable("ftbevolutioncompanion.skills.riposte.ready"));
+            }
         }
     }
 

@@ -5,10 +5,12 @@
   "compatibilityLevel": "JAVA_25",
   "refmap": "ftbevolutioncompanion.refmap.json",
   "mixins": [
+    "AbstractArrowInvoker",
     "BeardifierMixin",
     "BrokenSpawnerLootModifierMixin",
     "BlockMixin",
     "ConduitBundleBlockEntityMixin",
+    "ItemMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
     "ProjectileWeaponItemMixin",

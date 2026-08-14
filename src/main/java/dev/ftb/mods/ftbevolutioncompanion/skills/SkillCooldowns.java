@@ -23,6 +23,7 @@ public record SkillCooldowns(Map<String, Long> readyAt) {
     public static final String SHIELD_STUN = "shield_stun";
     public static final String LIGHTS_SHIELD = "lights_shield";
     public static final String NINJA = "ninja";
+    public static final String RIPOSTE = "riposte";
 
     public static boolean ready(ServerPlayer player, String key) {
         return remaining(player, key) <= 0;

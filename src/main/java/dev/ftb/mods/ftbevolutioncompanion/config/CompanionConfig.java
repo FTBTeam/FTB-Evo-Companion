@@ -47,6 +47,18 @@ public final class CompanionConfig {
     public static final ModConfigSpec.IntValue BLEED_INTERVAL_TICKS;
     public static final ModConfigSpec.IntValue BLEED_DURATION_TICKS;
     public static final ModConfigSpec.IntValue BLEED_MAX_STACKS;
+    public static final ModConfigSpec.IntValue POWER_SHOT_INTERVAL;
+    public static final ModConfigSpec.DoubleValue VITAL_SHOT_FRACTION;
+    public static final ModConfigSpec.IntValue MARKED_DURATION_TICKS;
+    public static final ModConfigSpec.DoubleValue MARKED_DAMAGE_BONUS;
+    public static final ModConfigSpec.IntValue RAIN_OF_ARROWS_COUNT;
+    public static final ModConfigSpec.DoubleValue RAIN_OF_ARROWS_RADIUS;
+    public static final ModConfigSpec.DoubleValue RAIN_OF_ARROWS_HEIGHT;
+    public static final ModConfigSpec.IntValue PIERCING_STRIKE_INTERVAL;
+    public static final ModConfigSpec.IntValue RIPOSTE_PARRY_WINDOW;
+    public static final ModConfigSpec.DoubleValue RIPOSTE_DAMAGE_MULT;
+    public static final ModConfigSpec.IntValue RIPOSTE_BUFF_WINDOW;
+    public static final ModConfigSpec.IntValue RIPOSTE_COOLDOWN;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -229,6 +241,54 @@ public final class CompanionConfig {
         BLEED_MAX_STACKS = builder
                 .comment("Maximum bleed stacks on a single target.")
                 .defineInRange("bleed_max_stacks", 3, 1, 100);
+
+        POWER_SHOT_INTERVAL = builder
+                .comment("Every Nth crossbow shot is a power shot.")
+                .defineInRange("power_shot_interval", 3, 2, 100);
+
+        VITAL_SHOT_FRACTION = builder
+                .comment("Fraction of the target's max health dealt as bonus damage when vital shot procs.")
+                .defineInRange("vital_shot_fraction", 0.10, 0.0, 1.0);
+
+        MARKED_DURATION_TICKS = builder
+                .comment("Duration in ticks of the marked for death debuff.")
+                .defineInRange("marked_duration_ticks", 200, 1, 72000);
+
+        MARKED_DAMAGE_BONUS = builder
+                .comment("Bonus damage fraction taken by targets marked for death.")
+                .defineInRange("marked_damage_bonus", 0.25, 0.0, 10.0);
+
+        RAIN_OF_ARROWS_COUNT = builder
+                .comment("Arrows summoned per rain of arrows proc.")
+                .defineInRange("rain_of_arrows_count", 8, 1, 64);
+
+        RAIN_OF_ARROWS_RADIUS = builder
+                .comment("Radius in blocks of the rain of arrows circle.")
+                .defineInRange("rain_of_arrows_radius", 2.0, 0.5, 16.0);
+
+        RAIN_OF_ARROWS_HEIGHT = builder
+                .comment("Height in blocks above the target the rain of arrows spawns at.")
+                .defineInRange("rain_of_arrows_height", 8.0, 2.0, 32.0);
+
+        PIERCING_STRIKE_INTERVAL = builder
+                .comment("Every Nth sword hit ignores the target's armor.")
+                .defineInRange("piercing_strike_interval", 3, 2, 100);
+
+        RIPOSTE_PARRY_WINDOW = builder
+                .comment("Ticks after raising a sword block during which a blocked melee hit counts as a parry.")
+                .defineInRange("riposte_parry_window", 10, 1, 200);
+
+        RIPOSTE_DAMAGE_MULT = builder
+                .comment("Damage multiplier of the sword attack following a riposte parry.")
+                .defineInRange("riposte_damage_mult", 2.5, 1.0, 20.0);
+
+        RIPOSTE_BUFF_WINDOW = builder
+                .comment("Ticks after a riposte parry during which the bonus damage attack can land.")
+                .defineInRange("riposte_buff_window", 60, 1, 12000);
+
+        RIPOSTE_COOLDOWN = builder
+                .comment("Cooldown in ticks between riposte parries.")
+                .defineInRange("riposte_cooldown", 100, 0, 1728000);
 
         builder.pop();
 

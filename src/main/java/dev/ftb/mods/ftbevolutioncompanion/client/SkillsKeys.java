@@ -26,6 +26,10 @@ public final class SkillsKeys {
             new KeyMapping("key.ftbevolutioncompanion.toggle_shadow_step", GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
     public static final KeyMapping TOGGLE_BLADEMASTER =
             new KeyMapping("key.ftbevolutioncompanion.toggle_blademaster", GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
+    public static final KeyMapping TOGGLE_RAIN_OF_ARROWS =
+            new KeyMapping("key.ftbevolutioncompanion.toggle_rain_of_arrows", GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
+    public static final KeyMapping TOGGLE_PIERCING_STRIKE =
+            new KeyMapping("key.ftbevolutioncompanion.toggle_piercing_strike", GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
 
     private SkillsKeys() {
     }
@@ -39,5 +43,7 @@ public final class SkillsKeys {
         event.register(TOGGLE_CHEAT_DEATH);
         event.register(TOGGLE_SHADOW_STEP);
         event.register(TOGGLE_BLADEMASTER);
+        event.register(TOGGLE_RAIN_OF_ARROWS);
+        event.register(TOGGLE_PIERCING_STRIKE);
     }
 }

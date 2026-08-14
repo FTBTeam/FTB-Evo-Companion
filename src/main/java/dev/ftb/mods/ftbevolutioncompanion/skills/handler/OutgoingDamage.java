@@ -40,6 +40,7 @@ public final class OutgoingDamage {
 
         CombatState state = attacker.getData(SkillsRegistry.COMBAT_STATE);
         double mult = 1.0;
+        double bonus = 0.0;
         boolean echoProc = false;
 
         if (source.isDirect() && source.getDirectEntity() == attacker) {
@@ -53,6 +54,11 @@ public final class OutgoingDamage {
                 }
                 if (SkillsHelper.isBehind(target, attacker)) {
                     mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.BACKSTAB);
+                }
+                if (state.riposteReadyUntil >= attacker.level().getGameTime()
+                        && SkillsHelper.attr(attacker, SkillsRegistry.RIPOSTE) > 0.0) {
+                    state.riposteReadyUntil = 0;
+                    mult *= CompanionConfig.RIPOSTE_DAMAGE_MULT.get();
                 }
                 double echo = SkillsHelper.attr(attacker, SkillsRegistry.ECHO_STRIKES);
                 echoProc = echo > 0.0 && attacker.getRandom().nextDouble() < echo;
@@ -75,7 +81,7 @@ public final class OutgoingDamage {
                     mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.UNARMED_RAMP) * state.unarmedRampStacks;
                 }
             }
-        } else if (source.getDirectEntity() instanceof AbstractArrow) {
+        } else if (source.getDirectEntity() instanceof AbstractArrow arrow) {
             if (target.getHealth() >= target.getMaxHealth()) {
                 mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.FIRST_STRIKE);
             }
@@ -90,10 +96,21 @@ public final class OutgoingDamage {
                             * Math.min(state.archerRampStacks, maxStacks);
                 }
             }
+            ItemStack weapon = arrow.getWeaponItem();
+            if (weapon != null && SkillsHelper.isCrossbow(weapon)) {
+                if (arrow.hasData(SkillsRegistry.HOMING_STATE)
+                        && arrow.getData(SkillsRegistry.HOMING_STATE).powerShot) {
+                    mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.POWER_SHOT);
+                }
+                double vital = SkillsHelper.attr(attacker, SkillsRegistry.VITAL_SHOT);
+                if (vital > 0.0 && attacker.getRandom().nextDouble() < vital) {
+                    bonus += target.getMaxHealth() * CompanionConfig.VITAL_SHOT_FRACTION.get();
+                }
+            }
         }
 
-        if (mult != 1.0) {
-            event.setAmount(event.getAmount() * (float) mult);
+        if (mult != 1.0 || bonus > 0.0) {
+            event.setAmount(event.getAmount() * (float) mult + (float) bonus);
         }
 
         if (echoProc) {

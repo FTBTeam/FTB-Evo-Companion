@@ -10,8 +10,9 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
 public record SkillToggles(boolean fasterStrikes, boolean unarmedRamp, boolean cheatDeath,
-                           boolean lightning, boolean shadowStep, boolean blademaster) {
-    public static final SkillToggles DEFAULT = new SkillToggles(true, true, true, true, true, true);
+                           boolean lightning, boolean shadowStep, boolean blademaster,
+                           boolean rainOfArrows, boolean piercingStrike) {
+    public static final SkillToggles DEFAULT = new SkillToggles(true, true, true, true, true, true, true, true);
 
     public static final MapCodec<SkillToggles> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.BOOL.optionalFieldOf("faster_strikes", true).forGetter(SkillToggles::fasterStrikes),
@@ -19,7 +20,9 @@ public record SkillToggles(boolean fasterStrikes, boolean unarmedRamp, boolean c
             Codec.BOOL.optionalFieldOf("cheat_death", true).forGetter(SkillToggles::cheatDeath),
             Codec.BOOL.optionalFieldOf("lightning", true).forGetter(SkillToggles::lightning),
             Codec.BOOL.optionalFieldOf("shadow_step", true).forGetter(SkillToggles::shadowStep),
-            Codec.BOOL.optionalFieldOf("blademaster", true).forGetter(SkillToggles::blademaster)
+            Codec.BOOL.optionalFieldOf("blademaster", true).forGetter(SkillToggles::blademaster),
+            Codec.BOOL.optionalFieldOf("rain_of_arrows", true).forGetter(SkillToggles::rainOfArrows),
+            Codec.BOOL.optionalFieldOf("piercing_strike", true).forGetter(SkillToggles::piercingStrike)
     ).apply(instance, SkillToggles::new));
 
     public static final StreamCodec<ByteBuf, SkillToggles> STREAM_CODEC = StreamCodec.composite(
@@ -29,6 +32,8 @@ public record SkillToggles(boolean fasterStrikes, boolean unarmedRamp, boolean c
             ByteBufCodecs.BOOL, SkillToggles::lightning,
             ByteBufCodecs.BOOL, SkillToggles::shadowStep,
             ByteBufCodecs.BOOL, SkillToggles::blademaster,
+            ByteBufCodecs.BOOL, SkillToggles::rainOfArrows,
+            ByteBufCodecs.BOOL, SkillToggles::piercingStrike,
             SkillToggles::new);
 
     public enum Toggle {
@@ -37,7 +42,9 @@ public record SkillToggles(boolean fasterStrikes, boolean unarmedRamp, boolean c
         CHEAT_DEATH("cheat_death"),
         LIGHTNING("lightning"),
         SHADOW_STEP("shadow_step"),
-        BLADEMASTER("blademaster");
+        BLADEMASTER("blademaster"),
+        RAIN_OF_ARROWS("rain_of_arrows"),
+        PIERCING_STRIKE("piercing_strike");
 
         private final String key;
 
@@ -63,17 +70,20 @@ public record SkillToggles(boolean fasterStrikes, boolean unarmedRamp, boolean c
             case LIGHTNING -> lightning;
             case SHADOW_STEP -> shadowStep;
             case BLADEMASTER -> blademaster;
+            case RAIN_OF_ARROWS -> rainOfArrows;
+            case PIERCING_STRIKE -> piercingStrike;
         };
     }
 
     public SkillToggles toggled(Toggle toggle) {
-        return switch (toggle) {
-            case FASTER_STRIKES -> new SkillToggles(!fasterStrikes, unarmedRamp, cheatDeath, lightning, shadowStep, blademaster);
-            case UNARMED_RAMP -> new SkillToggles(fasterStrikes, !unarmedRamp, cheatDeath, lightning, shadowStep, blademaster);
-            case CHEAT_DEATH -> new SkillToggles(fasterStrikes, unarmedRamp, !cheatDeath, lightning, shadowStep, blademaster);
-            case LIGHTNING -> new SkillToggles(fasterStrikes, unarmedRamp, cheatDeath, !lightning, shadowStep, blademaster);
-            case SHADOW_STEP -> new SkillToggles(fasterStrikes, unarmedRamp, cheatDeath, lightning, !shadowStep, blademaster);
-            case BLADEMASTER -> new SkillToggles(fasterStrikes, unarmedRamp, cheatDeath, lightning, shadowStep, !blademaster);
-        };
+        return new SkillToggles(
+                toggle == Toggle.FASTER_STRIKES ? !fasterStrikes : fasterStrikes,
+                toggle == Toggle.UNARMED_RAMP ? !unarmedRamp : unarmedRamp,
+                toggle == Toggle.CHEAT_DEATH ? !cheatDeath : cheatDeath,
+                toggle == Toggle.LIGHTNING ? !lightning : lightning,
+                toggle == Toggle.SHADOW_STEP ? !shadowStep : shadowStep,
+                toggle == Toggle.BLADEMASTER ? !blademaster : blademaster,
+                toggle == Toggle.RAIN_OF_ARROWS ? !rainOfArrows : rainOfArrows,
+                toggle == Toggle.PIERCING_STRIKE ? !piercingStrike : piercingStrike);
     }
 }

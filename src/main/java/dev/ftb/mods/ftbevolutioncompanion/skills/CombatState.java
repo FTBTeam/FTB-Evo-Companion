@@ -10,6 +10,10 @@ public final class CombatState {
     public long lastUnarmedHitTime;
     public int unarmedRampStacks;
     public int axeHitCounter;
+    public int swordHitCounter;
+    public int crossbowShotCounter;
+    public long lastCrossbowShotTick;
+    public long riposteReadyUntil;
     public long ninjaUntil;
     public long lastShieldHealTime;
     public UUID pendingEchoTarget;
