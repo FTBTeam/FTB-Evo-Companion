@@ -7,6 +7,7 @@ import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsClientHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsKeys;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsClientHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsKeys;
+import dev.ftb.mods.ftbevolutioncompanion.client.WingTooltips;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.content.CompanionContent;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
@@ -89,6 +90,7 @@ public class FTBEvolutionCompanion {
             NeoForge.EVENT_BUS.addListener(SkillsClientHandler::onClientTick);
             NeoForge.EVENT_BUS.addListener(SkillsClientHandler::onLeftClickEmpty);
             NeoForge.EVENT_BUS.addListener(SkillsClientHandler::onLeftClickBlock);
+            NeoForge.EVENT_BUS.addListener(WingTooltips::onItemTooltip);
             eventBus.<FMLClientSetupEvent>addListener(event -> clientSetup(event, eventBus));
         }
     }

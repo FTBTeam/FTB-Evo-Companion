@@ -6,10 +6,16 @@
   "refmap": "ftbevolutioncompanion.refmap.json",
   "mixins": [
     "AbstractArrowInvoker",
+    "ArmorSlotParagliderMixin",
     "BeardifierMixin",
     "BrokenSpawnerLootModifierMixin",
     "BlockMixin",
     "ConduitBundleBlockEntityMixin",
+    "ConnectionTimeoutMixin",
+    "ServerCommonPacketListenerKeepAliveMixin",
+    "ServerConfigurationSlowJoinMixin",
+    "HorseUseHandlerParagliderMixin",
+    "In2bubbleParagliderMixin",
     "ItemMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
@@ -19,7 +25,6 @@
     "NetherPortalBlockMixin",
     "PlayerMixin",
     "MeteoriteStructureMixin",
-    "PackParserMixin",
     "RandomSpreadStructurePlacementAccessor"
   ],
   "client": [

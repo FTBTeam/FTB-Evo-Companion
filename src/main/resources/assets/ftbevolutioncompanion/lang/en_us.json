@@ -103,5 +103,8 @@
   "block.ftbevolutioncompanion.odd_berry_bush.wild": "Wild: this bush will stay put",
   "block.ftbevolutioncompanion.odd_berry_bush.tooltip.harvest": "Right click a ripe bush to pick 1-3 odd berries",
   "block.ftbevolutioncompanion.odd_berry_bush.tooltip.shears": "Shear it to take the whole bush with you",
-  "block.ftbevolutioncompanion.odd_berry_bush.tooltip.spread": "Bushes you plant spread on their own; sneak and right click to stop that"
+  "block.ftbevolutioncompanion.odd_berry_bush.tooltip.spread": "Bushes you plant spread on their own; sneak and right click to stop that",
+  "ftbevolutioncompanion.wings.repair_with_leather": "Repair with leather in an anvil",
+  "jei.ftbevolutioncompanion.pegasus.conversion": "Right click a tamed horse with this to give it wings and turn it into a pegasus. The horse carries the wings in its own slot, and you can also drop them straight into its armor slot. Combining horse armor with a pair of wings in an anvil makes Winged Horse Armor instead, which grants flight and keeps its protection.",
+  "jei.ftbevolutioncompanion.pegasus.flight": "While riding a winged horse, press JUMP to take off. Hold forward for speed, and look up or down to climb and dive. Sneak with an empty hand to take the wings back. Wings wear down in flight, and a worn out pair forces an emergency landing until you repair them in an anvil: leather for a Paraglider or Deku Leaf, phantom membrane for an Elytra or Winged Horse Armor."
 }
