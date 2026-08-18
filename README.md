@@ -38,6 +38,12 @@ Values applied directly to the player survive death. Vanilla only carries perman
 | `ftb:bow_durability` | 0–20 | Virtual Unbreaking levels for bows (no enchantment applied; stacks with real Unbreaking) |
 | `ftb:crossbow_durability` | 0–20 | Same, for crossbows |
 | `ftb:homing_arrows` | 0–1 | 1 = your arrows lock onto the living target you aimed at (closest to your aim within ~25°, up to 48 blocks). An arrow that hits a block instead of the target redirects mid-air toward it, up to 3 times, then flies normally. Applies to bows and crossbows, not tridents |
+| `ftb:rain_of_arrows` | 0–1 | Chance a crossbow hit calls a ring of 8 arrows down on the target from 8 blocks up, all converging on it (config `rain_of_arrows_count`, `_radius`, `_height`). The summoned arrows cannot be picked up. Toggleable |
+| `ftb:power_shot` | 0–5 | Every 3rd crossbow shot (config `power_shot_interval`) deals +value bonus damage, so 1.0 doubles it |
+| `ftb:vital_shot` | 0–1 | Chance a crossbow hit deals extra damage equal to 10% of the target's max health (config `vital_shot_fraction`) |
+| `ftb:impale` | 0–5 | Extra piercing levels on crossbow bolts, so each punches through this many more entities. Stacks with real Piercing |
+| `ftb:marked_for_death` | 0–1 | 1 = crossbow hits apply `ftb:marked` for 10s. A marked target takes +25% damage from any living attacker, yourself or otherwise (config `marked_duration_ticks`, `marked_damage_bonus`) |
+| `ftb:ballista` | 0–3 | Multiplies crossbow bolt velocity by (1 + value), so 1.0 is double speed. Faster bolts shoot flatter and further, and vanilla arrow damage scales with speed |
 
 ### Brawler (unarmed = empty main hand)
 
@@ -87,6 +93,9 @@ Values applied directly to the player survive death. Vanilla only carries perman
 | `ftb:shakedown` | 0–1 | Chance sword kills drop one duplicated item |
 | `ftb:night_damage` | 0–2 | Bonus sword damage fraction at night |
 | `ftb:blademaster` | 0–1 | 1 = sword hits apply `ftb:bleeding`, stacking to 3. Bleed deals 1% of max health per stack every 2s for 6s. Toggleable |
+| `ftb:sword_block` | 0–1 | 1 = swords can be raised like a shield (right click, 0.25s wind-up, 90° arc). The value is the fraction of incoming damage blocked, so 0.5 stops half of it. Damage types that bypass shields still get through |
+| `ftb:riposte` | 0–1 | 1 = a melee hit blocked within 0.5s of raising a sword block is parried: the attacker is stunned and your next sword strike within 3s deals 2.5× damage. 5s cooldown. Needs `ftb:sword_block` to have something to parry with (config `riposte_*`) |
+| `ftb:piercing_strike` | 0–1 | 1 = every 3rd sword hit ignores the target's armor entirely (config `piercing_strike_interval`). Toggleable |
 
 ### Athletic / Mining
 
@@ -102,10 +111,11 @@ Values applied directly to the player survive death. Vanilla only carries perman
 |---|---|
 | `ftb:stunned` | −100% movement and attack speed; attacks by the stunned entity are cancelled outright |
 | `ftb:bleeding` | Deals `bleed_fraction` (default 1%) of max health × (amplifier + 1) as magic damage every `bleed_interval_ticks` (default 2s) |
+| `ftb:marked` | Target takes `marked_damage_bonus` (default +25%) extra damage from any living attacker |
 
 ### Toggles & Commands
 
-Toggleable skills (Faster Strikes, Flurry, Undying Rage, Storm Caller, Shadow Step, Blademaster) default to on, persist across death, and can be switched with keybinds (most unbound by default, under the "FTB Evolution Skills" category) or `/ftbskills toggle <skill>`.
+Toggleable skills (Faster Strikes, Flurry, Undying Rage, Storm Caller, Shadow Step, Blademaster, Rain of Arrows, Piercing Strike) default to on, persist across death, and can be switched with keybinds (most unbound by default, under the "FTB Evolution Skills" category) or `/ftbskills toggle <skill>`.
 
 Skill-tree nodes that need no companion support: Loot Goblin grants `minecraft:luck`, and arrow armor-piercing grants `apothic_attributes:armor_shred` directly.
 
