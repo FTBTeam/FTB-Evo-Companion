@@ -23,6 +23,7 @@
     "ProjectileWeaponItemMixin",
     "MultishotPatternMixin",
     "MeteoritePlacerMixin",
+    "MobFlowDarkDirtBlacklistMixin",
     "MobFlowFanLaneMixin",
     "NetherPortalBlockMixin",
     "OccultismGuideBookRemainderMixin",
@@ -32,6 +33,7 @@
   ],
   "client": [
     "FakeRenderEnvironmentMixin",
+    "PowerArmorKeybindMixin",
     "IndepentScaleScreenMixin"
   ],
   "injectors": {
