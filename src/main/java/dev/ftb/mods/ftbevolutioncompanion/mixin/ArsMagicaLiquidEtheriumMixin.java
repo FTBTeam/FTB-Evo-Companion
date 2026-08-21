@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(targets = "at.minecraftschurli.mods.arsmagicalegacy.init.AMBlocks", remap = false)
-public abstract class ArsMagicaLiquidEtheriumMixin {
+public interface ArsMagicaLiquidEtheriumMixin {
     @ModifyReturnValue(
             method = "lambda$static$4(Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)"
                     + "Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;",
