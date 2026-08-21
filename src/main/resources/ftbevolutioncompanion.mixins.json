@@ -7,6 +7,7 @@
   "mixins": [
     "AbstractArrowInvoker",
     "ArmorSlotParagliderMixin",
+    "ArsMagicaPiercingStatMixin",
     "BeardifierMixin",
     "BrokenSpawnerLootModifierMixin",
     "BlockMixin",
@@ -22,7 +23,9 @@
     "ProjectileWeaponItemMixin",
     "MultishotPatternMixin",
     "MeteoritePlacerMixin",
+    "MobFlowFanLaneMixin",
     "NetherPortalBlockMixin",
+    "OccultismGuideBookRemainderMixin",
     "PlayerMixin",
     "MeteoriteStructureMixin",
     "RandomSpreadStructurePlacementAccessor"
