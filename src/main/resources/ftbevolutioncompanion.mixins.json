@@ -7,7 +7,6 @@
   "mixins": [
     "AbstractArrowInvoker",
     "ArmorSlotParagliderMixin",
-    "ArsMagicaLiquidEtheriumMixin",
     "ArsMagicaPiercingStatMixin",
     "BeardifierMixin",
     "BrokenSpawnerLootModifierMixin",
@@ -22,6 +21,7 @@
     "In2bubbleParagliderMixin",
     "ItemMixin",
     "ItemStackMixin",
+    "LivingEntityFluidTravelMixin",
     "LivingEntityMixin",
     "ProjectileWeaponItemMixin",
     "MultishotPatternMixin",
