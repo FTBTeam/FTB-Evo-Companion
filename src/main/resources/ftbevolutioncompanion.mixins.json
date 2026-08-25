@@ -23,7 +23,6 @@
     "compat.dysoncubeproject.MultiblockStructureShapeGuardMixin",
     "compat.enderio.RedstoneConduitMixin",
     "compat.functionalstorage.ControllerInventoryHandlerPerfMixin",
-    "compat.functionalstorage.DrawerSlotSubLevelMixin",
     "compat.immersiveengineering.LootBlockStatePredicateChunkLoadMixin",
     "compat.industrialforegoing.TransporterItemTypeExtractAmountMixin",
     "compat.integrateddynamics.BlockEntityCableConnectableInventoryMixin",
