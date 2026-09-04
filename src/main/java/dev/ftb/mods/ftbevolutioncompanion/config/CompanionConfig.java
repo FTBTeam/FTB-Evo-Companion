@@ -60,8 +60,48 @@ public final class CompanionConfig {
     public static final ModConfigSpec.IntValue RIPOSTE_BUFF_WINDOW;
     public static final ModConfigSpec.IntValue RIPOSTE_COOLDOWN;
 
+    public static final ModConfigSpec.BooleanValue ENFORCE_WORLD_SPAWN;
+    public static final ModConfigSpec.BooleanValue PYRAMID_BIOME;
+    public static final ModConfigSpec.IntValue PYRAMID_MIN_X;
+    public static final ModConfigSpec.IntValue PYRAMID_MAX_X;
+    public static final ModConfigSpec.IntValue PYRAMID_MIN_Y;
+    public static final ModConfigSpec.IntValue PYRAMID_MAX_Y;
+    public static final ModConfigSpec.IntValue PYRAMID_MIN_Z;
+    public static final ModConfigSpec.IntValue PYRAMID_MAX_Z;
+    public static final ModConfigSpec.IntValue SPAWN_X;
+    public static final ModConfigSpec.IntValue SPAWN_Y;
+    public static final ModConfigSpec.IntValue SPAWN_Z;
+
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
+
+        builder.comment("World spawn handling.").push("spawn");
+
+        ENFORCE_WORLD_SPAWN = builder
+                .comment("Put players with no bed or respawn anchor exactly on the world spawn point, on first join and on every respawn.",
+                        "Vanilla searches the surface heightmap near the spawn point instead, which puts players on top of the",
+                        "spawn pyramid rather than inside it.")
+                .define("enforce_world_spawn", true);
+
+        PYRAMID_BIOME = builder
+                .comment("Generate the ftb:pyramid biome inside the box below during overworld worldgen, so the spawn pyramid",
+                        "has no mob spawns or weather without a fillbiome pass. The box must match where the pack places the pyramid.")
+                .define("pyramid_biome", true);
+        PYRAMID_MIN_X = builder.defineInRange("pyramid_min_x", -64, -30000000, 30000000);
+        PYRAMID_MAX_X = builder.defineInRange("pyramid_max_x", 71, -30000000, 30000000);
+        PYRAMID_MIN_Y = builder.defineInRange("pyramid_min_y", 220, -64, 319);
+        PYRAMID_MAX_Y = builder.defineInRange("pyramid_max_y", 319, -64, 319);
+        PYRAMID_MIN_Z = builder.defineInRange("pyramid_min_z", -64, -30000000, 30000000);
+        PYRAMID_MAX_Z = builder.defineInRange("pyramid_max_z", 71, -30000000, 30000000);
+
+        SPAWN_X = builder
+                .comment("World spawn point, the spot inside the pyramid players start at. Set on overworld load so it is",
+                        "correct on the very first join, before the structure finishes placing.")
+                .defineInRange("spawn_x", -2, -30000000, 30000000);
+        SPAWN_Y = builder.defineInRange("spawn_y", 266, -64, 2031);
+        SPAWN_Z = builder.defineInRange("spawn_z", 48, -30000000, 30000000);
+
+        builder.pop();
 
         builder.comment("Applied Energistics 2 meteorite worldgen.").push("meteorites");
 

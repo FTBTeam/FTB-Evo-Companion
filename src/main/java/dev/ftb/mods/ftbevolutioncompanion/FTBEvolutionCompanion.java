@@ -17,7 +17,11 @@ import dev.ftb.mods.ftbevolutioncompanion.skills.handler.CombatTicker;
 import dev.ftb.mods.ftbevolutioncompanion.skills.handler.IncomingDamage;
 import dev.ftb.mods.ftbevolutioncompanion.skills.handler.OutgoingDamage;
 import dev.ftb.mods.ftbevolutioncompanion.skills.network.SkillsPayloads;
+import dev.ftb.mods.ftbevolutioncompanion.spawn.PyramidBiome;
+import dev.ftb.mods.ftbevolutioncompanion.spawn.WorldSpawnEnforcer;
+import dev.ftb.mods.ftbevolutioncompanion.worldgen.FixedChunkPlacement;
 import dev.ftb.mods.ftbevolutioncompanion.worldgen.MeteoriteSpacing;
+import dev.ftb.mods.ftbevolutioncompanion.worldgen.SpawnPyramidStructure;
 
 import net.minecraft.resources.Identifier;
 
@@ -48,6 +52,17 @@ public class FTBEvolutionCompanion {
         CompanionContent.FTB_BLOCKS.register(eventBus);
         CompanionContent.FTB_ITEMS.register(eventBus);
         eventBus.addListener(CompanionContent::onBuildCreativeTabs);
+
+        FixedChunkPlacement.PLACEMENT_TYPES.register(eventBus);
+        SpawnPyramidStructure.STRUCTURE_TYPES.register(eventBus);
+
+        WorldSpawnEnforcer.ATTACHMENTS.register(eventBus);
+        NeoForge.EVENT_BUS.addListener(WorldSpawnEnforcer::onLevelLoad);
+        NeoForge.EVENT_BUS.addListener(WorldSpawnEnforcer::onServerStarted);
+        NeoForge.EVENT_BUS.addListener(WorldSpawnEnforcer::onPlayerLoggedIn);
+        NeoForge.EVENT_BUS.addListener(WorldSpawnEnforcer::onRespawnPosition);
+        NeoForge.EVENT_BUS.addListener(PyramidBiome::onLevelLoad);
+        NeoForge.EVENT_BUS.addListener(PyramidBiome::onLevelUnload);
 
         AthleticsRegistry.ATTRIBUTES.register(eventBus);
         AthleticsRegistry.ATTACHMENTS.register(eventBus);
