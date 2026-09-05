@@ -13,6 +13,10 @@
     "BrokenSpawnerLootModifierMixin",
     "ConduitBundleBlockEntityMixin",
     "ConnectionTimeoutMixin",
+    "EnderIOXpFluidMixin",
+    "EnergizedPowerXpDrainMixin",
+    "EnergizedPowerXpFurnaceMixin",
+    "EnergizedPowerXpStorageMixin",
     "EntityFallSpeedMixin",
     "HorseUseHandlerParagliderMixin",
     "In2bubbleParagliderMixin",
@@ -24,8 +28,10 @@
     "LivingEntityMixin",
     "MeteoritePlacerMixin",
     "MeteoriteStructureMixin",
+    "MobFlowCollectorXpBucketMixin",
     "MobFlowDarkDirtBlacklistMixin",
     "MobFlowFanLaneMixin",
+    "MobFlowXpFluidTankMixin",
     "MultiNoiseBiomeSourceMixin",
     "MultishotPatternMixin",
     "NetherPortalBlockMixin",
@@ -33,8 +39,10 @@
     "PlayerMixin",
     "ProjectileWeaponItemMixin",
     "RandomSpreadStructurePlacementAccessor",
+    "ReliquaryXpFluidMixin",
     "ServerCommonPacketListenerKeepAliveMixin",
-    "ServerConfigurationSlowJoinMixin"
+    "ServerConfigurationSlowJoinMixin",
+    "SophisticatedCoreXpFluidMixin"
   ],
   "client": [
     "FakeRenderEnvironmentMixin",
