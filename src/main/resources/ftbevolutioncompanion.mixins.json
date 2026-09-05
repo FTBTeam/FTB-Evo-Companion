@@ -13,6 +13,7 @@
     "BrokenSpawnerLootModifierMixin",
     "ConduitBundleBlockEntityMixin",
     "ConnectionTimeoutMixin",
+    "CraftingStationSideSlotMixin",
     "EnderIOXpFluidMixin",
     "EnergizedPowerXpDrainMixin",
     "EnergizedPowerXpFurnaceMixin",
