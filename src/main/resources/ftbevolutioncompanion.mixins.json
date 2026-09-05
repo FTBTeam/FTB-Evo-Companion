@@ -37,6 +37,7 @@
     "MultishotPatternMixin",
     "NetherPortalBlockMixin",
     "OccultismGuideBookRemainderMixin",
+    "OritechOilSpringMixin",
     "PlayerMixin",
     "ProjectileWeaponItemMixin",
     "RandomSpreadStructurePlacementAccessor",
