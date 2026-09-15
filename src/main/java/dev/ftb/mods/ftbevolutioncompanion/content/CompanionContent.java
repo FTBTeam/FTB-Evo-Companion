@@ -1,6 +1,8 @@
 package dev.ftb.mods.ftbevolutioncompanion.content;
 
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
+import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeBoardAuxBlock;
+import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeBoardBlock;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -77,6 +79,31 @@ public final class CompanionContent {
             properties -> properties.useBlockDescriptionPrefix()
     );
 
+    public static final DeferredBlock<ChallengeBoardBlock> CHALLENGE_BOARD = BLOCKS.registerBlock(
+            "challenge_board",
+            ChallengeBoardBlock::new,
+            properties -> properties
+                    .mapColor(MapColor.COLOR_BLACK)
+                    .strength(0.3F)
+                    .sound(SoundType.METAL)
+    );
+
+    public static final DeferredBlock<ChallengeBoardAuxBlock> CHALLENGE_BOARD_AUX = BLOCKS.registerBlock(
+            "challenge_board_aux",
+            ChallengeBoardAuxBlock::new,
+            properties -> properties
+                    .mapColor(MapColor.COLOR_BLACK)
+                    .strength(0.3F)
+                    .sound(SoundType.METAL)
+                    .noLootTable()
+    );
+
+    public static final DeferredItem<BlockItem> CHALLENGE_BOARD_ITEM = ITEMS.registerItem(
+            "challenge_board",
+            properties -> new BlockItem(CHALLENGE_BOARD.get(), properties),
+            properties -> properties.useBlockDescriptionPrefix()
+    );
+
     public static void onBuildCreativeTabs(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
             event.accept(ODD_BERRY_BUSH_ITEM);
@@ -84,6 +111,7 @@ public final class CompanionContent {
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(NETHER_BEDROCK_ITEM);
             event.accept(END_BEDROCK_ITEM);
+            event.accept(CHALLENGE_BOARD_ITEM);
         }
     }
 

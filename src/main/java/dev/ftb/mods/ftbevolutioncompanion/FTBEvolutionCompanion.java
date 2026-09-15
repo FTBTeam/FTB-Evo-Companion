@@ -3,8 +3,13 @@ package dev.ftb.mods.ftbevolutioncompanion;
 import dev.ftb.mods.ftbevolutioncompanion.athletics.AthleticsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.athletics.AthleticsRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.athletics.network.AthleticsPayloads;
+import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeBoardCommand;
+import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeLeaderboard;
+import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeRegistry;
+import dev.ftb.mods.ftbevolutioncompanion.challenge.network.ChallengePayloads;
 import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsClientHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsKeys;
+import dev.ftb.mods.ftbevolutioncompanion.client.ChallengeBoardClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsClientHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsKeys;
 import dev.ftb.mods.ftbevolutioncompanion.client.WingTooltips;
@@ -52,6 +57,12 @@ public class FTBEvolutionCompanion {
         CompanionContent.FTB_BLOCKS.register(eventBus);
         CompanionContent.FTB_ITEMS.register(eventBus);
         eventBus.addListener(CompanionContent::onBuildCreativeTabs);
+        ChallengeRegistry.BLOCK_ENTITIES.register(eventBus);
+        eventBus.addListener(ChallengePayloads::register);
+        NeoForge.EVENT_BUS.addListener(ChallengeLeaderboard::onServerTick);
+        NeoForge.EVENT_BUS.addListener(ChallengeLeaderboard::onPlayerLoggedIn);
+        NeoForge.EVENT_BUS.addListener(ChallengeLeaderboard::onServerStopped);
+        NeoForge.EVENT_BUS.addListener(ChallengeBoardCommand::onRegisterCommands);
 
         FixedChunkPlacement.PLACEMENT_TYPES.register(eventBus);
         SpawnPyramidStructure.STRUCTURE_TYPES.register(eventBus);
@@ -106,6 +117,8 @@ public class FTBEvolutionCompanion {
             NeoForge.EVENT_BUS.addListener(SkillsClientHandler::onLeftClickEmpty);
             NeoForge.EVENT_BUS.addListener(SkillsClientHandler::onLeftClickBlock);
             NeoForge.EVENT_BUS.addListener(WingTooltips::onItemTooltip);
+            eventBus.addListener(ChallengeBoardClient::onRegisterRenderers);
+            NeoForge.EVENT_BUS.addListener(ChallengeBoardClient::onLoggingOut);
             eventBus.<FMLClientSetupEvent>addListener(event -> clientSetup(event, eventBus));
         }
     }

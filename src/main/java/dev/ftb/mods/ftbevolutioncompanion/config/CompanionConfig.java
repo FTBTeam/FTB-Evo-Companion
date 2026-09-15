@@ -72,6 +72,10 @@ public final class CompanionConfig {
     public static final ModConfigSpec.IntValue SPAWN_Y;
     public static final ModConfigSpec.IntValue SPAWN_Z;
 
+    public static final ModConfigSpec.ConfigValue<String> CHALLENGE_CHAPTER;
+    public static final ModConfigSpec.IntValue CHALLENGE_REFRESH_SECONDS;
+    public static final ModConfigSpec.IntValue CHALLENGE_BOARD_SIZE;
+
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
 
@@ -100,6 +104,22 @@ public final class CompanionConfig {
                 .defineInRange("spawn_x", -2, -30000000, 30000000);
         SPAWN_Y = builder.defineInRange("spawn_y", 266, -64, 2031);
         SPAWN_Z = builder.defineInRange("spawn_z", 48, -30000000, 30000000);
+
+        builder.pop();
+
+        builder.comment("Challenge boards: the leaderboard screens in the spawn pyramid.").push("challenge");
+
+        CHALLENGE_CHAPTER = builder
+                .comment("Filename of the FTB Quests chapter the boards rank teams on (config/ftbquests/quests/chapters/<name>.json5).")
+                .define("chapter", "pyramid_challenge");
+
+        CHALLENGE_REFRESH_SECONDS = builder
+                .comment("How often the server re-ranks the teams and pushes the result to every client.")
+                .defineInRange("refresh_seconds", 60, 5, 3600);
+
+        CHALLENGE_BOARD_SIZE = builder
+                .comment("How many ranks the leaderboard tracks. A board set to a rank above this never shows a team.")
+                .defineInRange("board_size", 8, 1, 64);
 
         builder.pop();
 

@@ -104,6 +104,8 @@ repositories {
 
 dependencies {
 	implementation "dev.ftb.mods:ftb-library-neoforge:${ftb_library_version}"
+	implementation "dev.ftb.mods:ftb-teams-neoforge:${ftb_teams_version}"
+	implementation "dev.ftb.mods:ftb-quests-neoforge:${ftb_quests_version}"
 
 	compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
 	compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
@@ -129,7 +131,9 @@ tasks.withType(ProcessResources).configureEach {
 		minecraft_version: minecraft_version,
 		neoforge_loader_version: neoforge_loader_version,
 		neo_version_range: neo_version_range,
-		ftb_library_version: ftb_library_version
+		ftb_library_version: ftb_library_version,
+		ftb_teams_version: ftb_teams_version,
+		ftb_quests_version: ftb_quests_version
 	]
 
 	inputs.properties replaceProperties

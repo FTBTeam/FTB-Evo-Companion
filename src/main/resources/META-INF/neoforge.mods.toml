@@ -36,3 +36,17 @@ type = "required"
 versionRange = "[${ftb_library_version},)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "ftbteams"
+type = "required"
+versionRange = "[${ftb_teams_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "ftbquests"
+type = "required"
+versionRange = "[${ftb_quests_version},)"
+ordering = "AFTER"
+side = "BOTH"
