@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Powah's config file is read again; every edit used to be replaced by the mod defaults on boot (Technici4n/Powah#305)
 - Generated crude oil patches settle on their own instead of waiting for a nearby block update (FTBTesting/Testing-Issues#4229)
 - Taking items from a Crafting Station's side inventory gives one stack at a time (FTBTesting/Testing-Issues#4236)
 - XP fluid is now the same fluid across every mod that makes it (FTBTesting/Testing-Issues#4204)

@@ -100,6 +100,13 @@ repositories {
 			includeGroup("mezz.jei")
 		}
 	}
+
+	maven {
+		url = "https://maven.shedaniel.me/"
+		content {
+			includeGroup("me.shedaniel.cloth")
+		}
+	}
 }
 
 dependencies {
@@ -109,6 +116,7 @@ dependencies {
 
 	compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
 	compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+	compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
 }
 
 tasks.register("sourcesJar", Jar) {

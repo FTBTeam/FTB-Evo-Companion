@@ -39,6 +39,7 @@
     "OccultismGuideBookRemainderMixin",
     "OritechOilSpringMixin",
     "PlayerMixin",
+    "PowahConfigInPlaceUnpackMixin",
     "ProjectileWeaponItemMixin",
     "RandomSpreadStructurePlacementAccessor",
     "ReliquaryXpFluidMixin",
