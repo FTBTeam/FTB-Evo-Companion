@@ -91,19 +91,19 @@ public final class CompanionConfig {
                 .comment("Generate the ftb:pyramid biome inside the box below during overworld worldgen, so the spawn pyramid",
                         "has no mob spawns or weather without a fillbiome pass. The box must match where the pack places the pyramid.")
                 .define("pyramid_biome", true);
-        PYRAMID_MIN_X = builder.defineInRange("pyramid_min_x", -64, -30000000, 30000000);
-        PYRAMID_MAX_X = builder.defineInRange("pyramid_max_x", 71, -30000000, 30000000);
+        PYRAMID_MIN_X = builder.defineInRange("pyramid_min_x", -62, -30000000, 30000000);
+        PYRAMID_MAX_X = builder.defineInRange("pyramid_max_x", 73, -30000000, 30000000);
         PYRAMID_MIN_Y = builder.defineInRange("pyramid_min_y", 220, -64, 319);
         PYRAMID_MAX_Y = builder.defineInRange("pyramid_max_y", 319, -64, 319);
-        PYRAMID_MIN_Z = builder.defineInRange("pyramid_min_z", -64, -30000000, 30000000);
-        PYRAMID_MAX_Z = builder.defineInRange("pyramid_max_z", 71, -30000000, 30000000);
+        PYRAMID_MIN_Z = builder.defineInRange("pyramid_min_z", -65, -30000000, 30000000);
+        PYRAMID_MAX_Z = builder.defineInRange("pyramid_max_z", 70, -30000000, 30000000);
 
         SPAWN_X = builder
                 .comment("World spawn point, the spot inside the pyramid players start at. Set on overworld load so it is",
                         "correct on the very first join, before the structure finishes placing.")
-                .defineInRange("spawn_x", -2, -30000000, 30000000);
+                .defineInRange("spawn_x", 0, -30000000, 30000000);
         SPAWN_Y = builder.defineInRange("spawn_y", 266, -64, 2031);
-        SPAWN_Z = builder.defineInRange("spawn_z", 48, -30000000, 30000000);
+        SPAWN_Z = builder.defineInRange("spawn_z", 47, -30000000, 30000000);
 
         builder.pop();
 

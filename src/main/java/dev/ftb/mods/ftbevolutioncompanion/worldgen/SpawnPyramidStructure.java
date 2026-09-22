@@ -28,7 +28,9 @@ public class SpawnPyramidStructure extends Structure {
             instance.group(
                     settingsCodec(instance),
                     StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(s -> s.startPool),
-                    Codec.INT.fieldOf("start_height").forGetter(s -> s.startHeight)
+                    Codec.INT.fieldOf("start_height").forGetter(s -> s.startHeight),
+                    Codec.INT.optionalFieldOf("offset_x", 0).forGetter(s -> s.offsetX),
+                    Codec.INT.optionalFieldOf("offset_z", 0).forGetter(s -> s.offsetZ)
             ).apply(instance, SpawnPyramidStructure::new));
 
     public static final DeferredHolder<StructureType<?>, StructureType<SpawnPyramidStructure>> TYPE =
@@ -36,16 +38,22 @@ public class SpawnPyramidStructure extends Structure {
 
     private final Holder<StructureTemplatePool> startPool;
     private final int startHeight;
+    private final int offsetX;
+    private final int offsetZ;
 
-    public SpawnPyramidStructure(StructureSettings settings, Holder<StructureTemplatePool> startPool, int startHeight) {
+    public SpawnPyramidStructure(StructureSettings settings, Holder<StructureTemplatePool> startPool, int startHeight,
+                                 int offsetX, int offsetZ) {
         super(settings);
         this.startPool = startPool;
         this.startHeight = startHeight;
+        this.offsetX = offsetX;
+        this.offsetZ = offsetZ;
     }
 
     @Override
     protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
-        BlockPos pos = new BlockPos(context.chunkPos().getMinBlockX(), startHeight, context.chunkPos().getMinBlockZ());
+        BlockPos pos = new BlockPos(context.chunkPos().getMinBlockX() + offsetX, startHeight,
+                context.chunkPos().getMinBlockZ() + offsetZ);
         return JigsawPlacement.addPieces(context, startPool, Optional.empty(), 7, pos, false, Optional.empty(),
                 new JigsawStructure.MaxDistance(128, 256), PoolAliasLookup.EMPTY,
                 JigsawStructure.DEFAULT_DIMENSION_PADDING, JigsawStructure.DEFAULT_LIQUID_SETTINGS);

@@ -21,6 +21,7 @@
     "EntityFallSpeedMixin",
     "HorseUseHandlerParagliderMixin",
     "In2bubbleParagliderMixin",
+    "InjectorBiomeSourceMixin",
     "IntegratedDynamicsSqueezerMixin",
     "ItemMixin",
     "ItemStackMixin",

@@ -50,6 +50,7 @@ public final class PyramidBiome {
         minY = QuartPos.fromBlock(CompanionConfig.PYRAMID_MIN_Y.get());
         maxY = QuartPos.fromBlock(CompanionConfig.PYRAMID_MAX_Y.get());
         overworldSource = level.getChunkSource().getGenerator().getBiomeSource();
+        if (overworldSource instanceof PyramidBiomeSource marked) marked.ftbevo$setPyramidSource(true);
         LOGGER.info("spawn pyramid biome active over blocks x {}..{} y {}..{} z {}..{}",
                 CompanionConfig.PYRAMID_MIN_X.get(), CompanionConfig.PYRAMID_MAX_X.get(),
                 CompanionConfig.PYRAMID_MIN_Y.get(), CompanionConfig.PYRAMID_MAX_Y.get(),
@@ -58,6 +59,7 @@ public final class PyramidBiome {
 
     public static void onLevelUnload(LevelEvent.Unload event) {
         if (event.getLevel() instanceof ServerLevel level && level.dimension() == Level.OVERWORLD) {
+            if (overworldSource instanceof PyramidBiomeSource marked) marked.ftbevo$setPyramidSource(false);
             overworldSource = null;
             holder = null;
         }
@@ -65,6 +67,11 @@ public final class PyramidBiome {
 
     public static Holder<Biome> override(BiomeSource source, int quartX, int quartY, int quartZ) {
         if (source != overworldSource) return null;
+        return overrideInBox(quartX, quartY, quartZ);
+    }
+
+    public static Holder<Biome> overrideInBox(int quartX, int quartY, int quartZ) {
+        if (overworldSource == null) return null;
         if (quartX < minX || quartX > maxX || quartZ < minZ || quartZ > maxZ || quartY < minY || quartY > maxY) return null;
         return holder;
     }
