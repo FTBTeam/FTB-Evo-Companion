@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "ftbevolutioncompanion:block/evolution_pyramid"
+    },
+    "facing=east": {
+      "model": "ftbevolutioncompanion:block/evolution_pyramid"
+    },
+    "facing=south": {
+      "model": "ftbevolutioncompanion:block/evolution_pyramid"
+    },
+    "facing=west": {
+      "model": "ftbevolutioncompanion:block/evolution_pyramid"
+    }
+  }
+}

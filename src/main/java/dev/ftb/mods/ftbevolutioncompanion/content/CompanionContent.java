@@ -3,6 +3,9 @@ package dev.ftb.mods.ftbevolutioncompanion.content;
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeBoardAuxBlock;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeBoardBlock;
+import dev.ftb.mods.ftbevolutioncompanion.pyramid.EvolutionPyramidBlock;
+import dev.ftb.mods.ftbevolutioncompanion.pyramid.EvolutionPyramidItem;
+import dev.ftb.mods.ftbevolutioncompanion.pyramid.EvolutionPyramidPartBlock;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -104,6 +107,41 @@ public final class CompanionContent {
             properties -> properties.useBlockDescriptionPrefix()
     );
 
+    public static final DeferredBlock<EvolutionPyramidBlock> EVOLUTION_PYRAMID = BLOCKS.registerBlock(
+            "evolution_pyramid",
+            EvolutionPyramidBlock::new,
+            properties -> pyramidProperties(properties)
+    );
+
+    public static final DeferredBlock<EvolutionPyramidPartBlock> EVOLUTION_PYRAMID_PART = BLOCKS.registerBlock(
+            "evolution_pyramid_part",
+            EvolutionPyramidPartBlock::new,
+            properties -> pyramidProperties(properties)
+                    .dynamicShape()
+                    .noLootTable()
+                    .overrideDescription("block.ftbevolutioncompanion.evolution_pyramid")
+    );
+
+    public static final DeferredItem<EvolutionPyramidItem> EVOLUTION_PYRAMID_ITEM = ITEMS.registerItem(
+            "evolution_pyramid",
+            properties -> new EvolutionPyramidItem(EVOLUTION_PYRAMID.get(), properties),
+            properties -> properties.useBlockDescriptionPrefix().stacksTo(1)
+    );
+
+    private static BlockBehaviour.Properties pyramidProperties(BlockBehaviour.Properties properties) {
+        return properties
+                .mapColor(MapColor.QUARTZ)
+                .strength(4.0F, 1200.0F)
+                .sound(SoundType.METAL)
+                .noOcclusion()
+                .forceSolidOn()
+                .pushReaction(PushReaction.BLOCK)
+                .isValidSpawn((state, level, pos, entityType) -> false)
+                .isRedstoneConductor((state, level, pos) -> false)
+                .isSuffocating((state, level, pos) -> false)
+                .isViewBlocking((state, level, pos) -> false);
+    }
+
     public static void onBuildCreativeTabs(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
             event.accept(ODD_BERRY_BUSH_ITEM);
@@ -112,6 +150,7 @@ public final class CompanionContent {
             event.accept(NETHER_BEDROCK_ITEM);
             event.accept(END_BEDROCK_ITEM);
             event.accept(CHALLENGE_BOARD_ITEM);
+            event.accept(EVOLUTION_PYRAMID_ITEM);
         }
     }
 

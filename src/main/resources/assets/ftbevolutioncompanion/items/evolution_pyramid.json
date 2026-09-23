@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "ftbevolutioncompanion:item/evolution_pyramid",
+    "model": {
+      "type": "geckolib:geckolib"
+    }
+  }
+}

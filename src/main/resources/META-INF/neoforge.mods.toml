@@ -50,3 +50,10 @@ type = "required"
 versionRange = "[${ftb_quests_version},)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "geckolib"
+type = "required"
+versionRange = "[${geckolib_version},)"
+ordering = "AFTER"
+side = "BOTH"

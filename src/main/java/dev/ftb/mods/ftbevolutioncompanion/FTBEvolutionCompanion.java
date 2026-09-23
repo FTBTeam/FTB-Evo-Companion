@@ -10,11 +10,15 @@ import dev.ftb.mods.ftbevolutioncompanion.challenge.network.ChallengePayloads;
 import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsClientHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsKeys;
 import dev.ftb.mods.ftbevolutioncompanion.client.ChallengeBoardClient;
+import dev.ftb.mods.ftbevolutioncompanion.client.PyramidClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsClientHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsKeys;
 import dev.ftb.mods.ftbevolutioncompanion.client.WingTooltips;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.content.CompanionContent;
+import dev.ftb.mods.ftbevolutioncompanion.pyramid.LaunchTask;
+import dev.ftb.mods.ftbevolutioncompanion.pyramid.PyramidRegistry;
+import dev.ftb.mods.ftbevolutioncompanion.pyramid.network.PyramidPayloads;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsCommand;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
@@ -63,6 +67,10 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(ChallengeLeaderboard::onPlayerLoggedIn);
         NeoForge.EVENT_BUS.addListener(ChallengeLeaderboard::onServerStopped);
         NeoForge.EVENT_BUS.addListener(ChallengeBoardCommand::onRegisterCommands);
+        PyramidRegistry.BLOCK_ENTITIES.register(eventBus);
+        eventBus.addListener(PyramidRegistry::onRegisterCapabilities);
+        eventBus.addListener(PyramidPayloads::register);
+        LaunchTask.register();
 
         FixedChunkPlacement.PLACEMENT_TYPES.register(eventBus);
         SpawnPyramidStructure.STRUCTURE_TYPES.register(eventBus);
@@ -119,6 +127,7 @@ public class FTBEvolutionCompanion {
             NeoForge.EVENT_BUS.addListener(WingTooltips::onItemTooltip);
             eventBus.addListener(ChallengeBoardClient::onRegisterRenderers);
             NeoForge.EVENT_BUS.addListener(ChallengeBoardClient::onLoggingOut);
+            eventBus.addListener(PyramidClient::onRegisterRenderers);
             eventBus.<FMLClientSetupEvent>addListener(event -> clientSetup(event, eventBus));
         }
     }
