@@ -14,6 +14,8 @@
     "ConduitBundleBlockEntityMixin",
     "ConnectionTimeoutMixin",
     "CraftingStationSideSlotMixin",
+    "DankInventoryAccessMixin",
+    "DankInventoryTransactionMixin",
     "EnderIOXpFluidMixin",
     "EnergizedPowerXpDrainMixin",
     "EnergizedPowerXpFurnaceMixin",
