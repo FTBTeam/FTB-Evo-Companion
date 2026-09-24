@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Logistics Pipes pipes drop again when broken, along with the modules and upgrades installed in them
 - Dank Storage danks no longer lose or duplicate items when pipes and other mods check a transfer before making it
 - Powah's config file is read again; every edit used to be replaced by the mod defaults on boot (Technici4n/Powah#305)
 - Generated crude oil patches settle on their own instead of waiting for a nearby block update (FTBTesting/Testing-Issues#4229)
@@ -23,3 +24,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 ### Changed
+
+- Ice and Fire dragons, cyclopes, trolls and death worms no longer break or burn blocks inside claimed chunks, unless the claim allows mob griefing
+- Frost Bears no longer spawn as igloo guardians

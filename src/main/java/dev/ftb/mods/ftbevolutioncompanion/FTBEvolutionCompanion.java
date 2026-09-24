@@ -5,6 +5,7 @@ import dev.ftb.mods.ftbevolutioncompanion.athletics.AthleticsRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.athletics.network.AthleticsPayloads;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeBoardCommand;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeLeaderboard;
+import dev.ftb.mods.ftbevolutioncompanion.compat.iceandfire.IceAndFireClaimProtection;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.network.ChallengePayloads;
 import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsClientHandler;
@@ -58,6 +59,7 @@ public class FTBEvolutionCompanion {
         FabricatorRegistry.register(eventBus);
 
         NeoForge.EVENT_BUS.addListener(MeteoriteSpacing::onServerAboutToStart);
+        IceAndFireClaimProtection.register();
 
         CompanionContent.BLOCKS.register(eventBus);
         CompanionContent.ITEMS.register(eventBus);
