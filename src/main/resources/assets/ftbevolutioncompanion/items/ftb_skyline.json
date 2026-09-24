@@ -1,7 +1,7 @@
 {
   "model": {
     "type": "minecraft:special",
-    "base": "ftbevolutioncompanion:item/evolution_pyramid",
+    "base": "ftbevolutioncompanion:item/ftb_skyline",
     "model": {
       "type": "geckolib:geckolib"
     }

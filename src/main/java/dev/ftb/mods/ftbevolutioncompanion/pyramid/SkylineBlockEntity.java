@@ -36,12 +36,12 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.UUID;
 
-public class EvolutionPyramidBlockEntity extends BlockEntity implements GeoBlockEntity {
+public class SkylineBlockEntity extends BlockEntity implements GeoBlockEntity {
     public static final String CONTROLLER = "main";
     public static final String LAUNCH_ANIMATION = "objective_complete";
-    private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("animation.evolution_pyramid.idle");
-    private static final RawAnimation TRANSPORTING = RawAnimation.begin().thenLoop("animation.evolution_pyramid.transporting");
-    private static final RawAnimation LAUNCH = RawAnimation.begin().thenPlay("animation.evolution_pyramid.objective_complete");
+    private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("animation.ftb_skyline.idle");
+    private static final RawAnimation TRANSPORTING = RawAnimation.begin().thenLoop("animation.ftb_skyline.transporting");
+    private static final RawAnimation LAUNCH = RawAnimation.begin().thenPlay("animation.ftb_skyline.objective_complete");
     private static final int REMOVE_FLAGS = Block.UPDATE_ALL | Block.UPDATE_SKIP_BLOCK_ENTITY_SIDEEFFECTS;
     private static final int TRANSPORT_LINGER_TICKS = 60;
     private static final int LAUNCH_COMPLETE_TICK = 50;
@@ -70,8 +70,8 @@ public class EvolutionPyramidBlockEntity extends BlockEntity implements GeoBlock
     private Chapter cachedChapter;
     private long cachedDataTick = Long.MIN_VALUE;
 
-    public EvolutionPyramidBlockEntity(BlockPos pos, BlockState state) {
-        super(PyramidRegistry.EVOLUTION_PYRAMID.get(), pos, state);
+    public SkylineBlockEntity(BlockPos pos, BlockState state) {
+        super(PyramidRegistry.SKYLINE.get(), pos, state);
     }
 
     public PyramidHandlers handlers() {
@@ -241,7 +241,7 @@ public class EvolutionPyramidBlockEntity extends BlockEntity implements GeoBlock
         }
     }
 
-    public static void serverTick(Level level, BlockPos pos, BlockState state, EvolutionPyramidBlockEntity machine) {
+    public static void serverTick(Level level, BlockPos pos, BlockState state, SkylineBlockEntity machine) {
         if (!(level instanceof ServerLevel serverLevel)) return;
         long now = level.getGameTime();
 
@@ -288,9 +288,9 @@ public class EvolutionPyramidBlockEntity extends BlockEntity implements GeoBlock
 
     @Override
     public void preRemoveSideEffects(BlockPos pos, BlockState state) {
-        if (!(level instanceof ServerLevel serverLevel) || !state.hasProperty(EvolutionPyramidBlock.FACING)) return;
-        for (BlockPos partPos : PyramidLayout.positions(pos, state.getValue(EvolutionPyramidBlock.FACING))) {
-            if (!partPos.equals(pos) && EvolutionPyramidBlock.isPartOf(serverLevel, partPos, pos)) {
+        if (!(level instanceof ServerLevel serverLevel) || !state.hasProperty(SkylineBlock.FACING)) return;
+        for (BlockPos partPos : PyramidLayout.positions(pos, state.getValue(SkylineBlock.FACING))) {
+            if (!partPos.equals(pos) && SkylineBlock.isPartOf(serverLevel, partPos, pos)) {
                 serverLevel.setBlock(partPos, Blocks.AIR.defaultBlockState(), REMOVE_FLAGS);
             }
         }
@@ -298,7 +298,7 @@ public class EvolutionPyramidBlockEntity extends BlockEntity implements GeoBlock
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<EvolutionPyramidBlockEntity>(CONTROLLER, 5,
+        controllers.add(new AnimationController<SkylineBlockEntity>(CONTROLLER, 5,
                 test -> test.setAndContinue(test.animatable().isTransporting() ? TRANSPORTING : IDLE))
                 .triggerableAnim(LAUNCH_ANIMATION, LAUNCH));
     }

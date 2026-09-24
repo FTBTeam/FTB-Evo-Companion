@@ -20,15 +20,15 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class EvolutionPyramidPartBlock extends BaseEntityBlock {
-    public static final MapCodec<EvolutionPyramidPartBlock> CODEC = simpleCodec(EvolutionPyramidPartBlock::new);
+public class SkylinePartBlock extends BaseEntityBlock {
+    public static final MapCodec<SkylinePartBlock> CODEC = simpleCodec(SkylinePartBlock::new);
 
-    public EvolutionPyramidPartBlock(Properties properties) {
+    public SkylinePartBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    protected MapCodec<? extends EvolutionPyramidPartBlock> codec() {
+    protected MapCodec<? extends SkylinePartBlock> codec() {
         return CODEC;
     }
 
@@ -39,7 +39,7 @@ public class EvolutionPyramidPartBlock extends BaseEntityBlock {
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return level.getBlockEntity(pos) instanceof EvolutionPyramidPartBlockEntity part ? part.shape() : Shapes.block();
+        return level.getBlockEntity(pos) instanceof SkylinePartBlockEntity part ? part.shape() : Shapes.block();
     }
 
     @Override
@@ -49,16 +49,16 @@ public class EvolutionPyramidPartBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return EvolutionPyramidBlock.use(level, pos, player);
+        return SkylineBlock.use(level, pos, player);
     }
 
     @Override
     protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
-        return new ItemStack(CompanionContent.EVOLUTION_PYRAMID_ITEM.get());
+        return new ItemStack(CompanionContent.SKYLINE_ITEM.get());
     }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new EvolutionPyramidPartBlockEntity(pos, state);
+        return new SkylinePartBlockEntity(pos, state);
     }
 }

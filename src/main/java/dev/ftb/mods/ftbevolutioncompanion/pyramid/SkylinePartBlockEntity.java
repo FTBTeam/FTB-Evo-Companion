@@ -22,14 +22,14 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
 
-public class EvolutionPyramidPartBlockEntity extends BlockEntity {
+public class SkylinePartBlockEntity extends BlockEntity {
     @Nullable
     private BlockPos coreOffset;
     @Nullable
     private VoxelShape cachedShape;
 
-    public EvolutionPyramidPartBlockEntity(BlockPos pos, BlockState state) {
-        super(PyramidRegistry.EVOLUTION_PYRAMID_PART.get(), pos, state);
+    public SkylinePartBlockEntity(BlockPos pos, BlockState state) {
+        super(PyramidRegistry.SKYLINE_PART.get(), pos, state);
     }
 
     public void setCore(BlockPos corePos) {
@@ -51,11 +51,11 @@ public class EvolutionPyramidPartBlockEntity extends BlockEntity {
         return coreOffset == null ? Optional.empty() : Optional.of(worldPosition.offset(coreOffset));
     }
 
-    public Optional<EvolutionPyramidBlockEntity> core() {
+    public Optional<SkylineBlockEntity> core() {
         if (level == null || coreOffset == null) return Optional.empty();
         BlockPos corePos = worldPosition.offset(coreOffset);
         if (!level.isLoaded(corePos)) return Optional.empty();
-        return level.getBlockEntity(corePos) instanceof EvolutionPyramidBlockEntity core ? Optional.of(core) : Optional.empty();
+        return level.getBlockEntity(corePos) instanceof SkylineBlockEntity core ? Optional.of(core) : Optional.empty();
     }
 
     public PyramidLayout.Bay bay() {
@@ -76,7 +76,7 @@ public class EvolutionPyramidPartBlockEntity extends BlockEntity {
         BlockPos corePos = worldPosition.offset(coreOffset);
         if (!level.isLoaded(corePos)) return Optional.empty();
         BlockState coreState = level.getBlockState(corePos);
-        return coreState.hasProperty(EvolutionPyramidBlock.FACING) ? Optional.of(coreState.getValue(EvolutionPyramidBlock.FACING)) : Optional.empty();
+        return coreState.hasProperty(SkylineBlock.FACING) ? Optional.of(coreState.getValue(SkylineBlock.FACING)) : Optional.empty();
     }
 
     private Optional<Vec3i> modelOffset() {
@@ -90,7 +90,7 @@ public class EvolutionPyramidPartBlockEntity extends BlockEntity {
         if (!(level instanceof ServerLevel serverLevel) || coreOffset == null) return;
         BlockPos corePos = pos.offset(coreOffset);
         detach();
-        if (serverLevel.getBlockState(corePos).is(CompanionContent.EVOLUTION_PYRAMID.get())) {
+        if (serverLevel.getBlockState(corePos).is(CompanionContent.SKYLINE.get())) {
             serverLevel.destroyBlock(corePos, true);
         }
     }

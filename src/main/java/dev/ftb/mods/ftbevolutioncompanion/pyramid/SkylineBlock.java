@@ -43,18 +43,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class EvolutionPyramidBlock extends BaseEntityBlock {
-    public static final MapCodec<EvolutionPyramidBlock> CODEC = simpleCodec(EvolutionPyramidBlock::new);
+public class SkylineBlock extends BaseEntityBlock {
+    public static final MapCodec<SkylineBlock> CODEC = simpleCodec(SkylineBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
-    private static final String LANG = "ftbevolutioncompanion.evolution_pyramid.";
+    private static final String LANG = "ftbevolutioncompanion.ftb_skyline.";
 
-    public EvolutionPyramidBlock(Properties properties) {
+    public SkylineBlock(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
     @Override
-    protected MapCodec<? extends EvolutionPyramidBlock> codec() {
+    protected MapCodec<? extends SkylineBlock> codec() {
         return CODEC;
     }
 
@@ -118,18 +118,18 @@ public class EvolutionPyramidBlock extends BaseEntityBlock {
         if (level.isClientSide()) return;
 
         Direction facing = state.getValue(FACING);
-        BlockState partState = CompanionContent.EVOLUTION_PYRAMID_PART.get().defaultBlockState();
+        BlockState partState = CompanionContent.SKYLINE_PART.get().defaultBlockState();
         List<BlockPos> placed = new ArrayList<>();
         for (BlockPos partPos : PyramidLayout.positions(pos, facing)) {
             if (partPos.equals(pos)) continue;
             level.setBlock(partPos, partState, Block.UPDATE_CLIENTS);
-            if (level.getBlockEntity(partPos) instanceof EvolutionPyramidPartBlockEntity part) {
+            if (level.getBlockEntity(partPos) instanceof SkylinePartBlockEntity part) {
                 part.setCore(pos);
                 placed.add(partPos);
             }
         }
 
-        if (level.getBlockEntity(pos) instanceof EvolutionPyramidBlockEntity machine && by != null) {
+        if (level.getBlockEntity(pos) instanceof SkylineBlockEntity machine && by != null) {
             machine.setOwner(by.getUUID());
         }
 
@@ -146,12 +146,12 @@ public class EvolutionPyramidBlock extends BaseEntityBlock {
     }
 
     static InteractionResult use(Level level, BlockPos pos, Player player) {
-        Optional<EvolutionPyramidBlockEntity> found = coreAt(level, pos);
+        Optional<SkylineBlockEntity> found = coreAt(level, pos);
         if (found.isEmpty()) return InteractionResult.PASS;
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         if (!(player instanceof ServerPlayer serverPlayer)) return InteractionResult.SUCCESS_SERVER;
 
-        EvolutionPyramidBlockEntity machine = found.get();
+        SkylineBlockEntity machine = found.get();
         if (!PyramidQuests.isMember(serverPlayer, machine.getOwner())) {
             Component owner = PyramidQuests.ownerTeam(machine.getOwner()).map(Team::getColoredName)
                     .orElse(Component.translatable(LANG + "unknown_owner"));
@@ -169,24 +169,24 @@ public class EvolutionPyramidBlock extends BaseEntityBlock {
         return InteractionResult.SUCCESS_SERVER;
     }
 
-    public static Optional<EvolutionPyramidBlockEntity> coreAt(Level level, BlockPos pos) {
+    public static Optional<SkylineBlockEntity> coreAt(Level level, BlockPos pos) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof EvolutionPyramidBlockEntity core) return Optional.of(core);
-        if (blockEntity instanceof EvolutionPyramidPartBlockEntity part) return part.core();
+        if (blockEntity instanceof SkylineBlockEntity core) return Optional.of(core);
+        if (blockEntity instanceof SkylinePartBlockEntity part) return part.core();
         return Optional.empty();
     }
 
     public static boolean isPartOf(Level level, BlockPos pos, BlockPos corePos) {
-        return level.getBlockEntity(pos) instanceof EvolutionPyramidPartBlockEntity part && part.belongsTo(corePos);
+        return level.getBlockEntity(pos) instanceof SkylinePartBlockEntity part && part.belongsTo(corePos);
     }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new EvolutionPyramidBlockEntity(pos, state);
+        return new SkylineBlockEntity(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide() ? null : createTickerHelper(type, PyramidRegistry.EVOLUTION_PYRAMID.get(), EvolutionPyramidBlockEntity::serverTick);
+        return level.isClientSide() ? null : createTickerHelper(type, PyramidRegistry.SKYLINE.get(), SkylineBlockEntity::serverTick);
     }
 }

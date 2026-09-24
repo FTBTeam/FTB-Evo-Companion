@@ -23,7 +23,7 @@ public class LaunchTask extends Task {
 
     public static void register() {
         TYPE = TaskTypes.register(FTBEvolutionCompanion.id("launch"), LaunchTask::new,
-                () -> ItemIcon.ofItem(CompanionContent.EVOLUTION_PYRAMID_ITEM.get()));
+                () -> ItemIcon.ofItem(CompanionContent.SKYLINE_ITEM.get()));
     }
 
     @Override
@@ -43,6 +43,6 @@ public class LaunchTask extends Task {
 
     @Override
     public void addMouseOverText(TooltipList list, TeamData teamData) {
-        list.add(Component.translatable("ftbevolutioncompanion.evolution_pyramid.launch_task.tooltip").withStyle(ChatFormatting.GRAY));
+        list.add(Component.translatable("ftbevolutioncompanion.ftb_skyline.launch_task.tooltip").withStyle(ChatFormatting.GRAY));
     }
 }

@@ -7,17 +7,17 @@ import com.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
 import com.geckolib.animatable.manager.AnimatableManager;
 import com.geckolib.renderer.GeoItemRenderer;
 
-import dev.ftb.mods.ftbevolutioncompanion.client.EvolutionPyramidItemRenderer;
+import dev.ftb.mods.ftbevolutioncompanion.client.SkylineItemRenderer;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 
 import java.util.function.Consumer;
 
-public class EvolutionPyramidItem extends BlockItem implements GeoItem {
+public class SkylineItem extends BlockItem implements GeoItem {
     private final AnimatableInstanceCache geoCache = new SingletonAnimatableInstanceCache(this);
 
-    public EvolutionPyramidItem(Block block, Properties properties) {
+    public SkylineItem(Block block, Properties properties) {
         super(block, properties);
     }
 
@@ -33,12 +33,12 @@ public class EvolutionPyramidItem extends BlockItem implements GeoItem {
     @Override
     public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
         consumer.accept(new GeoRenderProvider() {
-            private EvolutionPyramidItemRenderer renderer;
+            private SkylineItemRenderer renderer;
 
             @Override
             public GeoItemRenderer<?> getGeoItemRenderer() {
                 if (renderer == null) {
-                    renderer = new EvolutionPyramidItemRenderer();
+                    renderer = new SkylineItemRenderer();
                 }
                 return renderer;
             }

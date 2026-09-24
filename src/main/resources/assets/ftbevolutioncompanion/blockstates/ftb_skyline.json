@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "ftbevolutioncompanion:block/ftb_skyline"
+    },
+    "facing=east": {
+      "model": "ftbevolutioncompanion:block/ftb_skyline"
+    },
+    "facing=south": {
+      "model": "ftbevolutioncompanion:block/ftb_skyline"
+    },
+    "facing=west": {
+      "model": "ftbevolutioncompanion:block/ftb_skyline"
+    }
+  }
+}

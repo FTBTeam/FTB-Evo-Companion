@@ -9,7 +9,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
-import dev.ftb.mods.ftbevolutioncompanion.pyramid.EvolutionPyramidBlockEntity;
+import dev.ftb.mods.ftbevolutioncompanion.pyramid.SkylineBlockEntity;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.LaunchTask;
 import dev.ftb.mods.ftbquests.client.ClientQuestFile;
 import dev.ftb.mods.ftbquests.client.FTBQuestsClientEventHandler;
@@ -45,8 +45,8 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
-public class EvolutionPyramidRenderer extends GeoBlockRenderer<EvolutionPyramidBlockEntity, EvolutionPyramidRenderer.State> {
-    private static final String LANG = "ftbevolutioncompanion.evolution_pyramid.";
+public class SkylineRenderer extends GeoBlockRenderer<SkylineBlockEntity, SkylineRenderer.State> {
+    private static final String LANG = "ftbevolutioncompanion.ftb_skyline.";
     private static final double HOLOGRAM_Y = 7.25D;
     private static final int TEXT_BACKGROUND = 0x40000000;
     private static final float TEXT_SCALE = 0.025F;
@@ -54,8 +54,8 @@ public class EvolutionPyramidRenderer extends GeoBlockRenderer<EvolutionPyramidB
     private final ItemModelResolver itemModelResolver;
     private final Font font;
 
-    public EvolutionPyramidRenderer(BlockEntityRendererProvider.Context context) {
-        super(context, new DefaultedBlockGeoModel<>(FTBEvolutionCompanion.id("evolution_pyramid")));
+    public SkylineRenderer(BlockEntityRendererProvider.Context context) {
+        super(context, new DefaultedBlockGeoModel<>(FTBEvolutionCompanion.id("ftb_skyline")));
         this.itemModelResolver = context.itemModelResolver();
         this.font = context.font();
         withRenderLayer(AutoGlowingGeoLayer::new);
@@ -83,7 +83,7 @@ public class EvolutionPyramidRenderer extends GeoBlockRenderer<EvolutionPyramidB
     }
 
     @Override
-    public void extractRenderState(EvolutionPyramidBlockEntity machine, State state, float partialTick, Vec3 cameraPos, ModelFeatureRenderer.@Nullable CrumblingOverlay crumbling) {
+    public void extractRenderState(SkylineBlockEntity machine, State state, float partialTick, Vec3 cameraPos, ModelFeatureRenderer.@Nullable CrumblingOverlay crumbling) {
         super.extractRenderState(machine, state, partialTick, cameraPos, crumbling);
 
         state.hologram = false;
@@ -220,7 +220,7 @@ public class EvolutionPyramidRenderer extends GeoBlockRenderer<EvolutionPyramidB
     }
 
     @Override
-    public AABB getRenderBoundingBox(EvolutionPyramidBlockEntity machine) {
+    public AABB getRenderBoundingBox(SkylineBlockEntity machine) {
         return new AABB(machine.getBlockPos()).inflate(3D, 0D, 3D).expandTowards(0D, 14D, 0D);
     }
 

@@ -5,7 +5,9 @@ import dev.ftb.mods.ftbevolutioncompanion.athletics.AthleticsRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.athletics.network.AthleticsPayloads;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeBoardCommand;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeLeaderboard;
+import dev.ftb.mods.ftbevolutioncompanion.compat.hats.GiveHatCommand;
 import dev.ftb.mods.ftbevolutioncompanion.compat.iceandfire.IceAndFireClaimProtection;
+import dev.ftb.mods.ftbevolutioncompanion.compat.iris.IrisGeckoGlow;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.network.ChallengePayloads;
 import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsClientHandler;
@@ -40,6 +42,7 @@ import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -72,6 +75,7 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(ChallengeLeaderboard::onPlayerLoggedIn);
         NeoForge.EVENT_BUS.addListener(ChallengeLeaderboard::onServerStopped);
         NeoForge.EVENT_BUS.addListener(ChallengeBoardCommand::onRegisterCommands);
+        NeoForge.EVENT_BUS.addListener(GiveHatCommand::onRegisterCommands);
         PyramidRegistry.BLOCK_ENTITIES.register(eventBus);
         eventBus.addListener(PyramidRegistry::onRegisterCapabilities);
         eventBus.addListener(PyramidPayloads::register);
@@ -140,6 +144,9 @@ public class FTBEvolutionCompanion {
 
     private void clientSetup(FMLClientSetupEvent event, IEventBus eventBus) {
         // Client init
+        if (ModList.get().isLoaded("iris")) {
+            event.enqueueWork(IrisGeckoGlow::register);
+        }
     }
 
     public static Identifier id(String path) {

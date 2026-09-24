@@ -2,7 +2,7 @@ package dev.ftb.mods.ftbevolutioncompanion.pyramid.network;
 
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
 import dev.ftb.mods.ftbevolutioncompanion.client.PyramidClient;
-import dev.ftb.mods.ftbevolutioncompanion.pyramid.EvolutionPyramidBlockEntity;
+import dev.ftb.mods.ftbevolutioncompanion.pyramid.SkylineBlockEntity;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.PyramidQuests;
 
 import net.minecraft.core.BlockPos;
@@ -75,10 +75,10 @@ public final class PyramidPayloads {
                         machine.launch((ServerPlayer) context.player(), payload.questId())));
     }
 
-    private static Optional<EvolutionPyramidBlockEntity> machine(IPayloadContext context, BlockPos pos) {
+    private static Optional<SkylineBlockEntity> machine(IPayloadContext context, BlockPos pos) {
         if (!(context.player() instanceof ServerPlayer player)) return Optional.empty();
         if (!player.level().isLoaded(pos) || player.position().distanceToSqr(pos.getCenter()) > REACH * REACH) return Optional.empty();
-        if (!(player.level().getBlockEntity(pos) instanceof EvolutionPyramidBlockEntity machine)) return Optional.empty();
+        if (!(player.level().getBlockEntity(pos) instanceof SkylineBlockEntity machine)) return Optional.empty();
         return PyramidQuests.isMember(player, machine.getOwner()) ? Optional.of(machine) : Optional.empty();
     }
 }

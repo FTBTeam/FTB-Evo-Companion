@@ -3,9 +3,9 @@ package dev.ftb.mods.ftbevolutioncompanion.content;
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeBoardAuxBlock;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeBoardBlock;
-import dev.ftb.mods.ftbevolutioncompanion.pyramid.EvolutionPyramidBlock;
-import dev.ftb.mods.ftbevolutioncompanion.pyramid.EvolutionPyramidItem;
-import dev.ftb.mods.ftbevolutioncompanion.pyramid.EvolutionPyramidPartBlock;
+import dev.ftb.mods.ftbevolutioncompanion.pyramid.SkylineBlock;
+import dev.ftb.mods.ftbevolutioncompanion.pyramid.SkylineItem;
+import dev.ftb.mods.ftbevolutioncompanion.pyramid.SkylinePartBlock;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -107,28 +107,34 @@ public final class CompanionContent {
             properties -> properties.useBlockDescriptionPrefix()
     );
 
-    public static final DeferredBlock<EvolutionPyramidBlock> EVOLUTION_PYRAMID = BLOCKS.registerBlock(
-            "evolution_pyramid",
-            EvolutionPyramidBlock::new,
-            properties -> pyramidProperties(properties)
+    public static final DeferredBlock<SkylineBlock> SKYLINE = BLOCKS.registerBlock(
+            "ftb_skyline",
+            SkylineBlock::new,
+            properties -> skylineProperties(properties)
     );
 
-    public static final DeferredBlock<EvolutionPyramidPartBlock> EVOLUTION_PYRAMID_PART = BLOCKS.registerBlock(
-            "evolution_pyramid_part",
-            EvolutionPyramidPartBlock::new,
-            properties -> pyramidProperties(properties)
+    public static final DeferredBlock<SkylinePartBlock> SKYLINE_PART = BLOCKS.registerBlock(
+            "ftb_skyline_part",
+            SkylinePartBlock::new,
+            properties -> skylineProperties(properties)
                     .dynamicShape()
                     .noLootTable()
-                    .overrideDescription("block.ftbevolutioncompanion.evolution_pyramid")
+                    .overrideDescription("block.ftbevolutioncompanion.ftb_skyline")
     );
 
-    public static final DeferredItem<EvolutionPyramidItem> EVOLUTION_PYRAMID_ITEM = ITEMS.registerItem(
-            "evolution_pyramid",
-            properties -> new EvolutionPyramidItem(EVOLUTION_PYRAMID.get(), properties),
+    public static final DeferredItem<SkylineItem> SKYLINE_ITEM = ITEMS.registerItem(
+            "ftb_skyline",
+            properties -> new SkylineItem(SKYLINE.get(), properties),
             properties -> properties.useBlockDescriptionPrefix().stacksTo(1)
     );
 
-    private static BlockBehaviour.Properties pyramidProperties(BlockBehaviour.Properties properties) {
+    static {
+        BLOCKS.addAlias(FTBEvolutionCompanion.id("evolution_pyramid"), SKYLINE.getId());
+        BLOCKS.addAlias(FTBEvolutionCompanion.id("evolution_pyramid_part"), SKYLINE_PART.getId());
+        ITEMS.addAlias(FTBEvolutionCompanion.id("evolution_pyramid"), SKYLINE_ITEM.getId());
+    }
+
+    private static BlockBehaviour.Properties skylineProperties(BlockBehaviour.Properties properties) {
         return properties
                 .mapColor(MapColor.QUARTZ)
                 .strength(4.0F, 1200.0F)
@@ -150,7 +156,7 @@ public final class CompanionContent {
             event.accept(NETHER_BEDROCK_ITEM);
             event.accept(END_BEDROCK_ITEM);
             event.accept(CHALLENGE_BOARD_ITEM);
-            event.accept(EVOLUTION_PYRAMID_ITEM);
+            event.accept(SKYLINE_ITEM);
         }
     }
 

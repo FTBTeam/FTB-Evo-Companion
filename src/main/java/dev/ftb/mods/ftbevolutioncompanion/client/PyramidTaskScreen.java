@@ -1,6 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion.client;
 
-import dev.ftb.mods.ftbevolutioncompanion.pyramid.EvolutionPyramidBlockEntity;
+import dev.ftb.mods.ftbevolutioncompanion.pyramid.SkylineBlockEntity;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.LaunchTask;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.PyramidQuests;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.network.PyramidPayloads;
@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class PyramidTaskScreen extends AbstractGroupedButtonListScreen<Quest, Task> {
-    private static final String LANG = "ftbevolutioncompanion.evolution_pyramid.";
+    private static final String LANG = "ftbevolutioncompanion.ftb_skyline.";
     private static final double MAX_DISTANCE = 16.0D;
     private static final Color4I ACTIVE = Color4I.rgb(0x55FF55).withAlpha(40);
     private static final Color4I BAR_BACKGROUND = Color4I.rgb(0x1A1A1A);
@@ -66,12 +66,12 @@ public class PyramidTaskScreen extends AbstractGroupedButtonListScreen<Quest, Ta
 
     private long activeTaskId() {
         var level = Minecraft.getInstance().level;
-        return level != null && level.getBlockEntity(pos) instanceof EvolutionPyramidBlockEntity machine ? machine.getActiveTaskId() : 0L;
+        return level != null && level.getBlockEntity(pos) instanceof SkylineBlockEntity machine ? machine.getActiveTaskId() : 0L;
     }
 
     private boolean machineLaunching() {
         var level = Minecraft.getInstance().level;
-        return level != null && level.getBlockEntity(pos) instanceof EvolutionPyramidBlockEntity machine && machine.isLaunching();
+        return level != null && level.getBlockEntity(pos) instanceof SkylineBlockEntity machine && machine.isLaunching();
     }
 
     private List<Quest> availableQuests() {
@@ -149,7 +149,7 @@ public class PyramidTaskScreen extends AbstractGroupedButtonListScreen<Quest, Ta
         super.tick();
         var player = Minecraft.getInstance().player;
         var level = Minecraft.getInstance().level;
-        if (player == null || level == null || !(level.getBlockEntity(pos) instanceof EvolutionPyramidBlockEntity)
+        if (player == null || level == null || !(level.getBlockEntity(pos) instanceof SkylineBlockEntity)
                 || player.position().distanceToSqr(pos.getCenter()) > MAX_DISTANCE * MAX_DISTANCE) {
             closeGui(false);
             return;

@@ -9,15 +9,15 @@ import com.geckolib.renderer.layer.builtin.AutoGlowingGeoLayer;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
-import dev.ftb.mods.ftbevolutioncompanion.pyramid.EvolutionPyramidItem;
+import dev.ftb.mods.ftbevolutioncompanion.pyramid.SkylineItem;
 
 import net.minecraft.world.item.ItemDisplayContext;
 
-public class EvolutionPyramidItemRenderer extends GeoItemRenderer<EvolutionPyramidItem> {
+public class SkylineItemRenderer extends GeoItemRenderer<SkylineItem> {
     private static final float HALF_HEIGHT = 3F;
 
-    public EvolutionPyramidItemRenderer() {
-        super(new DefaultedBlockGeoModel<>(FTBEvolutionCompanion.id("evolution_pyramid")));
+    public SkylineItemRenderer() {
+        super(new DefaultedBlockGeoModel<>(FTBEvolutionCompanion.id("ftb_skyline")));
         withRenderLayer(new AutoGlowingGeoLayer<>(this));
     }
 

@@ -11,7 +11,7 @@ public final class PyramidClient {
     }
 
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(PyramidRegistry.EVOLUTION_PYRAMID.get(), EvolutionPyramidRenderer::new);
+        event.registerBlockEntityRenderer(PyramidRegistry.SKYLINE.get(), SkylineRenderer::new);
     }
 
     public static void openScreen(BlockPos pos, long chapterId) {

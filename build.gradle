@@ -121,6 +121,13 @@ repositories {
 			includeGroup("maven.modrinth")
 		}
 	}
+
+	maven {
+		url = "https://cursemaven.com"
+		content {
+			includeGroup("curse.maven")
+		}
+	}
 }
 
 dependencies {
@@ -134,6 +141,8 @@ dependencies {
 	compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
 	compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
 	compileOnly "maven.modrinth:jade:5jKeKXwB"
+	compileOnly "maven.modrinth:iris:${iris_modrinth_id}"
+	compileOnly "curse.maven:hats-classic-1418069:${hats_curse_file_id}"
 	compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
 }
 

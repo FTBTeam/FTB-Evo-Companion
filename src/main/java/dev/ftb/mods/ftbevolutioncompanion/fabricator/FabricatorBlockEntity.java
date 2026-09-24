@@ -60,7 +60,7 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
     public static final int INPUTS = 9;
     public static final int OUTPUTS = 3;
     public static final int TANK_CAPACITY = 16000;
-    public static final int ENERGY_CAPACITY = 1000000;
+    public static final int ENERGY_CAPACITY = 100000000;
     public enum Status { IDLE, WORKING, STAGE_REQUIRED, NO_POWER, OUTPUT_FULL, NO_OWNER }
 
     private final ItemStacksResourceHandler items = new ItemStacksResourceHandler(INPUTS + OUTPUTS) {

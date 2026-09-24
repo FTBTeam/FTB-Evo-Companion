@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.evolution_pyramid.idle": {
+		"animation.ftb_skyline.idle": {
 			"loop": true,
 			"animation_length": 3,
 			"bones": {
@@ -168,7 +168,7 @@
 				}
 			}
 		},
-		"animation.evolution_pyramid.transporting": {
+		"animation.ftb_skyline.transporting": {
 			"loop": true,
 			"animation_length": 3,
 			"bones": {
@@ -542,7 +542,7 @@
 				}
 			}
 		},
-		"animation.evolution_pyramid.objective_complete": {
+		"animation.ftb_skyline.objective_complete": {
 			"animation_length": 8,
 			"bones": {
 				"core": {

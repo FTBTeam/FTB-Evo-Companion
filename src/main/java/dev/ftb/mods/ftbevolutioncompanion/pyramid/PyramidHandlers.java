@@ -16,12 +16,12 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import org.jspecify.annotations.Nullable;
 
 public final class PyramidHandlers {
-    private final EvolutionPyramidBlockEntity machine;
+    private final SkylineBlockEntity machine;
     private final Items items = new Items();
     private final Fluids fluids = new Fluids();
     private final Energy energy = new Energy();
 
-    PyramidHandlers(EvolutionPyramidBlockEntity machine) {
+    PyramidHandlers(SkylineBlockEntity machine) {
         this.machine = machine;
     }
 

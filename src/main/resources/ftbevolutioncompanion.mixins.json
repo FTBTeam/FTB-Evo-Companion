@@ -6,6 +6,7 @@
   "refmap": "ftbevolutioncompanion.refmap.json",
   "mixins": [
     "AbstractArrowInvoker",
+    "ApothicSpawnersEggTooltipMixin",
     "ArmorSlotParagliderMixin",
     "ArsMagicaPiercingStatMixin",
     "BeardifierMixin",
@@ -54,6 +55,7 @@
     "StellarisPumpjackOilMixin"
   ],
   "client": [
+    "AutoGlowingGeoLayerAccessor",
     "FakeRenderEnvironmentMixin",
     "PowerArmorKeybindMixin",
     "IndepentScaleScreenMixin"
