@@ -7,6 +7,7 @@ import com.astryxion.hats.common.registry.HatItemRegistry;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -29,6 +30,7 @@ import java.util.List;
 public final class GiveHatCommand {
     private static final String LANG = "ftbevolutioncompanion.givehat.";
     private static final String HATS = "hats";
+    private static final int[] MILESTONES = {1, 10, 100, 200, 300, 332};
 
     private GiveHatCommand() {
     }
@@ -89,10 +91,22 @@ public final class GiveHatCommand {
         PlayerHatData data = HatDataCapability.get(player).orElse(null);
         if (data == null || data.hasHat(id)) return false;
         data.unlockHat(id);
+        awardMilestones(player, data.getUnlockedHats().size());
         HatPacketHandler.sendHatUnlockedToPlayer(player, new ItemStack(hat));
         HatPacketHandler.sendSyncHatToPlayer(player, data.serializeNBT());
         HatDataCapability.markDirty(player);
         return true;
+    }
+
+    private static void awardMilestones(ServerPlayer player, int unlocked) {
+        for (int milestone : MILESTONES) {
+            if (unlocked < milestone) return;
+            AdvancementHolder holder = player.level().getServer().getAdvancements()
+                    .get(Identifier.fromNamespaceAndPath(HATS, "hats/collect_" + milestone));
+            if (holder != null) {
+                player.getAdvancements().award(holder, "unlock_via_code");
+            }
+        }
     }
 
     @Nullable
