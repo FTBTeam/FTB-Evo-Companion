@@ -1,6 +1,9 @@
 package dev.ftb.mods.ftbevolutioncompanion.compat.jei;
 
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
+import dev.ftb.mods.ftbevolutioncompanion.client.FabricatorClient;
+import dev.ftb.mods.ftbevolutioncompanion.client.FabricatorScreen;
+import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.simplywinged.ParagliderWings;
 
 import mezz.jei.api.IModPlugin;
@@ -9,6 +12,10 @@ import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.recipe.vanilla.IJeiAnvilRecipe;
 import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
@@ -47,6 +54,7 @@ public class FTBEvoJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
+        registration.addRecipes(FabricatorCategory.TYPE, FabricatorClient.recipes());
         if (!ModList.get().isLoaded(SIMPLY_WINGED)) {
             return;
         }
@@ -78,6 +86,22 @@ public class FTBEvoJeiPlugin implements IModPlugin {
         }
 
         registration.addRecipes(RecipeTypes.ANVIL, anvilRecipes);
+    }
+
+    @Override public void registerCategories(IRecipeCategoryRegistration registration) {
+        registration.addRecipeCategories(new FabricatorCategory(registration.getJeiHelpers().getGuiHelper()));
+    }
+
+    @Override public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        registration.addCraftingStation(FabricatorCategory.TYPE, FabricatorRegistry.ITEM.get());
+    }
+
+    @Override public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+        registration.addRecipeTransferHandler(new FabricatorTransferHandler(registration.getTransferHelper()), FabricatorCategory.TYPE);
+    }
+
+    @Override public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+        registration.addRecipeClickArea(FabricatorScreen.class, 89, 53, 42, 12, FabricatorCategory.TYPE);
     }
 
     private static ItemStack wingedArmorStack(WingedArmor armor, ItemStack wing) {

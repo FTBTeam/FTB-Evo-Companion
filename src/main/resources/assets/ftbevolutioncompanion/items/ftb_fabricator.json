@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "ftbevolutioncompanion:item/ftb_fabricator",
+    "model": {
+      "type": "geckolib:geckolib"
+    }
+  }
+}

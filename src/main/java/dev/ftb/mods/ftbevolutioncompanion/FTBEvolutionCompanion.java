@@ -10,12 +10,14 @@ import dev.ftb.mods.ftbevolutioncompanion.challenge.network.ChallengePayloads;
 import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsClientHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsKeys;
 import dev.ftb.mods.ftbevolutioncompanion.client.ChallengeBoardClient;
+import dev.ftb.mods.ftbevolutioncompanion.client.FabricatorClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.PyramidClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsClientHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsKeys;
 import dev.ftb.mods.ftbevolutioncompanion.client.WingTooltips;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.content.CompanionContent;
+import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.LaunchTask;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.PyramidRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.network.PyramidPayloads;
@@ -53,6 +55,7 @@ public class FTBEvolutionCompanion {
 
     public FTBEvolutionCompanion(IEventBus eventBus, ModContainer container, Dist dist) {
         container.registerConfig(ModConfig.Type.COMMON, CompanionConfig.SPEC);
+        FabricatorRegistry.register(eventBus);
 
         NeoForge.EVENT_BUS.addListener(MeteoriteSpacing::onServerAboutToStart);
 
@@ -118,6 +121,7 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(AthleticsAbilities::onPlayerTick);
 
         if (dist == Dist.CLIENT) {
+            FabricatorClient.register(eventBus);
             eventBus.addListener(AthleticsKeys::onRegisterKeyMappings);
             NeoForge.EVENT_BUS.addListener(AthleticsClientHandler::onClientTick);
             eventBus.addListener(SkillsKeys::onRegisterKeyMappings);

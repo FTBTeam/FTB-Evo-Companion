@@ -24,6 +24,7 @@ build
 logs
 
 # other
+/tools/
 eclipse
 run
 .vscode

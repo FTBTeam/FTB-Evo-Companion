@@ -10,6 +10,74 @@ Please feel free to contribute to this project but **always** open an issue firs
 
 Companion mods are provided `as is`. If you opt to use this mod inside another modpack we **will not** provide support, and any issues opened regarding problems due to use in another modpack will be closed!
 
+## FTB Fabricator
+
+`ftbevolutioncompanion:ftb_fabricator` is a powered bulk assembler. Its nine input
+slots form a buffer: ingredient positions do not matter, and counts can span
+stacks. It has three item output slots, two 16,000 mB input tanks, one 16,000 mB
+output tank, and a 1,000,000 FE buffer. Automation and bucket interaction work on
+every face except the front. Automation inserts into inputs and extracts from
+outputs. Players can remove input items through the GUI.
+
+Recipes use `ftbevolutioncompanion:fabricating`. Supply them through a datapack
+under `data/<namespace>/recipe/` or `ServerEvents.recipes` with `event.custom(...)`.
+No production recipes or machine crafting cost are bundled; the pack defines its
+own progression and balance.
+
+```json
+{
+  "type": "ftbevolutioncompanion:fabricating",
+  "ingredients": [
+    { "ingredient": "#c:ingots/iron", "count": 64 },
+    { "ingredient": "minecraft:emerald", "count": 13 }
+  ],
+  "fluids": [{ "id": "minecraft:lava", "amount": 4000 }],
+  "results": [{ "id": "minecraft:diamond", "count": 2 }],
+  "fluid_results": [{ "id": "minecraft:water", "amount": 1000 }],
+  "ticks": 200,
+  "energy_per_tick": 400,
+  "stage": "fabrication_tier_2"
+}
+```
+
+This example demonstrates the format; it is not a balanced production recipe.
+Omit `stage` for an ungated recipe. The stage is a literal player scoreboard tag
+(for example, assigned with `/tag <player> add fabrication_tier_2`), checked against
+the placing player's tags. The machine refreshes that snapshot while its owner is
+online and the machine is loaded, and saves it for offline operation. Other GUI
+users cannot change its owner. Breaking and replacing it assigns a new owner;
+stored energy and fluids are lost, and inventory contents drop normally.
+
+`ingredients` accepts up to nine ingredient/count entries, `fluids` up to two,
+`results` up to three valid item stacks, and `fluid_results` up to one fluid stack.
+Both item-only and fluid-only recipes are supported. Counts are positive; each
+fluid entry is at most 16,000 mB. `ticks` is 1–72,000 and `energy_per_tick` is
+0–1,000,000. Inputs are consumed together on completion. Missing power or blocked
+outputs pause processing without consuming ingredients. Removing ingredients or
+losing the required stage resets progress. Recipe changes on reload also reset
+progress; an unchanged recipe resumes saved progress after a restart.
+
+JEI shows ingredient totals, fluids, outputs, processing time, total energy, and
+the required stage. Its transfer button moves the full item quantities, including
+splitting them across slots; fluids must be supplied separately. Jade shows the
+owner, stage, status, progress, stored power, and inventory/tank contents. The
+animated chamber projects the first item output while working; fluid-only recipes
+use the projector and scan effect. Sounds currently use vanilla placeholders.
+
+For KubeJS, pass the same object to `event.custom`:
+
+```js
+ServerEvents.recipes(event => {
+  event.custom({
+    type: 'ftbevolutioncompanion:fabricating',
+    ingredients: [{ ingredient: '#c:ingots/iron', count: 64 }],
+    results: [{ id: 'minecraft:iron_block', count: 7 }],
+    ticks: 200,
+    energy_per_tick: 100
+  }).id('ftb:fabricator/example');
+});
+```
+
 ## Custom Attributes
 
 All companion attributes are registered under the `ftb:` namespace, attach to players only, default to `0`, and are granted in-game by Puffish Skills tree nodes (`puffish_skills:attribute` rewards with `add_value`). Every mechanic can be tested without a skill tree via `/attribute @s ftb:<name> base set <value>`.
