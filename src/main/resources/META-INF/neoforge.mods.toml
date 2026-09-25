@@ -57,3 +57,17 @@ type = "required"
 versionRange = "[${geckolib_version},)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "curios"
+type = "required"
+versionRange = "[15.0.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "iceandfire"
+type = "required"
+versionRange = "[2.2-beta.3,)"
+ordering = "AFTER"
+side = "BOTH"
