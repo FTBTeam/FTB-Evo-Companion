@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#c:chunks/adamantite",
+    "#c:chunks/aeternium",
+    "#c:chunks/aurichalcum"
+  ]
+}

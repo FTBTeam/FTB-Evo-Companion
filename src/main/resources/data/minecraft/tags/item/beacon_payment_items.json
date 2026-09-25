@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "ftbmaterials:adamantite_ingot",
+    "ftbmaterials:aeternium_ingot",
+    "ftbmaterials:aurichalcum_ingot"
+  ]
+}

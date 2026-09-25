@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": "ftbmaterials:aurichalcum_raw_ore"
+  },
+  "pattern": [
+    "RRR",
+    "RRR",
+    "RRR"
+  ],
+  "result": {
+    "id": "ftbmaterials:aurichalcum_raw_block"
+  }
+}

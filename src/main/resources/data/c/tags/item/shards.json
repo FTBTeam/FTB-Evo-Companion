@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#c:shards/adamantite",
+    "#c:shards/aeternium",
+    "#c:shards/aurichalcum"
+  ]
+}

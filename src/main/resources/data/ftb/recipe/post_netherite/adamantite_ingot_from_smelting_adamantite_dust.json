@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.5,
+  "ingredient": "ftbmaterials:adamantite_dust",
+  "result": {
+    "id": "ftbmaterials:adamantite_ingot"
+  }
+}

@@ -23,6 +23,7 @@ import dev.ftb.mods.ftbevolutioncompanion.client.WingTooltips;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.content.CompanionContent;
 import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorRegistry;
+import dev.ftb.mods.ftbevolutioncompanion.metals.PostNetheriteMetals;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.LaunchTask;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.PyramidRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.network.PyramidPayloads;
@@ -64,6 +65,7 @@ public class FTBEvolutionCompanion {
         container.registerConfig(ModConfig.Type.COMMON, CompanionConfig.SPEC);
         FabricatorRegistry.register(eventBus);
         CompanionSounds.SOUND_EVENTS.register(eventBus);
+        PostNetheriteMetals.register(eventBus);
 
         NeoForge.EVENT_BUS.addListener(MeteoriteSpacing::onServerAboutToStart);
         IceAndFireClaimProtection.register();

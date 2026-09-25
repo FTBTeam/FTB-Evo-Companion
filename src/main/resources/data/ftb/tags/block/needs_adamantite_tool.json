@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "ftbmaterials:aurichalcum_block",
+    "ftbmaterials:aurichalcum_raw_block",
+    "ftbmaterials:aurichalcum_end_ore"
+  ]
+}

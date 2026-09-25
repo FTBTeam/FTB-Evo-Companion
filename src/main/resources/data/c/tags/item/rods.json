@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#c:rods/adamantite",
+    "#c:rods/aeternium",
+    "#c:rods/aurichalcum"
+  ]
+}

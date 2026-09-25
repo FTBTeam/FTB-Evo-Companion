@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#c:small_dusts/adamantite",
+    "#c:small_dusts/aeternium",
+    "#c:small_dusts/aurichalcum"
+  ]
+}

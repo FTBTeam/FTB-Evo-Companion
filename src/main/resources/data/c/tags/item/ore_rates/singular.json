@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "ftbmaterials:adamantite_stone_ore",
+    "ftbmaterials:adamantite_deepslate_ore",
+    "ftbmaterials:aeternium_nether_ore",
+    "ftbmaterials:aurichalcum_end_ore"
+  ]
+}

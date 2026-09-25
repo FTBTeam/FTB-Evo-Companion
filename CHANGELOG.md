@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - FTB Skyline: a machine you pipe resources into to complete Feed The Beast quests
 - `/givehat <targets> <hat|random>` (permission level 2) unlocks a Hats (Classic) hat, or a random one the player does not have yet
 - Feed The Beast items: ten challenge components, the Heart of the Beast and the Beast Trophy, an animated two-block display piece
+- Adamantite, Aeternium and Aurichalcum: three post-netherite metals with ores, raw ores, storage and raw blocks, ingots, nuggets, dusts, plates, gears, rods, wires and ore processing items
 - Chat announcements when teams change place on the Feed The Beast leaderboard, hourly by default; `announce_interval_minutes` sets the interval (0 for right away, -1 for off) and `announce_only_on_change` can post the full leaderboard every interval instead
 
 ### Fixed

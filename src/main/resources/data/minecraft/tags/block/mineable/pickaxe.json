@@ -4,6 +4,16 @@
     "ftbevolutioncompanion:ftb_skyline",
     "ftbevolutioncompanion:ftb_skyline_part",
     "ftbevolutioncompanion:ftb_fabricator",
-    "ftb:beast_trophy"
+    "ftb:beast_trophy",
+    "ftbmaterials:adamantite_block",
+    "ftbmaterials:adamantite_raw_block",
+    "ftbmaterials:adamantite_stone_ore",
+    "ftbmaterials:adamantite_deepslate_ore",
+    "ftbmaterials:aeternium_block",
+    "ftbmaterials:aeternium_raw_block",
+    "ftbmaterials:aeternium_nether_ore",
+    "ftbmaterials:aurichalcum_block",
+    "ftbmaterials:aurichalcum_raw_block",
+    "ftbmaterials:aurichalcum_end_ore"
   ]
 }

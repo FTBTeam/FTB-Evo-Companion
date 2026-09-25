@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 2.0,
+  "ingredient": "ftbmaterials:aurichalcum_end_ore",
+  "result": {
+    "id": "ftbmaterials:aurichalcum_ingot"
+  }
+}

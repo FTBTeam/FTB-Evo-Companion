@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#c:storage_blocks/adamantite",
+    "#c:storage_blocks/raw_adamantite",
+    "#c:storage_blocks/aeternium",
+    "#c:storage_blocks/raw_aeternium",
+    "#c:storage_blocks/aurichalcum",
+    "#c:storage_blocks/raw_aurichalcum"
+  ]
+}

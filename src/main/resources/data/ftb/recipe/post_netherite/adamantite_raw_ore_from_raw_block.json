@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ftbmaterials:adamantite_raw_block"
+  ],
+  "result": {
+    "id": "ftbmaterials:adamantite_raw_ore",
+    "count": 9
+  }
+}

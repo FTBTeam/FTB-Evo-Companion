@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ftbmaterials:aurichalcum_dust"
+  ],
+  "result": {
+    "id": "ftbmaterials:aurichalcum_tiny_dust",
+    "count": 9
+  }
+}
