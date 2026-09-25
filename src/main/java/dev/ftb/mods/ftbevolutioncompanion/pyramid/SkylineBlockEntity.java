@@ -64,6 +64,7 @@ public class SkylineBlockEntity extends BlockEntity implements GeoBlockEntity {
     private UUID launchPlayer;
 
     private boolean syncPending;
+    private boolean bayRefreshPending;
     @Nullable
     private TeamData cachedData;
     @Nullable
@@ -241,9 +242,32 @@ public class SkylineBlockEntity extends BlockEntity implements GeoBlockEntity {
         }
     }
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (level instanceof ServerLevel serverLevel && serverLevel.getServer().isSameThread()) {
+            refreshBayCapabilities(serverLevel);
+        } else if (level instanceof ServerLevel) {
+            bayRefreshPending = true;
+        }
+    }
+
+    private void refreshBayCapabilities(ServerLevel serverLevel) {
+        bayRefreshPending = false;
+        BlockState state = getBlockState();
+        if (!state.hasProperty(SkylineBlock.FACING)) return;
+        for (BlockPos partPos : PyramidLayout.positions(worldPosition, state.getValue(SkylineBlock.FACING))) {
+            if (!partPos.equals(worldPosition)) serverLevel.invalidateCapabilities(partPos);
+        }
+    }
+
     public static void serverTick(Level level, BlockPos pos, BlockState state, SkylineBlockEntity machine) {
         if (!(level instanceof ServerLevel serverLevel)) return;
         long now = level.getGameTime();
+
+        if (machine.bayRefreshPending) {
+            machine.refreshBayCapabilities(serverLevel);
+        }
 
         if (machine.transporting && now - machine.lastDeliveryTick > TRANSPORT_LINGER_TICKS) {
             machine.transporting = false;

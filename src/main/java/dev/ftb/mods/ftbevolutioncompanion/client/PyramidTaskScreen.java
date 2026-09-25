@@ -270,7 +270,7 @@ public class PyramidTaskScreen extends AbstractGroupedButtonListScreen<Quest, Ta
             if (fill > 0) {
                 IconHelper.renderIcon(done ? BAR_DONE : BAR_FILL, graphics, barX, barY, fill, 3);
             }
-            Component amount = Component.literal(value.formatProgress(data, progress) + " / " + value.formatMaxProgress())
+            Component amount = Component.translatable(LANG + "progress", value.formatProgress(data, progress), value.formatMaxProgress())
                     .withStyle(done ? ChatFormatting.GREEN : ChatFormatting.GRAY);
             theme.drawString(graphics, amount, barX + barW - theme.getStringWidth(amount), y + 3, Theme.SHADOW);
             graphics.horizontalLine(x, x + w, y + h, 0x40808080);

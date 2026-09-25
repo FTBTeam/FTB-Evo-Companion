@@ -113,7 +113,7 @@ public class SkylineRenderer extends GeoBlockRenderer<SkylineBlockEntity, Skylin
         state.progress = (float) progress / max;
         state.title = task.getTitle();
         ChatFormatting color = progress >= max ? ChatFormatting.GREEN : progress > 0 ? ChatFormatting.YELLOW : ChatFormatting.GOLD;
-        state.detail = Component.literal(task.formatProgress(ClientQuestFile.getInstance().selfTeamData, progress) + " / " + task.formatMaxProgress()).withStyle(color);
+        state.detail = Component.translatable(LANG + "progress", task.formatProgress(ClientQuestFile.getInstance().selfTeamData, progress), task.formatMaxProgress()).withStyle(color);
 
         if (task instanceof ItemTask itemTask) {
             List<ItemStack> stacks = itemTask.getValidDisplayItems();

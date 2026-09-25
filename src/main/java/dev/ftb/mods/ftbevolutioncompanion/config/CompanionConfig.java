@@ -75,6 +75,8 @@ public final class CompanionConfig {
     public static final ModConfigSpec.ConfigValue<String> CHALLENGE_CHAPTER;
     public static final ModConfigSpec.IntValue CHALLENGE_REFRESH_SECONDS;
     public static final ModConfigSpec.IntValue CHALLENGE_BOARD_SIZE;
+    public static final ModConfigSpec.IntValue CHALLENGE_ANNOUNCE_MINUTES;
+    public static final ModConfigSpec.BooleanValue CHALLENGE_ANNOUNCE_ONLY_ON_CHANGE;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -120,6 +122,16 @@ public final class CompanionConfig {
         CHALLENGE_BOARD_SIZE = builder
                 .comment("How many ranks the leaderboard tracks. A board set to a rank above this never shows a team.")
                 .defineInRange("board_size", 8, 1, 64);
+
+        CHALLENGE_ANNOUNCE_MINUTES = builder
+                .comment("Minutes between leaderboard announcements in chat. An announcement names each team whose rank changed",
+                        "since the last one. 0 announces as soon as a leaderboard refresh finds a change; -1 turns announcements off.")
+                .defineInRange("announce_interval_minutes", 60, -1, 10080);
+
+        CHALLENGE_ANNOUNCE_ONLY_ON_CHANGE = builder
+                .comment("Only announce when at least one rank changed since the last announcement.",
+                        "When false, every interval posts the whole leaderboard, marking the ranks that moved.")
+                .define("announce_only_on_change", true);
 
         builder.pop();
 

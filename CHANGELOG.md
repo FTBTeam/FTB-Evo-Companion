@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - FTB Skyline: a machine you pipe resources into to complete Feed The Beast quests
 - `/givehat <targets> <hat|random>` (permission level 2) unlocks a Hats (Classic) hat, or a random one the player does not have yet
 - Feed The Beast items: ten challenge components, the Heart of the Beast and the Beast Trophy, an animated two-block display piece
+- Chat announcements when teams change place on the Feed The Beast leaderboard, hourly by default; `announce_interval_minutes` sets the interval (0 for right away, -1 for off) and `announce_only_on_change` can post the full leaderboard every interval instead
 
 ### Fixed
 
@@ -30,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Stellaris Fuel Refinery refusing the Oritech oil its pumpjacks produce
 - Building from source failing on machines without Java 25 installed, and CI building with Java 21 (FTBTesting/Testing-Issues#4435)
 - Temporary attribute bonuses from items or effects becoming permanent after death (FTBTesting/Testing-Issues#4439)
+- Pipes connected to an FTB Skyline that sits across a chunk border no longer stop delivering after a restart
 - Draining a Reliquary Hero Medallion a little at a time no longer creates extra XP fluid, and filling it in small amounts no longer loses any (FTBTesting/Testing-Issues#4444)
 - Starting without Ice and Fire or Curios shows a missing-mod message instead of crashing, since both are now required (FTBTesting/Testing-Issues#4438)
 
@@ -42,3 +44,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The Evolution Pyramid is now the FTB Skyline; ones already placed or carried convert automatically
 - The FTB Fabricator and FTB Skyline have their own working, crafting, launch and liftoff sounds instead of borrowed vanilla ones (FTBTesting/Testing-Issues#4443)
 - Updated the FTB Skyline model and textures, with collision matching the new model
+- The winged horse armor names in JEI and the FTB Skyline progress numbers use lang keys, so every piece of player-facing text can be translated

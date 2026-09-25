@@ -42,12 +42,12 @@ public class FTBEvoJeiPlugin implements IModPlugin {
     private static final Identifier SOUL_JAR = Identifier.fromNamespaceAndPath("mysticalagriculture", "soul_jar");
 
     private static final List<WingedArmor> WINGED_ARMORS = List.of(
-            new WingedArmor(Items.LEATHER_HORSE_ARMOR, "leather", "Winged Leather Horse Armor"),
-            new WingedArmor(Items.COPPER_HORSE_ARMOR, "copper", "Winged Copper Horse Armor"),
-            new WingedArmor(Items.IRON_HORSE_ARMOR, "iron", "Winged Iron Horse Armor"),
-            new WingedArmor(Items.GOLDEN_HORSE_ARMOR, "golden", "Winged Golden Horse Armor"),
-            new WingedArmor(Items.DIAMOND_HORSE_ARMOR, "diamond", "Winged Diamond Horse Armor"),
-            new WingedArmor(Items.NETHERITE_HORSE_ARMOR, "netherite", "Winged Netherite Horse Armor"));
+            new WingedArmor(Items.LEATHER_HORSE_ARMOR, "leather"),
+            new WingedArmor(Items.COPPER_HORSE_ARMOR, "copper"),
+            new WingedArmor(Items.IRON_HORSE_ARMOR, "iron"),
+            new WingedArmor(Items.GOLDEN_HORSE_ARMOR, "golden"),
+            new WingedArmor(Items.DIAMOND_HORSE_ARMOR, "diamond"),
+            new WingedArmor(Items.NETHERITE_HORSE_ARMOR, "netherite"));
 
     @Override
     public Identifier getPluginUid() {
@@ -124,14 +124,14 @@ public class FTBEvoJeiPlugin implements IModPlugin {
             stack.set(DataComponents.DAMAGE, 0);
         }
 
-        stack.set(DataComponents.ITEM_NAME, Component.literal(armor.displayName()).withStyle(ChatFormatting.GOLD));
+        stack.set(DataComponents.ITEM_NAME, Component.translatable("jei.ftbevolutioncompanion.winged_horse_armor", new ItemStack(armor.armor()).getHoverName()).withStyle(ChatFormatting.GOLD));
         stack.set(DataComponents.LORE, new ItemLore(
-                List.of(Component.literal("Upgrade: Winged Horse").withStyle(ChatFormatting.AQUA))));
+                List.of(Component.translatable("jei.ftbevolutioncompanion.winged_horse_armor.upgrade").withStyle(ChatFormatting.AQUA))));
         stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
 
         return stack;
     }
 
-    private record WingedArmor(Item armor, String path, String displayName) {
+    private record WingedArmor(Item armor, String path) {
     }
 }
