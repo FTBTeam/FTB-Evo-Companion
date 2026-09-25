@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "ftb:adamantite_pickaxe",
+    "ftb:adamantite_aiot",
+    "ftb:aeternium_pickaxe",
+    "ftb:aeternium_aiot",
+    "ftb:aurichalcum_pickaxe",
+    "ftb:aurichalcum_aiot"
+  ]
+}

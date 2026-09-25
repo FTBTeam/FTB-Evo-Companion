@@ -1,0 +1,8 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_nether",
+  "features": [
+    "ftb:post_netherite/ore_aeternium"
+  ],
+  "step": "underground_ores"
+}

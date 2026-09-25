@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": "minecraft:netherite_upgrade_smithing_template",
+  "base": "minecraft:netherite_sword",
+  "addition": "#c:ingots/adamantite",
+  "result": {
+    "id": "ftb:adamantite_sword"
+  }
+}

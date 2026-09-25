@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": "minecraft:netherite_upgrade_smithing_template",
+  "base": [
+    "ftb:adamantite_axe",
+    "ftb:aeternium_axe"
+  ],
+  "addition": "#c:ingots/aurichalcum",
+  "result": {
+    "id": "ftb:aurichalcum_axe"
+  }
+}

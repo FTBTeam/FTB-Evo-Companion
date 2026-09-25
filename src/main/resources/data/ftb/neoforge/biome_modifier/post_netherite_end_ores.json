@@ -1,0 +1,8 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_end",
+  "features": [
+    "ftb:post_netherite/ore_aurichalcum"
+  ],
+  "step": "underground_ores"
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "ftb:aeternium_sword",
+    "ftb:aeternium_pickaxe",
+    "ftb:aeternium_axe",
+    "ftb:aeternium_shovel",
+    "ftb:aeternium_hoe",
+    "#c:ingots/aeternium"
+  ],
+  "result": {
+    "id": "ftb:aeternium_aiot"
+  }
+}

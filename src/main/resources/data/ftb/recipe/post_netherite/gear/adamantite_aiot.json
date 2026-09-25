@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "ftb:adamantite_sword",
+    "ftb:adamantite_pickaxe",
+    "ftb:adamantite_axe",
+    "ftb:adamantite_shovel",
+    "ftb:adamantite_hoe",
+    "#c:ingots/adamantite"
+  ],
+  "result": {
+    "id": "ftb:adamantite_aiot"
+  }
+}
