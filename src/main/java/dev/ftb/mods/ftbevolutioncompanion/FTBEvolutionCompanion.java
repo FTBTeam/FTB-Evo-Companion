@@ -63,6 +63,7 @@ public class FTBEvolutionCompanion {
     public FTBEvolutionCompanion(IEventBus eventBus, ModContainer container, Dist dist) {
         container.registerConfig(ModConfig.Type.COMMON, CompanionConfig.SPEC);
         FabricatorRegistry.register(eventBus);
+        CompanionSounds.SOUND_EVENTS.register(eventBus);
 
         NeoForge.EVENT_BUS.addListener(MeteoriteSpacing::onServerAboutToStart);
         IceAndFireClaimProtection.register();

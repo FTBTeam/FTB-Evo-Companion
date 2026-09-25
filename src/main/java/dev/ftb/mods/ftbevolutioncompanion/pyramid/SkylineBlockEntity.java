@@ -7,6 +7,7 @@ import com.geckolib.animation.AnimationController;
 import com.geckolib.animation.RawAnimation;
 import com.geckolib.util.GeckoLibUtil;
 
+import dev.ftb.mods.ftbevolutioncompanion.CompanionSounds;
 import dev.ftb.mods.ftbquests.quest.Chapter;
 import dev.ftb.mods.ftbquests.quest.Quest;
 import dev.ftb.mods.ftbquests.quest.ServerQuestFile;
@@ -22,7 +23,6 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -180,7 +180,7 @@ public class SkylineBlockEntity extends BlockEntity implements GeoBlockEntity {
         launchPlayer = player.getUUID();
         launchTicks = 0;
         triggerAnim(CONTROLLER, LAUNCH_ANIMATION);
-        serverLevel.playSound(null, worldPosition.above(3), SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 2F, 1F);
+        serverLevel.playSound(null, worldPosition.above(3), CompanionSounds.SKYLINE_LAUNCH_START.get(), SoundSource.BLOCKS, 2F, 1F);
         sync();
         return true;
     }
@@ -197,7 +197,7 @@ public class SkylineBlockEntity extends BlockEntity implements GeoBlockEntity {
                 data.setProgress(task, 1L);
             }
         }
-        serverLevel.playSound(null, worldPosition.above(5), SoundEvents.FIREWORK_ROCKET_LAUNCH, SoundSource.BLOCKS, 3F, 0.8F);
+        serverLevel.playSound(null, worldPosition.above(5), CompanionSounds.SKYLINE_LIFTOFF.get(), SoundSource.BLOCKS, 3F, 1F);
         Task active = activeTask();
         if (active != null && active.getQuest().id == launchQuestId) {
             activeTaskId = 0L;

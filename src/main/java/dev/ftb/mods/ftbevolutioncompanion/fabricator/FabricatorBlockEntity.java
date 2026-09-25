@@ -8,6 +8,7 @@ import com.geckolib.animation.RawAnimation;
 import com.geckolib.util.GeckoLibUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
+import dev.ftb.mods.ftbevolutioncompanion.CompanionSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -18,7 +19,6 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
@@ -160,7 +160,7 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
         }
         if (previousStatus != status || syncPending && server.getGameTime() % 10 == 0) sync();
         if (working && server.getGameTime() % 60 == 0) {
-            server.playSound(null, worldPosition, SoundEvents.BEACON_AMBIENT, SoundSource.BLOCKS, 0.12F, 1.5F);
+            server.playSound(null, worldPosition, CompanionSounds.FABRICATOR_WORKING.get(), SoundSource.BLOCKS, 1F, 1F);
         }
     }
 
@@ -225,7 +225,7 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
                 transaction.commit();
             }
             progress = 0;
-            server.playSound(null, worldPosition, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 0.3F, 1.3F);
+            server.playSound(null, worldPosition, CompanionSounds.FABRICATOR_COMPLETE.get(), SoundSource.BLOCKS, 1F, 1F);
         } else {
             progress++;
         }

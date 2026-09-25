@@ -40,4 +40,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Frost Bears no longer spawn as igloo guardians
 - The Fabricator holds 100,000,000 FE, up from 1,000,000
 - The Evolution Pyramid is now the FTB Skyline; ones already placed or carried convert automatically
+- The FTB Fabricator and FTB Skyline have their own working, crafting, launch and liftoff sounds instead of borrowed vanilla ones (FTBTesting/Testing-Issues#4443)
 - Updated the FTB Skyline model and textures, with collision matching the new model
