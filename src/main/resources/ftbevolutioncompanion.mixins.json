@@ -52,7 +52,9 @@
     "ServerCommonPacketListenerKeepAliveMixin",
     "ServerConfigurationSlowJoinMixin",
     "SophisticatedCoreXpFluidMixin",
-    "StellarisPumpjackOilMixin"
+    "StellarisFluidSlotOilMixin",
+    "StellarisPumpjackOilMixin",
+    "StellarisRefineryOilMixin"
   ],
   "client": [
     "AutoGlowingGeoLayerAccessor",
