@@ -41,6 +41,7 @@ import dev.ftb.mods.ftbevolutioncompanion.worldgen.SpawnPyramidStructure;
 import net.minecraft.resources.Identifier;
 
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
@@ -77,7 +78,7 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(ChallengeLeaderboard::onServerStopped);
         NeoForge.EVENT_BUS.addListener(ChallengeBoardCommand::onRegisterCommands);
         NeoForge.EVENT_BUS.addListener(GiveHatCommand::onRegisterCommands);
-        NeoForge.EVENT_BUS.addListener(CuriosReloadFix::onServerDataLoad);
+        NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, CuriosReloadFix::onDatapackSync);
         PyramidRegistry.BLOCK_ENTITIES.register(eventBus);
         eventBus.addListener(PyramidRegistry::onRegisterCapabilities);
         eventBus.addListener(PyramidPayloads::register);

@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GeckoLib glowing textures not glowing with a shaderpack on
 - Creative inventory search not responding while Easy NPC is installed alongside Apothic Spawners
 - Curios slots disappearing for every player after a `/reload` until the server restarted (TheIllusiveC4/Curios#632)
+- Mystical Agriculture's Soul Extraction page in JEI giving no way to reach the empty Soul Jar's recipe (BlakeBr0/MysticalAgriculture#882)
 
 ### Removed
 ### Changed

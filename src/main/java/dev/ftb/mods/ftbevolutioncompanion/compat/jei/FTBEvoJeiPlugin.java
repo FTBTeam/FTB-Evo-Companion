@@ -38,6 +38,8 @@ import java.util.List;
 @JeiPlugin
 public class FTBEvoJeiPlugin implements IModPlugin {
     private static final String SIMPLY_WINGED = "in2bubble_simply_winged";
+    private static final Identifier SOUL_EXTRACTOR = Identifier.fromNamespaceAndPath("mysticalagriculture", "soul_extractor");
+    private static final Identifier SOUL_JAR = Identifier.fromNamespaceAndPath("mysticalagriculture", "soul_jar");
 
     private static final List<WingedArmor> WINGED_ARMORS = List.of(
             new WingedArmor(Items.LEATHER_HORSE_ARMOR, "leather", "Winged Leather Horse Armor"),
@@ -94,6 +96,8 @@ public class FTBEvoJeiPlugin implements IModPlugin {
 
     @Override public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addCraftingStation(FabricatorCategory.TYPE, FabricatorRegistry.ITEM.get());
+        registration.getJeiHelpers().getRecipeType(SOUL_EXTRACTOR)
+                .ifPresent(type -> registration.addCraftingStation(type, new ItemStack(BuiltInRegistries.ITEM.getValue(SOUL_JAR))));
     }
 
     @Override public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
