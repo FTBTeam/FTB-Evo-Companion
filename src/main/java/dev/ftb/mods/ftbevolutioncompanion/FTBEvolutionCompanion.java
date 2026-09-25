@@ -15,6 +15,7 @@ import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsClientHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsKeys;
 import dev.ftb.mods.ftbevolutioncompanion.client.ChallengeBoardClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.FabricatorClient;
+import dev.ftb.mods.ftbevolutioncompanion.client.BeastTrophyClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.PyramidClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsClientHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsKeys;
@@ -70,6 +71,7 @@ public class FTBEvolutionCompanion {
         CompanionContent.ITEMS.register(eventBus);
         CompanionContent.FTB_BLOCKS.register(eventBus);
         CompanionContent.FTB_ITEMS.register(eventBus);
+        CompanionContent.FTB_BLOCK_ENTITIES.register(eventBus);
         eventBus.addListener(CompanionContent::onBuildCreativeTabs);
         ChallengeRegistry.BLOCK_ENTITIES.register(eventBus);
         eventBus.addListener(ChallengePayloads::register);
@@ -141,6 +143,7 @@ public class FTBEvolutionCompanion {
             eventBus.addListener(ChallengeBoardClient::onRegisterRenderers);
             NeoForge.EVENT_BUS.addListener(ChallengeBoardClient::onLoggingOut);
             eventBus.addListener(PyramidClient::onRegisterRenderers);
+            eventBus.addListener(BeastTrophyClient::onRegisterRenderers);
             eventBus.<FMLClientSetupEvent>addListener(event -> clientSetup(event, eventBus));
         }
     }

@@ -7,10 +7,13 @@ import dev.ftb.mods.ftbevolutioncompanion.pyramid.SkylineBlock;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.SkylineItem;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.SkylinePartBlock;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
@@ -18,14 +21,18 @@ import net.minecraft.world.level.material.PushReaction;
 
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.Set;
 
 public final class CompanionContent {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(FTBEvolutionCompanion.MOD_ID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(FTBEvolutionCompanion.MOD_ID);
     public static final DeferredRegister.Blocks FTB_BLOCKS = DeferredRegister.createBlocks("ftb");
     public static final DeferredRegister.Items FTB_ITEMS = DeferredRegister.createItems("ftb");
+    public static final DeferredRegister<BlockEntityType<?>> FTB_BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, "ftb");
 
     public static final DeferredBlock<OddBerryBushBlock> ODD_BERRY_BUSH = BLOCKS.registerBlock(
             "odd_berry_bush",
@@ -128,10 +135,57 @@ public final class CompanionContent {
             properties -> properties.useBlockDescriptionPrefix().stacksTo(1)
     );
 
+    public static final DeferredItem<BeastItem> DYNAMO_MATRIX = beastComponent("dynamo_matrix", Rarity.UNCOMMON, "first_tier");
+    public static final DeferredItem<BeastItem> TECTONIC_INGOT = beastComponent("tectonic_ingot", Rarity.UNCOMMON, "first_tier");
+    public static final DeferredItem<BeastItem> LIVING_CULTURE = beastComponent("living_culture", Rarity.UNCOMMON, "first_tier");
+    public static final DeferredItem<BeastItem> ARCANE_CODEX = beastComponent("arcane_codex", Rarity.UNCOMMON, "first_tier");
+    public static final DeferredItem<BeastItem> COGNITION_ARRAY = beastComponent("cognition_array", Rarity.UNCOMMON, "first_tier");
+    public static final DeferredItem<BeastItem> STELLAR_CHART = beastComponent("stellar_chart", Rarity.RARE, "second_tier");
+    public static final DeferredItem<BeastItem> ABYSSAL_LENS = beastComponent("abyssal_lens", Rarity.RARE, "second_tier");
+    public static final DeferredItem<BeastItem> SOUL_COVENANT = beastComponent("soul_covenant", Rarity.RARE, "second_tier");
+    public static final DeferredItem<BeastItem> HUNT_STANDARD = beastComponent("hunt_standard", Rarity.RARE, "second_tier");
+    public static final DeferredItem<BeastItem> CAUSAL_ANCHOR = beastComponent("causal_anchor", Rarity.RARE, "second_tier");
+
+    public static final DeferredItem<BeastItem> BEAST_HEART = FTB_ITEMS.registerItem(
+            "beast_heart",
+            properties -> new BeastItem(properties, "item.ftb.beast_heart.tooltip"),
+            properties -> properties.rarity(Rarity.EPIC).stacksTo(1).fireResistant()
+    );
+
+    public static final DeferredBlock<BeastTrophyBlock> BEAST_TROPHY = FTB_BLOCKS.registerBlock(
+            "beast_trophy",
+            BeastTrophyBlock::new,
+            properties -> properties
+                    .mapColor(MapColor.GOLD)
+                    .strength(3.0F, 1200.0F)
+                    .sound(SoundType.METAL)
+                    .lightLevel(state -> 10)
+                    .noOcclusion()
+                    .pushReaction(PushReaction.BLOCK)
+                    .isValidSpawn((state, level, pos, entityType) -> false)
+    );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BeastTrophyBlockEntity>> BEAST_TROPHY_BLOCK_ENTITY =
+            FTB_BLOCK_ENTITIES.register("beast_trophy", () -> new BlockEntityType<>(BeastTrophyBlockEntity::new, Set.of(BEAST_TROPHY.get())));
+
+    public static final DeferredItem<BeastTrophyItem> BEAST_TROPHY_ITEM = FTB_ITEMS.registerItem(
+            "beast_trophy",
+            properties -> new BeastTrophyItem(BEAST_TROPHY.get(), properties),
+            properties -> properties.useBlockDescriptionPrefix().rarity(Rarity.EPIC)
+    );
+
     static {
         BLOCKS.addAlias(FTBEvolutionCompanion.id("evolution_pyramid"), SKYLINE.getId());
         BLOCKS.addAlias(FTBEvolutionCompanion.id("evolution_pyramid_part"), SKYLINE_PART.getId());
         ITEMS.addAlias(FTBEvolutionCompanion.id("evolution_pyramid"), SKYLINE_ITEM.getId());
+    }
+
+    private static DeferredItem<BeastItem> beastComponent(String name, Rarity rarity, String tier) {
+        return FTB_ITEMS.registerItem(
+                name,
+                properties -> new BeastItem(properties, "item.ftb.beast_component." + tier + ".tooltip"),
+                properties -> properties.rarity(rarity)
+        );
     }
 
     private static BlockBehaviour.Properties skylineProperties(BlockBehaviour.Properties properties) {
@@ -157,6 +211,20 @@ public final class CompanionContent {
             event.accept(END_BEDROCK_ITEM);
             event.accept(CHALLENGE_BOARD_ITEM);
             event.accept(SKYLINE_ITEM);
+            event.accept(BEAST_TROPHY_ITEM);
+        }
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(DYNAMO_MATRIX);
+            event.accept(TECTONIC_INGOT);
+            event.accept(LIVING_CULTURE);
+            event.accept(ARCANE_CODEX);
+            event.accept(COGNITION_ARRAY);
+            event.accept(STELLAR_CHART);
+            event.accept(ABYSSAL_LENS);
+            event.accept(SOUL_COVENANT);
+            event.accept(HUNT_STANDARD);
+            event.accept(CAUSAL_ANCHOR);
+            event.accept(BEAST_HEART);
         }
     }
 

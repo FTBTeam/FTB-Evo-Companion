@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Challenge Board: a task-screen-style leaderboard billboard, any size up to 9 x 9, that shows one of the top teams and their progress through the Pyramid Challenge quest chapter, re-ranked every minute
 - FTB Skyline: a machine you pipe resources into to complete Pyramid Challenge quests
 - `/givehat <targets> <hat|random>` (permission level 2) unlocks a Hats (Classic) hat, or a random one the player does not have yet
+- Feed The Beast items: ten challenge components, the Heart of the Beast and the Beast Trophy, an animated two-block display piece
 
 ### Fixed
 
