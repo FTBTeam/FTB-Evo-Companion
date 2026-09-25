@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "ftb:aurichalcum_boots"
+    "ftb:aurichalcum_boots",
+    "ftb:aeternium_boots",
+    "ftb:adamantite_boots"
   ]
 }

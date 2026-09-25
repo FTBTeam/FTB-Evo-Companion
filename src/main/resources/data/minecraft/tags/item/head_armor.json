@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "ftb:aurichalcum_helmet"
+    "ftb:aurichalcum_helmet",
+    "ftb:aeternium_helmet",
+    "ftb:adamantite_helmet"
   ]
 }

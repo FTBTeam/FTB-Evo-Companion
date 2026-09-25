@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "ftb:aurichalcum_leggings"
+    "ftb:aurichalcum_leggings",
+    "ftb:aeternium_leggings",
+    "ftb:adamantite_leggings"
   ]
 }

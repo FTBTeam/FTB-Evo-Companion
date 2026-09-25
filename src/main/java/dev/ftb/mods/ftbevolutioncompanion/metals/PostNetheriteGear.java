@@ -43,6 +43,8 @@ public final class PostNetheriteGear {
         gear(new Tier("adamantite", 3072, 10.0F, 7.0F, 12, false));
         gear(new Tier("aeternium", 2560, 11.0F, 9.0F, 25, false));
         gear(new Tier("aurichalcum", 4096, 12.0F, 13.0F, 20, true));
+        adamantiteArmor();
+        aeterniumArmor();
         aurichalcumArmor();
     }
 
@@ -66,6 +68,28 @@ public final class PostNetheriteGear {
         TOOLS.add(ITEMS.registerItem(n + "_shovel", p -> new ShovelItem(tool, 1.5F, -3.0F, p), tier::finish));
         TOOLS.add(ITEMS.registerItem(n + "_hoe", p -> new HoeItem(tool, -4.0F, 0.0F, p), tier::finish));
         TOOLS.add(ITEMS.registerItem(n + "_aiot", AiotItem::new, p -> tier.finish(p.tool(tool, MINEABLE_AIOT, 4.0F, -3.0F, 0.0F))));
+    }
+
+    private static void adamantiteArmor() {
+        ArmorMaterial netherite = ArmorMaterials.NETHERITE;
+        ArmorMaterial material = new ArmorMaterial(netherite.durability(), netherite.defense(),
+                12, netherite.equipSound(), netherite.toughness(),
+                netherite.knockbackResistance(), ingots("adamantite"), netherite.assetId());
+        for (ArmorType type : List.of(ArmorType.HELMET, ArmorType.CHESTPLATE, ArmorType.LEGGINGS, ArmorType.BOOTS)) {
+            COMBAT.add(ITEMS.registerItem("adamantite_" + type.getSerializedName(), AdamantiteArmorItem::new,
+                    p -> p.humanoidArmor(material, type).fireResistant()));
+        }
+    }
+
+    private static void aeterniumArmor() {
+        ArmorMaterial netherite = ArmorMaterials.NETHERITE;
+        ArmorMaterial material = new ArmorMaterial(netherite.durability(), netherite.defense(),
+                25, netherite.equipSound(), netherite.toughness(),
+                netherite.knockbackResistance(), ingots("aeternium"), netherite.assetId());
+        for (ArmorType type : List.of(ArmorType.HELMET, ArmorType.CHESTPLATE, ArmorType.LEGGINGS, ArmorType.BOOTS)) {
+            COMBAT.add(ITEMS.registerItem("aeternium_" + type.getSerializedName(), AeterniumArmorItem::new,
+                    p -> p.humanoidArmor(material, type).fireResistant()));
+        }
     }
 
     private static void aurichalcumArmor() {

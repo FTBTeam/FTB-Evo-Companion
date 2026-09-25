@@ -278,5 +278,13 @@
   "item.ftb.aurichalcum_helmet": "Aurichalcum Helmet",
   "item.ftb.aurichalcum_chestplate": "Aurichalcum Chestplate",
   "item.ftb.aurichalcum_leggings": "Aurichalcum Leggings",
-  "item.ftb.aurichalcum_boots": "Aurichalcum Boots"
+  "item.ftb.aurichalcum_boots": "Aurichalcum Boots",
+  "item.ftb.aeternium_helmet": "Aeternium Helmet",
+  "item.ftb.aeternium_chestplate": "Aeternium Chestplate",
+  "item.ftb.aeternium_leggings": "Aeternium Leggings",
+  "item.ftb.aeternium_boots": "Aeternium Boots",
+  "item.ftb.adamantite_helmet": "Adamantite Helmet",
+  "item.ftb.adamantite_chestplate": "Adamantite Chestplate",
+  "item.ftb.adamantite_leggings": "Adamantite Leggings",
+  "item.ftb.adamantite_boots": "Adamantite Boots"
 }
