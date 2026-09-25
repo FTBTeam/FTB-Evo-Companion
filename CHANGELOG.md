@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Challenge Board: a task-screen-style leaderboard billboard, any size up to 9 x 9, that shows one of the top teams and their progress through the Pyramid Challenge quest chapter, re-ranked every minute
-- FTB Skyline: a machine you pipe resources into to complete Pyramid Challenge quests
+- Challenge Board: a task-screen-style leaderboard billboard, any size up to 9 x 9, that shows one of the top teams and their progress through the Feed The Beast quest chapter, re-ranked every minute
+- FTB Skyline: a machine you pipe resources into to complete Feed The Beast quests
 - `/givehat <targets> <hat|random>` (permission level 2) unlocks a Hats (Classic) hat, or a random one the player does not have yet
 - Feed The Beast items: ten challenge components, the Heart of the Beast and the Beast Trophy, an animated two-block display piece
 
@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Curios slots disappearing for every player after a `/reload` until the server restarted (TheIllusiveC4/Curios#632)
 - Mystical Agriculture's Soul Extraction page in JEI giving no way to reach the empty Soul Jar's recipe (BlakeBr0/MysticalAgriculture#882)
 - Stellaris Fuel Refinery refusing the Oritech oil its pumpjacks produce
+- Building from source failing on machines without Java 25 installed, and CI building with Java 21 (FTBTesting/Testing-Issues#4435)
+- Temporary attribute bonuses from items or effects becoming permanent after death (FTBTesting/Testing-Issues#4439)
 
 ### Removed
 ### Changed

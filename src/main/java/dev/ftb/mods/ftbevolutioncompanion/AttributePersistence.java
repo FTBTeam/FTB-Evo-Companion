@@ -34,7 +34,7 @@ public final class AttributePersistence {
                 continue;
             }
             to.setBaseValue(from.getBaseValue());
-            for (AttributeModifier modifier : from.getModifiers()) {
+            for (AttributeModifier modifier : from.getPermanentModifiers()) {
                 to.addOrReplacePermanentModifier(modifier);
             }
         }
