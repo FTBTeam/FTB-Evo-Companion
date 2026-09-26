@@ -40,6 +40,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Pipes connected to an FTB Skyline that sits across a chunk border no longer stop delivering after a restart
 - Draining a Reliquary Hero Medallion a little at a time no longer creates extra XP fluid, and filling it in small amounts no longer loses any (FTBTesting/Testing-Issues#4444)
 - Starting without Ice and Fire or Curios shows a missing-mod message instead of crashing, since both are now required (FTBTesting/Testing-Issues#4438)
+- Productive Bees bee breeding, produce and conversion recipes show in JEI again
+- Power Armor Compressor recipes show in JEI
 
 ### Removed
 ### Changed

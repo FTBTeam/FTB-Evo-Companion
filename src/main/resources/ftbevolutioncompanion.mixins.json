@@ -48,6 +48,7 @@
     "PowahConfigInPlaceUnpackMixin",
     "ProjectileWeaponItemMixin",
     "RandomSpreadStructurePlacementAccessor",
+    "RecipeManagerAccessor",
     "ReliquaryHeroMedallionRoundingMixin",
     "ReliquaryXpFluidMixin",
     "ServerCommonPacketListenerKeepAliveMixin",
@@ -60,7 +61,9 @@
   "client": [
     "AutoGlowingGeoLayerAccessor",
     "FakeRenderEnvironmentMixin",
+    "PowerArmorJeiRecipesMixin",
     "PowerArmorKeybindMixin",
+    "ProductiveBeesIncubationRecipesMixin",
     "IndepentScaleScreenMixin"
   ],
   "injectors": {

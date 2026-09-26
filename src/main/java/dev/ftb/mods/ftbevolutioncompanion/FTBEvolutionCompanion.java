@@ -9,6 +9,7 @@ import dev.ftb.mods.ftbevolutioncompanion.compat.curios.CuriosReloadFix;
 import dev.ftb.mods.ftbevolutioncompanion.compat.hats.GiveHatCommand;
 import dev.ftb.mods.ftbevolutioncompanion.compat.iceandfire.IceAndFireClaimProtection;
 import dev.ftb.mods.ftbevolutioncompanion.compat.iris.IrisGeckoGlow;
+import dev.ftb.mods.ftbevolutioncompanion.compat.powerarmor.PowerArmorRecipeSync;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.network.ChallengePayloads;
 import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsClientHandler;
@@ -86,6 +87,8 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(ChallengeBoardCommand::onRegisterCommands);
         NeoForge.EVENT_BUS.addListener(GiveHatCommand::onRegisterCommands);
         NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, CuriosReloadFix::onDatapackSync);
+        eventBus.addListener(PowerArmorRecipeSync::register);
+        NeoForge.EVENT_BUS.addListener(PowerArmorRecipeSync::onDatapackSync);
         PyramidRegistry.BLOCK_ENTITIES.register(eventBus);
         eventBus.addListener(PyramidRegistry::onRegisterCapabilities);
         eventBus.addListener(PyramidPayloads::register);
