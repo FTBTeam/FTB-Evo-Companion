@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adamantite ore generates in the Overworld, Aeternium ore in the Nether and Aurichalcum ore in the End
 - Adamantite, Aeternium and Aurichalcum swords, spears, pickaxes, axes, shovels, hoes and AIOTs, a tier above netherite, upgraded from netherite tools at a smithing table; Aurichalcum ones are unbreakable
 - The AIOT mines as a pickaxe, axe, shovel and hoe; right click strips, scrapes and makes paths, and sneak right click tills
+- Nautec bacteria that grow Adamantite, Aeternium and Aurichalcum
 - Chat announcements when teams change place on the Feed The Beast leaderboard, hourly by default; `announce_interval_minutes` sets the interval (0 for right away, -1 for off) and `announce_only_on_change` can post the full leaderboard every interval instead
 
 ### Fixed

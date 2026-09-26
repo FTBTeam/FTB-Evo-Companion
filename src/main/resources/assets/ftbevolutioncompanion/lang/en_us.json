@@ -286,5 +286,8 @@
   "item.ftb.adamantite_helmet": "Adamantite Helmet",
   "item.ftb.adamantite_chestplate": "Adamantite Chestplate",
   "item.ftb.adamantite_leggings": "Adamantite Leggings",
-  "item.ftb.adamantite_boots": "Adamantite Boots"
+  "item.ftb.adamantite_boots": "Adamantite Boots",
+  "bacteria.ftb.adamantitophiles": "Adamantitophiles",
+  "bacteria.ftb.aeterniophiles": "Aeterniophiles",
+  "bacteria.ftb.aurichalcophiles": "Aurichalcophiles"
 }

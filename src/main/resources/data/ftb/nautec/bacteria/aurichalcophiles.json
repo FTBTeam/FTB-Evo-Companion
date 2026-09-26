@@ -1,0 +1,28 @@
+{
+  "type": "nautec:simple",
+  "bacteria": "#c:ingots/aurichalcum",
+  "initial_size": {
+    "max": 125,
+    "min": 100
+  },
+  "stats": {
+    "type": "nautec:simple",
+    "color": -1869782,
+    "growth_rate": {
+      "max": 0.8,
+      "min": 0.35
+    },
+    "lifespan": {
+      "max": 2000,
+      "min": 1000
+    },
+    "mutation_resistance": {
+      "max": 0.15,
+      "min": 0.0
+    },
+    "production_rate": {
+      "max": 0.08,
+      "min": 0.05
+    }
+  }
+}

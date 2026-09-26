@@ -1,0 +1,10 @@
+{
+  "type": "nautec:bacteria_incubation",
+  "bacteria": "ftb:aeterniophiles",
+  "consume_chance": 0.12,
+  "growth": {
+    "max": 15,
+    "min": 5
+  },
+  "nutrient": "#c:ingots/aeternium"
+}

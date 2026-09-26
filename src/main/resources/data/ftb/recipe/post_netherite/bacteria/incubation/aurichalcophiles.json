@@ -1,0 +1,10 @@
+{
+  "type": "nautec:bacteria_incubation",
+  "bacteria": "ftb:aurichalcophiles",
+  "consume_chance": 0.15,
+  "growth": {
+    "max": 10,
+    "min": 4
+  },
+  "nutrient": "#c:ingots/aurichalcum"
+}

@@ -1,0 +1,7 @@
+{
+  "type": "nautec:bacteria_mutation",
+  "catalyst": "#c:ingots/aurichalcum",
+  "chance": 2.0,
+  "input_bacteria": "ftb:adamantitophiles",
+  "result_bacteria": "ftb:aurichalcophiles"
+}
