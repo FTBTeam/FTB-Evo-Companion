@@ -16,8 +16,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+
+import java.util.List;
 
 public final class FabricatorCategory implements IRecipeCategory<RecipeHolder<FabricatorRecipe>> {
     public static final IRecipeHolderType<FabricatorRecipe> TYPE = IRecipeHolderType.create(FTBEvolutionCompanion.id("fabricating"));
@@ -61,10 +64,11 @@ public final class FabricatorCategory implements IRecipeCategory<RecipeHolder<Fa
         graphics.text(font, "→", 107, 27, 0xFF2CA8AF, false);
         graphics.text(font, Component.translatable(LANG + "recipe_power", recipe.energyPerTick(), recipe.ticks() / 20F), 4, 72, 0xFF444444, false);
         graphics.text(font, Component.translatable(LANG + "recipe_energy", (long) recipe.energyPerTick() * recipe.ticks()), 4, 84, 0xFF444444, false);
-        Component stage = recipe.stage().isEmpty() ? Component.translatable(LANG + "no_stage") : Component.translatable(LANG + "stage", recipe.stage());
-        graphics.text(font, font.plainSubstrByWidth(stage.getString(), 184), 4, 98, 0xFF166C7D, false);
+        Component stage = recipe.stage().isEmpty() ? Component.translatable(LANG + "no_stage") : Component.translatable(LANG + "stage", FabricatorRecipe.stageName(recipe.stage()));
+        List<FormattedCharSequence> lines = font.split(stage, 184);
+        for (int i = 0; i < Math.min(2, lines.size()); i++) graphics.text(font, lines.get(i), 4, 98 + i * 10, 0xFF166C7D, false);
     }
     @Override public void getTooltip(ITooltipBuilder tooltip, RecipeHolder<FabricatorRecipe> holder, IRecipeSlotsView slots, double mouseX, double mouseY) {
-        if (mouseY >= 96 && !holder.value().stage().isEmpty()) tooltip.add(Component.translatable(LANG + "stage", holder.value().stage()));
+        if (mouseY >= 96 && !holder.value().stage().isEmpty()) tooltip.add(Component.translatable(LANG + "stage", FabricatorRecipe.stageName(holder.value().stage())));
     }
 }

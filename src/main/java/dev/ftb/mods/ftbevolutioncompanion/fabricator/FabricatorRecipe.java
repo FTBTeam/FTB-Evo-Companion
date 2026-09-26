@@ -6,6 +6,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
@@ -63,6 +64,10 @@ public record FabricatorRecipe(List<CountedIngredient> ingredients, List<FluidSt
         fluids = List.copyOf(fluids);
         results = List.copyOf(results);
         fluidResults = List.copyOf(fluidResults);
+    }
+
+    public static Component stageName(String stage) {
+        return Component.translatableWithFallback("stage.ftbevolutioncompanion." + stage.replace(':', '.'), stage);
     }
 
     public int[] itemAllocation(FabricatorInput input) {

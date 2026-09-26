@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The AIOT mines as a pickaxe, axe, shovel and hoe; right click strips, scrapes and makes paths, and sneak right click tills
 - Nautec bacteria that grow Adamantite, Aeternium and Aurichalcum
 - Chat announcements when teams change place on the Feed The Beast leaderboard, hourly by default; `announce_interval_minutes` sets the interval (0 for right away, -1 for off) and `announce_only_on_change` can post the full leaderboard every interval instead
+- FTB Fabricator recipes that need a stage show a readable name for it in JEI, on the Fabricator screen and in Jade, taken from a `stage.ftbevolutioncompanion.<stage>` lang key
 
 ### Fixed
 

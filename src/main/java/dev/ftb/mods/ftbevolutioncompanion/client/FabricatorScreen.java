@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbevolutioncompanion.client;
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
 import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorBlockEntity;
 import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorMenu;
+import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorRecipe;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -49,7 +50,7 @@ public final class FabricatorScreen extends AbstractContainerScreen<FabricatorMe
         Component status = Component.translatable(LANG + "status." + machine.status().name().toLowerCase(Locale.ROOT));
         graphics.text(font, status, 12, 100, machine.status() == FabricatorBlockEntity.Status.WORKING ? 0xFF4BCFCD : 0xFFFFC768, false);
         if (!machine.requiredStage().isEmpty()) {
-            String stage = Component.translatable(LANG + "stage", machine.requiredStage()).getString();
+            String stage = Component.translatable(LANG + "stage", FabricatorRecipe.stageName(machine.requiredStage())).getString();
             graphics.text(font, font.plainSubstrByWidth(stage, 196), 12, 110, 0xFFC7CFCF, false);
         }
     }
@@ -71,7 +72,7 @@ public final class FabricatorScreen extends AbstractContainerScreen<FabricatorMe
                 tooltip = Component.translatable(LANG + (tank < 2 ? "fluid_input" : "fluid_output"), name, fluid.getAmount(), FabricatorBlockEntity.TANK_CAPACITY);
             }
         } else if (y >= 100 && y <= 119) {
-            tooltip = Component.translatable(LANG + "owner_stage", machine.ownerName(), machine.requiredStage().isEmpty() ? "—" : machine.requiredStage());
+            tooltip = Component.translatable(LANG + "owner_stage", machine.ownerName(), machine.requiredStage().isEmpty() ? Component.literal("—") : FabricatorRecipe.stageName(machine.requiredStage()));
         }
         if (tooltip != null) graphics.setTooltipForNextFrame(font, tooltip, mouseX, mouseY);
     }

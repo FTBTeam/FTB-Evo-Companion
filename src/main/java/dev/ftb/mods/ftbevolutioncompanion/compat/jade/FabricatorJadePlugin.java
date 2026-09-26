@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbevolutioncompanion.compat.jade;
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
 import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorBlock;
 import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorBlockEntity;
+import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorRecipe;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -61,7 +62,7 @@ public final class FabricatorJadePlugin implements IWailaPlugin {
             tooltip.add(Component.translatable(LANG + "energy", data.getIntOr("energy", 0), FabricatorBlockEntity.ENERGY_CAPACITY));
             if (data.getIntOr("duration", 0) > 0) tooltip.add(Component.translatable(LANG + "process",
                     data.getIntOr("progress", 0), data.getIntOr("duration", 0), data.getIntOr("usage", 0)));
-            if (!data.getStringOr("stage", "").isEmpty()) tooltip.add(Component.translatable(LANG + "stage", data.getStringOr("stage", "")));
+            if (!data.getStringOr("stage", "").isEmpty()) tooltip.add(Component.translatable(LANG + "stage", FabricatorRecipe.stageName(data.getStringOr("stage", ""))));
             tooltip.add(Component.translatable(LANG + "owner", data.getStringOr("owner", "—")));
             for (int i = 0; i < 12; i++) {
                 if (data.contains("item" + i)) tooltip.add(Component.translatable(LANG + (i < 9 ? "input_contents" : "output_contents"), data.getStringOr("item" + i, "")));
