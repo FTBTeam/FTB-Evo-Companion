@@ -22,6 +22,10 @@ public final class CompanionConfig {
     public static final ModConfigSpec.DoubleValue DEATH_BLOW_THRESHOLD;
     public static final ModConfigSpec.DoubleValue LIGHTS_SHIELD_THRESHOLD;
     public static final ModConfigSpec.IntValue CHEAT_DEATH_COOLDOWN;
+    public static final ModConfigSpec.IntValue ROOTS_POTENCY_CAP;
+    public static final ModConfigSpec.IntValue ROOTS_LILAC_POTENCY_CAP;
+    public static final ModConfigSpec.IntValue WITCH_POWER_CAP;
+    public static final ModConfigSpec.BooleanValue RITUAL_OWNER_OFFLINE_FULL_COST;
     public static final ModConfigSpec.IntValue CHEAT_DEATH_INVULN_TICKS;
     public static final ModConfigSpec.IntValue LIGHTNING_COOLDOWN;
     public static final ModConfigSpec.DoubleValue MULTISHOT_SPREAD;
@@ -361,6 +365,22 @@ public final class CompanionConfig {
         RIPOSTE_COOLDOWN = builder
                 .comment("Cooldown in ticks between riposte parries.")
                 .defineInRange("riposte_cooldown", 100, 0, 1728000);
+
+        ROOTS_POTENCY_CAP = builder
+                .comment("Highest Roots Classic staff potency after the Magic tree bonus is added.")
+                .defineInRange("roots_potency_cap", 5, 0, 10);
+
+        ROOTS_LILAC_POTENCY_CAP = builder
+                .comment("Highest potency for Lilac casts; Roots Classic throws at potency 5 or more.")
+                .defineInRange("roots_lilac_potency_cap", 4, 0, 4);
+
+        WITCH_POWER_CAP = builder
+                .comment("Highest witch power after the Magic tree bonus; Witchery curse rites stop working above 13.")
+                .defineInRange("witch_power_cap", 13, 0, 13);
+
+        RITUAL_OWNER_OFFLINE_FULL_COST = builder
+                .comment("Rituals and machines whose owner is offline pay the base cost instead of the last known skill discount.")
+                .define("ritual_owner_offline_full_cost", true);
 
         builder.pop();
 

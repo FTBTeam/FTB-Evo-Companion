@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nautec bacteria that grow Adamantite, Aeternium and Aurichalcum
 - Chat announcements when teams change place on the Feed The Beast leaderboard, hourly by default; `announce_interval_minutes` sets the interval (0 for right away, -1 for off) and `announce_only_on_change` can post the full leaderboard every interval instead
 - FTB Fabricator recipes that need a stage show a readable name for it in JEI, on the Fabricator screen and in Jade, taken from a `stage.ftbevolutioncompanion.<stage>` lang key
+- Magic skill tree support: 37 new skill attributes that scale Ars Magica, Thaumaturge, Apothic Enchanting, Roots Classic, Witchery, Neo Vitae, Animus, EvilCraft, Occultism and Anima
+- Magic statistics for spells cast, rites performed, brews bottled, research completed and affliction levels gained, used as Magic skill XP sources
+- Magic mod tooltips and screens show costs, cooldowns and strengths with the player's Magic skills applied
 
 ### Fixed
 
@@ -42,6 +45,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Starting without Ice and Fire or Curios shows a missing-mod message instead of crashing, since both are now required (FTBTesting/Testing-Issues#4438)
 - Productive Bees bee breeding, produce and conversion recipes show in JEI again
 - Power Armor Compressor recipes show in JEI
+- Hephaestus Forge Melters and Smeltery Controllers drop the items inside them when broken
+- Hephaestus Forge Seared Ladders placed from the top down link up
+- Hephaestus Forge Seared Fuel Tank fluid showing through walls
+- Hephaestus Forge Melter and Smeltery tooltips showing the wrong ingot and block amounts
 
 ### Removed
 ### Changed
@@ -53,3 +60,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The FTB Fabricator and FTB Skyline have their own working, crafting, launch and liftoff sounds instead of borrowed vanilla ones (FTBTesting/Testing-Issues#4443)
 - Updated the FTB Skyline model and textures, with collision matching the new model
 - The winged horse armor names in JEI and the FTB Skyline progress numbers use lang keys, so every piece of player-facing text can be translated
+- Scythe sweep damage follows the scythe's own attack damage
