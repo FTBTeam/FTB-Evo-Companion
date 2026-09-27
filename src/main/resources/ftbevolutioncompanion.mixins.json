@@ -105,7 +105,6 @@
     "PowerArmorJeiRecipesMixin",
     "PowerArmorKeybindMixin",
     "ProductiveBeesIncubationRecipesMixin",
-    "IndepentScaleScreenMixin",
     "compat.hephaestus.HephaestusMelterTooltipMixin",
     "compat.hephaestus.HephaestusSmelteryTooltipMixin",
     "compat.hephaestus.HephaestusTankRenderXrayMixin",
