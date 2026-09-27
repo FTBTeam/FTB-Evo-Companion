@@ -49,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Hephaestus Forge Seared Ladders placed from the top down link up
 - Hephaestus Forge Seared Fuel Tank fluid showing through walls
 - Hephaestus Forge Melter and Smeltery tooltips showing the wrong ingot and block amounts
+- Aeternium and Aurichalcum ores never generating, because their veins were too small to place any blocks
 
 ### Removed
 ### Changed
@@ -61,3 +62,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated the FTB Skyline model and textures, with collision matching the new model
 - The winged horse armor names in JEI and the FTB Skyline progress numbers use lang keys, so every piece of player-facing text can be translated
 - Scythe sweep damage follows the scythe's own attack damage
+- Adamantite ore is five times rarer
