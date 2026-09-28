@@ -32,6 +32,8 @@ import net.minecraft.world.item.component.ItemLore;
 
 import net.neoforged.fml.ModList;
 
+import top.theillusivec4.curios.client.screen.CuriosScreen;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,6 +108,7 @@ public class FTBEvoJeiPlugin implements IModPlugin {
 
     @Override public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addRecipeClickArea(FabricatorScreen.class, 89, 53, 42, 12, FabricatorCategory.TYPE);
+        registration.addGuiContainerHandler(CuriosScreen.class, new CuriosJeiGuiHandler());
     }
 
     private static ItemStack wingedArmorStack(WingedArmor armor, ItemStack wing) {

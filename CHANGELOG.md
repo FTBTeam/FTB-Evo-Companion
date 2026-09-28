@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GeckoLib glowing textures not glowing with a shaderpack on
 - Creative inventory search not responding while Easy NPC is installed alongside Apothic Spawners
 - Curios slots disappearing for every player after a `/reload` until the server restarted (TheIllusiveC4/Curios#632)
+- Dragging items into Curios slots with JEI cheat mode enabled deletes them because the Curios panel was missing from JEI's GUI exclusions
 - Mystical Agriculture's Soul Extraction page in JEI giving no way to reach the empty Soul Jar's recipe (BlakeBr0/MysticalAgriculture#882)
 - Stellaris Fuel Refinery refusing the Oritech oil its pumpjacks produce
 - Building from source failing on machines without Java 25 installed, and CI building with Java 21 (FTBTesting/Testing-Issues#4435)
@@ -63,6 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Adamantite and Aeternium armor now give more armor and toughness than netherite, and Aurichalcum armor gives the most
 - Ice and Fire dragons, cyclopes, trolls and death worms no longer break or burn blocks inside claimed chunks, unless the claim allows mob griefing
 - Frost Bears no longer spawn as igloo guardians
 - The Fabricator holds 100,000,000 FE, up from 1,000,000

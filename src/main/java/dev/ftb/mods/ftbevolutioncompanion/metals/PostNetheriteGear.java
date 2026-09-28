@@ -21,7 +21,9 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public final class PostNetheriteGear {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("ftb");
@@ -70,11 +72,20 @@ public final class PostNetheriteGear {
         TOOLS.add(ITEMS.registerItem(n + "_aiot", AiotItem::new, p -> tier.finish(p.tool(tool, MINEABLE_AIOT, 4.0F, -3.0F, 0.0F))));
     }
 
+    private static Map<ArmorType, Integer> defense(int helmet, int chestplate, int leggings, int boots) {
+        Map<ArmorType, Integer> defense = new EnumMap<>(ArmorMaterials.NETHERITE.defense());
+        defense.put(ArmorType.HELMET, helmet);
+        defense.put(ArmorType.CHESTPLATE, chestplate);
+        defense.put(ArmorType.LEGGINGS, leggings);
+        defense.put(ArmorType.BOOTS, boots);
+        return defense;
+    }
+
     private static void adamantiteArmor() {
         ArmorMaterial netherite = ArmorMaterials.NETHERITE;
-        ArmorMaterial material = new ArmorMaterial(netherite.durability(), netherite.defense(),
-                12, netherite.equipSound(), netherite.toughness(),
-                netherite.knockbackResistance(), ingots("adamantite"), netherite.assetId());
+        ArmorMaterial material = new ArmorMaterial(56, defense(5, 10, 8, 5),
+                12, netherite.equipSound(), 5.0F,
+                0.15F, ingots("adamantite"), netherite.assetId());
         for (ArmorType type : List.of(ArmorType.HELMET, ArmorType.CHESTPLATE, ArmorType.LEGGINGS, ArmorType.BOOTS)) {
             COMBAT.add(ITEMS.registerItem("adamantite_" + type.getSerializedName(), AdamantiteArmorItem::new,
                     p -> p.humanoidArmor(material, type).fireResistant()));
@@ -83,9 +94,9 @@ public final class PostNetheriteGear {
 
     private static void aeterniumArmor() {
         ArmorMaterial netherite = ArmorMaterials.NETHERITE;
-        ArmorMaterial material = new ArmorMaterial(netherite.durability(), netherite.defense(),
-                25, netherite.equipSound(), netherite.toughness(),
-                netherite.knockbackResistance(), ingots("aeternium"), netherite.assetId());
+        ArmorMaterial material = new ArmorMaterial(47, defense(5, 10, 8, 5),
+                25, netherite.equipSound(), 4.0F,
+                0.1F, ingots("aeternium"), netherite.assetId());
         for (ArmorType type : List.of(ArmorType.HELMET, ArmorType.CHESTPLATE, ArmorType.LEGGINGS, ArmorType.BOOTS)) {
             COMBAT.add(ITEMS.registerItem("aeternium_" + type.getSerializedName(), AeterniumArmorItem::new,
                     p -> p.humanoidArmor(material, type).fireResistant()));
@@ -94,9 +105,9 @@ public final class PostNetheriteGear {
 
     private static void aurichalcumArmor() {
         ArmorMaterial netherite = ArmorMaterials.NETHERITE;
-        ArmorMaterial material = new ArmorMaterial(netherite.durability(), netherite.defense(),
-                netherite.enchantmentValue(), netherite.equipSound(), netherite.toughness(),
-                netherite.knockbackResistance(), ingots("aurichalcum"), netherite.assetId());
+        ArmorMaterial material = new ArmorMaterial(75, defense(7, 12, 10, 7),
+                netherite.enchantmentValue(), netherite.equipSound(), 7.0F,
+                0.2F, ingots("aurichalcum"), netherite.assetId());
         for (ArmorType type : List.of(ArmorType.HELMET, ArmorType.CHESTPLATE, ArmorType.LEGGINGS, ArmorType.BOOTS)) {
             COMBAT.add(ITEMS.registerItem("aurichalcum_" + type.getSerializedName(), AurichalcumArmorItem::new,
                     p -> p.humanoidArmor(material, type).fireResistant().component(DataComponents.UNBREAKABLE, Unit.INSTANCE)));
