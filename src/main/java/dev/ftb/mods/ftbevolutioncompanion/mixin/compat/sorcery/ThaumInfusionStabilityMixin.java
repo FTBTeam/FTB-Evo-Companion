@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 @Mixin(targets = "com.leclowndu93150.thaumaturge.content.infusion.BlockEntityInfusionMatrix", remap = false)
 public abstract class ThaumInfusionStabilityMixin {
     @ModifyArg(
-            method = "startCraft(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/player/Player;)V",
+            method = "tryStartCraft(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/player/Player;)Z",
             at = @At(value = "INVOKE",
                     target = "Lcom/leclowndu93150/thaumaturge/content/infusion/InfusionCraftJob;<init>(Ljava/util/List;"
                             + "Lcom/leclowndu93150/thaumaturge/api/aspect/AspectList;Lnet/minecraft/world/item/ItemStack;"

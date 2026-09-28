@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Updated Thaumaturge no longer crashes the game on startup, and Magic skills still steady infusions
 - The game crashing for players near an Ice and Fire dragon that picks up a mob or player in its mouth (FTBTesting/Testing-Issues#4484)
 - Logistics Pipes pipes drop again when broken, along with the modules and upgrades installed in them
 - Dank Storage danks no longer lose or duplicate items when pipes and other mods check a transfer before making it
