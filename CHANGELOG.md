@@ -49,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Hephaestus Forge Seared Ladders placed from the top down link up
 - Hephaestus Forge Seared Fuel Tank fluid showing through walls
 - Hephaestus Forge Melter and Smeltery tooltips showing the wrong ingot and block amounts
+- Filling a bucket with Hephaestus Forge Molten Cobalt, Quartz, Diamond, Emerald, Amethyst or Blaze giving a Lava Bucket
 - Aeternium and Aurichalcum ores never generating, because their veins were too small to place any blocks
 
 ### Removed

@@ -26,6 +26,7 @@
     "FrostBearIglooSpawnsMixin",
     "compat.hephaestus.HephaestusInventoryDropMixin",
     "compat.hephaestus.HephaestusLadderLinkMixin",
+    "compat.hephaestus.HephaestusMoltenBucketMixin",
     "HorseUseHandlerParagliderMixin",
     "In2bubbleParagliderMixin",
     "InjectorBiomeSourceMixin",
