@@ -55,6 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - The GuideMe guide screen click fix, since GuideMe 26.1.14 fixes it and the old fix stopped the game from starting (AppliedEnergistics/GuideME#105)
+- The GuideMe structure preview memory fix, since GuideMe 26.1.14 fixes it and the old fix crashed the game on any page with a 3D scene (AppliedEnergistics/GuideME#106)
 
 ### Changed
 
