@@ -39,6 +39,10 @@ public final class GunneryHooks {
         add(profile, ShotComponents.KNOCKBACK, SkillsHelper.attr(shooter, GunneryRegistry.GUN_KNOCKBACK));
         add(profile, ShotComponents.SEEKING, SkillsHelper.attr(shooter, GunneryRegistry.GUN_SEEKING));
         add(profile, ShotComponents.ACCELERATING, Math.floor(SkillsHelper.attr(shooter, GunneryRegistry.GUN_RAMPING)));
+        add(profile, ShotComponents.PIERCING, Math.floor(SkillsHelper.attr(shooter, GunneryRegistry.GUN_PIERCING)));
+        add(profile, ShotComponents.RICOCHET, Math.floor(SkillsHelper.attr(shooter, GunneryRegistry.GUN_RICOCHET)));
+        multiply(profile, ShotComponents.CAMERA_RECOIL_MULTIPLIER, -SkillsHelper.attr(shooter, GunneryRegistry.GUN_RECOIL_CONTROL));
+        multiply(profile, ShotComponents.IN_AIR_PENALTY, -SkillsHelper.attr(shooter, GunneryRegistry.GUN_AIR_ACCURACY));
         double deadEye = SkillsHelper.attr(shooter, GunneryRegistry.GUN_DEAD_EYE);
         if (deadEye > 0.0
                 && shooter.getItemBySlot(EquipmentSlot.HEAD).is(ItemRegistry.TRICORNE_HAT)

@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Magic statistics for spells cast, rites performed, brews bottled, research completed and affliction levels gained, used as Magic skill XP sources
 - Magic mod tooltips and screens show costs, cooldowns and strengths with the player's Magic skills applied
 - Gunnery skill support: 12 new skill attributes for Iron's Arms 'n Artifice guns covering damage, fire rate, reload speed, bullet speed, spread, ammo saving, extra bullets, knockback, seeking and ramping fire, plus stronger Cowboy Hat and Tricorne abilities (FTBTesting/Testing-Issues#4487)
+- Gunnery skill attributes for bullet piercing, ricochet, recoil control and airborne accuracy (FTBTesting/Testing-Issues#4487)
 
 ### Fixed
 

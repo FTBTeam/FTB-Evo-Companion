@@ -32,6 +32,10 @@ public final class GunneryRegistry {
     public static final DeferredHolder<Attribute, Attribute> GUN_RAMPING = attr("gun_ramping", 5.0);
     public static final DeferredHolder<Attribute, Attribute> GUN_QUICKDRAW = attr("gun_quickdraw", 0.9);
     public static final DeferredHolder<Attribute, Attribute> GUN_DEAD_EYE = attr("gun_dead_eye", 3.0);
+    public static final DeferredHolder<Attribute, Attribute> GUN_PIERCING = attr("gun_piercing", 5.0);
+    public static final DeferredHolder<Attribute, Attribute> GUN_RICOCHET = attr("gun_ricochet", 5.0);
+    public static final DeferredHolder<Attribute, Attribute> GUN_RECOIL_CONTROL = attr("gun_recoil_control", 0.9);
+    public static final DeferredHolder<Attribute, Attribute> GUN_AIR_ACCURACY = attr("gun_air_accuracy", 0.9);
 
     private GunneryRegistry() {
     }
