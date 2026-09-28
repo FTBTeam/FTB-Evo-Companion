@@ -24,6 +24,8 @@ import dev.ftb.mods.ftbevolutioncompanion.client.WingTooltips;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.content.CompanionContent;
 import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorRegistry;
+import dev.ftb.mods.ftbevolutioncompanion.gunnery.GunneryHooks;
+import dev.ftb.mods.ftbevolutioncompanion.gunnery.GunneryRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.magic.hedgecraft.HedgeCraftMagic;
 import dev.ftb.mods.ftbevolutioncompanion.magic.hemomancy.HemomancyMagic;
@@ -125,6 +127,9 @@ public class FTBEvolutionCompanion {
         HedgeCraftMagic.register(eventBus);
         HemomancyMagic.register(eventBus);
         OtherworldMagic.register(eventBus);
+        GunneryRegistry.ATTRIBUTES.register(eventBus);
+        eventBus.addListener(GunneryRegistry::onEntityAttributeModification);
+        GunneryHooks.register();
         eventBus.addListener(SkillsRegistry::onEntityAttributeModification);
         NeoForge.EVENT_BUS.addListener(AttributePersistence::onPlayerClone);
         eventBus.addListener(SkillsPayloads::register);

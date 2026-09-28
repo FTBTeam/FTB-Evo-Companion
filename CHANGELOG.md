@@ -23,9 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Magic skill tree support: 37 new skill attributes that scale Ars Magica, Thaumaturge, Apothic Enchanting, Roots Classic, Witchery, Neo Vitae, Animus, EvilCraft, Occultism and Anima
 - Magic statistics for spells cast, rites performed, brews bottled, research completed and affliction levels gained, used as Magic skill XP sources
 - Magic mod tooltips and screens show costs, cooldowns and strengths with the player's Magic skills applied
+- Gunnery skill support: 12 new skill attributes for Iron's Arms 'n Artifice guns covering damage, fire rate, reload speed, bullet speed, spread, ammo saving, extra bullets, knockback, seeking and ramping fire, plus stronger Cowboy Hat and Tricorne abilities (FTBTesting/Testing-Issues#4487)
 
 ### Fixed
 
+- The game crashing for players near an Ice and Fire dragon that picks up a mob or player in its mouth (FTBTesting/Testing-Issues#4484)
 - Logistics Pipes pipes drop again when broken, along with the modules and upgrades installed in them
 - Dank Storage danks no longer lose or duplicate items when pipes and other mods check a transfer before making it
 - Powah's config file is read again; every edit used to be replaced by the mod defaults on boot (Technici4n/Powah#305)

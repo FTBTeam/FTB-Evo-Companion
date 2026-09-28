@@ -27,6 +27,8 @@
     "compat.hephaestus.HephaestusInventoryDropMixin",
     "compat.hephaestus.HephaestusLadderLinkMixin",
     "compat.hephaestus.HephaestusMoltenBucketMixin",
+    "compat.iceandfire.DragonPreyInMouthMixin",
+    "compat.artifice.CowboyHatQuickdrawMixin",
     "HorseUseHandlerParagliderMixin",
     "In2bubbleParagliderMixin",
     "InjectorBiomeSourceMixin",

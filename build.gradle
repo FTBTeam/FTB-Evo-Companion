@@ -157,6 +157,7 @@ dependencies {
 	compileOnly "curse.maven:witchery-forbidden-magic-1644651:${witchery_forbidden_magic_curse_file_id}"
 	compileOnly "curse.maven:kotlin-for-forge-351264:${kotlinforforge_curse_file_id}"
 	compileOnly "curse.maven:anima-1706323:${anima_curse_file_id}"
+	compileOnly "curse.maven:irons-artifice-1650193:${irons_artifice_curse_file_id}"
 	compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
 }
 
