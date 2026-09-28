@@ -41,6 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Creative inventory search not responding while Easy NPC is installed alongside Apothic Spawners
 - Curios slots disappearing for every player after a `/reload` until the server restarted (TheIllusiveC4/Curios#632)
 - Dragging items into Curios slots with JEI cheat mode enabled deletes them because the Curios panel was missing from JEI's GUI exclusions
+- The server crashing when an Ender IO Limited Item Filter slot is set above 99 items; filter slots now stop at 99
+- Ender IO filter slots duplicating items when Inventory Essentials transfer shortcuts are used on them (Team-EnderIO/EnderIO#1450)
 - Mystical Agriculture's Soul Extraction page in JEI giving no way to reach the empty Soul Jar's recipe (BlakeBr0/MysticalAgriculture#882)
 - Stellaris Fuel Refinery refusing the Oritech oil its pumpjacks produce
 - Building from source failing on machines without Java 25 installed, and CI building with Java 21 (FTBTesting/Testing-Issues#4435)
