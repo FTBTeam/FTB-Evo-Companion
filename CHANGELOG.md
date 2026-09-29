@@ -13,10 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - FTB Skyline: a machine you pipe resources into to complete Feed The Beast quests
 - `/givehat <targets> <hat|random>` (permission level 2) unlocks a Hats (Classic) hat, or a random one the player does not have yet
 - Feed The Beast items: ten challenge components, the Heart of the Beast and the Beast Trophy, an animated two-block display piece
-- Adamantite, Aeternium and Aurichalcum: three post-netherite metals with ores, raw ores, storage and raw blocks, ingots, nuggets, dusts, plates, gears, rods, wires and ore processing items
-- Adamantite ore generates in the Overworld, Aeternium ore in the Nether and Aurichalcum ore in the End
-- Adamantite, Aeternium and Aurichalcum swords, spears, pickaxes, axes, shovels, hoes and AIOTs, a tier above netherite, upgraded from netherite tools at a smithing table; Aurichalcum ones are unbreakable
-- The AIOT mines as a pickaxe, axe, shovel and hoe; right click strips, scrapes and makes paths, and sneak right click tills
 - Nautec bacteria that grow Adamantite, Aeternium and Aurichalcum
 - Chat announcements when teams change place on the Feed The Beast leaderboard, hourly by default; `announce_interval_minutes` sets the interval (0 for right away, -1 for off) and `announce_only_on_change` can post the full leaderboard every interval instead
 - FTB Fabricator recipes that need a stage show a readable name for it in JEI, on the Fabricator screen and in Jade, taken from a `stage.ftbevolutioncompanion.<stage>` lang key
@@ -62,17 +58,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Hephaestus Forge Seared Fuel Tank fluid showing through walls
 - Hephaestus Forge Melter and Smeltery tooltips showing the wrong ingot and block amounts
 - Filling a bucket with Hephaestus Forge Molten Cobalt, Quartz, Diamond, Emerald, Amethyst or Blaze giving a Lava Bucket
-- Aeternium and Aurichalcum ores never generating, because their veins were too small to place any blocks
 
 ### Removed
 
+- Adamantite, Aeternium and Aurichalcum and their ores, worldgen, tools and armor, which moved to the FTB Armory mod
 - The GuideMe guide screen click fix, since GuideMe 26.1.14 fixes it and the old fix stopped the game from starting (AppliedEnergistics/GuideME#105)
 - The GuideMe structure preview memory fix, since GuideMe 26.1.14 fixes it and the old fix crashed the game on any page with a 3D scene (AppliedEnergistics/GuideME#106)
 
 ### Changed
 
-- Adamantite, Aeternium and Aurichalcum items, blocks, tools, armor, tool tier tags, recipes and worldgen use the `ftbarmory` namespace; the old `ftbmaterials:` and `ftb:` IDs in existing worlds load as the new ones
-- Adamantite and Aeternium armor now give more armor and toughness than netherite, and Aurichalcum armor gives the most
 - Ice and Fire dragons, cyclopes, trolls and death worms no longer break or burn blocks inside claimed chunks, unless the claim allows mob griefing
 - Frost Bears no longer spawn as igloo guardians
 - The Fabricator holds 100,000,000 FE, up from 1,000,000
@@ -81,4 +75,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated the FTB Skyline model and textures, with collision matching the new model
 - The winged horse armor names in JEI and the FTB Skyline progress numbers use lang keys, so every piece of player-facing text can be translated
 - Scythe sweep damage follows the scythe's own attack damage
-- Adamantite ore is five times rarer
