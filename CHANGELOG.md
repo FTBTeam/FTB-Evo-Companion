@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Just Dire Things ore scanners and X-ray not showing Aurichalcum ore
+- The game crashing when fuel is put into a Mystical Agriculture Soulium Spawner, and fuel not dragging into the fuel slot of other Mystical Agriculture machines (FTBTesting/Testing-Issues#4498, BlakeBr0/MysticalAgriculture#883)
 - Dank Auto Sort reordering and merging incoming inventory updates on the client
 - Water entering the output tanks of Ender IO and Ender IO Evolution Vats
 - Hats equipped by a player not appearing for other players on a server (astryxion/Hats#3)
@@ -69,6 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Adamantite, Aeternium and Aurichalcum items, blocks, tools, armor, tool tier tags, recipes and worldgen use the `ftbarmory` namespace; the old `ftbmaterials:` and `ftb:` IDs in existing worlds load as the new ones
 - Adamantite and Aeternium armor now give more armor and toughness than netherite, and Aurichalcum armor gives the most
 - Ice and Fire dragons, cyclopes, trolls and death worms no longer break or burn blocks inside claimed chunks, unless the claim allows mob griefing
 - Frost Bears no longer spawn as igloo guardians

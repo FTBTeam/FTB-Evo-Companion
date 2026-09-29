@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "ftb:adamantite_sword",
-    "ftb:aeternium_sword",
-    "ftb:aurichalcum_sword"
+    "ftbarmory:adamantite_sword",
+    "ftbarmory:aeternium_sword",
+    "ftbarmory:aurichalcum_sword"
   ]
 }

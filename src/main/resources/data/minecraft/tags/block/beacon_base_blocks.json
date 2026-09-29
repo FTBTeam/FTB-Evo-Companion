@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "ftbmaterials:adamantite_block",
-    "ftbmaterials:aeternium_block",
-    "ftbmaterials:aurichalcum_block"
+    "ftbarmory:adamantite_block",
+    "ftbarmory:aeternium_block",
+    "ftbarmory:aurichalcum_block"
   ]
 }

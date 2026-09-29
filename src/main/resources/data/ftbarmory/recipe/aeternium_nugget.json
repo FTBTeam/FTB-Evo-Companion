@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ftbarmory:aeternium_ingot"
+  ],
+  "result": {
+    "id": "ftbarmory:aeternium_nugget",
+    "count": 9
+  }
+}

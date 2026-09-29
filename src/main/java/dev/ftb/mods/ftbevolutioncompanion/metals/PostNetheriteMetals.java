@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion.metals;
 
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -18,7 +19,8 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 
 public final class PostNetheriteMetals {
-    public static final String NAMESPACE = "ftbmaterials";
+    public static final String NAMESPACE = "ftbarmory";
+    private static final String OLD_NAMESPACE = "ftbmaterials";
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(NAMESPACE);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(NAMESPACE);
 
@@ -40,6 +42,10 @@ public final class PostNetheriteMetals {
                 new Ore("nether_ore", 10.0F, SoundType.NETHER_ORE, MapColor.NETHER));
         metal("aurichalcum", MapColor.COLOR_ORANGE,
                 new Ore("end_ore", 12.0F, SoundType.STONE, MapColor.SAND));
+        BLOCKS.getEntries().forEach(block -> BLOCKS.addAlias(
+                Identifier.fromNamespaceAndPath(OLD_NAMESPACE, block.getId().getPath()), block.getId()));
+        ITEMS.getEntries().forEach(item -> ITEMS.addAlias(
+                Identifier.fromNamespaceAndPath(OLD_NAMESPACE, item.getId().getPath()), item.getId()));
     }
 
     private PostNetheriteMetals() {

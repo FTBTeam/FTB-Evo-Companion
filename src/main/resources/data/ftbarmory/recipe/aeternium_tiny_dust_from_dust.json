@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ftbarmory:aeternium_dust"
+  ],
+  "result": {
+    "id": "ftbarmory:aeternium_tiny_dust",
+    "count": 9
+  }
+}

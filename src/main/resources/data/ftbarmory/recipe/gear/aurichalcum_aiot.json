@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "ftbarmory:aurichalcum_sword",
+    "ftbarmory:aurichalcum_pickaxe",
+    "ftbarmory:aurichalcum_axe",
+    "ftbarmory:aurichalcum_shovel",
+    "ftbarmory:aurichalcum_hoe",
+    "#c:ingots/aurichalcum"
+  ],
+  "result": {
+    "id": "ftbarmory:aurichalcum_aiot"
+  }
+}

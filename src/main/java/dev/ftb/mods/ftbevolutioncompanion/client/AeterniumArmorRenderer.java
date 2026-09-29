@@ -8,6 +8,6 @@ import net.minecraft.resources.Identifier;
 
 public final class AeterniumArmorRenderer extends GeoArmorRenderer<AeterniumArmorItem, HumanoidRenderState> {
     public AeterniumArmorRenderer() {
-        super(new DefaultedItemGeoModel<>(Identifier.fromNamespaceAndPath("ftb", "aeternium_armor")));
+        super(new DefaultedItemGeoModel<>(Identifier.fromNamespaceAndPath("ftbarmory", "aeternium_armor")));
     }
 }

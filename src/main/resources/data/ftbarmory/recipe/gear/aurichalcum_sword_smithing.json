@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": "minecraft:netherite_upgrade_smithing_template",
+  "base": [
+    "ftbarmory:adamantite_sword",
+    "ftbarmory:aeternium_sword"
+  ],
+  "addition": "#c:ingots/aurichalcum",
+  "result": {
+    "id": "ftbarmory:aurichalcum_sword"
+  }
+}

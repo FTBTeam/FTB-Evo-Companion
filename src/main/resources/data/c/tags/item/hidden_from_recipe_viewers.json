@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "ftbmaterials:adamantite_cluster",
-    "ftbmaterials:aeternium_cluster",
-    "ftbmaterials:aurichalcum_cluster"
+    "ftbarmory:adamantite_cluster",
+    "ftbarmory:aeternium_cluster",
+    "ftbarmory:aurichalcum_cluster"
   ]
 }

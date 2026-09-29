@@ -8,6 +8,6 @@ import net.minecraft.resources.Identifier;
 
 public final class AdamantiteArmorRenderer extends GeoArmorRenderer<AdamantiteArmorItem, HumanoidRenderState> {
     public AdamantiteArmorRenderer() {
-        super(new DefaultedItemGeoModel<>(Identifier.fromNamespaceAndPath("ftb", "adamantite_armor")));
+        super(new DefaultedItemGeoModel<>(Identifier.fromNamespaceAndPath("ftbarmory", "adamantite_armor")));
     }
 }

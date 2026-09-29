@@ -57,6 +57,7 @@
     "OritechOilSpringMixin",
     "PlayerMixin",
     "PowahConfigInPlaceUnpackMixin",
+    "MysticalAgricultureMachineClientLevelMixin",
     "ProjectileWeaponItemMixin",
     "RandomSpreadStructurePlacementAccessor",
     "RecipeManagerAccessor",
@@ -109,6 +110,7 @@
   ],
   "client": [
     "compat.hats.client.HatClientPacketsMixin",
+    "compat.justdirethings.client.JustDireThingsOreFinderMixin",
     "AutoGlowingGeoLayerAccessor",
     "PowerArmorJeiRecipesMixin",
     "PowerArmorKeybindMixin",

@@ -1,11 +1,11 @@
 {
   "replace": false,
   "values": [
-    "ftb:adamantite_shovel",
-    "ftb:adamantite_aiot",
-    "ftb:aeternium_shovel",
-    "ftb:aeternium_aiot",
-    "ftb:aurichalcum_shovel",
-    "ftb:aurichalcum_aiot"
+    "ftbarmory:adamantite_shovel",
+    "ftbarmory:adamantite_aiot",
+    "ftbarmory:aeternium_shovel",
+    "ftbarmory:aeternium_aiot",
+    "ftbarmory:aurichalcum_shovel",
+    "ftbarmory:aurichalcum_aiot"
   ]
 }

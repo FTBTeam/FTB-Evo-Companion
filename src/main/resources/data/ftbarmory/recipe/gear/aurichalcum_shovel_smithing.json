@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": "minecraft:netherite_upgrade_smithing_template",
+  "base": [
+    "ftbarmory:adamantite_shovel",
+    "ftbarmory:aeternium_shovel"
+  ],
+  "addition": "#c:ingots/aurichalcum",
+  "result": {
+    "id": "ftbarmory:aurichalcum_shovel"
+  }
+}

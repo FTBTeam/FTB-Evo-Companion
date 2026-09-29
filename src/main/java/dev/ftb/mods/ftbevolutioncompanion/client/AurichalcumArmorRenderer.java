@@ -8,6 +8,6 @@ import net.minecraft.resources.Identifier;
 
 public final class AurichalcumArmorRenderer extends GeoArmorRenderer<AurichalcumArmorItem, HumanoidRenderState> {
     public AurichalcumArmorRenderer() {
-        super(new DefaultedItemGeoModel<>(Identifier.fromNamespaceAndPath("ftb", "aurichalcum_armor")));
+        super(new DefaultedItemGeoModel<>(Identifier.fromNamespaceAndPath("ftbarmory", "aurichalcum_armor")));
     }
 }

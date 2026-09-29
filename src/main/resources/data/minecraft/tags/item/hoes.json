@@ -1,11 +1,11 @@
 {
   "replace": false,
   "values": [
-    "ftb:adamantite_hoe",
-    "ftb:adamantite_aiot",
-    "ftb:aeternium_hoe",
-    "ftb:aeternium_aiot",
-    "ftb:aurichalcum_hoe",
-    "ftb:aurichalcum_aiot"
+    "ftbarmory:adamantite_hoe",
+    "ftbarmory:adamantite_aiot",
+    "ftbarmory:aeternium_hoe",
+    "ftbarmory:aeternium_aiot",
+    "ftbarmory:aurichalcum_hoe",
+    "ftbarmory:aurichalcum_aiot"
   ]
 }

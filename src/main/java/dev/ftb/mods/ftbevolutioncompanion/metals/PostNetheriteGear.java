@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.Map;
 
 public final class PostNetheriteGear {
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("ftb");
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("ftbarmory");
 
-    public static final TagKey<Block> INCORRECT_FOR_ADAMANTITE_TOOL = TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("ftb", "incorrect_for_adamantite_tool"));
-    public static final TagKey<Block> MINEABLE_AIOT = TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("ftb", "mineable/aiot"));
+    public static final TagKey<Block> INCORRECT_FOR_ADAMANTITE_TOOL = TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("ftbarmory", "incorrect_for_adamantite_tool"));
+    public static final TagKey<Block> MINEABLE_AIOT = TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("ftbarmory", "mineable/aiot"));
 
     private static final List<DeferredItem<? extends Item>> COMBAT = new ArrayList<>();
     private static final List<DeferredItem<? extends Item>> TOOLS = new ArrayList<>();
@@ -48,6 +48,8 @@ public final class PostNetheriteGear {
         adamantiteArmor();
         aeterniumArmor();
         aurichalcumArmor();
+        ITEMS.getEntries().forEach(item -> ITEMS.addAlias(
+                Identifier.fromNamespaceAndPath("ftb", item.getId().getPath()), item.getId()));
     }
 
     private PostNetheriteGear() {

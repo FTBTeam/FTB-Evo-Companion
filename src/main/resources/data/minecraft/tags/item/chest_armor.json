@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "ftb:aurichalcum_chestplate",
-    "ftb:aeternium_chestplate",
-    "ftb:adamantite_chestplate"
+    "ftbarmory:aurichalcum_chestplate",
+    "ftbarmory:aeternium_chestplate",
+    "ftbarmory:adamantite_chestplate"
   ]
 }

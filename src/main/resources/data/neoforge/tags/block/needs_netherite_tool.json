@@ -1,12 +1,12 @@
 {
   "replace": false,
   "values": [
-    "ftbmaterials:adamantite_block",
-    "ftbmaterials:adamantite_raw_block",
-    "ftbmaterials:adamantite_stone_ore",
-    "ftbmaterials:adamantite_deepslate_ore",
-    "ftbmaterials:aeternium_block",
-    "ftbmaterials:aeternium_raw_block",
-    "ftbmaterials:aeternium_nether_ore"
+    "ftbarmory:adamantite_block",
+    "ftbarmory:adamantite_raw_block",
+    "ftbarmory:adamantite_stone_ore",
+    "ftbarmory:adamantite_deepslate_ore",
+    "ftbarmory:aeternium_block",
+    "ftbarmory:aeternium_raw_block",
+    "ftbarmory:aeternium_nether_ore"
   ]
 }

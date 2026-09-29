@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "ftbarmory:block/aurichalcum_end_ore"
+  }
+}

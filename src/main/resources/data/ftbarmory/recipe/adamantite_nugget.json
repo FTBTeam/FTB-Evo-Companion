@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ftbarmory:adamantite_ingot"
+  ],
+  "result": {
+    "id": "ftbarmory:adamantite_nugget",
+    "count": 9
+  }
+}
