@@ -105,6 +105,7 @@
     "compat.sorcery.ApothEnchantmentMenuMixin"
   ],
   "client": [
+    "compat.hats.client.HatClientPacketsMixin",
     "AutoGlowingGeoLayerAccessor",
     "PowerArmorJeiRecipesMixin",
     "PowerArmorKeybindMixin",

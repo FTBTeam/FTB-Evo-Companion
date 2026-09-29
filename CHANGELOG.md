@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Hats equipped by a player not appearing for other players on a server (astryxion/Hats#3)
 - Updated Thaumaturge no longer crashes the game on startup, and Magic skills still steady infusions
 - The game crashing for players near an Ice and Fire dragon that picks up a mob or player in its mouth (FTBTesting/Testing-Issues#4484)
 - Logistics Pipes pipes drop again when broken, along with the modules and upgrades installed in them
