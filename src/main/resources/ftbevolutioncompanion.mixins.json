@@ -111,6 +111,7 @@
   ],
   "client": [
     "compat.hats.client.HatClientPacketsMixin",
+    "compat.iceandfire.client.IceAndFireSirenShaderMixin",
     "compat.justdirethings.client.JustDireThingsOreFinderMixin",
     "AutoGlowingGeoLayerAccessor",
     "PowerArmorJeiRecipesMixin",

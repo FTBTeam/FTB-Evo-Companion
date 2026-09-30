@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Being charmed by an Ice and Fire siren disconnecting the player or clearing their resource packs (FTBTesting/AI_Testing#45)
 - Just Dire Things ore scanners and X-ray not showing Aurichalcum ore
 - The game crashing when fuel is put into a Mystical Agriculture Soulium Spawner, and fuel not dragging into the fuel slot of other Mystical Agriculture machines (FTBTesting/Testing-Issues#4498, BlakeBr0/MysticalAgriculture#883)
 - Dank Auto Sort reordering and merging incoming inventory updates on the client
