@@ -67,6 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The Productive Bees Breeding Chamber picks a new random offspring after every breed, instead of repeating its first pick for the same parents
 - Ice and Fire dragons, cyclopes, trolls and death worms no longer break or burn blocks inside claimed chunks, unless the claim allows mob griefing
 - Frost Bears no longer spawn as igloo guardians
 - The Fabricator holds 100,000,000 FE, up from 1,000,000

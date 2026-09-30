@@ -57,6 +57,7 @@
     "OritechOilSpringMixin",
     "PlayerMixin",
     "PowahConfigInPlaceUnpackMixin",
+    "ProductiveBeesBreedingRerollMixin",
     "MysticalAgricultureMachineClientLevelMixin",
     "ProjectileWeaponItemMixin",
     "RandomSpreadStructurePlacementAccessor",
