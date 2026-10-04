@@ -12,19 +12,54 @@ import io.redspace.irons_artifice.gun.ShotProfile;
 import io.redspace.irons_artifice.item.TricorneItem;
 import io.redspace.irons_artifice.registry.ItemRegistry;
 
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 public final class GunneryHooks {
+    private static final TagKey<DamageType> ATLANTEAN_RIFLE =
+            TagKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath("nautec", "atlantean_rifle"));
+
     private GunneryHooks() {
     }
 
     public static void register() {
         NeoForge.EVENT_BUS.addListener(EventPriority.HIGH, GunneryHooks::onComposeShot);
         NeoForge.EVENT_BUS.addListener(GunneryHooks::onGunShootPre);
+        NeoForge.EVENT_BUS.addListener(GunneryHooks::onRifleDamage);
+        NeoForge.EVENT_BUS.addListener(GunneryHooks::onRifleHit);
+    }
+
+    public static void onRifleDamage(LivingIncomingDamageEvent event) {
+        if (!event.getSource().is(ATLANTEAN_RIFLE)
+                || !(event.getSource().getEntity() instanceof LivingEntity shooter)) {
+            return;
+        }
+        double bonus = SkillsHelper.attr(shooter, GunneryRegistry.GUN_DAMAGE)
+                + SkillsHelper.attr(shooter, GunneryRegistry.GUN_BULLET_SPEED);
+        if (bonus > 0.0) {
+            event.setAmount(event.getAmount() * (float) (1.0 + bonus));
+        }
+    }
+
+    public static void onRifleHit(LivingDamageEvent.Post event) {
+        if (!event.getSource().is(ATLANTEAN_RIFLE)
+                || !(event.getSource().getEntity() instanceof LivingEntity shooter)) {
+            return;
+        }
+        double strength = SkillsHelper.attr(shooter, GunneryRegistry.GUN_KNOCKBACK);
+        LivingEntity target = event.getEntity();
+        if (strength > 0.0 && target != shooter) {
+            target.knockback(strength, shooter.getX() - target.getX(), shooter.getZ() - target.getZ());
+        }
     }
 
     public static void onComposeShot(ComposeShotEvent event) {

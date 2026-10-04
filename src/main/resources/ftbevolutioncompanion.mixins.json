@@ -39,6 +39,7 @@
     "compat.hephaestus.HephaestusTierTooltipMixin",
     "compat.iceandfire.DragonPreyInMouthMixin",
     "compat.artifice.CowboyHatQuickdrawMixin",
+    "compat.nautec.AtlanteanRifleGunneryMixin",
     "HorseUseHandlerParagliderMixin",
     "In2bubbleParagliderMixin",
     "InjectorBiomeSourceMixin",
