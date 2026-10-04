@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbevolutioncompanion;
 
 import dev.ftb.mods.ftbevolutioncompanion.compat.apotheosis.BossInvaderHandler;
+import dev.ftb.mods.ftbevolutioncompanion.compat.gateways.TreasureGoblinEvent;
 import dev.ftb.mods.ftbevolutioncompanion.client.MoltenMetalsClient;
 import dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus.MoltenMetals;
 import dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus.ToolTraits;
@@ -97,6 +98,12 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(GiveHatCommand::onRegisterCommands);
         NeoForge.EVENT_BUS.addListener(EventPriority.LOW, BossInvaderHandler::onFinalizeSpawn);
         NeoForge.EVENT_BUS.addListener(BossInvaderHandler::onEntityJoinLevel);
+        NeoForge.EVENT_BUS.addListener(TreasureGoblinEvent::onDamage);
+        NeoForge.EVENT_BUS.addListener(TreasureGoblinEvent::onWaveEntitySpawned);
+        NeoForge.EVENT_BUS.addListener(TreasureGoblinEvent::onLivingDeath);
+        NeoForge.EVENT_BUS.addListener(TreasureGoblinEvent::onEntityInteract);
+        NeoForge.EVENT_BUS.addListener(TreasureGoblinEvent::onEntityInteractSpecific);
+        NeoForge.EVENT_BUS.addListener(TreasureGoblinEvent::onServerTick);
         NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, CuriosReloadFix::onDatapackSync);
         eventBus.addListener(PowerArmorRecipeSync::register);
         NeoForge.EVENT_BUS.addListener(PowerArmorRecipeSync::onDatapackSync);
@@ -118,6 +125,7 @@ public class FTBEvolutionCompanion {
 
         AthleticsRegistry.ATTRIBUTES.register(eventBus);
         AthleticsRegistry.ATTACHMENTS.register(eventBus);
+        TreasureGoblinEvent.ATTACHMENTS.register(eventBus);
         eventBus.addListener(AthleticsRegistry::onEntityAttributeModification);
 
         SkillsRegistry.ATTRIBUTES.register(eventBus);

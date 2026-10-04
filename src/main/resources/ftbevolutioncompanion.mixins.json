@@ -30,6 +30,7 @@
     "EnergizedPowerXpStorageMixin",
     "EntityFallSpeedMixin",
     "FrostBearIglooSpawnsMixin",
+    "MobAccessor",
     "MobFlowPadMotionSyncMixin",
     "compat.hephaestus.HephaestusHarvestTierMixin",
     "compat.hephaestus.HephaestusToolHarvestMixin",
