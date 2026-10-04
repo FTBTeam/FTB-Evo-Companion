@@ -9,4 +9,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface LivingEntityAccessor {
     @Accessor("attackStrengthTicker")
     void ftbevo$setAttackStrengthTicker(int ticker);
+
+    @Accessor("dead")
+    boolean ftbevo$isDead();
 }

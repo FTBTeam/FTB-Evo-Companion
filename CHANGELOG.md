@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- The server crashing when a creeper explodes next to a player with the Ars Magica Legacy Thorns ability
 - LTX Industries tanks no longer crash the game when they render fluid with a shader pack on
 - Nether portals no longer generate inside the spawn pyramid. A portal lit in the Nether near spawn could build its Overworld side into the pyramid and clear blocks there; it now generates under or beside it instead
 - Mob Flow Utilities flow pads flooding nearby players with entity movement packets, which caused connection timeouts around large mob farms (FTBTesting/Testing-Issues#4520)
