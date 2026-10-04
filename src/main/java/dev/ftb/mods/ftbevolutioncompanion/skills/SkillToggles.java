@@ -11,8 +11,8 @@ import net.minecraft.network.codec.StreamCodec;
 
 public record SkillToggles(boolean fasterStrikes, boolean unarmedRamp, boolean cheatDeath,
                            boolean lightning, boolean shadowStep, boolean blademaster,
-                           boolean rainOfArrows, boolean piercingStrike) {
-    public static final SkillToggles DEFAULT = new SkillToggles(true, true, true, true, true, true, true, true);
+                           boolean rainOfArrows, boolean piercingStrike, boolean scytheArc) {
+    public static final SkillToggles DEFAULT = new SkillToggles(true, true, true, true, true, true, true, true, true);
 
     public static final MapCodec<SkillToggles> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.BOOL.optionalFieldOf("faster_strikes", true).forGetter(SkillToggles::fasterStrikes),
@@ -22,7 +22,8 @@ public record SkillToggles(boolean fasterStrikes, boolean unarmedRamp, boolean c
             Codec.BOOL.optionalFieldOf("shadow_step", true).forGetter(SkillToggles::shadowStep),
             Codec.BOOL.optionalFieldOf("blademaster", true).forGetter(SkillToggles::blademaster),
             Codec.BOOL.optionalFieldOf("rain_of_arrows", true).forGetter(SkillToggles::rainOfArrows),
-            Codec.BOOL.optionalFieldOf("piercing_strike", true).forGetter(SkillToggles::piercingStrike)
+            Codec.BOOL.optionalFieldOf("piercing_strike", true).forGetter(SkillToggles::piercingStrike),
+            Codec.BOOL.optionalFieldOf("scythe_arc", true).forGetter(SkillToggles::scytheArc)
     ).apply(instance, SkillToggles::new));
 
     public static final StreamCodec<ByteBuf, SkillToggles> STREAM_CODEC = StreamCodec.composite(
@@ -34,6 +35,7 @@ public record SkillToggles(boolean fasterStrikes, boolean unarmedRamp, boolean c
             ByteBufCodecs.BOOL, SkillToggles::blademaster,
             ByteBufCodecs.BOOL, SkillToggles::rainOfArrows,
             ByteBufCodecs.BOOL, SkillToggles::piercingStrike,
+            ByteBufCodecs.BOOL, SkillToggles::scytheArc,
             SkillToggles::new);
 
     public enum Toggle {
@@ -44,7 +46,8 @@ public record SkillToggles(boolean fasterStrikes, boolean unarmedRamp, boolean c
         SHADOW_STEP("shadow_step"),
         BLADEMASTER("blademaster"),
         RAIN_OF_ARROWS("rain_of_arrows"),
-        PIERCING_STRIKE("piercing_strike");
+        PIERCING_STRIKE("piercing_strike"),
+        SCYTHE_ARC("scythe_arc");
 
         private final String key;
 
@@ -72,6 +75,7 @@ public record SkillToggles(boolean fasterStrikes, boolean unarmedRamp, boolean c
             case BLADEMASTER -> blademaster;
             case RAIN_OF_ARROWS -> rainOfArrows;
             case PIERCING_STRIKE -> piercingStrike;
+            case SCYTHE_ARC -> scytheArc;
         };
     }
 
@@ -84,6 +88,7 @@ public record SkillToggles(boolean fasterStrikes, boolean unarmedRamp, boolean c
                 toggle == Toggle.SHADOW_STEP ? !shadowStep : shadowStep,
                 toggle == Toggle.BLADEMASTER ? !blademaster : blademaster,
                 toggle == Toggle.RAIN_OF_ARROWS ? !rainOfArrows : rainOfArrows,
-                toggle == Toggle.PIERCING_STRIKE ? !piercingStrike : piercingStrike);
+                toggle == Toggle.PIERCING_STRIKE ? !piercingStrike : piercingStrike,
+                toggle == Toggle.SCYTHE_ARC ? !scytheArc : scytheArc);
     }
 }

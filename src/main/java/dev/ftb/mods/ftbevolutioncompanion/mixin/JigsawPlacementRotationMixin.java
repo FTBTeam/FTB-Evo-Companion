@@ -53,7 +53,7 @@ public abstract class JigsawPlacementRotationMixin {
                 .map(key -> key.identifier().toString())
                 .orElse("<direct holder, no key>");
         if (ftbevolutioncompanion$SEEN.add("head:" + id)) {
-            ftbevolutioncompanion$LOGGER.info("addPieces entered with start pool {} at {}", id, pos);
+            ftbevolutioncompanion$LOGGER.debug("addPieces entered with start pool {} at {}", id, pos);
         }
     }
 
@@ -81,7 +81,7 @@ public abstract class JigsawPlacementRotationMixin {
                 .map(key -> key.identifier().toString())
                 .orElse("<direct holder, no key>");
         if (ftbevolutioncompanion$SEEN.add(id)) {
-            ftbevolutioncompanion$LOGGER.info("jigsaw rotation hook saw start pool {}", id);
+            ftbevolutioncompanion$LOGGER.debug("jigsaw rotation hook saw start pool {}", id);
         }
         if (!id.contains("spawn_pyramid")) return rolled;
         ftbevolutioncompanion$LOGGER.info("forcing rotation NONE for the spawn pyramid jigsaw (rolled {})", rolled);

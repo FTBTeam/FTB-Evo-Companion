@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbevolutioncompanion.skills.handler;
 
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
+import dev.ftb.mods.ftbevolutioncompanion.skills.AllyCheck;
 import dev.ftb.mods.ftbevolutioncompanion.skills.ApothicHooks;
 import dev.ftb.mods.ftbevolutioncompanion.skills.CombatState;
 import dev.ftb.mods.ftbevolutioncompanion.skills.HomingState;
@@ -11,14 +12,18 @@ import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
 
 import dev.ftb.mods.ftbevolutioncompanion.mixin.AbstractArrowInvoker;
+import dev.ftb.mods.ftbevolutioncompanion.mixin.LivingEntityAccessor;
 
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -40,12 +45,12 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
-import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
@@ -57,12 +62,21 @@ public final class CombatTicker {
     private static final Identifier SHIELD_MASTERY_TOUGHNESS_ID = FTBEvolutionCompanion.id("shield_mastery_toughness");
     private static final Identifier AXE_DESPERATION_ID = FTBEvolutionCompanion.id("axe_desperation");
 
+    private static boolean applyingLightning;
+    private static boolean applyingSkillDamage;
+
     private CombatTicker() {
+    }
+
+    public static boolean isApplyingSkillDamage() {
+        return applyingSkillDamage;
     }
 
     public static void onDamagePost(LivingDamageEvent.Post event) {
         DamageSource source = event.getSource();
         if (OutgoingDamage.isApplyingEcho()
+                || applyingLightning
+                || applyingSkillDamage
                 || !(source.getEntity() instanceof ServerPlayer attacker)
                 || event.getEntity() == attacker) {
             return;
@@ -94,6 +108,9 @@ public final class CombatTicker {
                 state.swordHitCounter++;
             } else {
                 state.swordHitCounter = 0;
+            }
+            if (SkillsHelper.isScythe(attacker.getMainHandItem())) {
+                reapingArc(attacker, target, state.lastScytheHitDamage);
             }
         } else if (source.getDirectEntity() instanceof AbstractArrow arrow) {
             resetUnarmed(state);
@@ -144,26 +161,114 @@ public final class CombatTicker {
             return;
         }
         if (attacker.level() instanceof ServerLevel serverLevel) {
-            LightningBolt bolt = EntityType.LIGHTNING_BOLT.spawn(serverLevel, target.blockPosition(),
-                    EntitySpawnReason.TRIGGERED);
-            if (bolt != null) {
-                bolt.setCause(attacker);
-                state.skillLightningBoltId = bolt.getUUID();
-            }
+            strikeLightning(serverLevel, attacker, target);
             SkillCooldowns.start(attacker, SkillCooldowns.LIGHTNING, CompanionConfig.LIGHTNING_COOLDOWN.get());
         }
     }
 
-    public static void onEntityStruckByLightning(EntityStruckByLightningEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player
-                && event.getLightning().getUUID()
-                        .equals(player.getData(SkillsRegistry.COMBAT_STATE).skillLightningBoltId)) {
-            event.setCanceled(true);
+    private static void strikeLightning(ServerLevel level, ServerPlayer attacker, LivingEntity target) {
+        Vec3 strike = Vec3.atBottomCenterOf(target.blockPosition());
+        LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level, EntitySpawnReason.TRIGGERED);
+        if (bolt != null) {
+            bolt.snapTo(strike);
+            bolt.setVisualOnly(true);
+            level.addFreshEntity(bolt);
         }
+
+        float damage = CompanionConfig.LIGHTNING_DAMAGE.get().floatValue();
+        if (damage <= 0.0F) {
+            return;
+        }
+        AABB area = new AABB(strike.x - 3.0, strike.y - 3.0, strike.z - 3.0,
+                strike.x + 3.0, strike.y + 9.0, strike.z + 3.0);
+        DamageSource source = level.damageSources().source(DamageTypes.LIGHTNING_BOLT, attacker);
+        applyingLightning = true;
+        try {
+            for (LivingEntity victim : level.getEntitiesOfClass(LivingEntity.class, area,
+                    entity -> entity != attacker && entity.isAlive() && !entity.isSpectator()
+                            && !(entity instanceof Player other && !attacker.canHarmPlayer(other)))) {
+                int invulnerableTime = victim.invulnerableTime;
+                victim.invulnerableTime = 0;
+                if (!victim.hurtServer(level, source, damage)) {
+                    victim.invulnerableTime = invulnerableTime;
+                }
+            }
+        } finally {
+            applyingLightning = false;
+        }
+    }
+
+    private static void reapingArc(ServerPlayer attacker, LivingEntity target, float damage) {
+        double fraction = SkillsHelper.attr(attacker, SkillsRegistry.REAPING_ARC);
+        if (fraction <= 0.0 || damage <= 0.0F || !SkillsAbilities.toggles(attacker).scytheArc()
+                || !(attacker.level() instanceof ServerLevel level)) {
+            return;
+        }
+        double radius = CompanionConfig.SCYTHE_ARC_RADIUS.get();
+        double minDot = Math.cos(Math.toRadians(CompanionConfig.SCYTHE_ARC_ANGLE.get() / 2.0));
+        Vec3 look = attacker.getLookAngle();
+        Vec3 facing = new Vec3(look.x, 0.0, look.z);
+        boolean hasFacing = facing.lengthSqr() > 1.0E-4;
+        if (hasFacing) {
+            facing = facing.normalize();
+        }
+        Vec3 origin = attacker.position();
+        DamageSource source = level.damageSources().playerAttack(attacker);
+        float arcDamage = (float) (damage * fraction);
+        int hits = 0;
+        applyingSkillDamage = true;
+        try {
+            for (LivingEntity victim : level.getEntitiesOfClass(LivingEntity.class,
+                    attacker.getBoundingBox().inflate(radius, 1.0, radius),
+                    entity -> entity != target && AllyCheck.isHostileTarget(attacker, entity))) {
+                Vec3 offset = victim.position().subtract(origin);
+                Vec3 horizontal = new Vec3(offset.x, 0.0, offset.z);
+                double distance = horizontal.length();
+                if (distance > radius) {
+                    continue;
+                }
+                if (hasFacing && distance > 1.0E-4 && facing.dot(horizontal.scale(1.0 / distance)) < minDot) {
+                    continue;
+                }
+                if (hurtIgnoringCooldown(level, victim, source, arcDamage)) {
+                    hits++;
+                }
+            }
+        } finally {
+            applyingSkillDamage = false;
+        }
+        if (hits == 0) {
+            return;
+        }
+        double heal = SkillsHelper.attr(attacker, SkillsRegistry.SOUL_HARVEST);
+        if (heal > 0.0) {
+            attacker.heal((float) (heal * hits));
+        }
+        double dx = -Math.sin(Math.toRadians(attacker.getYRot()));
+        double dz = Math.cos(Math.toRadians(attacker.getYRot()));
+        level.sendParticles(ParticleTypes.SWEEP_ATTACK, attacker.getX() + dx, attacker.getY(0.5),
+                attacker.getZ() + dz, 0, dx, 0.0, dz, 0.0);
+        level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
+                SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1.0F, 0.8F);
+    }
+
+    private static boolean hurtIgnoringCooldown(ServerLevel level, LivingEntity victim, DamageSource source,
+                                                float damage) {
+        int invulnerableTime = victim.invulnerableTime;
+        victim.invulnerableTime = 0;
+        if (victim.hurtServer(level, source, damage)) {
+            return true;
+        }
+        victim.invulnerableTime = invulnerableTime;
+        return false;
     }
 
     public static void onLivingDeath(LivingDeathEvent event) {
         if (!(event.getSource().getEntity() instanceof ServerPlayer killer) || event.getEntity() == killer) {
+            return;
+        }
+        if (SkillsHelper.isScythe(killer.getMainHandItem())) {
+            onScytheKill(killer, event.getEntity());
             return;
         }
         if (SkillsHelper.isUnarmed(killer)) {
@@ -176,6 +281,51 @@ public final class CombatTicker {
             if (flat > 0.0) {
                 killer.heal((float) flat);
             }
+        }
+    }
+
+    private static void onScytheKill(ServerPlayer killer, LivingEntity victim) {
+        double rhythm = SkillsHelper.attr(killer, SkillsRegistry.REAP_RHYTHM);
+        if (rhythm > 0.0 && killer.getRandom().nextDouble() < rhythm) {
+            ((LivingEntityAccessor) killer).ftbevo$setAttackStrengthTicker(
+                    (int) Math.ceil(killer.getCurrentItemAttackStrengthDelay()));
+        }
+        double toll = SkillsHelper.attr(killer, SkillsRegistry.DEATHS_TOLL);
+        if (applyingSkillDamage || toll <= 0.0
+                || !SkillCooldowns.ready(killer, SkillCooldowns.DEATHS_TOLL)
+                || !(killer.level() instanceof ServerLevel level)) {
+            return;
+        }
+        float damage = (float) (victim.getMaxHealth() * toll);
+        double radius = CompanionConfig.DEATHS_TOLL_RADIUS.get();
+        DamageSource source = level.damageSources().playerAttack(killer);
+        applyingSkillDamage = true;
+        try {
+            for (LivingEntity nearby : level.getEntitiesOfClass(LivingEntity.class,
+                    victim.getBoundingBox().inflate(radius),
+                    entity -> entity != victim && entity.distanceToSqr(victim) <= radius * radius
+                            && AllyCheck.isHostileTarget(killer, entity))) {
+                hurtIgnoringCooldown(level, nearby, source, damage);
+            }
+        } finally {
+            applyingSkillDamage = false;
+        }
+        SkillCooldowns.start(killer, SkillCooldowns.DEATHS_TOLL, CompanionConfig.DEATHS_TOLL_COOLDOWN.get());
+        Vec3 center = victim.getBoundingBox().getCenter();
+        level.sendParticles(ParticleTypes.SOUL, center.x, center.y, center.z, 30,
+                radius / 3.0, 0.5, radius / 3.0, 0.05);
+        level.playSound(null, center.x, center.y, center.z,
+                SoundEvents.SOUL_ESCAPE, SoundSource.PLAYERS, 1.5F, 0.8F);
+    }
+
+    public static void onLivingExperienceDrop(LivingExperienceDropEvent event) {
+        if (!(event.getAttackingPlayer() instanceof ServerPlayer player)
+                || !SkillsHelper.isScythe(player.getMainHandItem())) {
+            return;
+        }
+        double tithe = SkillsHelper.attr(player, SkillsRegistry.SOUL_TITHE);
+        if (tithe > 0.0) {
+            event.setDroppedExperience((int) Math.round(event.getDroppedExperience() * (1.0 + tithe)));
         }
     }
 
@@ -352,6 +502,15 @@ public final class CombatTicker {
                 || !(player.level() instanceof ServerLevel serverLevel)) {
             return;
         }
+        CombatState combatState = player.getData(SkillsRegistry.COMBAT_STATE);
+        if (combatState.lancerLeapPending) {
+            combatState.lancerLeapPending = false;
+            event.setDamageMultiplier(0.0F);
+            if (SkillsHelper.isSpear(player.getMainHandItem())) {
+                lancerSmash(serverLevel, player, event.getDistance());
+            }
+            return;
+        }
         double attrValue = SkillsHelper.attr(player, SkillsRegistry.GROUND_SLAM);
         if (attrValue <= 0.0 || event.getDistance() < CompanionConfig.GROUND_SLAM_MIN_FALL.get()) {
             return;
@@ -374,12 +533,71 @@ public final class CombatTicker {
                 SoundEvents.MACE_SMASH_GROUND, SoundSource.PLAYERS, 1.0F, 1.0F);
     }
 
+    private static void lancerSmash(ServerLevel level, ServerPlayer player, double fallDistance) {
+        double bonus;
+        if (fallDistance <= 3.0) {
+            bonus = 4.0 * fallDistance;
+        } else if (fallDistance <= 8.0) {
+            bonus = 12.0 + 2.0 * (fallDistance - 3.0);
+        } else {
+            bonus = 22.0 + fallDistance - 8.0;
+        }
+        double damage = (player.getAttributeValue(Attributes.ATTACK_DAMAGE) + bonus)
+                * (1.0 + SkillsHelper.attr(player, SkillsRegistry.SPEAR_DAMAGE))
+                * (1.0 + SkillsHelper.attr(player, SkillsRegistry.LANCER_DAMAGE))
+                * CompanionConfig.LANCER_DAMAGE_SCALE.get();
+        double radius = SkillsHelper.attr(player, SkillsRegistry.LANCER_RADIUS);
+        double edge = CompanionConfig.LANCER_EDGE_DAMAGE.get();
+        Vec3 impact = player.position();
+        AABB search = radius > 0.0
+                ? new AABB(impact, impact).inflate(radius, 2.0, radius)
+                : player.getBoundingBox().inflate(0.25);
+        DamageSource source = level.damageSources().playerAttack(player);
+        double knockbackRadius = Math.max(radius, 1.5);
+        applyingSkillDamage = true;
+        try {
+            for (LivingEntity victim : level.getEntitiesOfClass(LivingEntity.class, search,
+                    entity -> AllyCheck.isHostileTarget(player, entity))) {
+                Vec3 offset = victim.position().subtract(impact);
+                double distance = Math.sqrt(offset.x * offset.x + offset.z * offset.z);
+                double falloff = 1.0;
+                if (radius > 0.0) {
+                    if (distance > radius) {
+                        continue;
+                    }
+                    falloff = 1.0 - (1.0 - edge) * (distance / radius);
+                }
+                if (!hurtIgnoringCooldown(level, victim, source, (float) (damage * falloff))) {
+                    continue;
+                }
+                double power = 0.7 * (knockbackRadius - distance)
+                        * (1.0 - victim.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+                if (power > 0.0 && distance > 1.0E-4) {
+                    victim.push(offset.x / distance * power, 0.7, offset.z / distance * power);
+                    if (victim instanceof ServerPlayer hitPlayer) {
+                        hitPlayer.connection.send(new ClientboundSetEntityMotionPacket(hitPlayer));
+                    }
+                }
+            }
+        } finally {
+            applyingSkillDamage = false;
+        }
+        level.levelEvent(2013, player.getOnPos(), 750);
+        level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                SoundEvents.MACE_SMASH_GROUND_HEAVY, SoundSource.PLAYERS, 1.0F, 1.0F);
+    }
+
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || player.tickCount % 10 != 0) {
             return;
         }
         CombatState state = player.getData(SkillsRegistry.COMBAT_STATE);
         long now = player.level().getGameTime();
+
+        int protection = CompanionConfig.LANCER_PROTECTION_TICKS.get();
+        if (state.lancerLeapPending && protection > 0 && now - state.lancerLeapStart > protection) {
+            state.lancerLeapPending = false;
+        }
 
         if (state.fasterStrikesStacks > 0
                 && now - state.lastUnarmedHitTime > CompanionConfig.FASTER_STRIKES_TIMEOUT.get()) {

@@ -16,6 +16,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -35,12 +36,34 @@ public final class IncomingDamage {
                 && event.getEntity().hasEffect(SkillsRegistry.MARKED)) {
             event.setAmount(event.getAmount() * (float) (1.0 + CompanionConfig.MARKED_DAMAGE_BONUS.get()));
         }
+        if (event.getEntity() instanceof Player victim
+                && SkillsHelper.isSpear(victim.getMainHandItem())
+                && SkillsHelper.isShield(victim.getOffhandItem())
+                && event.getSource().getDirectEntity() instanceof LivingEntity meleeAttacker
+                && meleeAttacker == event.getSource().getEntity()
+                && isInFront(victim, meleeAttacker)) {
+            double phalanx = SkillsHelper.attr(victim, SkillsRegistry.PHALANX);
+            if (phalanx > 0.0) {
+                event.setAmount(event.getAmount() * (float) Math.max(0.0, 1.0 - phalanx));
+            }
+        }
         if (event.getEntity() instanceof Player victim && SkillsHelper.isUnarmed(victim)) {
             double resist = SkillsHelper.attr(victim, SkillsRegistry.UNARMED_RESISTANCE);
             if (resist > 0.0) {
                 event.setAmount(event.getAmount() * (float) Math.max(0.0, 1.0 - resist));
             }
         }
+    }
+
+    private static boolean isInFront(LivingEntity victim, LivingEntity attacker) {
+        Vec3 toAttacker = attacker.position().subtract(victim.position());
+        Vec3 horizontal = new Vec3(toAttacker.x, 0.0, toAttacker.z);
+        Vec3 look = victim.getLookAngle();
+        Vec3 facing = new Vec3(look.x, 0.0, look.z);
+        if (horizontal.lengthSqr() < 1.0E-4 || facing.lengthSqr() < 1.0E-4) {
+            return true;
+        }
+        return facing.normalize().dot(horizontal.normalize()) > 0.5;
     }
 
     public static void onDamagePre(LivingDamageEvent.Pre event) {

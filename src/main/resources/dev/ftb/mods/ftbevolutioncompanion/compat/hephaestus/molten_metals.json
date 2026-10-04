@@ -1,0 +1,292 @@
+[
+  {
+    "name": "molten_adamantite",
+    "colour": "0x435F64",
+    "temperature": 2000
+  },
+  {
+    "name": "molten_aeternium",
+    "colour": "0x7A3EAA",
+    "temperature": 2000
+  },
+  {
+    "name": "molten_aurichalcum",
+    "colour": "0xD77126",
+    "temperature": 2000
+  },
+  {
+    "name": "molten_titanium",
+    "colour": "0xA28CB6",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_chromium",
+    "colour": "0xB5A6A6",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_wrought_iron",
+    "colour": "0x58595D",
+    "temperature": 800
+  },
+  {
+    "name": "molten_conductive_alloy",
+    "colour": "0xD79985",
+    "temperature": 800
+  },
+  {
+    "name": "molten_redstone_alloy",
+    "colour": "0xC7453A",
+    "temperature": 800
+  },
+  {
+    "name": "molten_energetic_alloy",
+    "colour": "0xE6994A",
+    "temperature": 800
+  },
+  {
+    "name": "molten_pulsating_alloy",
+    "colour": "0x5DBA8F",
+    "temperature": 800
+  },
+  {
+    "name": "molten_soularium",
+    "colour": "0x62543F",
+    "temperature": 800
+  },
+  {
+    "name": "molten_vibrant_alloy",
+    "colour": "0xDDEF8C",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_dark_steel",
+    "colour": "0x4C494E",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_end_steel",
+    "colour": "0xB5B77F",
+    "temperature": 1600
+  },
+  {
+    "name": "molten_energetic_silver",
+    "colour": "0x8BAAC2",
+    "temperature": 800
+  },
+  {
+    "name": "molten_vivid_alloy",
+    "colour": "0x5BACBC",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_energized_copper",
+    "colour": "0xE1A47B",
+    "temperature": 800
+  },
+  {
+    "name": "molten_energized_gold",
+    "colour": "0xE3E693",
+    "temperature": 800
+  },
+  {
+    "name": "molten_advanced_alloy",
+    "colour": "0x6E452D",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_energized_alloy",
+    "colour": "0x5397C6",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_crystallized_alloy",
+    "colour": "0x0C5C95",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_niobium",
+    "colour": "0x625DB9",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_slatesteel",
+    "colour": "0x4B4B4B",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_tungsten_slatesteel",
+    "colour": "0x746532",
+    "temperature": 1600
+  },
+  {
+    "name": "molten_desh",
+    "colour": "0xCA8049",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_ferricore",
+    "colour": "0x7BA3A3",
+    "temperature": 800
+  },
+  {
+    "name": "molten_blazegold",
+    "colour": "0x8E4A45",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_eclipse_alloy",
+    "colour": "0x313B48",
+    "temperature": 1600
+  },
+  {
+    "name": "molten_thaumium",
+    "colour": "0x50417B",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_void_metal",
+    "colour": "0x1F1232",
+    "temperature": 1600
+  },
+  {
+    "name": "molten_hellforged",
+    "colour": "0x80C2C6",
+    "temperature": 1600
+  },
+  {
+    "name": "molten_iesnium",
+    "colour": "0x79ACB2",
+    "temperature": 1200
+  },
+  {
+    "name": "molten_atlantic_gold",
+    "colour": "0xC69434",
+    "temperature": 1200
+  },
+  {
+    "name": "molten_aquarine_steel",
+    "colour": "0x77A48F",
+    "temperature": 1200
+  },
+  {
+    "name": "molten_dragonsteel_fire",
+    "colour": "0xC9816B",
+    "temperature": 1600
+  },
+  {
+    "name": "molten_dragonsteel_ice",
+    "colour": "0x709FAF",
+    "temperature": 1600
+  },
+  {
+    "name": "molten_dragonsteel_lightning",
+    "colour": "0xAB96A9",
+    "temperature": 1600
+  },
+  {
+    "name": "molten_adamant",
+    "colour": "0x8395F1",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_duratium",
+    "colour": "0x7C67A7",
+    "temperature": 1600
+  },
+  {
+    "name": "molten_prometheum",
+    "colour": "0x73B1A8",
+    "temperature": 1600
+  },
+  {
+    "name": "molten_ruby",
+    "colour": "0xC14A46",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_sapphire",
+    "colour": "0x4360A5",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_peridot",
+    "colour": "0x6DB03E",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_topaz",
+    "colour": "0x87C6EC",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_onyx",
+    "colour": "0x38211C",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_garnet",
+    "colour": "0x941716",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_moonstone",
+    "colour": "0xBBC6D6",
+    "temperature": 800
+  },
+  {
+    "name": "molten_prismarine",
+    "colour": "0x96BFB2",
+    "temperature": 800
+  },
+  {
+    "name": "molten_certus_quartz",
+    "colour": "0x6791B5",
+    "temperature": 800
+  },
+  {
+    "name": "molten_fluix",
+    "colour": "0x352E5E",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_entro",
+    "colour": "0x118F82",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_fluxite",
+    "colour": "0x872DAB",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_xychorium",
+    "colour": "0x50D5E5",
+    "temperature": 800
+  },
+  {
+    "name": "molten_spirit_attuned",
+    "colour": "0xB3ABBA",
+    "temperature": 1000
+  },
+  {
+    "name": "molten_dark_gem",
+    "colour": "0x2B2B2B",
+    "temperature": 800
+  },
+  {
+    "name": "molten_celestine",
+    "colour": "0xC5CFF2",
+    "temperature": 800
+  },
+  {
+    "name": "molten_olivine",
+    "colour": "0x6A8528",
+    "temperature": 800
+  },
+  {
+    "name": "molten_dimensional_shard",
+    "colour": "0x93BCC7",
+    "temperature": 1000
+  }
+]

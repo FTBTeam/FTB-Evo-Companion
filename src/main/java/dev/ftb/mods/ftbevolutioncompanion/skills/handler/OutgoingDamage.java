@@ -12,7 +12,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 
@@ -29,7 +31,7 @@ public final class OutgoingDamage {
     }
 
     public static void onIncomingDamage(LivingIncomingDamageEvent event) {
-        if (applyingEcho) {
+        if (applyingEcho || CombatTicker.isApplyingSkillDamage()) {
             return;
         }
         LivingEntity target = event.getEntity();
@@ -63,6 +65,35 @@ public final class OutgoingDamage {
                 double echo = SkillsHelper.attr(attacker, SkillsRegistry.ECHO_STRIKES);
                 echoProc = echo > 0.0 && attacker.getRandom().nextDouble() < echo;
                 applyBleed(attacker, target);
+            } else if (SkillsHelper.isSpear(mainHand)) {
+                mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.SPEAR_DAMAGE);
+                if (!attacker.isUsingItem()) {
+                    long now = attacker.level().getGameTime();
+                    if (state.lastJabTick != now) {
+                        state.lastJabTick = now;
+                        state.jabTargetsThisTick = 0;
+                    }
+                    mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.SKEWER) * state.jabTargetsThisTick;
+                    state.jabTargetsThisTick++;
+                    double pin = SkillsHelper.attr(attacker, SkillsRegistry.PIN);
+                    if (pin > 0.0 && canReceiveDebuff(target) && attacker.getRandom().nextDouble() < pin) {
+                        target.addEffect(new MobEffectInstance(SkillsRegistry.PINNED,
+                                CompanionConfig.PIN_DURATION_TICKS.get(), 0), attacker);
+                    }
+                }
+                double distance = SkillsHelper.attr(attacker, SkillsRegistry.SPEAR_DISTANCE);
+                if (distance > 0.0) {
+                    mult *= 1.0 + distance * reachFraction(attacker, target, mainHand);
+                }
+                if (!target.onGround()) {
+                    mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.DRAGOON);
+                }
+            } else if (SkillsHelper.isScythe(mainHand)) {
+                mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.SCYTHE_DAMAGE);
+                double wither = SkillsHelper.attr(attacker, SkillsRegistry.WITHERING_EDGE);
+                if (wither > 0.0 && canReceiveDebuff(target) && attacker.getRandom().nextDouble() < wither) {
+                    applyWither(attacker, target);
+                }
             } else if (SkillsHelper.isAxe(mainHand)) {
                 if (SkillsHelper.healthFraction(target) < CompanionConfig.DEATH_BLOW_THRESHOLD.get()) {
                     mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.DEATH_BLOW);
@@ -113,6 +144,11 @@ public final class OutgoingDamage {
             event.setAmount(event.getAmount() * (float) mult + (float) bonus);
         }
 
+        if (source.isDirect() && source.getDirectEntity() == attacker
+                && SkillsHelper.isScythe(attacker.getMainHandItem())) {
+            state.lastScytheHitDamage = event.getAmount();
+        }
+
         if (echoProc) {
             state.pendingEchoTarget = target.getUUID();
             state.pendingEchoAmount = event.getAmount();
@@ -150,6 +186,27 @@ public final class OutgoingDamage {
         } else {
             target.invulnerableTime = invulnerableTime;
         }
+    }
+
+    private static boolean canReceiveDebuff(LivingEntity target) {
+        return !(target instanceof Player player) || (!player.isCreative() && !player.isSpectator());
+    }
+
+    private static double reachFraction(ServerPlayer attacker, LivingEntity target, ItemStack weapon) {
+        double maxReach = attacker.getAttackRangeWith(weapon).effectiveMaxRange(attacker);
+        if (maxReach <= 0.0) {
+            return 0.0;
+        }
+        double distance = Math.sqrt(target.getBoundingBox().distanceToSqr(attacker.getEyePosition()));
+        return Math.clamp(distance / maxReach, 0.0, 1.0);
+    }
+
+    private static void applyWither(ServerPlayer attacker, LivingEntity target) {
+        MobEffectInstance current = target.getEffect(MobEffects.WITHER);
+        int amplifier = current == null ? 0
+                : Math.min(current.getAmplifier() + 1, CompanionConfig.WITHERING_MAX_STACKS.get() - 1);
+        target.addEffect(new MobEffectInstance(MobEffects.WITHER,
+                CompanionConfig.WITHERING_DURATION_TICKS.get(), amplifier), attacker);
     }
 
     private static void applyBleed(ServerPlayer attacker, LivingEntity target) {

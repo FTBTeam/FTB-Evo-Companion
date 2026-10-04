@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - FTB Skyline: a machine you pipe resources into to complete Feed The Beast quests
 - `/givehat <targets> <hat|random>` (permission level 2) unlocks a Hats (Classic) hat, or a random one the player does not have yet
 - Feed The Beast items: ten challenge components, the Heart of the Beast and the Beast Trophy, an animated two-block display piece
-- Nautec bacteria that grow Adamantite, Aeternium and Aurichalcum
+- Kelp Slurry and Algal Lipid, the items the modpack's Lipophiles bacteria use
 - Chat announcements when teams change place on the Feed The Beast leaderboard, hourly by default; `announce_interval_minutes` sets the interval (0 for right away, -1 for off) and `announce_only_on_change` can post the full leaderboard every interval instead
 - FTB Fabricator recipes that need a stage show a readable name for it in JEI, on the Fabricator screen and in Jade, taken from a `stage.ftbevolutioncompanion.<stage>` lang key
 - Magic skill tree support: 37 new skill attributes that scale Ars Magica, Thaumaturge, Apothic Enchanting, Roots Classic, Witchery, Neo Vitae, Animus, EvilCraft, Occultism and Anima
@@ -21,9 +21,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Magic mod tooltips and screens show costs, cooldowns and strengths with the player's Magic skills applied
 - Gunnery skill support: 12 new skill attributes for Iron's Arms 'n Artifice guns covering damage, fire rate, reload speed, bullet speed, spread, ammo saving, extra bullets, knockback, seeking and ramping fire, plus stronger Cowboy Hat and Tricorne abilities (FTBTesting/Testing-Issues#4487)
 - Gunnery skill attributes for bullet piercing, ricochet, recoil control and airborne accuracy (FTBTesting/Testing-Issues#4487)
+- Molten fluids and buckets for 58 metals and gems, so Hephaestus can melt them and cast tool parts from them
+- Hephaestus tool traits Magical, Magically Jagged, Demonic, Nautical, Dragonfire, Dragonfrost and Dragonstorm
+- Hephaestus tool tiers 6 and 7 for Adamantite, Aeternium and Aurichalcum heads
 
 ### Fixed
 
+- LTX Industries tanks no longer crash the game when they render fluid with a shader pack on
+- Nether portals no longer generate inside the spawn pyramid. A portal lit in the Nether near spawn could build its Overworld side into the pyramid and clear blocks there; it now generates under or beside it instead
+- Mob Flow Utilities flow pads flooding nearby players with entity movement packets, which caused connection timeouts around large mob farms (FTBTesting/Testing-Issues#4520)
+- Hephaestus tools mining Adamantite, Aeternium and Aurichalcum ore below the tier those ores need, and tier 4 heads mining like wood
+- Storm Caller strikes setting fires; the bolt is now cosmetic and deals its damage directly, ignoring the hit cooldown from the axe swing
 - Being charmed by an Ice and Fire siren disconnecting the player or clearing their resource packs (FTBTesting/AI_Testing#45)
 - Just Dire Things ore scanners and X-ray not showing Aurichalcum ore
 - The game crashing when fuel is put into a Mystical Agriculture Soulium Spawner, and fuel not dragging into the fuel slot of other Mystical Agriculture machines (FTBTesting/Testing-Issues#4498, BlakeBr0/MysticalAgriculture#883)
@@ -62,6 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- The Hephaestus Constantan tool material, and Molten Tungsten with its bucket
 - Adamantite, Aeternium and Aurichalcum and their ores, worldgen, tools and armor, which moved to the FTB Armory mod
 - The GuideMe guide screen click fix, since GuideMe 26.1.14 fixes it and the old fix stopped the game from starting (AppliedEnergistics/GuideME#105)
 - The GuideMe structure preview memory fix, since GuideMe 26.1.14 fixes it and the old fix crashed the game on any page with a 3D scene (AppliedEnergistics/GuideME#106)

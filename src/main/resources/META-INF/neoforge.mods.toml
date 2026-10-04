@@ -39,7 +39,7 @@ side = "BOTH"
 
 [[dependencies.${mod_id}]]
 modId = "ftbteams"
-type = "required"
+type = "optional"
 versionRange = "[${ftb_teams_version},)"
 ordering = "AFTER"
 side = "BOTH"

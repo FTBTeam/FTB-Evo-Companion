@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbevolutioncompanion.skills;
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
 import dev.ftb.mods.ftbevolutioncompanion.skills.effect.BleedingEffect;
 import dev.ftb.mods.ftbevolutioncompanion.skills.effect.MarkedEffect;
+import dev.ftb.mods.ftbevolutioncompanion.skills.effect.PinnedEffect;
 import dev.ftb.mods.ftbevolutioncompanion.skills.effect.StunnedEffect;
 
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -82,6 +83,27 @@ public final class SkillsRegistry {
     public static final DeferredHolder<Attribute, Attribute> RIPOSTE = attr("riposte", 1.0);
     public static final DeferredHolder<Attribute, Attribute> PIERCING_STRIKE = attr("piercing_strike", 1.0);
 
+    public static final DeferredHolder<Attribute, Attribute> SPEAR_DAMAGE = attr("spear_damage", 5.0);
+    public static final DeferredHolder<Attribute, Attribute> SPEAR_DURABILITY = attr("spear_durability", 20.0);
+    public static final DeferredHolder<Attribute, Attribute> SKEWER = attr("skewer", 2.0);
+    public static final DeferredHolder<Attribute, Attribute> SPEAR_DISTANCE = attr("spear_distance", 2.0);
+    public static final DeferredHolder<Attribute, Attribute> PIN = attr("pin", 1.0);
+    public static final DeferredHolder<Attribute, Attribute> DRAGOON = attr("dragoon", 3.0);
+    public static final DeferredHolder<Attribute, Attribute> PHALANX = attr("phalanx", 0.9);
+    public static final DeferredHolder<Attribute, Attribute> SPEAR_REACH = attr("spear_reach", 3.0);
+    public static final DeferredHolder<Attribute, Attribute> LANCER = attr("lancer", 1.0);
+    public static final DeferredHolder<Attribute, Attribute> LANCER_RADIUS = attr("lancer_radius", 5.0);
+    public static final DeferredHolder<Attribute, Attribute> LANCER_DAMAGE = attr("lancer_damage", 3.0);
+
+    public static final DeferredHolder<Attribute, Attribute> SCYTHE_DAMAGE = attr("scythe_damage", 5.0);
+    public static final DeferredHolder<Attribute, Attribute> SCYTHE_DURABILITY = attr("scythe_durability", 20.0);
+    public static final DeferredHolder<Attribute, Attribute> REAPING_ARC = attr("reaping_arc", 1.0);
+    public static final DeferredHolder<Attribute, Attribute> SOUL_HARVEST = attr("soul_harvest", 20.0);
+    public static final DeferredHolder<Attribute, Attribute> REAP_RHYTHM = attr("reap_rhythm", 1.0);
+    public static final DeferredHolder<Attribute, Attribute> WITHERING_EDGE = attr("withering_edge", 1.0);
+    public static final DeferredHolder<Attribute, Attribute> SOUL_TITHE = attr("soul_tithe", 5.0);
+    public static final DeferredHolder<Attribute, Attribute> DEATHS_TOLL = attr("deaths_toll", 1.0);
+
     public static final DeferredHolder<Attribute, Attribute> ARMOR_DURABILITY = attr("armor_durability", 20.0);
     public static final DeferredHolder<Attribute, Attribute> MINING_FORTUNE = attr("mining_fortune", 20.0);
     public static final DeferredHolder<Attribute, Attribute> PICKAXE_DURABILITY = attr("pickaxe_durability", 20.0);
@@ -89,6 +111,7 @@ public final class SkillsRegistry {
     public static final DeferredHolder<MobEffect, MobEffect> STUNNED = EFFECTS.register("stunned", StunnedEffect::new);
     public static final DeferredHolder<MobEffect, MobEffect> BLEEDING = EFFECTS.register("bleeding", BleedingEffect::new);
     public static final DeferredHolder<MobEffect, MobEffect> MARKED = EFFECTS.register("marked", MarkedEffect::new);
+    public static final DeferredHolder<MobEffect, MobEffect> PINNED = EFFECTS.register("pinned", PinnedEffect::new);
 
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<SkillToggles>> TOGGLES =
             ATTACHMENTS.register("skill_toggles",

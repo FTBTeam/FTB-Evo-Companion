@@ -2,17 +2,24 @@ package dev.ftb.mods.ftbevolutioncompanion.skills;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
 public final class SkillsHelper {
+    public static final TagKey<Item> SCYTHES =
+            TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(SkillsRegistry.NAMESPACE, "scythes"));
+
     private SkillsHelper() {
     }
 
@@ -29,7 +36,15 @@ public final class SkillsHelper {
     }
 
     public static boolean isSword(ItemStack stack) {
-        return stack.is(ItemTags.SWORDS);
+        return stack.is(ItemTags.SWORDS) && !isScythe(stack);
+    }
+
+    public static boolean isSpear(ItemStack stack) {
+        return stack.is(ItemTags.SPEARS);
+    }
+
+    public static boolean isScythe(ItemStack stack) {
+        return stack.is(SCYTHES);
     }
 
     public static boolean isPickaxe(ItemStack stack) {
@@ -65,6 +80,12 @@ public final class SkillsHelper {
     }
 
     public static Holder<Attribute> durabilityAttribute(ItemStack stack) {
+        if (isScythe(stack)) {
+            return SkillsRegistry.SCYTHE_DURABILITY;
+        }
+        if (isSpear(stack)) {
+            return SkillsRegistry.SPEAR_DURABILITY;
+        }
         if (isSword(stack)) {
             return SkillsRegistry.SWORD_DURABILITY;
         }

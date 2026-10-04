@@ -28,6 +28,7 @@ public final class CompanionConfig {
     public static final ModConfigSpec.BooleanValue RITUAL_OWNER_OFFLINE_FULL_COST;
     public static final ModConfigSpec.IntValue CHEAT_DEATH_INVULN_TICKS;
     public static final ModConfigSpec.IntValue LIGHTNING_COOLDOWN;
+    public static final ModConfigSpec.DoubleValue LIGHTNING_DAMAGE;
     public static final ModConfigSpec.DoubleValue MULTISHOT_SPREAD;
     public static final ModConfigSpec.BooleanValue MULTISHOT_X_PATTERN;
     public static final ModConfigSpec.DoubleValue EXTRA_JUMP_HEIGHT;
@@ -63,6 +64,19 @@ public final class CompanionConfig {
     public static final ModConfigSpec.DoubleValue RIPOSTE_DAMAGE_MULT;
     public static final ModConfigSpec.IntValue RIPOSTE_BUFF_WINDOW;
     public static final ModConfigSpec.IntValue RIPOSTE_COOLDOWN;
+    public static final ModConfigSpec.IntValue PIN_DURATION_TICKS;
+    public static final ModConfigSpec.DoubleValue LANCER_LEAP_HEIGHT;
+    public static final ModConfigSpec.DoubleValue LANCER_FORWARD_SPEED;
+    public static final ModConfigSpec.DoubleValue LANCER_DAMAGE_SCALE;
+    public static final ModConfigSpec.DoubleValue LANCER_EDGE_DAMAGE;
+    public static final ModConfigSpec.IntValue LANCER_COOLDOWN;
+    public static final ModConfigSpec.IntValue LANCER_PROTECTION_TICKS;
+    public static final ModConfigSpec.DoubleValue SCYTHE_ARC_RADIUS;
+    public static final ModConfigSpec.DoubleValue SCYTHE_ARC_ANGLE;
+    public static final ModConfigSpec.IntValue WITHERING_DURATION_TICKS;
+    public static final ModConfigSpec.IntValue WITHERING_MAX_STACKS;
+    public static final ModConfigSpec.DoubleValue DEATHS_TOLL_RADIUS;
+    public static final ModConfigSpec.IntValue DEATHS_TOLL_COOLDOWN;
 
     public static final ModConfigSpec.BooleanValue ENFORCE_WORLD_SPAWN;
     public static final ModConfigSpec.BooleanValue PYRAMID_BIOME;
@@ -226,6 +240,10 @@ public final class CompanionConfig {
                 .comment("Cooldown in ticks between lightning strike procs.")
                 .defineInRange("lightning_cooldown", 100, 0, 1728000);
 
+        LIGHTNING_DAMAGE = builder
+                .comment("Damage dealt by a Storm Caller strike to each entity in range. Strikes do not set fires.")
+                .defineInRange("lightning_damage", 5.0, 0.0, 1024.0);
+
         SHADOW_STEP_COOLDOWN = builder
                 .comment("Cooldown in ticks between shadow step teleports.")
                 .defineInRange("shadow_step_cooldown", 200, 0, 1728000);
@@ -365,6 +383,58 @@ public final class CompanionConfig {
         RIPOSTE_COOLDOWN = builder
                 .comment("Cooldown in ticks between riposte parries.")
                 .defineInRange("riposte_cooldown", 100, 0, 1728000);
+
+        PIN_DURATION_TICKS = builder
+                .comment("Duration in ticks of the Pinned effect applied by Pinning Strike.")
+                .defineInRange("pin_duration_ticks", 40, 1, 12000);
+
+        LANCER_LEAP_HEIGHT = builder
+                .comment("Height in blocks the Lancer leap reaches at its peak.")
+                .defineInRange("lancer_leap_height", 30.0, 1.0, 128.0);
+
+        LANCER_FORWARD_SPEED = builder
+                .comment("Horizontal speed in blocks per tick added along the look direction when the Lancer leap starts.")
+                .defineInRange("lancer_forward_speed", 0.3, 0.0, 4.0);
+
+        LANCER_DAMAGE_SCALE = builder
+                .comment("Multiplier applied to the Lancer landing damage after every other bonus.")
+                .defineInRange("lancer_damage_scale", 1.0, 0.0, 10.0);
+
+        LANCER_EDGE_DAMAGE = builder
+                .comment("Fraction of the Lancer landing damage dealt at the edge of the smash radius.")
+                .defineInRange("lancer_edge_damage", 0.5, 0.0, 1.0);
+
+        LANCER_COOLDOWN = builder
+                .comment("Cooldown in ticks between Lancer leaps.")
+                .defineInRange("lancer_cooldown", 600, 0, 1728000);
+
+        LANCER_PROTECTION_TICKS = builder
+                .comment("Ticks after a Lancer leap before its fall protection expires. 0 keeps it until the next fall.")
+                .defineInRange("lancer_protection_ticks", 0, 0, 72000);
+
+        SCYTHE_ARC_RADIUS = builder
+                .comment("Radius in blocks of the Reaping Arc.")
+                .defineInRange("scythe_arc_radius", 3.0, 0.5, 16.0);
+
+        SCYTHE_ARC_ANGLE = builder
+                .comment("Width in degrees of the Reaping Arc in front of the player.")
+                .defineInRange("scythe_arc_angle", 120.0, 1.0, 360.0);
+
+        WITHERING_DURATION_TICKS = builder
+                .comment("Duration in ticks of the Wither applied by Withering Edge.")
+                .defineInRange("withering_duration_ticks", 100, 1, 72000);
+
+        WITHERING_MAX_STACKS = builder
+                .comment("Maximum Wither level Withering Edge can stack up to.")
+                .defineInRange("withering_max_stacks", 3, 1, 10);
+
+        DEATHS_TOLL_RADIUS = builder
+                .comment("Radius in blocks of the Death's Toll soul burst.")
+                .defineInRange("deaths_toll_radius", 4.0, 0.5, 16.0);
+
+        DEATHS_TOLL_COOLDOWN = builder
+                .comment("Cooldown in ticks between Death's Toll bursts.")
+                .defineInRange("deaths_toll_cooldown", 100, 0, 1728000);
 
         ROOTS_POTENCY_CAP = builder
                 .comment("Highest Roots Classic staff potency after the Magic tree bonus is added.")

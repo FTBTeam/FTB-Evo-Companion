@@ -1,5 +1,8 @@
 package dev.ftb.mods.ftbevolutioncompanion;
 
+import dev.ftb.mods.ftbevolutioncompanion.client.MoltenMetalsClient;
+import dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus.MoltenMetals;
+import dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus.ToolTraits;
 import dev.ftb.mods.ftbevolutioncompanion.athletics.AthleticsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.athletics.AthleticsRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.athletics.network.AthleticsPayloads;
@@ -81,6 +84,8 @@ public class FTBEvolutionCompanion {
         CompanionContent.FTB_BLOCKS.register(eventBus);
         CompanionContent.FTB_ITEMS.register(eventBus);
         CompanionContent.FTB_BLOCK_ENTITIES.register(eventBus);
+        MoltenMetals.register(eventBus);
+        ToolTraits.register();
         eventBus.addListener(CompanionContent::onBuildCreativeTabs);
         ChallengeRegistry.BLOCK_ENTITIES.register(eventBus);
         eventBus.addListener(ChallengePayloads::register);
@@ -138,6 +143,7 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(IncomingDamage::onDamagePre);
         NeoForge.EVENT_BUS.addListener(CombatTicker::onDamagePost);
         NeoForge.EVENT_BUS.addListener(CombatTicker::onLivingDeath);
+        NeoForge.EVENT_BUS.addListener(CombatTicker::onLivingExperienceDrop);
         NeoForge.EVENT_BUS.addListener(CombatTicker::onProjectileImpact);
         NeoForge.EVENT_BUS.addListener(CombatTicker::onShieldBlock);
         NeoForge.EVENT_BUS.addListener(CombatTicker::onLivingFall);
@@ -146,7 +152,6 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(CombatTicker::onAttackEntity);
         NeoForge.EVENT_BUS.addListener(CombatTicker::onLivingDrops);
         NeoForge.EVENT_BUS.addListener(CombatTicker::onEntityJoin);
-        NeoForge.EVENT_BUS.addListener(CombatTicker::onEntityStruckByLightning);
         eventBus.addListener(AthleticsPayloads::register);
         NeoForge.EVENT_BUS.addListener(AthleticsAbilities::onPlayerLoggedIn);
         NeoForge.EVENT_BUS.addListener(AthleticsAbilities::onPlayerRespawn);
@@ -155,6 +160,7 @@ public class FTBEvolutionCompanion {
 
         if (dist == Dist.CLIENT) {
             FabricatorClient.register(eventBus);
+            eventBus.addListener(MoltenMetalsClient::onRegisterFluidModels);
             eventBus.addListener(AthleticsKeys::onRegisterKeyMappings);
             NeoForge.EVENT_BUS.addListener(AthleticsClientHandler::onClientTick);
             eventBus.addListener(SkillsKeys::onRegisterKeyMappings);

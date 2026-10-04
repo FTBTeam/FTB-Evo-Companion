@@ -19,5 +19,9 @@ public final class CombatState {
     public UUID pendingEchoTarget;
     public float pendingEchoAmount;
     public long pendingEchoTick;
-    public UUID skillLightningBoltId;
+    public long lastJabTick;
+    public int jabTargetsThisTick;
+    public float lastScytheHitDamage;
+    public boolean lancerLeapPending;
+    public long lancerLeapStart;
 }
