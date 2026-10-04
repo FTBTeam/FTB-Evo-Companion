@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Magic mod tooltips and screens show costs, cooldowns and strengths with the player's Magic skills applied
 - Gunnery skill support: 12 new skill attributes for Iron's Arms 'n Artifice guns covering damage, fire rate, reload speed, bullet speed, spread, ammo saving, extra bullets, knockback, seeking and ramping fire, plus stronger Cowboy Hat and Tricorne abilities (FTBTesting/Testing-Issues#4487)
 - Gunnery skill attributes for bullet piercing, ricochet, recoil control and airborne accuracy (FTBTesting/Testing-Issues#4487)
+- Gunnery skills apply to the Nautec Atlantean Rifle: gun damage and bullet speed raise beam damage, reload speed shortens the charge, fire rate shortens the ramp, ammo saving cuts the power drain, accuracy steadies the shake, knockback pushes targets back, piercing passes the beam through extra targets, ricochet bounces it off the block it hits, and extra bullets let the damage ramp past its normal maximum
 - Molten fluids and buckets for 58 metals and gems, so Hephaestus can melt them and cast tool parts from them
 - Hephaestus tool traits Magical, Magically Jagged, Demonic, Nautical, Dragonfire, Dragonfrost and Dragonstorm
 - Hephaestus tool tiers 6 and 7 for Adamantite, Aeternium and Aurichalcum heads
