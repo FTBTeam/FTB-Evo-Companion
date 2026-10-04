@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Bosses listed in the modpack's `ftb:bosses/` Apotheosis invader definitions spawn as Apothic bosses of that rarity, with a guaranteed affix item drop. Spawner mobs are left alone
 - Lucky Zone Minigames Won statistic, counting Nautec lucky zone catches where the minigame was won
 - Challenge Board: a task-screen-style leaderboard billboard, any size up to 9 x 9, that shows one of the top teams and their progress through the Feed The Beast quest chapter, re-ranked every minute
 - FTB Skyline: a machine you pipe resources into to complete Feed The Beast quests

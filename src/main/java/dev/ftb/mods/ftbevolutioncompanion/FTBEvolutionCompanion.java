@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion;
 
+import dev.ftb.mods.ftbevolutioncompanion.compat.apotheosis.BossInvaderHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.MoltenMetalsClient;
 import dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus.MoltenMetals;
 import dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus.ToolTraits;
@@ -94,6 +95,8 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(ChallengeLeaderboard::onServerStopped);
         NeoForge.EVENT_BUS.addListener(ChallengeBoardCommand::onRegisterCommands);
         NeoForge.EVENT_BUS.addListener(GiveHatCommand::onRegisterCommands);
+        NeoForge.EVENT_BUS.addListener(EventPriority.LOW, BossInvaderHandler::onFinalizeSpawn);
+        NeoForge.EVENT_BUS.addListener(BossInvaderHandler::onEntityJoinLevel);
         NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, CuriosReloadFix::onDatapackSync);
         eventBus.addListener(PowerArmorRecipeSync::register);
         NeoForge.EVENT_BUS.addListener(PowerArmorRecipeSync::onDatapackSync);
