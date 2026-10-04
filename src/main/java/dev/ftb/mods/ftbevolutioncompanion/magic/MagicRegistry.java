@@ -78,6 +78,7 @@ public final class MagicRegistry {
     public static final DeferredHolder<Identifier, Identifier> BREWS_BOTTLED = stat("brews_bottled");
     public static final DeferredHolder<Identifier, Identifier> RESEARCH_COMPLETED = stat("research_completed");
     public static final DeferredHolder<Identifier, Identifier> AFFLICTION_LEVELS = stat("affliction_levels");
+    public static final DeferredHolder<Identifier, Identifier> LUCKY_ZONE_MINIGAMES_WON = stat("lucky_zone_minigames_won");
 
     private MagicRegistry() {
     }
