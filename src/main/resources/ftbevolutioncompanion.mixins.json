@@ -127,6 +127,7 @@
     "compat.hats.client.HatClientPacketsMixin",
     "compat.iceandfire.client.IceAndFireSirenShaderMixin",
     "compat.ltxi.client.LtxiBlockQuadNormalMixin",
+    "client.BlockStateModelWrapperNullModelMixin",
     "compat.justdirethings.client.JustDireThingsOreFinderMixin",
     "AutoGlowingGeoLayerAccessor",
     "PowerArmorJeiRecipesMixin",
