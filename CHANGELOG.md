@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Nautec lucky zone bonus catches and Starcatcher catches no longer get carried off by Streams Reflowing currents on the way to the player
 - The server crashing when a creeper explodes next to a player with the Ars Magica Legacy Thorns ability
 - LTX Industries tanks no longer crash the game when they render fluid with a shader pack on
 - Nether portals no longer generate inside the spawn pyramid. A portal lit in the Nether near spawn could build its Overworld side into the pyramid and clear blocks there; it now generates under or beside it instead
@@ -80,7 +81,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- The Ender Dragon leaves a Dragon Egg on the exit portal every time it is killed, not only the first time
 - The Productive Bees Breeding Chamber picks a new random offspring after every breed, instead of repeating its first pick for the same parents
 - Ice and Fire dragons, cyclopes, trolls and death worms no longer break or burn blocks inside claimed chunks, unless the claim allows mob griefing
 - Frost Bears no longer spawn as igloo guardians
