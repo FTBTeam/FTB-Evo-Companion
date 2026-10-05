@@ -84,6 +84,7 @@
     "StellarisFluidSlotOilMixin",
     "StellarisPumpjackOilMixin",
     "StellarisRefineryOilMixin",
+    "WitcheryArthanaPersistenceMixin",
     "compat.otherworld.AnimaSoulMagicMixin",
     "compat.otherworld.AnimaWorkerEnduranceMixin",
     "compat.otherworld.OccultismCrusherJobMixin",
