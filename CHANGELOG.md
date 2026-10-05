@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `TreasureGoblinEvent.start(ServerPlayer)` opens a Treasure Goblin event for a player without the chance, cooldown or hostile checks, so the pack's `/events force` command can trigger it
+- Players who turned the Treasure Goblin event off with the pack's `/events toggle ftb:treasure_goblin` no longer get goblins
 - Treasure Goblin event: while fighting at least three hostiles, a hit has a 1% chance (once every two hours per player) to open the modpack's `ftb:treasure_goblin` gateway. An Apothic Treasure Goblin runs for the portal and escapes after 10 seconds or on reaching it; killing it pays the gateway's loot plus 1 to 50 shop coins, more the faster it dies
 - Bosses listed in the modpack's `ftb:bosses/` Apotheosis invader definitions spawn as Apothic bosses of that rarity, with a guaranteed affix item drop. Spawner mobs are left alone
 - Lucky Zone Minigames Won statistic, counting Nautec lucky zone catches where the minigame was won

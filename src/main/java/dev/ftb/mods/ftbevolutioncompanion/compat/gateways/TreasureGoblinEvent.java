@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbevolutioncompanion.compat.gateways;
 
 import com.mojang.serialization.Codec;
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
+import dev.ftb.mods.ftbevolutioncompanion.compat.kubejs.PlayerEventToggles;
 import dev.ftb.mods.ftbevolutioncompanion.compat.sgeconomy.ShopCoins;
 import dev.ftb.mods.ftbevolutioncompanion.mixin.MobAccessor;
 import dev.shadowsoffire.gateways.entity.GatewayEntity;
@@ -54,6 +55,7 @@ public final class TreasureGoblinEvent {
 
     private static final Identifier GATEWAY = Identifier.fromNamespaceAndPath("ftb", "treasure_goblin");
     private static final String GOBLIN_TAG = "ftbevo.treasure_goblin";
+    private static final String EVENT_NAME = "ftb:treasure_goblin";
     private static final float CHANCE = 0.01F;
     private static final long COOLDOWN_TICKS = 2L * 60L * 60L * 20L;
     private static final double FIGHT_RANGE = 16.0;
@@ -76,7 +78,9 @@ public final class TreasureGoblinEvent {
                 || player.isSpectator()) {
             return;
         }
-        if (level.getRandom().nextFloat() >= CHANCE || hasActiveEvent(player)) {
+        if (level.getRandom().nextFloat() >= CHANCE
+                || hasActiveEvent(player)
+                || PlayerEventToggles.isDisabled(player, EVENT_NAME)) {
             return;
         }
         long now = level.getGameTime();
@@ -90,20 +94,28 @@ public final class TreasureGoblinEvent {
         if (hostiles < MIN_HOSTILES) {
             return;
         }
+        if (start(player)) {
+            player.setData(LAST_EVENT, now);
+        }
+    }
+
+    public static boolean start(ServerPlayer player) {
+        if (!(player.level() instanceof ServerLevel level) || hasActiveEvent(player)) {
+            return false;
+        }
         BlockPos portalPos = findOpenSpot(level, player.blockPosition(), 12, 16);
         if (portalPos == null) {
-            return;
+            return false;
         }
         DynamicHolder<Gateway> holder = GatewayRegistry.INSTANCE.holder(GATEWAY);
         if (!holder.isBound()) {
-            return;
+            return false;
         }
         GatewayEntity gate = holder.get().createEntity(level, player);
         gate.setPos(portalPos.getX() + 0.5, portalPos.getY(), portalPos.getZ() + 0.5);
         if (!level.addFreshEntity(gate)) {
-            return;
+            return false;
         }
-        player.setData(LAST_EVENT, now);
         ACTIVE.put(gate.getUUID(), new Active(player.getUUID(), level.dimension()));
         player.connection.send(new ClientboundSetTitlesAnimationPacket(5, 50, 10));
         player.connection.send(new ClientboundSetTitleTextPacket(
@@ -111,6 +123,7 @@ public final class TreasureGoblinEvent {
         player.connection.send(new ClientboundSetSubtitleTextPacket(
                 Component.translatable("ftbevolutioncompanion.treasure_goblin.subtitle")
                         .withStyle(ChatFormatting.YELLOW)));
+        return true;
     }
 
     public static void onWaveEntitySpawned(GateEvent.WaveEntitySpawned event) {
