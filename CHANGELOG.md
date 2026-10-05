@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Rift Weaver boss fights work inside an enclosed arena, such as the modpack's underwater dome: his flight height, roaming, reinforcements, Tidal Surge and Seismic Smash all measure from the arena floor instead of the ocean surface above it
+- Trial spawners can summon the Rift Weaver, one at a time, and keep tracking him anywhere in his arena so the reward only drops once he is dead
+- A Rift Weaver summoned by a trial spawner gets his Apotheosis boss rarity, like one spawned any other way
 - The FTB Evolution 2 advancement tab (`ftb:evolution/root`) is always listed first
 - `TreasureGoblinEvent.start(ServerPlayer)` opens a Treasure Goblin event for a player without the chance, cooldown or hostile checks, so the pack's `/events force` command can trigger it
 - Players who turned the Treasure Goblin event off with the pack's `/events toggle ftb:treasure_goblin` no longer get goblins
@@ -34,6 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Oritech solar panels generate in fixed-time dimensions with a bright sky, such as the JAMD mining dimensions and the JAVD void, and Ender IO solar panels run at full output there instead of following the Overworld's day and night
+- The Treasure Goblin now dodges players for most of its 10 seconds before running for the portal, instead of escaping in about 3 seconds
 - The SG Economy coin bag no longer draws over item tooltips, hints and other popups on inventory screens (FTBTesting/Testing-Issues#4564)
 - Block models that have not loaded yet under ModernFix dynamic resources no longer crash the renderer; they draw as empty instead. This fixes the XyCraft Extractor JEI pages for recipes with water or lava (FTBTesting/Testing-Issues#4543)
 - Nautec lucky zone bonus catches and Starcatcher catches no longer get carried off by Streams Reflowing currents on the way to the player
@@ -89,6 +94,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The game log shows one summary line for recipes that cannot be placed in the recipe book, instead of a warning per recipe (about 2,800 per load in the modpack)
 - Challenge Boards count every quest in the ranked chapter, optional ones included, for both the percentage and the completed count
 - The Productive Bees Breeding Chamber picks a new random offspring after every breed, instead of repeating its first pick for the same parents
 - Ice and Fire dragons, cyclopes, trolls and death worms no longer break or burn blocks inside claimed chunks, unless the claim allows mob griefing

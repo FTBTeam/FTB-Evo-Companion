@@ -61,6 +61,7 @@ public final class TreasureGoblinEvent {
     private static final double FIGHT_RANGE = 16.0;
     private static final int MIN_HOSTILES = 3;
     private static final int ESCAPE_TICKS = 200;
+    private static final int DASH_TICKS = 80;
     private static final int MAX_COINS = 50;
     private static final int MIN_COINS = 1;
     private static final double GOBLIN_SPEED = 1.4;
@@ -145,9 +146,10 @@ public final class TreasureGoblinEvent {
         MobAccessor accessor = (MobAccessor) goblin;
         accessor.ftbevo$getGoalSelector().removeAllGoals(goal -> true);
         accessor.ftbevo$getTargetSelector().removeAllGoals(goal -> true);
-        accessor.ftbevo$getGoalSelector().addGoal(0, new RunToPortalGoal(goblin, gate, GOBLIN_SPEED));
         active.goblin = goblin.getUUID();
         active.waveStart = level.getGameTime();
+        accessor.ftbevo$getGoalSelector()
+                .addGoal(0, new RunToPortalGoal(goblin, gate, GOBLIN_SPEED, active.dashAt()));
     }
 
     public static void onLivingDeath(LivingDeathEvent event) {
@@ -206,7 +208,11 @@ public final class TreasureGoblinEvent {
                 it.remove();
                 continue;
             }
-            if (goblin != null && goblin.isAlive() && !active.escaped && goblin.distanceToSqr(gate) < ESCAPE_DISTANCE_SQ) {
+            if (goblin != null
+                    && goblin.isAlive()
+                    && !active.escaped
+                    && level.getGameTime() >= active.dashAt()
+                    && goblin.distanceToSqr(gate) < ESCAPE_DISTANCE_SQ) {
                 active.escaped = true;
                 notifyEscaped(server, active);
                 goblin.discard();
@@ -270,6 +276,10 @@ public final class TreasureGoblinEvent {
         private Active(UUID player, ResourceKey<Level> dimension) {
             this.player = player;
             this.dimension = dimension;
+        }
+
+        private long dashAt() {
+            return this.waveStart + ESCAPE_TICKS - DASH_TICKS;
         }
     }
 }

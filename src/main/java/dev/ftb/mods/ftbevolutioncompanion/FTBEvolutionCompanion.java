@@ -14,6 +14,7 @@ import dev.ftb.mods.ftbevolutioncompanion.compat.curios.CuriosReloadFix;
 import dev.ftb.mods.ftbevolutioncompanion.compat.hats.GiveHatCommand;
 import dev.ftb.mods.ftbevolutioncompanion.compat.iceandfire.IceAndFireClaimProtection;
 import dev.ftb.mods.ftbevolutioncompanion.compat.iris.IrisGeckoGlow;
+import dev.ftb.mods.ftbevolutioncompanion.compat.oceanmobs.RiftArena;
 import dev.ftb.mods.ftbevolutioncompanion.compat.powerarmor.PowerArmorRecipeSync;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.network.ChallengePayloads;
@@ -75,6 +76,7 @@ public class FTBEvolutionCompanion {
     private static final Logger LOGGER = LoggerFactory.getLogger(FTBEvolutionCompanion.class);
 
     public FTBEvolutionCompanion(IEventBus eventBus, ModContainer container, Dist dist) {
+        System.setProperty("streamsreflowing.nostalldump", "true");
         container.registerConfig(ModConfig.Type.COMMON, CompanionConfig.SPEC);
         FabricatorRegistry.register(eventBus);
         CompanionSounds.SOUND_EVENTS.register(eventBus);
@@ -99,6 +101,7 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(GiveHatCommand::onRegisterCommands);
         NeoForge.EVENT_BUS.addListener(EventPriority.LOW, BossInvaderHandler::onFinalizeSpawn);
         NeoForge.EVENT_BUS.addListener(BossInvaderHandler::onEntityJoinLevel);
+        NeoForge.EVENT_BUS.addListener(RiftArena::onSpawnPlacementCheck);
         NeoForge.EVENT_BUS.addListener(TreasureGoblinEvent::onDamage);
         NeoForge.EVENT_BUS.addListener(TreasureGoblinEvent::onWaveEntitySpawned);
         NeoForge.EVENT_BUS.addListener(TreasureGoblinEvent::onLivingDeath);

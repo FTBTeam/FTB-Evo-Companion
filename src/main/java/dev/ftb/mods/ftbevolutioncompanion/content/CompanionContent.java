@@ -136,8 +136,6 @@ public final class CompanionContent {
             properties -> properties.useBlockDescriptionPrefix().stacksTo(1)
     );
 
-    public static final DeferredItem<Item> KELP_SLURRY = FTB_ITEMS.registerSimpleItem("kelp_slurry");
-    public static final DeferredItem<Item> ALGAL_LIPID = FTB_ITEMS.registerSimpleItem("algal_lipid");
 
     public static final DeferredItem<BeastItem> DYNAMO_MATRIX = beastComponent("dynamo_matrix", Rarity.UNCOMMON, "first_tier");
     public static final DeferredItem<BeastItem> TECTONIC_INGOT = beastComponent("tectonic_ingot", Rarity.UNCOMMON, "first_tier");
@@ -229,8 +227,6 @@ public final class CompanionContent {
             event.accept(HUNT_STANDARD);
             event.accept(CAUSAL_ANCHOR);
             event.accept(BEAST_HEART);
-            event.accept(KELP_SLURRY);
-            event.accept(ALGAL_LIPID);
         }
     }
 

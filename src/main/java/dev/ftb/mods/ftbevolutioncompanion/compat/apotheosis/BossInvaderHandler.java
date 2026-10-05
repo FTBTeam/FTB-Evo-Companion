@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion.compat.apotheosis;
 
+import dev.ftb.mods.ftbevolutioncompanion.compat.oceanmobs.RiftArena;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.mobs.registries.InvaderRegistry;
 import dev.shadowsoffire.apotheosis.mobs.types.Invader;
@@ -30,7 +31,8 @@ public final class BossInvaderHandler {
         }
         Mob mob = event.getEntity();
         EntitySpawnReason reason = event.getSpawnType();
-        if (reason == EntitySpawnReason.SPAWNER || reason == EntitySpawnReason.TRIAL_SPAWNER) {
+        if (reason == EntitySpawnReason.SPAWNER
+                || (reason == EntitySpawnReason.TRIAL_SPAWNER && !RiftArena.isRiftWeaver(mob.getType()))) {
             mob.getPersistentData().putBoolean(CHECKED_KEY, true);
             return;
         }

@@ -223,8 +223,6 @@
   "fabricator.ftbevolutioncompanion.status.no_power": "Insufficient energy",
   "fabricator.ftbevolutioncompanion.status.output_full": "Output blocked",
   "fabricator.ftbevolutioncompanion.status.no_owner": "Stage recipe needs an owner",
-  "item.ftb.kelp_slurry": "Kelp Slurry",
-  "item.ftb.algal_lipid": "Algal Lipid",
   "attribute.name.ftb.ars_cost_reduction": "Ars Magica Cost Reduction",
   "attribute.name.ftb.ars_spell_power": "Ars Magica Spell Power",
   "attribute.name.ftb.ars_xp_gain": "Ars Magica XP Gain",
