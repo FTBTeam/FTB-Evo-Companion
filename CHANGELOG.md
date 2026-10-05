@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- The FTB Evolution 2 advancement tab (`ftb:evolution/root`) is always listed first
 - `TreasureGoblinEvent.start(ServerPlayer)` opens a Treasure Goblin event for a player without the chance, cooldown or hostile checks, so the pack's `/events force` command can trigger it
 - Players who turned the Treasure Goblin event off with the pack's `/events toggle ftb:treasure_goblin` no longer get goblins
 - Treasure Goblin event: while fighting at least three hostiles, a hit has a 1% chance (once every two hours per player) to open the modpack's `ftb:treasure_goblin` gateway. An Apothic Treasure Goblin runs for the portal and escapes after 10 seconds or on reaching it; killing it pays the gateway's loot plus 1 to 50 shop coins, more the faster it dies
@@ -80,6 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- The LTX Industries tank fluid shader fix; LTX Industries 2.3.0 fixes it itself
 - The Hephaestus Constantan tool material, and Molten Tungsten with its bucket
 - Adamantite, Aeternium and Aurichalcum and their ores, worldgen, tools and armor, which moved to the FTB Armory mod
 - The GuideMe guide screen click fix, since GuideMe 26.1.14 fixes it and the old fix stopped the game from starting (AppliedEnergistics/GuideME#105)

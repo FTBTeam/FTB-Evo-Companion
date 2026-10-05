@@ -6,6 +6,7 @@
   "refmap": "ftbevolutioncompanion.refmap.json",
   "mixins": [
     "AbstractArrowInvoker",
+    "AdvancementTreeTabOrderMixin",
     "ApothicSpawnersEggTooltipMixin",
     "ArmorSlotParagliderMixin",
     "ArsMagicaPiercingStatMixin",
@@ -126,7 +127,6 @@
   "client": [
     "compat.hats.client.HatClientPacketsMixin",
     "compat.iceandfire.client.IceAndFireSirenShaderMixin",
-    "compat.ltxi.client.LtxiBlockQuadNormalMixin",
     "client.BlockStateModelWrapperNullModelMixin",
     "compat.justdirethings.client.JustDireThingsOreFinderMixin",
     "AutoGlowingGeoLayerAccessor",
