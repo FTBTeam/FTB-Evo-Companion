@@ -173,19 +173,20 @@ public final class ChallengeLeaderboard {
         for (TeamData data : file.getAllTeamData()) {
             Team team = teams.getTeamByID(data.getTeamId()).orElse(null);
             if (team == null) continue;
-            int percent = data.getRelativeProgress(chapter);
-            if (percent <= 0) continue;
+            long progressSum = 0;
             int completed = 0;
             int total = 0;
             long lastCompletion = Long.MAX_VALUE;
             for (Quest quest : chapter.getQuests()) {
-                if (quest.isOptionalForProgression(data)) continue;
                 total++;
+                progressSum += data.getRelativeProgress(quest);
                 if (!data.isCompleted(quest)) continue;
                 completed++;
                 long when = data.getCompletedTime(quest.id).map(Date::getTime).orElse(0L);
                 lastCompletion = lastCompletion == Long.MAX_VALUE ? when : Math.max(lastCompletion, when);
             }
+            int percent = total == 0 ? 0 : (int) (progressSum / total);
+            if (progressSum <= 0) continue;
             ranked.add(new Ranked(team.getId(), team.getColoredName(), percent, completed, total, lastCompletion));
         }
 
