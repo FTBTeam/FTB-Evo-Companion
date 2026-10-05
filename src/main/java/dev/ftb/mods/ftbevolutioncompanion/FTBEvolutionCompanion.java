@@ -26,6 +26,7 @@ import dev.ftb.mods.ftbevolutioncompanion.client.PyramidClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsClientHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsKeys;
 import dev.ftb.mods.ftbevolutioncompanion.client.WingTooltips;
+import dev.ftb.mods.ftbevolutioncompanion.compat.sgeconomy.client.CoinBagLayer;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.content.CompanionContent;
 import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorRegistry;
@@ -179,6 +180,7 @@ public class FTBEvolutionCompanion {
             NeoForge.EVENT_BUS.addListener(SkillsClientHandler::onLeftClickEmpty);
             NeoForge.EVENT_BUS.addListener(SkillsClientHandler::onLeftClickBlock);
             NeoForge.EVENT_BUS.addListener(WingTooltips::onItemTooltip);
+            NeoForge.EVENT_BUS.addListener(CoinBagLayer::onRenderForeground);
             eventBus.addListener(ChallengeBoardClient::onRegisterRenderers);
             NeoForge.EVENT_BUS.addListener(ChallengeBoardClient::onLoggingOut);
             eventBus.addListener(PyramidClient::onRegisterRenderers);

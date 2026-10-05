@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- The SG Economy coin bag no longer draws over item tooltips, hints and other popups on inventory screens (FTBTesting/Testing-Issues#4564)
 - Block models that have not loaded yet under ModernFix dynamic resources no longer crash the renderer; they draw as empty instead. This fixes the XyCraft Extractor JEI pages for recipes with water or lava (FTBTesting/Testing-Issues#4543)
 - Nautec lucky zone bonus catches and Starcatcher catches no longer get carried off by Streams Reflowing currents on the way to the player
 - The server crashing when a creeper explodes next to a player with the Ars Magica Legacy Thorns ability

@@ -148,7 +148,8 @@
     "compat.sorcery.client.ThaumJeiInstabilityMixin",
     "compat.sorcery.client.ThaumWandVisDiscountTooltipMixin",
     "compat.otherworld.client.AnimaSpellScreenMixin",
-    "compat.otherworld.client.AnimaSoulFocusTooltipMixin"
+    "compat.otherworld.client.AnimaSoulFocusTooltipMixin",
+    "compat.sgeconomy.client.SGEconomyCurrencyDisplayMixin"
   ],
   "injectors": {
     "defaultRequire": 1
