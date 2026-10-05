@@ -94,6 +94,7 @@
     "StellarisPumpjackOilMixin",
     "StellarisRefineryOilMixin",
     "TrialSpawnerMixin",
+    "WitcheryArthanaPersistenceMixin",
     "compat.otherworld.AnimaSoulMagicMixin",
     "compat.otherworld.AnimaWorkerEnduranceMixin",
     "compat.otherworld.OccultismCrusherJobMixin",
