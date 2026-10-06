@@ -10,15 +10,16 @@ tasks.named('wrapper', Wrapper).configure {
 	distributionType = Wrapper.DistributionType.BIN
 }
 
-version = "${minecraft_version}.${mod_version}"
+apply from: 'https://raw.githubusercontent.com/FTBTeam/mods-meta/v1/gradle/publishing-2.gradle'
+apply from: 'https://raw.githubusercontent.com/FTBTeam/mods-meta/v1/gradle/utils.gradle'
+apply from: 'https://raw.githubusercontent.com/FTBTeam/mods-meta/v1/gradle/changelog.gradle'
+
+version = createModVersion(project)
 group = project.maven_group
 
 base {
 	archivesName = project.archives_base_name
 }
-
-apply from: 'https://raw.githubusercontent.com/FTBTeam/mods-meta/main/gradle/changelog.gradle'
-apply from: "https://raw.githubusercontent.com/FTBTeam/mods-meta/main/gradle/publishing.gradle"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
@@ -239,8 +240,7 @@ publishMods {
 	file = jar.archiveFile
 	version = project.version // Pretty sure it defaults to this
 
-	def tag = providers.environmentVariable("TAG").getOrElse("release")
-	type = tag.endsWith("-beta") ? BETA : (tag.endsWith("-alpha") ? ALPHA : STABLE)
+	type = createReleaseType(project)
 
 	curseforge {
 		accessToken = CFToken.orElse("missing")
@@ -252,27 +252,4 @@ publishMods {
 	}
 }
 
-publishing {
-	publications {
-		register('mavenJava', MavenPublication) {
-			version = ftbPublishing.mavenVersion
-            artifactId = archives_base_name
-			from components.java
-			artifact sourcesJar
-			// Uncomment this if you want to create an API jar
-			// artifact apiJar
-		}
-	}
-
-	repositories {
-		if (ftbPublishing.ftbToken) {
-			maven {
-				url ftbPublishing.ftbURL
-				credentials {
-					username = ftbPublishing.ftbUser
-					password = ftbPublishing.ftbToken
-				}
-			}
-		}
-	}
-}
+createMavenPublishingBlock(project)

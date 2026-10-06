@@ -18,6 +18,7 @@ import dev.ftb.mods.ftbevolutioncompanion.compat.jei.RecipeSyncTypes;
 import dev.ftb.mods.ftbevolutioncompanion.compat.streams.StreamsRemoval;
 import dev.ftb.mods.ftbevolutioncompanion.compat.oceanmobs.RiftArena;
 import dev.ftb.mods.ftbevolutioncompanion.compat.powerarmor.PowerArmorRecipeSync;
+import dev.ftb.mods.ftbevolutioncompanion.compat.starcatcher.StarcatcherPayloads;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.network.ChallengePayloads;
 import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsClientHandler;
@@ -116,6 +117,9 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, CuriosReloadFix::onDatapackSync);
         eventBus.addListener(PowerArmorRecipeSync::register);
         NeoForge.EVENT_BUS.addListener(PowerArmorRecipeSync::onDatapackSync);
+        if (ModList.get().isLoaded("starcatcher")) {
+            eventBus.addListener(StarcatcherPayloads::register);
+        }
         PyramidRegistry.BLOCK_ENTITIES.register(eventBus);
         eventBus.addListener(PyramidRegistry::onRegisterCapabilities);
         eventBus.addListener(PyramidPayloads::register);
