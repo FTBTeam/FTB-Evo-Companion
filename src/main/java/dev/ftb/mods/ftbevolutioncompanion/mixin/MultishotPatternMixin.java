@@ -3,14 +3,12 @@ package dev.ftb.mods.ftbevolutioncompanion.mixin;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
-
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.phys.Vec3;
-
 import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,11 +20,20 @@ public abstract class MultishotPatternMixin {
     private static final double DIAGONAL = Math.sqrt(0.5);
 
     @Inject(
-            method = "shootProjectile(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/projectile/Projectile;IFFFLnet/minecraft/world/entity/LivingEntity;)V",
+            method =
+                    "shootProjectile(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/projectile/Projectile;IFFFLnet/minecraft/world/entity/LivingEntity;)V",
             at = @At("RETURN"))
-    private void ftbevo$xPattern(LivingEntity shooter, Projectile projectile, int index, float velocity,
-                                 float inaccuracy, float angle, LivingEntity target, CallbackInfo ci) {
-        if (angle == 0.0F || target != null
+    private void ftbevo$xPattern(
+            LivingEntity shooter,
+            Projectile projectile,
+            int index,
+            float velocity,
+            float inaccuracy,
+            float angle,
+            LivingEntity target,
+            CallbackInfo ci) {
+        if (angle == 0.0F
+                || target != null
                 || !(shooter instanceof Player player)
                 || SkillsHelper.attr(player, SkillsRegistry.MULTISHOT) <= 0.0
                 || !CompanionConfig.MULTISHOT_X_PATTERN.get()) {

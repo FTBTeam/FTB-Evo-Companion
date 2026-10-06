@@ -1,5 +1,7 @@
 package dev.ftb.mods.ftbevolutioncompanion;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
@@ -7,19 +9,14 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public final class AttributePersistence {
     private static final String NAMESPACE = "ftb";
 
     private static List<Holder<Attribute>> attributes;
 
-    private AttributePersistence() {
-    }
+    private AttributePersistence() {}
 
     public static void onPlayerClone(PlayerEvent.Clone event) {
         if (!event.isWasDeath()) {
@@ -34,7 +31,7 @@ public final class AttributePersistence {
                 continue;
             }
             to.setBaseValue(from.getBaseValue());
-            for (AttributeModifier modifier : from.getModifiers()) {
+            for (AttributeModifier modifier : from.getPermanentModifiers()) {
                 to.addOrReplacePermanentModifier(modifier);
             }
         }

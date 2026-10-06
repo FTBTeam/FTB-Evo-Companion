@@ -1,17 +1,14 @@
 package dev.ftb.mods.ftbevolutioncompanion.skills.network;
 
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
+import dev.ftb.mods.ftbevolutioncompanion.skills.SkillToggles;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
-import dev.ftb.mods.ftbevolutioncompanion.skills.SkillToggles;
-
 import io.netty.buffer.ByteBuf;
-
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
-
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
@@ -49,8 +46,7 @@ public final class SkillsPayloads {
         }
     }
 
-    private SkillsPayloads() {
-    }
+    private SkillsPayloads() {}
 
     public static void register(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar("1");
@@ -67,7 +63,9 @@ public final class SkillsPayloads {
             }
         });
 
-        registrar.playToClient(SyncSkillToggles.TYPE, SyncSkillToggles.STREAM_CODEC,
+        registrar.playToClient(
+                SyncSkillToggles.TYPE,
+                SyncSkillToggles.STREAM_CODEC,
                 (payload, context) -> context.player().setData(SkillsRegistry.TOGGLES, payload.toggles()));
     }
 }

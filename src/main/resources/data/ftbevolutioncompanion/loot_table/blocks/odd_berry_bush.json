@@ -1,0 +1,56 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "neoforge:can_item_perform_ability",
+          "ability": "shears_dig"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "ftbevolutioncompanion:odd_berry_bush"
+        }
+      ]
+    },
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1.0,
+        "max": 3.0
+      },
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "neoforge:can_item_perform_ability",
+            "ability": "shears_dig"
+          }
+        },
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "ftbevolutioncompanion:odd_berry_bush",
+          "properties": {
+            "age": "2"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:tag",
+          "name": "rootsclassic:berries",
+          "expand": true
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:explosion_decay"
+        }
+      ]
+    }
+  ],
+  "random_sequence": "ftbevolutioncompanion:blocks/odd_berry_bush"
+}

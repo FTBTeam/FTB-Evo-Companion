@@ -10,6 +10,74 @@ Please feel free to contribute to this project but **always** open an issue firs
 
 Companion mods are provided `as is`. If you opt to use this mod inside another modpack we **will not** provide support, and any issues opened regarding problems due to use in another modpack will be closed!
 
+## FTB Fabricator
+
+`ftbevolutioncompanion:ftb_fabricator` is a powered bulk assembler. Its nine input
+slots form a buffer: ingredient positions do not matter, and counts can span
+stacks. It has three item output slots, two 16,000 mB input tanks, one 16,000 mB
+output tank, and a 1,000,000 FE buffer. Automation and bucket interaction work on
+every face except the front. Automation inserts into inputs and extracts from
+outputs. Players can remove input items through the GUI.
+
+Recipes use `ftbevolutioncompanion:fabricating`. Supply them through a datapack
+under `data/<namespace>/recipe/` or `ServerEvents.recipes` with `event.custom(...)`.
+No production recipes or machine crafting cost are bundled; the pack defines its
+own progression and balance.
+
+```json
+{
+  "type": "ftbevolutioncompanion:fabricating",
+  "ingredients": [
+    { "ingredient": "#c:ingots/iron", "count": 64 },
+    { "ingredient": "minecraft:emerald", "count": 13 }
+  ],
+  "fluids": [{ "id": "minecraft:lava", "amount": 4000 }],
+  "results": [{ "id": "minecraft:diamond", "count": 2 }],
+  "fluid_results": [{ "id": "minecraft:water", "amount": 1000 }],
+  "ticks": 200,
+  "energy_per_tick": 400,
+  "stage": "fabrication_tier_2"
+}
+```
+
+This example demonstrates the format; it is not a balanced production recipe.
+Omit `stage` for an ungated recipe. The stage is a literal player scoreboard tag
+(for example, assigned with `/tag <player> add fabrication_tier_2`), checked against
+the placing player's tags. The machine refreshes that snapshot while its owner is
+online and the machine is loaded, and saves it for offline operation. Other GUI
+users cannot change its owner. Breaking and replacing it assigns a new owner;
+stored energy and fluids are lost, and inventory contents drop normally.
+
+`ingredients` accepts up to nine ingredient/count entries, `fluids` up to two,
+`results` up to three valid item stacks, and `fluid_results` up to one fluid stack.
+Both item-only and fluid-only recipes are supported. Counts are positive; each
+fluid entry is at most 16,000 mB. `ticks` is 1–72,000 and `energy_per_tick` is
+0–1,000,000. Inputs are consumed together on completion. Missing power or blocked
+outputs pause processing without consuming ingredients. Removing ingredients or
+losing the required stage resets progress. Recipe changes on reload also reset
+progress; an unchanged recipe resumes saved progress after a restart.
+
+JEI shows ingredient totals, fluids, outputs, processing time, total energy, and
+the required stage. Its transfer button moves the full item quantities, including
+splitting them across slots; fluids must be supplied separately. Jade shows the
+owner, stage, status, progress, stored power, and inventory/tank contents. The
+animated chamber projects the first item output while working; fluid-only recipes
+use the projector and scan effect. Sounds currently use vanilla placeholders.
+
+For KubeJS, pass the same object to `event.custom`:
+
+```js
+ServerEvents.recipes(event => {
+  event.custom({
+    type: 'ftbevolutioncompanion:fabricating',
+    ingredients: [{ ingredient: '#c:ingots/iron', count: 64 }],
+    results: [{ id: 'minecraft:iron_block', count: 7 }],
+    ticks: 200,
+    energy_per_tick: 100
+  }).id('ftb:fabricator/example');
+});
+```
+
 ## Custom Attributes
 
 All companion attributes are registered under the `ftb:` namespace, attach to players only, default to `0`, and are granted in-game by Puffish Skills tree nodes (`puffish_skills:attribute` rewards with `add_value`). Every mechanic can be tested without a skill tree via `/attribute @s ftb:<name> base set <value>`.
@@ -38,6 +106,12 @@ Values applied directly to the player survive death. Vanilla only carries perman
 | `ftb:bow_durability` | 0–20 | Virtual Unbreaking levels for bows (no enchantment applied; stacks with real Unbreaking) |
 | `ftb:crossbow_durability` | 0–20 | Same, for crossbows |
 | `ftb:homing_arrows` | 0–1 | 1 = your arrows lock onto the living target you aimed at (closest to your aim within ~25°, up to 48 blocks). An arrow that hits a block instead of the target redirects mid-air toward it, up to 3 times, then flies normally. Applies to bows and crossbows, not tridents |
+| `ftb:rain_of_arrows` | 0–1 | Chance a crossbow hit calls a ring of 8 arrows down on the target from 8 blocks up, all converging on it (config `rain_of_arrows_count`, `_radius`, `_height`). The summoned arrows cannot be picked up. Toggleable |
+| `ftb:power_shot` | 0–5 | Every 3rd crossbow shot (config `power_shot_interval`) deals +value bonus damage, so 1.0 doubles it |
+| `ftb:vital_shot` | 0–1 | Chance a crossbow hit deals extra damage equal to 10% of the target's max health (config `vital_shot_fraction`) |
+| `ftb:impale` | 0–5 | Extra piercing levels on crossbow bolts, so each punches through this many more entities. Stacks with real Piercing |
+| `ftb:marked_for_death` | 0–1 | 1 = crossbow hits apply `ftb:marked` for 10s. A marked target takes +25% damage from any living attacker, yourself or otherwise (config `marked_duration_ticks`, `marked_damage_bonus`) |
+| `ftb:ballista` | 0–3 | Multiplies crossbow bolt velocity by (1 + value), so 1.0 is double speed. Faster bolts shoot flatter and further, and vanilla arrow damage scales with speed |
 
 ### Brawler (unarmed = empty main hand)
 
@@ -87,6 +161,9 @@ Values applied directly to the player survive death. Vanilla only carries perman
 | `ftb:shakedown` | 0–1 | Chance sword kills drop one duplicated item |
 | `ftb:night_damage` | 0–2 | Bonus sword damage fraction at night |
 | `ftb:blademaster` | 0–1 | 1 = sword hits apply `ftb:bleeding`, stacking to 3. Bleed deals 1% of max health per stack every 2s for 6s. Toggleable |
+| `ftb:sword_block` | 0–1 | 1 = swords can be raised like a shield (right click, 0.25s wind-up, 90° arc). The value is the fraction of incoming damage blocked, so 0.5 stops half of it. Damage types that bypass shields still get through |
+| `ftb:riposte` | 0–1 | 1 = a melee hit blocked within 0.5s of raising a sword block is parried: the attacker is stunned and your next sword strike within 3s deals 2.5× damage. 5s cooldown. Needs `ftb:sword_block` to have something to parry with (config `riposte_*`) |
+| `ftb:piercing_strike` | 0–1 | 1 = every 3rd sword hit ignores the target's armor entirely (config `piercing_strike_interval`). Toggleable |
 
 ### Athletic / Mining
 
@@ -102,12 +179,37 @@ Values applied directly to the player survive death. Vanilla only carries perman
 |---|---|
 | `ftb:stunned` | −100% movement and attack speed; attacks by the stunned entity are cancelled outright |
 | `ftb:bleeding` | Deals `bleed_fraction` (default 1%) of max health × (amplifier + 1) as magic damage every `bleed_interval_ticks` (default 2s) |
+| `ftb:marked` | Target takes `marked_damage_bonus` (default +25%) extra damage from any living attacker |
 
 ### Toggles & Commands
 
-Toggleable skills (Faster Strikes, Flurry, Undying Rage, Storm Caller, Shadow Step, Blademaster) default to on, persist across death, and can be switched with keybinds (most unbound by default, under the "FTB Evolution Skills" category) or `/ftbskills toggle <skill>`.
+Toggleable skills (Faster Strikes, Flurry, Undying Rage, Storm Caller, Shadow Step, Blademaster, Rain of Arrows, Piercing Strike) default to on, persist across death, and can be switched with keybinds (most unbound by default, under the "FTB Evolution Skills" category) or `/ftbskills toggle <skill>`.
 
 Skill-tree nodes that need no companion support: Loot Goblin grants `minecraft:luck`, and arrow armor-piercing grants `apothic_attributes:armor_shred` directly.
+
+## Pack fixes
+
+## Content
+
+### Odd Berry Bush
+
+`ftbevolutioncompanion:odd_berry_bush` is the pack's source of Roots Classic berries. The pack sets Roots' own `berriesDropChance` to `0`, so berries no longer fall out of every leaf block in the game; you gather them from this bush instead.
+
+| Behavior | Detail |
+|---|---|
+| Growth | Three stages on the vanilla `age` (`AGE_2`) property: sprout, leafy, ripe. Grows in light level 9 or brighter, and bone meal advances a stage |
+| Harvesting | Right click a ripe bush for 1–3 berries picked at random from the `rootsclassic:berries` tag (nightshade, blackcurrant, redcurrant, whitecurrant, elderberry). The bush drops back to the leafy stage and ripens again |
+| Breaking | A ripe bush broken by hand or tool drops the same 1–3 berries; younger bushes drop nothing |
+| Shearing | Drops the bush itself at any stage, so it can be moved and replanted |
+| Placement | Survives on any block in `ftbevolutioncompanion:odd_berry_bush_spreadable` (grass, dirt, podzol, moss, mud, farmland by default) |
+| Tended state | A bush placed by a player is `tended=true` and, once ripe, spreads to nearby valid blocks the way mushrooms do. Sneak and right click to toggle between tended and wild |
+| Worldgen | Ripe, wild bushes in patches through `#ftbevolutioncompanion:has_feature/odd_berry_bush`, at the same rarity and patch size Pantry for Blockheads uses for its grapevines |
+
+The biome tag covers `#minecraft:is_forest` and `#minecraft:is_taiga` (Terralith folds its own forest and taiga biomes into both), plus plains, sunflower plains, meadow, cherry grove, grove, sparse jungle and, optionally, `#terralith:reference/plains`. The plains-side entries matter more than they look: in a Terralith world most surface chunks are plains or Terralith highlands, so a forest-only tag leaves the bush almost unfindable.
+
+Because the block is a `BonemealableBlock` carrying a vanilla `AGE_2` property, Jade's own crop progress provider shows its growth percentage with no Jade plugin or dependency on our side. The item carries a three-line tooltip covering harvesting, shearing and spreading.
+
+Growth rate, spread rate, the nearby-bush cap and the spread toggle are in the `odd_berry_bush` section of `ftbevolutioncompanion-common.toml`. Retargeting worldgen, changing which blocks it spreads onto, or retexturing needs no code: override the biome tag, the block tag or the textures from a pack datapack or resource pack.
 
 ## Support
 

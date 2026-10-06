@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_forest",
+    "#minecraft:is_taiga",
+    "minecraft:plains",
+    "minecraft:sunflower_plains",
+    "minecraft:meadow",
+    "minecraft:cherry_grove",
+    "minecraft:grove",
+    "minecraft:sparse_jungle",
+    {
+      "id": "#terralith:reference/plains",
+      "required": false
+    }
+  ]
+}

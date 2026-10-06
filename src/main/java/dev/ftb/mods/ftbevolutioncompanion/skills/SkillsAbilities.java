@@ -2,9 +2,9 @@ package dev.ftb.mods.ftbevolutioncompanion.skills;
 
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.skills.network.SkillsPayloads;
-
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -20,18 +20,17 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public final class SkillsAbilities {
     public static final int ACTIVATE_NINJA = 0;
     public static final int ACTIVATE_SHADOW_STEP = 1;
+    public static final int ACTIVATE_LANCER = 2;
 
     private static final double MELEE_REACH = 3.0;
 
-    private SkillsAbilities() {
-    }
+    private SkillsAbilities() {}
 
     public static SkillToggles toggles(Player player) {
         return player.getData(SkillsRegistry.TOGGLES);
@@ -51,11 +50,78 @@ public final class SkillsAbilities {
             activateNinja(player);
         } else if (skill == ACTIVATE_SHADOW_STEP) {
             activateShadowStep(player);
+        } else if (skill == ACTIVATE_LANCER) {
+            activateLancer(player);
         }
     }
 
+    private static void activateLancer(ServerPlayer player) {
+        if (SkillsHelper.attr(player, SkillsRegistry.LANCER) <= 0.0
+                || !SkillsHelper.isSpear(player.getMainHandItem())
+                || !player.onGround()
+                || player.isPassenger()
+                || player.isFallFlying()
+                || player.hasEffect(SkillsRegistry.STUNNED)) {
+            return;
+        }
+        if (!SkillCooldowns.ready(player, SkillCooldowns.LANCER)) {
+            sendCooldown(player, "attribute.name.ftb.lancer", SkillCooldowns.remaining(player, SkillCooldowns.LANCER));
+            return;
+        }
+        double vertical = launchSpeedFor(CompanionConfig.LANCER_LEAP_HEIGHT.get());
+        Vec3 look = player.getLookAngle();
+        Vec3 horizontal = new Vec3(look.x, 0.0, look.z);
+        if (horizontal.lengthSqr() > 1.0E-4) {
+            horizontal = horizontal.normalize().scale(CompanionConfig.LANCER_FORWARD_SPEED.get());
+        }
+        player.setDeltaMovement(horizontal.x, vertical, horizontal.z);
+        player.resetFallDistance();
+        player.hurtMarked = true;
+        player.connection.send(new ClientboundSetEntityMotionPacket(player));
+
+        CombatState state = player.getData(SkillsRegistry.COMBAT_STATE);
+        state.lancerLeapPending = true;
+        state.lancerLeapStart = player.level().getGameTime();
+        SkillCooldowns.start(player, SkillCooldowns.LANCER, CompanionConfig.LANCER_COOLDOWN.get());
+        player.level()
+                .playSound(
+                        null,
+                        player.getX(),
+                        player.getY(),
+                        player.getZ(),
+                        SoundEvents.TRIDENT_RIPTIDE_3,
+                        SoundSource.PLAYERS,
+                        1.0F,
+                        1.0F);
+    }
+
+    private static double launchSpeedFor(double height) {
+        double low = 0.0;
+        double high = 8.0;
+        for (int i = 0; i < 40; i++) {
+            double mid = (low + high) / 2.0;
+            if (apexFor(mid) < height) {
+                low = mid;
+            } else {
+                high = mid;
+            }
+        }
+        return high;
+    }
+
+    private static double apexFor(double speed) {
+        double y = 0.0;
+        double velocity = speed;
+        while (velocity > 0.0) {
+            y += velocity;
+            velocity = (velocity - 0.08) * 0.98;
+        }
+        return y;
+    }
+
     private static void activateShadowStep(ServerPlayer player) {
-        if (!player.isShiftKeyDown() || !SkillsHelper.isSword(player.getMainHandItem())
+        if (!player.isShiftKeyDown()
+                || !SkillsHelper.isSword(player.getMainHandItem())
                 || SkillsHelper.attr(player, SkillsRegistry.SHADOW_STEP) <= 0.0
                 || !toggles(player).shadowStep()
                 || !SkillCooldowns.ready(player, SkillCooldowns.SHADOW_STEP)) {
@@ -72,15 +138,23 @@ public final class SkillsAbilities {
         Vec3 view = player.getViewVector(1.0F);
         Vec3 end = eye.add(view.scale(range));
         AABB search = player.getBoundingBox().expandTowards(view.scale(range)).inflate(1.0);
-        EntityHitResult hit = ProjectileUtil.getEntityHitResult(player, eye, end, search,
-                entity -> entity instanceof LivingEntity && entity != player && entity.isAlive()
-                        && !entity.isSpectator() && entity.isPickable(),
+        EntityHitResult hit = ProjectileUtil.getEntityHitResult(
+                player,
+                eye,
+                end,
+                search,
+                entity -> entity instanceof LivingEntity
+                        && entity != player
+                        && entity.isAlive()
+                        && !entity.isSpectator()
+                        && entity.isPickable(),
                 range * range);
         if (hit == null || !(hit.getEntity() instanceof LivingEntity target)) {
             return null;
         }
-        BlockHitResult blocked = player.level().clip(new ClipContext(eye, hit.getLocation(),
-                ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
+        BlockHitResult blocked = player.level()
+                .clip(new ClipContext(
+                        eye, hit.getLocation(), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
         if (blocked.getType() != HitResult.Type.MISS
                 && blocked.getLocation().distanceToSqr(eye) < hit.getLocation().distanceToSqr(eye)) {
             return null;
@@ -116,10 +190,17 @@ public final class SkillsAbilities {
         player.teleportTo(destination.x, destination.y, destination.z);
         player.lookAt(EntityAnchorArgument.Anchor.EYES, target, EntityAnchorArgument.Anchor.EYES);
         SkillCooldowns.start(player, SkillCooldowns.SHADOW_STEP, CompanionConfig.SHADOW_STEP_COOLDOWN.get());
-        level.playSound(null, origin.x, origin.y, origin.z,
-                SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
-        level.playSound(null, destination.x, destination.y, destination.z,
-                SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+        level.playSound(
+                null, origin.x, origin.y, origin.z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+        level.playSound(
+                null,
+                destination.x,
+                destination.y,
+                destination.z,
+                SoundEvents.ENDERMAN_TELEPORT,
+                SoundSource.PLAYERS,
+                1.0F,
+                1.0F);
         return true;
     }
 
@@ -145,8 +226,10 @@ public final class SkillsAbilities {
     }
 
     public static void sendCooldown(ServerPlayer player, String nameKey, long remainingTicks) {
-        player.sendOverlayMessage(Component.translatable("ftbevolutioncompanion.skills.cooldown",
-                Component.translatable(nameKey), String.valueOf(remainingTicks / 20)));
+        player.sendOverlayMessage(Component.translatable(
+                "ftbevolutioncompanion.skills.cooldown",
+                Component.translatable(nameKey),
+                String.valueOf(remainingTicks / 20)));
     }
 
     public static void syncToggles(ServerPlayer player) {

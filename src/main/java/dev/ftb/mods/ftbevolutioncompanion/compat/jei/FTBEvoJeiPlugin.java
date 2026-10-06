@@ -1,0 +1,154 @@
+package dev.ftb.mods.ftbevolutioncompanion.compat.jei;
+
+import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
+import dev.ftb.mods.ftbevolutioncompanion.client.FabricatorClient;
+import dev.ftb.mods.ftbevolutioncompanion.client.FabricatorScreen;
+import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorRegistry;
+import dev.ftb.mods.ftbevolutioncompanion.simplywinged.ParagliderWings;
+import java.util.ArrayList;
+import java.util.List;
+import mezz.jei.api.IModPlugin;
+import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.RecipeTypes;
+import mezz.jei.api.recipe.vanilla.IJeiAnvilRecipe;
+import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
+import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.ItemLore;
+import net.neoforged.fml.ModList;
+import top.theillusivec4.curios.client.screen.CuriosScreen;
+
+@JeiPlugin
+public class FTBEvoJeiPlugin implements IModPlugin {
+    private static final String SIMPLY_WINGED = "in2bubble_simply_winged";
+    private static final Identifier SOUL_EXTRACTOR =
+            Identifier.fromNamespaceAndPath("mysticalagriculture", "soul_extractor");
+    private static final Identifier SOUL_JAR = Identifier.fromNamespaceAndPath("mysticalagriculture", "soul_jar");
+
+    private static final List<WingedArmor> WINGED_ARMORS = List.of(
+            new WingedArmor(Items.LEATHER_HORSE_ARMOR, "leather"),
+            new WingedArmor(Items.COPPER_HORSE_ARMOR, "copper"),
+            new WingedArmor(Items.IRON_HORSE_ARMOR, "iron"),
+            new WingedArmor(Items.GOLDEN_HORSE_ARMOR, "golden"),
+            new WingedArmor(Items.DIAMOND_HORSE_ARMOR, "diamond"),
+            new WingedArmor(Items.NETHERITE_HORSE_ARMOR, "netherite"));
+
+    @Override
+    public Identifier getPluginUid() {
+        return FTBEvolutionCompanion.id("jei_plugin");
+    }
+
+    @Override
+    public void registerRecipes(IRecipeRegistration registration) {
+        registration.addRecipes(FabricatorCategory.TYPE, FabricatorClient.recipes());
+        if (!ModList.get().isLoaded(SIMPLY_WINGED)) {
+            return;
+        }
+
+        List<ItemStack> wings = new ArrayList<>();
+        for (Holder<Item> holder : BuiltInRegistries.ITEM.getTagOrEmpty(ParagliderWings.PARAGLIDERS)) {
+            wings.add(new ItemStack(holder));
+        }
+
+        if (wings.isEmpty()) {
+            return;
+        }
+
+        registration.addItemStackInfo(
+                wings,
+                Component.translatable("jei.ftbevolutioncompanion.pegasus.conversion"),
+                Component.translatable("jei.ftbevolutioncompanion.pegasus.flight"));
+
+        IVanillaRecipeFactory factory = registration.getVanillaRecipeFactory();
+        List<IJeiAnvilRecipe> anvilRecipes = new ArrayList<>();
+
+        for (WingedArmor armor : WINGED_ARMORS) {
+            List<ItemStack> outputs =
+                    wings.stream().map(wing -> wingedArmorStack(armor, wing)).toList();
+
+            anvilRecipes.add(factory.createAnvilRecipe(
+                    new ItemStack(armor.armor()),
+                    wings,
+                    outputs,
+                    FTBEvolutionCompanion.id("winged_horse_armor/" + armor.path())));
+        }
+
+        registration.addRecipes(RecipeTypes.ANVIL, anvilRecipes);
+    }
+
+    @Override
+    public void registerCategories(IRecipeCategoryRegistration registration) {
+        registration.addRecipeCategories(
+                new FabricatorCategory(registration.getJeiHelpers().getGuiHelper()));
+    }
+
+    @Override
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        registration.addCraftingStation(FabricatorCategory.TYPE, FabricatorRegistry.ITEM.get());
+        registration
+                .getJeiHelpers()
+                .getRecipeType(SOUL_EXTRACTOR)
+                .ifPresent(type -> registration.addCraftingStation(
+                        type, new ItemStack(BuiltInRegistries.ITEM.getValue(SOUL_JAR))));
+    }
+
+    @Override
+    public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+        registration.addRecipeTransferHandler(
+                new FabricatorTransferHandler(registration.getTransferHelper()), FabricatorCategory.TYPE);
+    }
+
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+        registration.addRecipeClickArea(FabricatorScreen.class, 89, 53, 42, 12, FabricatorCategory.TYPE);
+        registration.addGuiContainerHandler(CuriosScreen.class, new CuriosJeiGuiHandler());
+    }
+
+    private static ItemStack wingedArmorStack(WingedArmor armor, ItemStack wing) {
+        ItemStack stack = new ItemStack(armor.armor());
+        int maxDamage = wing.getMaxDamage();
+
+        CompoundTag tag =
+                stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+        tag.putBoolean("in2bubble_winged", true);
+        tag.putInt("in2bubble_elytra_damage", 0);
+        tag.putInt("in2bubble_elytra_max_damage", maxDamage);
+        tag.putBoolean("in2bubble_visible_damage_synced", true);
+        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+
+        if (maxDamage > 0) {
+            stack.set(DataComponents.MAX_DAMAGE, maxDamage);
+            stack.set(DataComponents.DAMAGE, 0);
+        }
+
+        stack.set(
+                DataComponents.ITEM_NAME,
+                Component.translatable(
+                                "jei.ftbevolutioncompanion.winged_horse_armor",
+                                new ItemStack(armor.armor()).getHoverName())
+                        .withStyle(ChatFormatting.GOLD));
+        stack.set(
+                DataComponents.LORE,
+                new ItemLore(List.of(Component.translatable("jei.ftbevolutioncompanion.winged_horse_armor.upgrade")
+                        .withStyle(ChatFormatting.AQUA))));
+        stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
+
+        return stack;
+    }
+
+    private record WingedArmor(Item armor, String path) {}
+}

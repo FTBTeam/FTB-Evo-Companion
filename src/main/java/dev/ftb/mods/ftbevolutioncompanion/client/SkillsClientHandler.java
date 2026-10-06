@@ -4,18 +4,15 @@ import dev.ftb.mods.ftbevolutioncompanion.skills.SkillToggles;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
 import dev.ftb.mods.ftbevolutioncompanion.skills.network.SkillsPayloads;
-
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
-
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public final class SkillsClientHandler {
-    private SkillsClientHandler() {
-    }
+    private SkillsClientHandler() {}
 
     public static void onClientTick(ClientTickEvent.Post event) {
         if (Minecraft.getInstance().player == null) {
@@ -29,9 +26,15 @@ public final class SkillsClientHandler {
         sendToggle(SkillsKeys.TOGGLE_LIGHTNING, SkillToggles.Toggle.LIGHTNING);
         sendToggle(SkillsKeys.TOGGLE_SHADOW_STEP, SkillToggles.Toggle.SHADOW_STEP);
         sendToggle(SkillsKeys.TOGGLE_BLADEMASTER, SkillToggles.Toggle.BLADEMASTER);
+        sendToggle(SkillsKeys.TOGGLE_RAIN_OF_ARROWS, SkillToggles.Toggle.RAIN_OF_ARROWS);
+        sendToggle(SkillsKeys.TOGGLE_PIERCING_STRIKE, SkillToggles.Toggle.PIERCING_STRIKE);
+        sendToggle(SkillsKeys.TOGGLE_SCYTHE_ARC, SkillToggles.Toggle.SCYTHE_ARC);
 
         while (SkillsKeys.ACTIVATE_NINJA.consumeClick()) {
             ClientPacketDistributor.sendToServer(new SkillsPayloads.ActivateSkill(SkillsAbilities.ACTIVATE_NINJA));
+        }
+        while (SkillsKeys.ACTIVATE_LANCER.consumeClick()) {
+            ClientPacketDistributor.sendToServer(new SkillsPayloads.ActivateSkill(SkillsAbilities.ACTIVATE_LANCER));
         }
     }
 
@@ -46,10 +49,12 @@ public final class SkillsClientHandler {
     }
 
     private static void trySendShadowStep(Player player) {
-        if (player.level().isClientSide() && player.isShiftKeyDown()
+        if (player.level().isClientSide()
+                && player.isShiftKeyDown()
                 && SkillsHelper.isSword(player.getMainHandItem())
                 && SkillsAbilities.toggles(player).shadowStep()) {
-            ClientPacketDistributor.sendToServer(new SkillsPayloads.ActivateSkill(SkillsAbilities.ACTIVATE_SHADOW_STEP));
+            ClientPacketDistributor.sendToServer(
+                    new SkillsPayloads.ActivateSkill(SkillsAbilities.ACTIVATE_SHADOW_STEP));
         }
     }
 
@@ -66,7 +71,10 @@ public final class SkillsClientHandler {
                 || SkillsKeys.TOGGLE_UNARMED_RAMP.consumeClick()
                 || SkillsKeys.TOGGLE_CHEAT_DEATH.consumeClick()
                 || SkillsKeys.TOGGLE_SHADOW_STEP.consumeClick()
-                || SkillsKeys.TOGGLE_BLADEMASTER.consumeClick()) {
-        }
+                || SkillsKeys.TOGGLE_BLADEMASTER.consumeClick()
+                || SkillsKeys.TOGGLE_RAIN_OF_ARROWS.consumeClick()
+                || SkillsKeys.TOGGLE_PIERCING_STRIKE.consumeClick()
+                || SkillsKeys.TOGGLE_SCYTHE_ARC.consumeClick()
+                || SkillsKeys.ACTIVATE_LANCER.consumeClick()) {}
     }
 }

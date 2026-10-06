@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "age=0,tended=false": {
+      "model": "ftbevolutioncompanion:block/odd_berry_bush_stage0"
+    },
+    "age=0,tended=true": {
+      "model": "ftbevolutioncompanion:block/odd_berry_bush_stage0"
+    },
+    "age=1,tended=false": {
+      "model": "ftbevolutioncompanion:block/odd_berry_bush_stage1"
+    },
+    "age=1,tended=true": {
+      "model": "ftbevolutioncompanion:block/odd_berry_bush_stage1"
+    },
+    "age=2,tended=false": {
+      "model": "ftbevolutioncompanion:block/odd_berry_bush_stage2"
+    },
+    "age=2,tended=true": {
+      "model": "ftbevolutioncompanion:block/odd_berry_bush_stage2"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "block.ftb_fabricator.working": {
+    "subtitle": "subtitles.ftbevolutioncompanion.block.ftb_fabricator.working",
+    "sounds": ["ftbevolutioncompanion:block/fabricator_working"]
+  },
+  "block.ftb_fabricator.complete": {
+    "subtitle": "subtitles.ftbevolutioncompanion.block.ftb_fabricator.complete",
+    "sounds": ["ftbevolutioncompanion:block/fabricator_complete"]
+  },
+  "block.ftb_skyline.launch_start": {
+    "subtitle": "subtitles.ftbevolutioncompanion.block.ftb_skyline.launch_start",
+    "sounds": ["ftbevolutioncompanion:block/skyline_launch_start"]
+  },
+  "block.ftb_skyline.liftoff": {
+    "subtitle": "subtitles.ftbevolutioncompanion.block.ftb_skyline.liftoff",
+    "sounds": ["ftbevolutioncompanion:block/skyline_liftoff"]
+  }
+}

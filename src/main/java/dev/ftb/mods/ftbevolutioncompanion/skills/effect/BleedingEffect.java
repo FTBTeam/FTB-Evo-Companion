@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion.skills.effect;
 
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;

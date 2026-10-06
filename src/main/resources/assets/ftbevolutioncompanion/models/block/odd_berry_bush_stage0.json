@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "ftbevolutioncompanion:block/odd_berry_bush_stage0"
+  }
+}

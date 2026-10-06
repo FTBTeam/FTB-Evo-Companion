@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "#cucumber:scythes", "required": false },
+    { "id": "#malum:scythe", "required": false },
+    { "id": "ftbarmory:adamantite_scythe", "required": false },
+    { "id": "ftbarmory:aeternium_scythe", "required": false },
+    { "id": "ftbarmory:aurichalcum_scythe", "required": false },
+    { "id": "hephaestus_tools:scythe", "required": false },
+    { "id": "neovitae:sentient_scythe", "required": false },
+    { "id": "arsmagicalegacy:nature_scythe", "required": false },
+    { "id": "farmingforblockheads:iron_scythe", "required": false }
+  ]
+}

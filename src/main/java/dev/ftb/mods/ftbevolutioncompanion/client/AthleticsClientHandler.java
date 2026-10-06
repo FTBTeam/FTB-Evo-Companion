@@ -1,13 +1,11 @@
 package dev.ftb.mods.ftbevolutioncompanion.client;
 
 import dev.ftb.mods.ftbevolutioncompanion.athletics.AthleticsAbilities;
-import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.athletics.network.AthleticsPayloads;
-
+import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.phys.Vec3;
-
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
@@ -23,8 +21,7 @@ public final class AthleticsClientHandler {
     private static int dashesUsed;
     private static int clingTicks;
 
-    private AthleticsClientHandler() {
-    }
+    private AthleticsClientHandler() {}
 
     public static void onClientTick(ClientTickEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
@@ -133,7 +130,8 @@ public final class AthleticsClientHandler {
         horizontal = horizontal.normalize();
 
         dashesUsed++;
-        player.setDeltaMovement(horizontal.x * DASH_STRENGTH,
+        player.setDeltaMovement(
+                horizontal.x * DASH_STRENGTH,
                 Math.max(player.getDeltaMovement().y, DASH_LIFT),
                 horizontal.z * DASH_STRENGTH);
         ClientPacketDistributor.sendToServer(
@@ -144,7 +142,6 @@ public final class AthleticsClientHandler {
         while (AthleticsKeys.TOGGLE_EXTRA_JUMPS.consumeClick()
                 || AthleticsKeys.TOGGLE_WALL_CLIMB.consumeClick()
                 || AthleticsKeys.TOGGLE_AIR_DASH.consumeClick()
-                || AthleticsKeys.AIR_DASH.consumeClick()) {
-        }
+                || AthleticsKeys.AIR_DASH.consumeClick()) {}
     }
 }

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "ftbevolutioncompanion:block/challenge_board"
+    },
+    "facing=east": {
+      "model": "ftbevolutioncompanion:block/challenge_board",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "ftbevolutioncompanion:block/challenge_board",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ftbevolutioncompanion:block/challenge_board",
+      "y": 270
+    }
+  }
+}

@@ -10,10 +10,18 @@ public final class CombatState {
     public long lastUnarmedHitTime;
     public int unarmedRampStacks;
     public int axeHitCounter;
+    public int swordHitCounter;
+    public int crossbowShotCounter;
+    public long lastCrossbowShotTick;
+    public long riposteReadyUntil;
     public long ninjaUntil;
     public long lastShieldHealTime;
     public UUID pendingEchoTarget;
     public float pendingEchoAmount;
     public long pendingEchoTick;
-    public UUID skillLightningBoltId;
+    public long lastJabTick;
+    public int jabTargetsThisTick;
+    public float lastScytheHitDamage;
+    public boolean lancerLeapPending;
+    public long lancerLeapStart;
 }

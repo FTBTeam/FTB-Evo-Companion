@@ -1,9 +1,7 @@
 package dev.ftb.mods.ftbevolutioncompanion.mixin;
 
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
-
 import net.minecraft.world.level.LevelAccessor;
-
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -34,6 +32,7 @@ public abstract class MeteoritePlacerMixin {
 
     @Unique
     private boolean ftbevo$shouldSuppressCrater() {
-        return CompanionConfig.NETHER_METEORITE_SUPPRESS_CRATER.get() && level.dimensionType().hasCeiling();
+        return CompanionConfig.NETHER_METEORITE_SUPPRESS_CRATER.get()
+                && level.dimensionType().hasCeiling();
     }
 }

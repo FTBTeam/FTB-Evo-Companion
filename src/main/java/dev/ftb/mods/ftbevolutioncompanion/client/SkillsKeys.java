@@ -1,16 +1,12 @@
 package dev.ftb.mods.ftbevolutioncompanion.client;
 
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
-
 import net.minecraft.client.KeyMapping;
-
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
-
 import org.lwjgl.glfw.GLFW;
 
 public final class SkillsKeys {
-    public static final KeyMapping.Category CATEGORY =
-            new KeyMapping.Category(FTBEvolutionCompanion.id("skills"));
+    public static final KeyMapping.Category CATEGORY = new KeyMapping.Category(FTBEvolutionCompanion.id("skills"));
 
     public static final KeyMapping ACTIVATE_NINJA =
             new KeyMapping("key.ftbevolutioncompanion.activate_ninja", GLFW.GLFW_KEY_V, CATEGORY);
@@ -26,9 +22,16 @@ public final class SkillsKeys {
             new KeyMapping("key.ftbevolutioncompanion.toggle_shadow_step", GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
     public static final KeyMapping TOGGLE_BLADEMASTER =
             new KeyMapping("key.ftbevolutioncompanion.toggle_blademaster", GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
+    public static final KeyMapping TOGGLE_RAIN_OF_ARROWS =
+            new KeyMapping("key.ftbevolutioncompanion.toggle_rain_of_arrows", GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
+    public static final KeyMapping TOGGLE_PIERCING_STRIKE =
+            new KeyMapping("key.ftbevolutioncompanion.toggle_piercing_strike", GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
+    public static final KeyMapping TOGGLE_SCYTHE_ARC =
+            new KeyMapping("key.ftbevolutioncompanion.toggle_scythe_arc", GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
+    public static final KeyMapping ACTIVATE_LANCER =
+            new KeyMapping("key.ftbevolutioncompanion.activate_lancer", GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
 
-    private SkillsKeys() {
-    }
+    private SkillsKeys() {}
 
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
         event.registerCategory(CATEGORY);
@@ -39,5 +42,9 @@ public final class SkillsKeys {
         event.register(TOGGLE_CHEAT_DEATH);
         event.register(TOGGLE_SHADOW_STEP);
         event.register(TOGGLE_BLADEMASTER);
+        event.register(TOGGLE_RAIN_OF_ARROWS);
+        event.register(TOGGLE_PIERCING_STRIKE);
+        event.register(TOGGLE_SCYTHE_ARC);
+        event.register(ACTIVATE_LANCER);
     }
 }

@@ -1,11 +1,9 @@
 package dev.ftb.mods.ftbevolutioncompanion.athletics;
 
 import dev.ftb.mods.ftbevolutioncompanion.athletics.network.AthleticsPayloads;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -32,8 +30,7 @@ public final class AthleticsAbilities {
         }
     }
 
-    private AthleticsAbilities() {
-    }
+    private AthleticsAbilities() {}
 
     public static AthleticsToggles toggles(Player player) {
         return player.getData(AthleticsRegistry.TOGGLES);

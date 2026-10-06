@@ -4,26 +4,34 @@ plugins {
 	id 'maven-publish'
 	id 'net.neoforged.moddev' version '2.0.141'
 	id "me.modmuss50.mod-publish-plugin" version "2.1.1"
+	id 'com.diffplug.spotless' version '8.10.3'
 }
 
 tasks.named('wrapper', Wrapper).configure {
 	distributionType = Wrapper.DistributionType.BIN
 }
 
-version = "${minecraft_version}.${mod_version}"
+apply from: 'https://raw.githubusercontent.com/FTBTeam/mods-meta/v1/gradle/publishing-2.gradle'
+apply from: 'https://raw.githubusercontent.com/FTBTeam/mods-meta/v1/gradle/utils.gradle'
+apply from: 'https://raw.githubusercontent.com/FTBTeam/mods-meta/v1/gradle/changelog.gradle'
+
+version = createModVersion(project)
 group = project.maven_group
 
 base {
 	archivesName = project.archives_base_name
 }
 
-apply from: 'https://raw.githubusercontent.com/FTBTeam/mods-meta/main/gradle/changelog.gradle'
-apply from: "https://raw.githubusercontent.com/FTBTeam/mods-meta/main/gradle/publishing.gradle"
-
 java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 neoForge {
 	version = project.neoforge_full_version
+
+	interfaceInjectionData.from(provider {
+		zipTree(configurations.geckolibArtifact.singleFile).matching {
+			include 'META-INF/interface_injections.json'
+		}
+	})
 
 	runs {
 		configureEach {
@@ -70,6 +78,9 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 // "optional", meaning it will not be pulled by dependents of this mod.
 configurations {
 	runtimeClasspath.extendsFrom localRuntime
+	geckolibArtifact { transitive = false }
+	enderIoArtifact { transitive = false }
+	compileOnly.extendsFrom enderIoArtifact
 }
 
 repositories {
@@ -93,10 +104,81 @@ repositories {
 			includeGroup("dev.architectury")
 		}
 	}
+
+	maven {
+		url = "https://maven.blamejared.com/"
+		content {
+			includeGroup("mezz.jei")
+		}
+	}
+
+	maven {
+		url = "https://maven.shedaniel.me/"
+		content {
+			includeGroup("me.shedaniel.cloth")
+		}
+	}
+
+	maven {
+		url = "https://api.modrinth.com/maven"
+		content {
+			includeGroup("maven.modrinth")
+		}
+	}
+
+	maven {
+		url = "https://cursemaven.com"
+		content {
+			includeGroup("curse.maven")
+		}
+	}
 }
 
 dependencies {
+	enderIoArtifact "curse.maven:ender-io-64578:${enderio_curse_file_id}"
+	compileOnly files(provider {
+		zipTree(configurations.enderIoArtifact.singleFile).matching {
+			include 'META-INF/jarjar/com.enderio.endercore-*.jar'
+		}.files
+	})
 	implementation "dev.ftb.mods:ftb-library-neoforge:${ftb_library_version}"
+	compileOnly "dev.ftb.mods:ftb-teams-neoforge:${ftb_teams_version}"
+	localRuntime "dev.ftb.mods:ftb-teams-neoforge:${ftb_teams_version}"
+	implementation "dev.ftb.mods:ftb-quests-neoforge:${ftb_quests_version}"
+	implementation "dev.ftb.mods:ftb-chunks-neoforge:${ftb_chunks_version}"
+	implementation "maven.modrinth:geckolib:${geckolib_modrinth_id}"
+	geckolibArtifact "maven.modrinth:geckolib:${geckolib_modrinth_id}"
+
+	compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+	compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+	compileOnly "maven.modrinth:jade:5jKeKXwB"
+	compileOnly "maven.modrinth:iris:${iris_modrinth_id}"
+	compileOnly "curse.maven:hats-classic-1418069:${hats_curse_file_id}"
+	compileOnly "curse.maven:curios-309927:${curios_curse_file_id}"
+	compileOnly "curse.maven:ars-magica-legacy-350734:${ars_magica_legacy_curse_file_id}"
+	compileOnly "curse.maven:neo-vitae-1404763:${neovitae_curse_file_id}"
+	compileOnly "curse.maven:animus-229664:${animusnv_curse_file_id}"
+	compileOnly "curse.maven:evilcraft-74610:${evilcraft_curse_file_id}"
+	compileOnly "curse.maven:cyclops-core-232758:${cyclopscore_curse_file_id}"
+	compileOnly "curse.maven:occultism-361026:${occultism_curse_file_id}"
+	compileOnly "curse.maven:apothic-enchanting-1063926:${apothic_enchanting_curse_file_id}"
+	compileOnly "curse.maven:placebo-283644:${placebo_curse_file_id}"
+	compileOnly "curse.maven:hostile-neural-networks-552574:${hostilenetworks_curse_file_id}"
+	compileOnly "curse.maven:apotheosis-313970:${apotheosis_curse_file_id}"
+	compileOnly "curse.maven:gateways-to-eternity-417802:${gateways_curse_file_id}"
+	compileOnly "curse.maven:roots-classic-295780:${roots_classic_curse_file_id}"
+	compileOnly "curse.maven:witchery-1125946:${witchery_curse_file_id}"
+	compileOnly "curse.maven:witchery-forbidden-magic-1644651:${witchery_forbidden_magic_curse_file_id}"
+	compileOnly "curse.maven:kotlin-for-forge-351264:${kotlinforforge_curse_file_id}"
+	compileOnly "curse.maven:anima-1706323:${anima_curse_file_id}"
+	compileOnly "curse.maven:irons-artifice-1650193:${irons_artifice_curse_file_id}"
+	compileOnly "curse.maven:ltxi-1075456:${ltxi_curse_file_id}"
+	compileOnly "curse.maven:limacore-1075362:${limacore_curse_file_id}"
+	compileOnly "curse.maven:apothic-compats-1188699:${apothic_compats_curse_file_id}"
+	compileOnly "curse.maven:starcatcher-1357603:${starcatcher_curse_file_id}"
+	compileOnly "curse.maven:ice-and-fire-1040076:${iceandfire_curse_file_id}"
+	compileOnly "curse.maven:uranus-1010827:${uranus_curse_file_id}"
+	compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
 }
 
 tasks.register("sourcesJar", Jar) {
@@ -119,7 +201,10 @@ tasks.withType(ProcessResources).configureEach {
 		minecraft_version: minecraft_version,
 		neoforge_loader_version: neoforge_loader_version,
 		neo_version_range: neo_version_range,
-		ftb_library_version: ftb_library_version
+		ftb_library_version: ftb_library_version,
+		ftb_teams_version: ftb_teams_version,
+		ftb_quests_version: ftb_quests_version,
+		geckolib_version: geckolib_version
 	]
 
 	inputs.properties replaceProperties
@@ -156,8 +241,7 @@ publishMods {
 	file = jar.archiveFile
 	version = project.version // Pretty sure it defaults to this
 
-	def tag = providers.environmentVariable("TAG").getOrElse("release")
-	type = tag.endsWith("-beta") ? BETA : (tag.endsWith("-alpha") ? ALPHA : STABLE)
+	type = createReleaseType(project)
 
 	curseforge {
 		accessToken = CFToken.orElse("missing")
@@ -169,27 +253,15 @@ publishMods {
 	}
 }
 
-publishing {
-	publications {
-		register('mavenJava', MavenPublication) {
-			version = ftbPublishing.mavenVersion
-            artifactId = archives_base_name
-			from components.java
-			artifact sourcesJar
-			// Uncomment this if you want to create an API jar
-			// artifact apiJar
-		}
-	}
+createMavenPublishingBlock(project)
 
-	repositories {
-		if (ftbPublishing.ftbToken) {
-			maven {
-				url ftbPublishing.ftbURL
-				credentials {
-					username = ftbPublishing.ftbUser
-					password = ftbPublishing.ftbToken
-				}
-			}
-		}
+spotless {
+	java {
+		target 'src/*/java/**/*.java'
+		palantirJavaFormat()
+		importOrder()
+		removeUnusedImports()
+		trimTrailingWhitespace()
+		endWithNewline()
 	}
 }
