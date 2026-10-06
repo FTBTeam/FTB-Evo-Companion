@@ -16,8 +16,6 @@ public abstract class HephaestusHarvestTierMixin {
     private static void ftbevo$remapTier(int ordinal, CallbackInfoReturnable<Object> cir) {
         if (ordinal == 4) {
             cir.setReturnValue(HephaestusTools.tier(3));
-        } else if (ordinal > 5) {
-            cir.setReturnValue(HephaestusTools.tier(5));
         }
     }
 }

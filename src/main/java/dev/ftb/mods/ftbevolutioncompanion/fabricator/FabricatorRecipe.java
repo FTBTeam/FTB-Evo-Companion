@@ -40,7 +40,7 @@ public record FabricatorRecipe(List<CountedIngredient> ingredients, List<FluidSt
             ItemStackTemplate.CODEC.listOf(0, 3).optionalFieldOf("results", List.of()).forGetter(FabricatorRecipe::results),
             FluidStackTemplate.CODEC.listOf(0, 1).optionalFieldOf("fluid_results", List.of()).forGetter(FabricatorRecipe::fluidResults),
             Codec.intRange(1, 72000).fieldOf("ticks").forGetter(FabricatorRecipe::ticks),
-            Codec.intRange(0, 1000000).fieldOf("energy_per_tick").forGetter(FabricatorRecipe::energyPerTick),
+            Codec.intRange(0, 50000000).fieldOf("energy_per_tick").forGetter(FabricatorRecipe::energyPerTick),
             Codec.STRING.optionalFieldOf("stage", "").forGetter(FabricatorRecipe::stage)
     ).apply(instance, FabricatorRecipe::new));
 

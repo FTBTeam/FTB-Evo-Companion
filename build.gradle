@@ -169,6 +169,9 @@ dependencies {
 	compileOnly "curse.maven:kotlin-for-forge-351264:${kotlinforforge_curse_file_id}"
 	compileOnly "curse.maven:anima-1706323:${anima_curse_file_id}"
 	compileOnly "curse.maven:irons-artifice-1650193:${irons_artifice_curse_file_id}"
+	compileOnly "curse.maven:ltxi-1075456:${ltxi_curse_file_id}"
+	compileOnly "curse.maven:limacore-1075362:${limacore_curse_file_id}"
+	compileOnly "curse.maven:apothic-compats-1188699:${apothic_compats_curse_file_id}"
 	compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
 }
 

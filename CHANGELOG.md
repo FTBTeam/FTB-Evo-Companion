@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Gunnery skills apply to LTX Industries weapons: gun damage and bullet speed raise their damage, fire rate and reload speed shorten their cooldown and reload, ammo saving can skip the ammo cost, accuracy tightens their spread, piercing hits extra targets, knockback pushes targets back, and extra bullets can fire a free second shot
 - Rift Weaver boss fights work inside an enclosed arena, such as the modpack's underwater dome: his flight height, roaming, reinforcements, Tidal Surge and Seismic Smash all measure from the arena floor instead of the ocean surface above it
 - Trial spawners can summon the Rift Weaver, one at a time, and keep tracking him anywhere in his arena so the reward only drops once he is dead
 - A Rift Weaver summoned by a trial spawner gets his Apotheosis boss rarity, like one spawned any other way
@@ -22,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - FTB Skyline: a machine you pipe resources into to complete Feed The Beast quests
 - `/givehat <targets> <hat|random>` (permission level 2) unlocks a Hats (Classic) hat, or a random one the player does not have yet
 - Feed The Beast items: ten challenge components, the Heart of the Beast and the Beast Trophy, an animated two-block display piece
+- Ultradense Antimatter, an animated item for the modpack's Feed The Beast challenge
+- FTB Fabricator holds 1 billion FE, and recipes can draw up to 50 million FE per tick
+- Readable names for the Feed The Beast stage locks on Fabricator recipes
+- Thirteen more Feed The Beast items: ten parts (Hunter's Mark, Dragon Relic, Logic Lattice, Storage Matrix, Quantum Alloy Lattice, Composite Hull Plating, Charge Cell, Fuel Core, Rune Plate, Bound Essence) and three assemblies (Beast Core, Beast Mind, Beast Soul)
 - Kelp Slurry and Algal Lipid, the items the modpack's Lipophiles bacteria use
 - Chat announcements when teams change place on the Feed The Beast leaderboard, hourly by default; `announce_interval_minutes` sets the interval (0 for right away, -1 for off) and `announce_only_on_change` can post the full leaderboard every interval instead
 - FTB Fabricator recipes that need a stage show a readable name for it in JEI, on the Fabricator screen and in Jade, taken from a `stage.ftbevolutioncompanion.<stage>` lang key
@@ -37,6 +42,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Super Factory Manager's printing press recipes show in JEI on multiplayer servers instead of the plugin crashing
+- Occultism's JEI plugin no longer stops partway on multiplayer servers, so its info pages show there
 - Oritech solar panels generate in fixed-time dimensions with a bright sky, such as the JAMD mining dimensions and the JAVD void, and Ender IO solar panels run at full output there instead of following the Overworld's day and night
 - The Treasure Goblin now dodges players for most of its 10 seconds before running for the portal, instead of escaping in about 3 seconds
 - The SG Economy coin bag no longer draws over item tooltips, hints and other popups on inventory screens (FTBTesting/Testing-Issues#4564)
@@ -86,6 +93,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- Streams Reflowing compatibility (reeled-in Nautec and Starcatcher catches, the stall-dump switch); the modpack no longer ships Streams Reflowing
 - The LTX Industries tank fluid shader fix; LTX Industries 2.3.0 fixes it itself
 - The Hephaestus Constantan tool material, and Molten Tungsten with its bucket
 - Adamantite, Aeternium and Aurichalcum and their ores, worldgen, tools and armor, which moved to the FTB Armory mod
@@ -94,6 +102,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Worlds made with Streams Reflowing load its stream water as vanilla water once the mod is removed, instead of leaving the streams dry
+- Hephaestus tools of tier 6 and 7 use Hephaestus Tools' own Adamantite and Aurichalcum tiers (1.0.4 and later) instead of the companion's stand-in; tier 4 is still mapped to Diamond
 - The game log shows one summary line for recipes that cannot be placed in the recipe book, instead of a warning per recipe (about 2,800 per load in the modpack)
 - Challenge Boards count every quest in the ranked chapter, optional ones included, for both the percentage and the completed count
 - The Productive Bees Breeding Chamber picks a new random offspring after every breed, instead of repeating its first pick for the same parents

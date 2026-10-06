@@ -139,14 +139,34 @@ public final class CompanionContent {
 
     public static final DeferredItem<BeastItem> DYNAMO_MATRIX = beastComponent("dynamo_matrix", Rarity.UNCOMMON, "first_tier");
     public static final DeferredItem<BeastItem> TECTONIC_INGOT = beastComponent("tectonic_ingot", Rarity.UNCOMMON, "first_tier");
-    public static final DeferredItem<BeastItem> LIVING_CULTURE = beastComponent("living_culture", Rarity.UNCOMMON, "first_tier");
+    public static final DeferredItem<BeastItem> LIVING_CULTURE = beastComponent("living_culture", Rarity.RARE, "second_tier");
     public static final DeferredItem<BeastItem> ARCANE_CODEX = beastComponent("arcane_codex", Rarity.UNCOMMON, "first_tier");
     public static final DeferredItem<BeastItem> COGNITION_ARRAY = beastComponent("cognition_array", Rarity.UNCOMMON, "first_tier");
     public static final DeferredItem<BeastItem> STELLAR_CHART = beastComponent("stellar_chart", Rarity.RARE, "second_tier");
     public static final DeferredItem<BeastItem> ABYSSAL_LENS = beastComponent("abyssal_lens", Rarity.RARE, "second_tier");
     public static final DeferredItem<BeastItem> SOUL_COVENANT = beastComponent("soul_covenant", Rarity.RARE, "second_tier");
-    public static final DeferredItem<BeastItem> HUNT_STANDARD = beastComponent("hunt_standard", Rarity.RARE, "second_tier");
+    public static final DeferredItem<BeastItem> HUNT_STANDARD = beastComponent("hunt_standard", Rarity.UNCOMMON, "first_tier");
     public static final DeferredItem<BeastItem> CAUSAL_ANCHOR = beastComponent("causal_anchor", Rarity.RARE, "second_tier");
+
+    public static final DeferredItem<BeastItem> HUNTERS_MARK = beastComponent("hunters_mark", Rarity.COMMON, "part");
+    public static final DeferredItem<BeastItem> DRAGON_RELIC = beastComponent("dragon_relic", Rarity.COMMON, "part");
+    public static final DeferredItem<BeastItem> LOGIC_LATTICE = beastComponent("logic_lattice", Rarity.COMMON, "part");
+    public static final DeferredItem<BeastItem> STORAGE_MATRIX = beastComponent("storage_matrix", Rarity.COMMON, "part");
+    public static final DeferredItem<BeastItem> QUANTUM_ALLOY_LATTICE = beastComponent("quantum_alloy_lattice", Rarity.COMMON, "part");
+    public static final DeferredItem<BeastItem> COMPOSITE_HULL_PLATING = beastComponent("composite_hull_plating", Rarity.COMMON, "part");
+    public static final DeferredItem<BeastItem> CHARGE_CELL = beastComponent("charge_cell", Rarity.COMMON, "part");
+    public static final DeferredItem<BeastItem> FUEL_CORE = beastComponent("fuel_core", Rarity.COMMON, "part");
+    public static final DeferredItem<BeastItem> RUNE_PLATE = beastComponent("rune_plate", Rarity.COMMON, "part");
+    public static final DeferredItem<BeastItem> BOUND_ESSENCE = beastComponent("bound_essence", Rarity.COMMON, "part");
+    public static final DeferredItem<BeastItem> BEAST_CORE = beastComponent("beast_core", Rarity.EPIC, "assembly");
+    public static final DeferredItem<BeastItem> BEAST_MIND = beastComponent("beast_mind", Rarity.EPIC, "assembly");
+    public static final DeferredItem<BeastItem> BEAST_SOUL = beastComponent("beast_soul", Rarity.EPIC, "assembly");
+
+    public static final DeferredItem<BeastItem> ULTRADENSE_ANTIMATTER = FTB_ITEMS.registerItem(
+            "ultradense_antimatter",
+            properties -> new BeastItem(properties, "item.ftb.ultradense_antimatter.tooltip"),
+            properties -> properties.rarity(Rarity.EPIC).fireResistant()
+    );
 
     public static final DeferredItem<BeastItem> BEAST_HEART = FTB_ITEMS.registerItem(
             "beast_heart",
@@ -216,6 +236,16 @@ public final class CompanionContent {
             event.accept(BEAST_TROPHY_ITEM);
         }
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(HUNTERS_MARK);
+            event.accept(DRAGON_RELIC);
+            event.accept(LOGIC_LATTICE);
+            event.accept(STORAGE_MATRIX);
+            event.accept(QUANTUM_ALLOY_LATTICE);
+            event.accept(COMPOSITE_HULL_PLATING);
+            event.accept(CHARGE_CELL);
+            event.accept(FUEL_CORE);
+            event.accept(RUNE_PLATE);
+            event.accept(BOUND_ESSENCE);
             event.accept(DYNAMO_MATRIX);
             event.accept(TECTONIC_INGOT);
             event.accept(LIVING_CULTURE);
@@ -226,6 +256,10 @@ public final class CompanionContent {
             event.accept(SOUL_COVENANT);
             event.accept(HUNT_STANDARD);
             event.accept(CAUSAL_ANCHOR);
+            event.accept(ULTRADENSE_ANTIMATTER);
+            event.accept(BEAST_CORE);
+            event.accept(BEAST_MIND);
+            event.accept(BEAST_SOUL);
             event.accept(BEAST_HEART);
         }
     }

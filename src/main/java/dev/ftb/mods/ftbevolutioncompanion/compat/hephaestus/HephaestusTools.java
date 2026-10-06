@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -22,16 +21,11 @@ public final class HephaestusTools {
     private static final Logger LOGGER = LoggerFactory.getLogger(HephaestusTools.class);
     private static final String ROOT = "com.titammods.hephaestus_tools.";
     private static final Identifier CONSTRUCTION = Identifier.fromNamespaceAndPath("hephaestus_tools", "construction");
-    public static final TagKey<Block> INCORRECT_FOR_ADAMANTITE =
-            TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("ftbarmory", "incorrect_for_adamantite_tool"));
     public static final Set<String> REMOVED_MATERIALS = Set.of("lumium", "signalum", "constantan");
 
     private static Object[] tiers;
     private static Method materials;
     private static Method materialIdentifier;
-    private static Method managerInstance;
-    private static Method managerStats;
-    private static Method statsTier;
     private static Method harvestTier;
     private static Method incorrectFor;
     private static Object jagged;
@@ -52,10 +46,6 @@ public final class HephaestusTools {
             tiers = tierClass.getEnumConstants();
             materials = Class.forName(ROOT + "tools.nbt.ToolConstructionData").getMethod("materials");
             materialIdentifier = Class.forName(ROOT + "materials.MaterialId").getMethod("id");
-            Class<?> manager = Class.forName(ROOT + "materials.MaterialManager");
-            managerInstance = manager.getMethod("getInstance");
-            managerStats = manager.getMethod("getStats", Class.forName(ROOT + "materials.MaterialId"));
-            statsTier = Class.forName(ROOT + "materials.MaterialStats").getMethod("tierOrdinal");
             harvestTier = Class.forName(ROOT + "tools.nbt.ToolStack").getMethod("getHarvestTier", ItemStack.class);
             incorrectFor = tierClass.getMethod("incorrectForTag");
             Class<?> trait = Class.forName(ROOT + "materials.trait.MaterialTrait");
@@ -117,24 +107,8 @@ public final class HephaestusTools {
         }
     }
 
-    public static int headTier(ItemStack stack) {
-        List<Object> list = rawMaterials(stack);
-        if (list.isEmpty()) {
-            return -1;
-        }
-        try {
-            Object stats = managerStats.invoke(managerInstance.invoke(null), list.get(0));
-            return stats == null ? -1 : (int) statsTier.invoke(stats);
-        } catch (ReflectiveOperationException e) {
-            return -1;
-        }
-    }
-
     @SuppressWarnings("unchecked")
     public static TagKey<Block> incorrectFor(ItemStack stack) {
-        if (headTier(stack) >= 6) {
-            return INCORRECT_FOR_ADAMANTITE;
-        }
         if (!init()) {
             return BlockTags.INCORRECT_FOR_WOODEN_TOOL;
         }

@@ -14,6 +14,8 @@ import dev.ftb.mods.ftbevolutioncompanion.compat.curios.CuriosReloadFix;
 import dev.ftb.mods.ftbevolutioncompanion.compat.hats.GiveHatCommand;
 import dev.ftb.mods.ftbevolutioncompanion.compat.iceandfire.IceAndFireClaimProtection;
 import dev.ftb.mods.ftbevolutioncompanion.compat.iris.IrisGeckoGlow;
+import dev.ftb.mods.ftbevolutioncompanion.compat.jei.RecipeSyncTypes;
+import dev.ftb.mods.ftbevolutioncompanion.compat.streams.StreamsRemoval;
 import dev.ftb.mods.ftbevolutioncompanion.compat.oceanmobs.RiftArena;
 import dev.ftb.mods.ftbevolutioncompanion.compat.powerarmor.PowerArmorRecipeSync;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeRegistry;
@@ -24,6 +26,7 @@ import dev.ftb.mods.ftbevolutioncompanion.client.ChallengeBoardClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.FabricatorClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.BeastTrophyClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.PyramidClient;
+import dev.ftb.mods.ftbevolutioncompanion.client.RecipeSyncClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsClientHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsKeys;
 import dev.ftb.mods.ftbevolutioncompanion.client.WingTooltips;
@@ -33,6 +36,7 @@ import dev.ftb.mods.ftbevolutioncompanion.content.CompanionContent;
 import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.gunnery.GunneryHooks;
 import dev.ftb.mods.ftbevolutioncompanion.gunnery.GunneryRegistry;
+import dev.ftb.mods.ftbevolutioncompanion.gunnery.LtxGunnery;
 import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.magic.hedgecraft.HedgeCraftMagic;
 import dev.ftb.mods.ftbevolutioncompanion.magic.hemomancy.HemomancyMagic;
@@ -76,7 +80,6 @@ public class FTBEvolutionCompanion {
     private static final Logger LOGGER = LoggerFactory.getLogger(FTBEvolutionCompanion.class);
 
     public FTBEvolutionCompanion(IEventBus eventBus, ModContainer container, Dist dist) {
-        System.setProperty("streamsreflowing.nostalldump", "true");
         container.registerConfig(ModConfig.Type.COMMON, CompanionConfig.SPEC);
         FabricatorRegistry.register(eventBus);
         CompanionSounds.SOUND_EVENTS.register(eventBus);
@@ -102,6 +105,8 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(EventPriority.LOW, BossInvaderHandler::onFinalizeSpawn);
         NeoForge.EVENT_BUS.addListener(BossInvaderHandler::onEntityJoinLevel);
         NeoForge.EVENT_BUS.addListener(RiftArena::onSpawnPlacementCheck);
+        NeoForge.EVENT_BUS.addListener(RecipeSyncTypes::onDatapackSync);
+        StreamsRemoval.register(eventBus);
         NeoForge.EVENT_BUS.addListener(TreasureGoblinEvent::onDamage);
         NeoForge.EVENT_BUS.addListener(TreasureGoblinEvent::onWaveEntitySpawned);
         NeoForge.EVENT_BUS.addListener(TreasureGoblinEvent::onLivingDeath);
@@ -146,6 +151,7 @@ public class FTBEvolutionCompanion {
         GunneryRegistry.ATTRIBUTES.register(eventBus);
         eventBus.addListener(GunneryRegistry::onEntityAttributeModification);
         GunneryHooks.register();
+        LtxGunnery.register();
         eventBus.addListener(SkillsRegistry::onEntityAttributeModification);
         NeoForge.EVENT_BUS.addListener(AttributePersistence::onPlayerClone);
         eventBus.addListener(SkillsPayloads::register);
@@ -186,6 +192,7 @@ public class FTBEvolutionCompanion {
             NeoForge.EVENT_BUS.addListener(CoinBagLayer::onRenderForeground);
             eventBus.addListener(ChallengeBoardClient::onRegisterRenderers);
             NeoForge.EVENT_BUS.addListener(ChallengeBoardClient::onLoggingOut);
+            NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, RecipeSyncClient::onRecipesReceived);
             eventBus.addListener(PyramidClient::onRegisterRenderers);
             eventBus.addListener(BeastTrophyClient::onRegisterRenderers);
             eventBus.<FMLClientSetupEvent>addListener(event -> clientSetup(event, eventBus));
