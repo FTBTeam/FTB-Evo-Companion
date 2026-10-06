@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Hostile Neural Networks Simulation Chambers are locked to Training mode: the mode button does nothing and a chamber set to Inference switches back, so resources come only from the Data Center
 - Gunnery skills apply to LTX Industries weapons: gun damage and bullet speed raise their damage, fire rate and reload speed shorten their cooldown and reload, ammo saving can skip the ammo cost, accuracy tightens their spread, piercing hits extra targets, knockback pushes targets back, and extra bullets can fire a free second shot
 - Rift Weaver boss fights work inside an enclosed arena, such as the modpack's underwater dome: his flight height, roaming, reinforcements, Tidal Surge and Seismic Smash all measure from the arena floor instead of the ocean surface above it
 - Trial spawners can summon the Rift Weaver, one at a time, and keep tracking him anywhere in his arena so the reward only drops once he is dead
@@ -42,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- The sorcery arcana bonus on the Apothic enchanting table works with Apothic Enchanting 2.1.0, which changed the table's stat gathering; the companion is now built against 2.1.0
 - Super Factory Manager's printing press recipes show in JEI on multiplayer servers instead of the plugin crashing
 - Occultism's JEI plugin no longer stops partway on multiplayer servers, so its info pages show there
 - Oritech solar panels generate in fixed-time dimensions with a bright sky, such as the JAMD mining dimensions and the JAVD void, and Ender IO solar panels run at full output there instead of following the Overworld's day and night
@@ -93,6 +95,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- The Logistics Pipes drop fix, now that the modpack no longer includes Logistics Pipes
 - Streams Reflowing compatibility (reeled-in Nautec and Starcatcher catches, the stall-dump switch); the modpack no longer ships Streams Reflowing
 - The LTX Industries tank fluid shader fix; LTX Industries 2.3.0 fixes it itself
 - The Hephaestus Constantan tool material, and Molten Tungsten with its bucket

@@ -161,6 +161,7 @@ dependencies {
 	compileOnly "curse.maven:occultism-361026:${occultism_curse_file_id}"
 	compileOnly "curse.maven:apothic-enchanting-1063926:${apothic_enchanting_curse_file_id}"
 	compileOnly "curse.maven:placebo-283644:${placebo_curse_file_id}"
+	compileOnly "curse.maven:hostile-neural-networks-552574:${hostilenetworks_curse_file_id}"
 	compileOnly "curse.maven:apotheosis-313970:${apotheosis_curse_file_id}"
 	compileOnly "curse.maven:gateways-to-eternity-417802:${gateways_curse_file_id}"
 	compileOnly "curse.maven:roots-classic-295780:${roots_classic_curse_file_id}"

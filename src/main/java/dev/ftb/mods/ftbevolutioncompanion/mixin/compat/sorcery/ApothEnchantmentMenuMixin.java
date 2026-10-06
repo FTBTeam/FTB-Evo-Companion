@@ -26,7 +26,7 @@ public abstract class ApothEnchantmentMenuMixin {
                     + "Ldev/shadowsoffire/apothic_enchanting/table/ApothEnchantmentMenu;",
             at = @At(value = "INVOKE",
                     target = "Ldev/shadowsoffire/apothic_enchanting/table/EnchantmentTableStats;gatherStats("
-                            + "Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;I)"
+                            + "Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)"
                             + "Ldev/shadowsoffire/apothic_enchanting/table/EnchantmentTableStats;"))
     private EnchantmentTableStats ftbevo$addArcana(EnchantmentTableStats original) {
         return EnchantingHooks.addArcana(this.player, original);
