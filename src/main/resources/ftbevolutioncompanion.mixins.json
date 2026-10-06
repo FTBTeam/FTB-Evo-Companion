@@ -45,6 +45,7 @@
     "compat.artifice.CowboyHatQuickdrawMixin",
     "compat.nautec.NautecLuckyZoneStatMixin",
     "compat.nautec.AtlanteanRifleGunneryMixin",
+    "compat.starcatcher.FishingBobClientBiteTimeoutMixin",
     "compat.apothic.BulletModifierAffixAccessor",
     "compat.apothic.MultiShotAffixMixin",
     "compat.ltxi.LTXIAuroraGunneryMixin",
