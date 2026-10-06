@@ -16,8 +16,6 @@ public final class CuriosJeiGuiHandler implements IGuiContainerHandler<CuriosScr
     @Override
     public List<Rect2i> getGuiExtraAreas(CuriosScreen screen) {
         List<Rect2i> areas = new ArrayList<>(CuriosExclusionAreas.create(screen));
-        // The upstream panel bounds omit the eight-pixel offset on paged menus.
-        // Include each actual slot so JEI never treats an equip click as deletion.
         for (Slot slot : screen.getMenu().slots) {
             if (slot instanceof CurioSlot) {
                 areas.add(new Rect2i(screen.getLeftPos() + slot.x - 1,

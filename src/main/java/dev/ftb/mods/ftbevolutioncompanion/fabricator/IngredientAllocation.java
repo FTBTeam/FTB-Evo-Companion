@@ -4,7 +4,6 @@ import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-/** Integral allocation prevents overlapping item tags from counting the same items twice. */
 public final class IngredientAllocation {
     private IngredientAllocation() {}
 

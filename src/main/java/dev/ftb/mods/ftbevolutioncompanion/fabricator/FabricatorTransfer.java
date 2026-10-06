@@ -8,7 +8,6 @@ import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Plans the complete inventory change before touching either inventory. */
 public final class FabricatorTransfer {
     public record Plan(List<ItemStack> machine, List<ItemStack> player) {}
     private FabricatorTransfer() {}

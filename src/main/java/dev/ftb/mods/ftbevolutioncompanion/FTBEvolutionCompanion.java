@@ -204,7 +204,6 @@ public class FTBEvolutionCompanion {
     }
 
     private void clientSetup(FMLClientSetupEvent event, IEventBus eventBus) {
-        // Client init
         if (ModList.get().isLoaded("iris")) {
             event.enqueueWork(IrisGeckoGlow::register);
         }

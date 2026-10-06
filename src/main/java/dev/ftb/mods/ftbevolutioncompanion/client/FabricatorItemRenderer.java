@@ -17,7 +17,6 @@ public final class FabricatorItemRenderer extends GeoItemRenderer<FabricatorItem
     @Override
     public void adjustRenderPose(RenderPassInfo<GeoRenderState> pass) {
         super.adjustRenderPose(pass);
-        // The block model spans Y=0..16; item transforms rotate around its center.
         pass.poseStack().translate(0F, -0.5F, 0F);
     }
 }
