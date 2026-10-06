@@ -33,6 +33,7 @@
     "FrostBearIglooSpawnsMixin",
     "MobAccessor",
     "MobFlowPadMotionSyncMixin",
+    "compat.ae2.MeteoriteNetherLakeMixin",
     "compat.hostilenetworks.SimChamberMenuModeLockMixin",
     "compat.hostilenetworks.SimChamberTrainingOnlyMixin",
     "compat.hephaestus.HephaestusHarvestTierMixin",
