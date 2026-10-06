@@ -2,7 +2,6 @@ package dev.ftb.mods.ftbevolutioncompanion.mixin;
 
 import com.geckolib.renderer.layer.builtin.AutoGlowingGeoLayer;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 

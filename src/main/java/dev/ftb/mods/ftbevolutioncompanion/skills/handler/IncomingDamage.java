@@ -6,7 +6,6 @@ import dev.ftb.mods.ftbevolutioncompanion.skills.SkillCooldowns;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -17,14 +16,12 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 public final class IncomingDamage {
-    private IncomingDamage() {
-    }
+    private IncomingDamage() {}
 
     public static void onIncomingDamage(LivingIncomingDamageEvent event) {
         if (event.getSource().getEntity() instanceof LivingEntity attacker
@@ -81,11 +78,19 @@ public final class IncomingDamage {
         }
         event.setNewDamage(Math.max(0.0F, player.getHealth() - 1.0F));
         event.getContainer().setPostAttackInvulnerabilityTicks(40);
-        player.addEffect(new MobEffectInstance(MobEffects.RESISTANCE,
-                CompanionConfig.CHEAT_DEATH_INVULN_TICKS.get(), 4, false, false, true));
+        player.addEffect(new MobEffectInstance(
+                MobEffects.RESISTANCE, CompanionConfig.CHEAT_DEATH_INVULN_TICKS.get(), 4, false, false, true));
         SkillCooldowns.start(player, SkillCooldowns.CHEAT_DEATH, CompanionConfig.CHEAT_DEATH_COOLDOWN.get());
-        player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
-                SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 1.0F, 1.0F);
+        player.level()
+                .playSound(
+                        null,
+                        player.getX(),
+                        player.getY(),
+                        player.getZ(),
+                        SoundEvents.TOTEM_USE,
+                        SoundSource.PLAYERS,
+                        1.0F,
+                        1.0F);
         player.sendOverlayMessage(Component.translatable("ftbevolutioncompanion.skills.cheat_death.triggered"));
     }
 
@@ -93,7 +98,8 @@ public final class IncomingDamage {
         DamageSource source = event.getContainer().getSource();
         if (!(source.getEntity() instanceof ServerPlayer attacker)
                 || attacker == event.getEntity()
-                || !source.isDirect() || source.getDirectEntity() != attacker
+                || !source.isDirect()
+                || source.getDirectEntity() != attacker
                 || !SkillsHelper.isSword(attacker.getMainHandItem())
                 || SkillsHelper.attr(attacker, SkillsRegistry.PIERCING_STRIKE) <= 0.0
                 || !SkillsAbilities.toggles(attacker).piercingStrike()) {

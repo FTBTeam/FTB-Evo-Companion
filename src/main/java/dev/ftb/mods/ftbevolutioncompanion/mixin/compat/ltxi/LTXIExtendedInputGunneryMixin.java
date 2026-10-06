@@ -3,18 +3,14 @@ package dev.ftb.mods.ftbevolutioncompanion.mixin.compat.ltxi;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-
 import dev.ftb.mods.ftbevolutioncompanion.gunnery.GunneryRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.gunnery.LtxGunnery;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
-
 import liedge.ltxindustries.item.weapon.WeaponItem;
 import liedge.ltxindustries.lib.weapons.LTXIExtendedInput;
-
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -22,10 +18,13 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class LTXIExtendedInputGunneryMixin {
     @WrapOperation(
             method = "shootWeapon",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lliedge/ltxindustries/item/weapon/WeaponItem;getFireRate(Lnet/minecraft/world/item/ItemStack;)I"))
-    private int ftbevo$fireRate(WeaponItem weapon, ItemStack stack, Operation<Integer> original, @Local(argsOnly = true) Player player) {
+            at =
+                    @At(
+                            value = "INVOKE",
+                            target =
+                                    "Lliedge/ltxindustries/item/weapon/WeaponItem;getFireRate(Lnet/minecraft/world/item/ItemStack;)I"))
+    private int ftbevo$fireRate(
+            WeaponItem weapon, ItemStack stack, Operation<Integer> original, @Local(argsOnly = true) Player player) {
         int ticks = original.call(weapon, stack);
         double rate = SkillsHelper.attr(player, GunneryRegistry.GUN_FIRE_RATE);
         return rate > 0.0 && ticks > 0 ? Math.max(1, (int) Math.round(ticks / (1.0 + rate))) : ticks;
@@ -33,9 +32,11 @@ public abstract class LTXIExtendedInputGunneryMixin {
 
     @WrapOperation(
             method = "shootWeapon",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lliedge/ltxindustries/item/weapon/WeaponItem;weaponFired(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;Lliedge/ltxindustries/lib/weapons/LTXIExtendedInput;)V"))
+            at =
+                    @At(
+                            value = "INVOKE",
+                            target =
+                                    "Lliedge/ltxindustries/item/weapon/WeaponItem;weaponFired(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;Lliedge/ltxindustries/lib/weapons/LTXIExtendedInput;)V"))
     private void ftbevo$extraShot(
             WeaponItem weapon,
             ItemStack stack,

@@ -1,10 +1,9 @@
 package dev.ftb.mods.ftbevolutioncompanion.compat.kubejs;
 
+import java.lang.reflect.Method;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.Entity;
-
-import java.lang.reflect.Method;
 
 public final class PlayerEventToggles {
     private static final Method PERSISTENT_DATA = findPersistentData();

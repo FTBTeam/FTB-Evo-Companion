@@ -2,15 +2,13 @@ package dev.ftb.mods.ftbevolutioncompanion.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.ToDoubleFunction;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(targets = "at.minecraftschurli.mods.arsmagicalegacy.apiimpl.SpellHelperImpl", remap = false)
 public abstract class ArsMagicaPiercingStatMixin {
@@ -23,11 +21,13 @@ public abstract class ArsMagicaPiercingStatMixin {
     @WrapOperation(
             method = "getModifiedStat(DLat/minecraftschurli/mods/arsmagicalegacy/api/spell/SpellStat;"
                     + "Ljava/util/List;Lat/minecraftschurli/mods/arsmagicalegacy/api/spell/SpellCastContext;)D",
-            at = @At(value = "INVOKE",
-                    target = "Lat/minecraftschurli/mods/arsmagicalegacy/api/spell/SpellStat;"
-                            + "genericModifiers(Ljava/util/function/ToDoubleFunction;)Ljava/util/Map;"))
-    private Map<Object, Object> ftbevo$dropPiercingGenericModifier(ToDoubleFunction<Object> valueFunction,
-                                                                  Operation<Map<Object, Object>> original) {
+            at =
+                    @At(
+                            value = "INVOKE",
+                            target = "Lat/minecraftschurli/mods/arsmagicalegacy/api/spell/SpellStat;"
+                                    + "genericModifiers(Ljava/util/function/ToDoubleFunction;)Ljava/util/Map;"))
+    private Map<Object, Object> ftbevo$dropPiercingGenericModifier(
+            ToDoubleFunction<Object> valueFunction, Operation<Map<Object, Object>> original) {
         Map<Object, Object> generic = original.call(valueFunction);
         Map<Object, Object> filtered = new LinkedHashMap<>(generic.size());
         for (Map.Entry<Object, Object> entry : generic.entrySet()) {

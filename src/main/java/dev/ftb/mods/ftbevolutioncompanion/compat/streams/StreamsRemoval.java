@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion.compat.streams;
 
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
-
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;

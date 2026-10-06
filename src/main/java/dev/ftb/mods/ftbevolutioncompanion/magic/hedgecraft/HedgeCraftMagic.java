@@ -1,13 +1,11 @@
 package dev.ftb.mods.ftbevolutioncompanion.magic.hedgecraft;
 
 import net.minecraft.util.RandomSource;
-
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.NeoForge;
 
 public final class HedgeCraftMagic {
-    private HedgeCraftMagic() {
-    }
+    private HedgeCraftMagic() {}
 
     public static void register(IEventBus modBus) {
         NeoForge.EVENT_BUS.addListener(CovenMagic::onServerStopped);

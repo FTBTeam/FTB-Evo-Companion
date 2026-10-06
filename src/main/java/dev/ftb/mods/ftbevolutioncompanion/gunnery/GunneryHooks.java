@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion.gunnery;
 
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
-
 import io.redspace.irons_artifice.api.ComposeShotEvent;
 import io.redspace.irons_artifice.api.GunShootEvent;
 import io.redspace.irons_artifice.data.ComponentType;
@@ -11,14 +10,12 @@ import io.redspace.irons_artifice.data.ValueModifier;
 import io.redspace.irons_artifice.gun.ShotProfile;
 import io.redspace.irons_artifice.item.TricorneItem;
 import io.redspace.irons_artifice.registry.ItemRegistry;
-
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -28,8 +25,7 @@ public final class GunneryHooks {
     private static final TagKey<DamageType> ATLANTEAN_RIFLE =
             TagKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath("nautec", "atlantean_rifle"));
 
-    private GunneryHooks() {
-    }
+    private GunneryHooks() {}
 
     public static void register() {
         NeoForge.EVENT_BUS.addListener(EventPriority.HIGH, GunneryHooks::onComposeShot);
@@ -67,16 +63,25 @@ public final class GunneryHooks {
         ShotProfile profile = event.getShotProfile();
         multiply(profile, ShotComponents.DAMAGE, SkillsHelper.attr(shooter, GunneryRegistry.GUN_DAMAGE));
         multiply(profile, ShotComponents.FIRE_RATE, SkillsHelper.attr(shooter, GunneryRegistry.GUN_FIRE_RATE));
-        multiply(profile, ShotComponents.RELOAD_SPEED_MULTIPLIER, SkillsHelper.attr(shooter, GunneryRegistry.GUN_RELOAD_SPEED));
+        multiply(
+                profile,
+                ShotComponents.RELOAD_SPEED_MULTIPLIER,
+                SkillsHelper.attr(shooter, GunneryRegistry.GUN_RELOAD_SPEED));
         multiply(profile, ShotComponents.BULLET_SPEED, SkillsHelper.attr(shooter, GunneryRegistry.GUN_BULLET_SPEED));
         multiply(profile, ShotComponents.SPREAD, -SkillsHelper.attr(shooter, GunneryRegistry.GUN_ACCURACY));
-        multiply(profile, ShotComponents.AMMO_CONSUME_CHANCE, -SkillsHelper.attr(shooter, GunneryRegistry.GUN_AMMO_SAVE));
+        multiply(
+                profile,
+                ShotComponents.AMMO_CONSUME_CHANCE,
+                -SkillsHelper.attr(shooter, GunneryRegistry.GUN_AMMO_SAVE));
         add(profile, ShotComponents.KNOCKBACK, SkillsHelper.attr(shooter, GunneryRegistry.GUN_KNOCKBACK));
         add(profile, ShotComponents.SEEKING, SkillsHelper.attr(shooter, GunneryRegistry.GUN_SEEKING));
         add(profile, ShotComponents.ACCELERATING, Math.floor(SkillsHelper.attr(shooter, GunneryRegistry.GUN_RAMPING)));
         add(profile, ShotComponents.PIERCING, Math.floor(SkillsHelper.attr(shooter, GunneryRegistry.GUN_PIERCING)));
         add(profile, ShotComponents.RICOCHET, Math.floor(SkillsHelper.attr(shooter, GunneryRegistry.GUN_RICOCHET)));
-        multiply(profile, ShotComponents.CAMERA_RECOIL_MULTIPLIER, -SkillsHelper.attr(shooter, GunneryRegistry.GUN_RECOIL_CONTROL));
+        multiply(
+                profile,
+                ShotComponents.CAMERA_RECOIL_MULTIPLIER,
+                -SkillsHelper.attr(shooter, GunneryRegistry.GUN_RECOIL_CONTROL));
         multiply(profile, ShotComponents.IN_AIR_PENALTY, -SkillsHelper.attr(shooter, GunneryRegistry.GUN_AIR_ACCURACY));
         double deadEye = SkillsHelper.attr(shooter, GunneryRegistry.GUN_DEAD_EYE);
         if (deadEye > 0.0
@@ -108,7 +113,8 @@ public final class GunneryHooks {
 
     private static void add(ShotProfile profile, ComponentType<Value> type, double amount) {
         if (amount != 0.0) {
-            profile.modifyValue(type, new ValueModifier(amount, ValueModifier.Operation.ADD, ValueModifier.Type.BENEFICIAL));
+            profile.modifyValue(
+                    type, new ValueModifier(amount, ValueModifier.Operation.ADD, ValueModifier.Type.BENEFICIAL));
         }
     }
 }

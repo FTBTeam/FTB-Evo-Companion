@@ -6,13 +6,10 @@ import com.geckolib.animatable.instance.AnimatableInstanceCache;
 import com.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
 import com.geckolib.animatable.manager.AnimatableManager;
 import com.geckolib.renderer.GeoItemRenderer;
-
 import dev.ftb.mods.ftbevolutioncompanion.client.SkylineItemRenderer;
-
+import java.util.function.Consumer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
-
-import java.util.function.Consumer;
 
 public class SkylineItem extends BlockItem implements GeoItem {
     private final AnimatableInstanceCache geoCache = new SingletonAnimatableInstanceCache(this);
@@ -22,8 +19,7 @@ public class SkylineItem extends BlockItem implements GeoItem {
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-    }
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {

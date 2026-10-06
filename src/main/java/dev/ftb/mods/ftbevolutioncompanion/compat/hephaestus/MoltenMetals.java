@@ -4,7 +4,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BucketItem;
@@ -14,7 +18,6 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.PushReaction;
-
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -25,12 +28,6 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 public final class MoltenMetals {
     private static final String NAMESPACE = "ftb";
@@ -104,24 +101,28 @@ public final class MoltenMetals {
         Entry(String name, int colour, int temperature) {
             this.name = name;
             int tint = 0xFF000000 | colour;
-            this.type = FLUID_TYPES.register(name, () -> new Type(
-                    FluidType.Properties.create()
-                            .descriptionId("fluid_type.ftb." + name)
-                            .temperature(temperature)
-                            .density(2000)
-                            .viscosity(10000)
-                            .lightLevel(10)
-                            .canSwim(false)
-                            .canDrown(false)
-                            .canExtinguish(false)
-                            .canConvertToSource(false)
-                            .supportsBoating(false)
-                            .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
-                            .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA),
-                    tint));
+            this.type = FLUID_TYPES.register(
+                    name,
+                    () -> new Type(
+                            FluidType.Properties.create()
+                                    .descriptionId("fluid_type.ftb." + name)
+                                    .temperature(temperature)
+                                    .density(2000)
+                                    .viscosity(10000)
+                                    .lightLevel(10)
+                                    .canSwim(false)
+                                    .canDrown(false)
+                                    .canExtinguish(false)
+                                    .canConvertToSource(false)
+                                    .supportsBoating(false)
+                                    .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
+                                    .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA),
+                            tint));
             this.source = FLUIDS.register(name, () -> new BaseFlowingFluid.Source(properties()));
             this.flowing = FLUIDS.register("flowing_" + name, () -> new BaseFlowingFluid.Flowing(properties()));
-            this.block = BLOCKS.registerBlock(name + "_block", properties -> new LiquidBlock(source.get(), properties),
+            this.block = BLOCKS.registerBlock(
+                    name + "_block",
+                    properties -> new LiquidBlock(source.get(), properties),
                     properties -> properties
                             .noCollision()
                             .replaceable()
@@ -131,7 +132,9 @@ public final class MoltenMetals {
                             .noLootTable()
                             .liquid()
                             .sound(SoundType.EMPTY));
-            this.bucket = ITEMS.registerItem(name + "_bucket", properties -> new BucketItem(source.get(), properties),
+            this.bucket = ITEMS.registerItem(
+                    name + "_bucket",
+                    properties -> new BucketItem(source.get(), properties),
                     properties -> properties.craftRemainder(Items.BUCKET).stacksTo(1));
         }
 

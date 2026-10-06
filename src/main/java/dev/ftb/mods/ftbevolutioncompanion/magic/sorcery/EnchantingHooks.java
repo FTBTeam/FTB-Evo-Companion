@@ -1,9 +1,7 @@
 package dev.ftb.mods.ftbevolutioncompanion.magic.sorcery;
 
 import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
-
 import dev.shadowsoffire.apothic_enchanting.table.EnchantmentTableStats;
-
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -11,8 +9,7 @@ import net.minecraft.world.entity.player.Player;
 public final class EnchantingHooks {
     private static final float MAX_ARCANA = 100.0F;
 
-    private EnchantingHooks() {
-    }
+    private EnchantingHooks() {}
 
     public static EnchantmentTableStats addArcana(Player player, EnchantmentTableStats stats) {
         if (!(player instanceof ServerPlayer) || stats == null || stats.arcana() >= MAX_ARCANA) {
@@ -23,8 +20,14 @@ public final class EnchantingHooks {
             return stats;
         }
         float arcana = Math.min(MAX_ARCANA, stats.arcana() + (float) bonus);
-        return new EnchantmentTableStats(stats.tableEterna(), stats.quanta(), arcana, stats.clues(),
-                stats.blacklist(), stats.treasure(), stats.stable());
+        return new EnchantmentTableStats(
+                stats.tableEterna(),
+                stats.quanta(),
+                arcana,
+                stats.clues(),
+                stats.blacklist(),
+                stats.treasure(),
+                stats.stable());
     }
 
     public static int discount(LivingEntity entity, int cost) {

@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion.mixin.compat.hephaestus;
 
 import dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus.HephaestusTools;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

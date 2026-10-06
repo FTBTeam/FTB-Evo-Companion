@@ -6,7 +6,7 @@ import com.astryxion.hats.common.network.HatPacketHandler;
 import com.astryxion.hats.common.registry.HatItemRegistry;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-
+import java.util.List;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -20,31 +20,28 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.permissions.Permissions;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
-
 import org.jspecify.annotations.Nullable;
-
-import java.util.List;
 
 public final class GiveHatCommand {
     private static final String LANG = "ftbevolutioncompanion.givehat.";
     private static final String HATS = "hats";
     private static final int[] MILESTONES = {1, 10, 100, 200, 300, 332};
 
-    private GiveHatCommand() {
-    }
+    private GiveHatCommand() {}
 
     public static void onRegisterCommands(RegisterCommandsEvent event) {
-        event.getDispatcher().register(Commands.literal("givehat")
-                .requires(source -> source.permissions().hasPermission(Permissions.COMMANDS_GAMEMASTER))
-                .then(Commands.argument("targets", EntityArgument.players())
-                        .then(Commands.literal("random")
-                                .executes(GiveHatCommand::giveRandom))
-                        .then(Commands.argument("hat", IdentifierArgument.id())
-                                .suggests((context, builder) -> SharedSuggestionProvider.suggestResource(
-                                        HatItemRegistry.getAllHats().stream().map(BuiltInRegistries.ITEM::getKey), builder))
-                                .executes(GiveHatCommand::giveHat))));
+        event.getDispatcher()
+                .register(Commands.literal("givehat")
+                        .requires(source -> source.permissions().hasPermission(Permissions.COMMANDS_GAMEMASTER))
+                        .then(Commands.argument("targets", EntityArgument.players())
+                                .then(Commands.literal("random").executes(GiveHatCommand::giveRandom))
+                                .then(Commands.argument("hat", IdentifierArgument.id())
+                                        .suggests((context, builder) -> SharedSuggestionProvider.suggestResource(
+                                                HatItemRegistry.getAllHats().stream()
+                                                        .map(BuiltInRegistries.ITEM::getKey),
+                                                builder))
+                                        .executes(GiveHatCommand::giveHat))));
     }
 
     private static int giveHat(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
@@ -58,9 +55,14 @@ public final class GiveHatCommand {
         for (ServerPlayer player : EntityArgument.getPlayers(context, "targets")) {
             if (unlock(player, hat)) {
                 unlocked++;
-                context.getSource().sendSuccess(() -> Component.translatable(LANG + "unlocked", hatName(hat), player.getDisplayName()), true);
+                context.getSource()
+                        .sendSuccess(
+                                () -> Component.translatable(LANG + "unlocked", hatName(hat), player.getDisplayName()),
+                                true);
             } else {
-                context.getSource().sendFailure(Component.translatable(LANG + "already_unlocked", player.getDisplayName(), hatName(hat)));
+                context.getSource()
+                        .sendFailure(Component.translatable(
+                                LANG + "already_unlocked", player.getDisplayName(), hatName(hat)));
             }
         }
         return unlocked;
@@ -80,7 +82,10 @@ public final class GiveHatCommand {
             Item hat = locked.get(player.getRandom().nextInt(locked.size()));
             if (unlock(player, hat)) {
                 unlocked++;
-                context.getSource().sendSuccess(() -> Component.translatable(LANG + "unlocked", hatName(hat), player.getDisplayName()), true);
+                context.getSource()
+                        .sendSuccess(
+                                () -> Component.translatable(LANG + "unlocked", hatName(hat), player.getDisplayName()),
+                                true);
             }
         }
         return unlocked;
@@ -101,7 +106,9 @@ public final class GiveHatCommand {
     private static void awardMilestones(ServerPlayer player, int unlocked) {
         for (int milestone : MILESTONES) {
             if (unlocked < milestone) return;
-            AdvancementHolder holder = player.level().getServer().getAdvancements()
+            AdvancementHolder holder = player.level()
+                    .getServer()
+                    .getAdvancements()
                     .get(Identifier.fromNamespaceAndPath(HATS, "hats/collect_" + milestone));
             if (holder != null) {
                 player.getAdvancements().award(holder, "unlock_via_code");

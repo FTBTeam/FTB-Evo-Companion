@@ -1,10 +1,9 @@
 package dev.ftb.mods.ftbevolutioncompanion.compat.sgeconomy;
 
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-
 import java.lang.reflect.Method;
 import java.util.function.Supplier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 
 public final class ShopCoins {
     private static final Method DEPOSIT = findDeposit();

@@ -7,17 +7,16 @@ import com.geckolib.renderer.layer.builtin.AutoGlowingGeoLayer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
-import dev.ftb.mods.ftbevolutioncompanion.pyramid.SkylineBlockEntity;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.LaunchTask;
+import dev.ftb.mods.ftbevolutioncompanion.pyramid.SkylineBlockEntity;
 import dev.ftb.mods.ftbquests.client.ClientQuestFile;
 import dev.ftb.mods.ftbquests.client.FTBQuestsClientEventHandler;
 import dev.ftb.mods.ftbquests.quest.task.EnergyTask;
 import dev.ftb.mods.ftbquests.quest.task.FluidTask;
 import dev.ftb.mods.ftbquests.quest.task.ItemTask;
 import dev.ftb.mods.ftbquests.quest.task.Task;
-
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -39,11 +38,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-
 import org.joml.Matrix4f;
 import org.jspecify.annotations.Nullable;
-
-import java.util.List;
 
 public class SkylineRenderer extends GeoBlockRenderer<SkylineBlockEntity, SkylineRenderer.State> {
     private static final String LANG = "ftbevolutioncompanion.ftb_skyline.";
@@ -65,10 +61,13 @@ public class SkylineRenderer extends GeoBlockRenderer<SkylineBlockEntity, Skylin
         boolean hologram;
         final ItemStackRenderState item = new ItemStackRenderState();
         boolean hasItem;
+
         @Nullable
         TextureAtlasSprite baseSprite;
+
         @Nullable
         TextureAtlasSprite fillSprite;
+
         int baseTint = 0xFFFFFFFF;
         boolean fillBase;
         float progress;
@@ -83,7 +82,12 @@ public class SkylineRenderer extends GeoBlockRenderer<SkylineBlockEntity, Skylin
     }
 
     @Override
-    public void extractRenderState(SkylineBlockEntity machine, State state, float partialTick, Vec3 cameraPos, ModelFeatureRenderer.@Nullable CrumblingOverlay crumbling) {
+    public void extractRenderState(
+            SkylineBlockEntity machine,
+            State state,
+            float partialTick,
+            Vec3 cameraPos,
+            ModelFeatureRenderer.@Nullable CrumblingOverlay crumbling) {
         super.extractRenderState(machine, state, partialTick, cameraPos, crumbling);
 
         state.hologram = false;
@@ -92,7 +96,10 @@ public class SkylineRenderer extends GeoBlockRenderer<SkylineBlockEntity, Skylin
         state.fillSprite = null;
         state.item.clear();
 
-        if (machine.isLaunching() || machine.getActiveTaskId() == 0L || machine.getLevel() == null || !ClientQuestFile.exists()) return;
+        if (machine.isLaunching()
+                || machine.getActiveTaskId() == 0L
+                || machine.getLevel() == null
+                || !ClientQuestFile.exists()) return;
         Task task = ClientQuestFile.getInstance().getTask(machine.getActiveTaskId());
         if (task == null) return;
 
@@ -103,7 +110,13 @@ public class SkylineRenderer extends GeoBlockRenderer<SkylineBlockEntity, Skylin
         if (task instanceof LaunchTask) {
             state.title = task.getQuest().getTitle();
             state.detail = Component.translatable(LANG + "ready_to_launch").withStyle(ChatFormatting.GREEN);
-            itemModelResolver.updateForTopItem(state.item, machine.getBlockState().getBlock().asItem().getDefaultInstance(), ItemDisplayContext.FIXED, machine.getLevel(), null, 0);
+            itemModelResolver.updateForTopItem(
+                    state.item,
+                    machine.getBlockState().getBlock().asItem().getDefaultInstance(),
+                    ItemDisplayContext.FIXED,
+                    machine.getLevel(),
+                    null,
+                    0);
             state.hasItem = !state.item.isEmpty();
             return;
         }
@@ -112,19 +125,32 @@ public class SkylineRenderer extends GeoBlockRenderer<SkylineBlockEntity, Skylin
         long progress = Math.min(machine.getDisplayProgress(), max);
         state.progress = (float) progress / max;
         state.title = task.getTitle();
-        ChatFormatting color = progress >= max ? ChatFormatting.GREEN : progress > 0 ? ChatFormatting.YELLOW : ChatFormatting.GOLD;
-        state.detail = Component.translatable(LANG + "progress", task.formatProgress(ClientQuestFile.getInstance().selfTeamData, progress), task.formatMaxProgress()).withStyle(color);
+        ChatFormatting color =
+                progress >= max ? ChatFormatting.GREEN : progress > 0 ? ChatFormatting.YELLOW : ChatFormatting.GOLD;
+        state.detail = Component.translatable(
+                        LANG + "progress",
+                        task.formatProgress(ClientQuestFile.getInstance().selfTeamData, progress),
+                        task.formatMaxProgress())
+                .withStyle(color);
 
         if (task instanceof ItemTask itemTask) {
             List<ItemStack> stacks = itemTask.getValidDisplayItems();
-            ItemStack shown = stacks.isEmpty() ? itemTask.getItemStack() : stacks.get((int) (time / 20L % stacks.size()));
-            itemModelResolver.updateForTopItem(state.item, shown, ItemDisplayContext.FIXED, machine.getLevel(), null, 0);
+            ItemStack shown =
+                    stacks.isEmpty() ? itemTask.getItemStack() : stacks.get((int) (time / 20L % stacks.size()));
+            itemModelResolver.updateForTopItem(
+                    state.item, shown, ItemDisplayContext.FIXED, machine.getLevel(), null, 0);
             state.hasItem = !state.item.isEmpty();
         } else if (task instanceof FluidTask fluidTask && FTBQuestsClientEventHandler.tankSprite != null) {
             FluidState fluid = fluidTask.getFluid().defaultFluidState();
-            var model = Minecraft.getInstance().getModelManager().getFluidStateModelSet().get(fluid);
+            var model = Minecraft.getInstance()
+                    .getModelManager()
+                    .getFluidStateModelSet()
+                    .get(fluid);
             state.baseSprite = model.stillMaterial().sprite();
-            state.baseTint = 0xFF000000 | (model.tintSource() == null ? 0xFFFFFF : model.tintSource().color(fluid.createLegacyBlock()));
+            state.baseTint = 0xFF000000
+                    | (model.tintSource() == null
+                            ? 0xFFFFFF
+                            : model.tintSource().color(fluid.createLegacyBlock()));
             state.fillBase = true;
             state.fillSprite = FTBQuestsClientEventHandler.tankSprite;
         } else if (task instanceof EnergyTask energyTask) {
@@ -149,7 +175,8 @@ public class SkylineRenderer extends GeoBlockRenderer<SkylineBlockEntity, Skylin
         }
     }
 
-    private void submitHologram(State state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
+    private void submitHologram(
+            State state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
         poseStack.pushPose();
         poseStack.translate(0.5D, HOLOGRAM_Y, 0.5D);
 
@@ -168,7 +195,8 @@ public class SkylineRenderer extends GeoBlockRenderer<SkylineBlockEntity, Skylin
         poseStack.popPose();
     }
 
-    private void submitGauge(State state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
+    private void submitGauge(
+            State state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
         TextureAtlasSprite base = state.baseSprite;
         TextureAtlasSprite fill = state.fillSprite;
         float baseAmount = state.fillBase ? state.progress : 1F;
@@ -189,7 +217,8 @@ public class SkylineRenderer extends GeoBlockRenderer<SkylineBlockEntity, Skylin
         poseStack.popPose();
     }
 
-    private static void gaugeQuad(PoseStack.Pose pose, VertexConsumer consumer, TextureAtlasSprite sprite, float amount, float z, int color) {
+    private static void gaugeQuad(
+            PoseStack.Pose pose, VertexConsumer consumer, TextureAtlasSprite sprite, float amount, float z, int color) {
         Matrix4f matrix = pose.pose();
         float bottom = -0.5F;
         float top = bottom + amount;
@@ -198,24 +227,47 @@ public class SkylineRenderer extends GeoBlockRenderer<SkylineBlockEntity, Skylin
         float v0 = sprite.getV(1F - amount);
         float v1 = sprite.getV1();
         int light = LightCoordsUtil.FULL_BRIGHT;
-        consumer.addVertex(matrix, -0.5F, bottom, z).setColor(color).setUv(u0, v1).setLight(light);
-        consumer.addVertex(matrix, 0.5F, bottom, z).setColor(color).setUv(u1, v1).setLight(light);
+        consumer.addVertex(matrix, -0.5F, bottom, z)
+                .setColor(color)
+                .setUv(u0, v1)
+                .setLight(light);
+        consumer.addVertex(matrix, 0.5F, bottom, z)
+                .setColor(color)
+                .setUv(u1, v1)
+                .setLight(light);
         consumer.addVertex(matrix, 0.5F, top, z).setColor(color).setUv(u1, v0).setLight(light);
         consumer.addVertex(matrix, -0.5F, top, z).setColor(color).setUv(u0, v0).setLight(light);
         consumer.addVertex(matrix, -0.5F, top, z).setColor(color).setUv(u0, v0).setLight(light);
         consumer.addVertex(matrix, 0.5F, top, z).setColor(color).setUv(u1, v0).setLight(light);
-        consumer.addVertex(matrix, 0.5F, bottom, z).setColor(color).setUv(u1, v1).setLight(light);
-        consumer.addVertex(matrix, -0.5F, bottom, z).setColor(color).setUv(u0, v1).setLight(light);
+        consumer.addVertex(matrix, 0.5F, bottom, z)
+                .setColor(color)
+                .setUv(u1, v1)
+                .setLight(light);
+        consumer.addVertex(matrix, -0.5F, bottom, z)
+                .setColor(color)
+                .setUv(u0, v1)
+                .setLight(light);
     }
 
-    private void submitLabel(Component text, double y, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
+    private void submitLabel(
+            Component text, double y, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
         if (text.getString().isEmpty()) return;
         poseStack.pushPose();
         poseStack.translate(0D, y, 0D);
         poseStack.mulPose(camera.orientation);
         poseStack.scale(TEXT_SCALE, -TEXT_SCALE, TEXT_SCALE);
         float x = -font.width(text) / 2F;
-        collector.submitText(poseStack, x, 0F, text.getVisualOrderText(), false, Font.DisplayMode.NORMAL, LightCoordsUtil.FULL_BRIGHT, 0xFFFFFFFF, TEXT_BACKGROUND, 0);
+        collector.submitText(
+                poseStack,
+                x,
+                0F,
+                text.getVisualOrderText(),
+                false,
+                Font.DisplayMode.NORMAL,
+                LightCoordsUtil.FULL_BRIGHT,
+                0xFFFFFFFF,
+                TEXT_BACKGROUND,
+                0);
         poseStack.popPose();
     }
 

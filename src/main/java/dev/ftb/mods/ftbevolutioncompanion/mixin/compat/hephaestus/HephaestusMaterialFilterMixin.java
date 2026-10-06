@@ -1,15 +1,12 @@
 package dev.ftb.mods.ftbevolutioncompanion.mixin.compat.hephaestus;
 
 import dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus.HephaestusTools;
-
+import java.util.Map;
 import net.minecraft.resources.Identifier;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Map;
 
 @Mixin(targets = "com.titammods.hephaestus_tools.materials.MaterialManager", remap = false)
 public abstract class HephaestusMaterialFilterMixin {

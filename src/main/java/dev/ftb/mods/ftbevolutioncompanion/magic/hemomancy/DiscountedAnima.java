@@ -3,11 +3,9 @@ package dev.ftb.mods.ftbevolutioncompanion.magic.hemomancy;
 import com.breakinblocks.neovitae.api.soul.AnimaTicket;
 import com.breakinblocks.neovitae.api.soul.IAnima;
 import com.breakinblocks.neovitae.api.soul.SyphonResult;
-
+import java.util.UUID;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
-
-import java.util.UUID;
 
 public final class DiscountedAnima implements IAnima {
     private final IAnima delegate;

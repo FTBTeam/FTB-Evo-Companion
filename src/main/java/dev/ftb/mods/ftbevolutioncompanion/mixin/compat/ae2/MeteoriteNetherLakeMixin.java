@@ -3,7 +3,6 @@ package dev.ftb.mods.ftbevolutioncompanion.mixin.compat.ae2;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -19,7 +18,8 @@ public abstract class MeteoriteNetherLakeMixin {
 
     @Inject(method = "placeCraterLake()V", at = @At("HEAD"), cancellable = true)
     private void ftbevo$noNetherCraterLake(CallbackInfo ci) {
-        if (this.level instanceof ServerLevelAccessor accessor && accessor.getLevel().dimension() == Level.NETHER) {
+        if (this.level instanceof ServerLevelAccessor accessor
+                && accessor.getLevel().dimension() == Level.NETHER) {
             ci.cancel();
         }
     }

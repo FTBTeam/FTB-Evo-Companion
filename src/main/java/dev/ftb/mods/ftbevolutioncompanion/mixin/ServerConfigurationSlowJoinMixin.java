@@ -1,12 +1,10 @@
 package dev.ftb.mods.ftbevolutioncompanion.mixin;
 
 import com.mojang.authlib.GameProfile;
-
 import net.minecraft.network.DisconnectionDetails;
 import net.minecraft.server.network.ConfigurationTask;
-import net.minecraft.util.Util;
 import net.minecraft.server.network.ServerConfigurationPacketListenerImpl;
-
+import net.minecraft.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Mixin;

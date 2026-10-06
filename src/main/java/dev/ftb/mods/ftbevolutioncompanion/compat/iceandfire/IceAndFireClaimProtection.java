@@ -1,23 +1,19 @@
 package dev.ftb.mods.ftbevolutioncompanion.compat.iceandfire;
 
-import java.lang.reflect.Method;
-
 import dev.ftb.mods.ftbchunks.api.ClaimedChunk;
 import dev.ftb.mods.ftbchunks.api.FTBChunksAPI;
 import dev.ftb.mods.ftblibrary.math.ChunkDimPos;
-
+import java.lang.reflect.Method;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
-
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.ICancellableEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
 public final class IceAndFireClaimProtection {
-    private IceAndFireClaimProtection() {
-    }
+    private IceAndFireClaimProtection() {}
 
     public static void register() {
         listen("com.iafenvoy.iceandfire.event.GriefBreakBlockEvent", "getGriefer");
@@ -47,9 +43,7 @@ public final class IceAndFireClaimProtection {
                     return;
                 }
                 BlockPos pos = BlockPos.containing(
-                        (double) targetX.invoke(event),
-                        (double) targetY.invoke(event),
-                        (double) targetZ.invoke(event));
+                        (double) targetX.invoke(event), (double) targetY.invoke(event), (double) targetZ.invoke(event));
                 if (isProtected(entity.level(), pos)) {
                     ((ICancellableEvent) event).setCanceled(true);
                 }

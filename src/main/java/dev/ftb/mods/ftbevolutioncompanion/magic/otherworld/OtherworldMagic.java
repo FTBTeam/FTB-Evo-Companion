@@ -6,7 +6,8 @@ import dev.anima.MachineBlockEntity;
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
-
+import java.util.UUID;
+import java.util.function.Supplier;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,7 +18,6 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -26,11 +26,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-
 import org.jspecify.annotations.Nullable;
-
-import java.util.UUID;
-import java.util.function.Supplier;
 
 public final class OtherworldMagic {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS =
@@ -48,8 +44,7 @@ public final class OtherworldMagic {
     private static final double EPSILON = 1.0E-6;
     private static final long WORKER_SNAPSHOT_INTERVAL = 100L;
 
-    private OtherworldMagic() {
-    }
+    private OtherworldMagic() {}
 
     public static void register(IEventBus modBus) {
         ATTACHMENTS.register(modBus);
@@ -57,27 +52,37 @@ public final class OtherworldMagic {
     }
 
     private static DeferredHolder<AttachmentType<?>, AttachmentType<OwnerSnapshot>> snapshot(String name) {
-        return ATTACHMENTS.register(name, () -> AttachmentType.builder(() -> OwnerSnapshot.NONE)
-                .serialize(OwnerSnapshot.CODEC)
-                .build());
+        return ATTACHMENTS.register(
+                name,
+                () -> AttachmentType.builder(() -> OwnerSnapshot.NONE)
+                        .serialize(OwnerSnapshot.CODEC)
+                        .build());
     }
 
     public static double ritualHaste(GoldenSacrificialBowlBlockEntity bowl) {
-        return ownerValue(bowl.getLevel(), bowl.castingPlayerId, MagicRegistry.OCCULT_RITUAL_HASTE,
-                bowl, RITUAL_HASTE_SNAPSHOT);
+        return ownerValue(
+                bowl.getLevel(), bowl.castingPlayerId, MagicRegistry.OCCULT_RITUAL_HASTE, bowl, RITUAL_HASTE_SNAPSHOT);
     }
 
     public static void snapshotSummoned(LivingEntity living, @Nullable Player caster) {
-        if (!(living instanceof SpiritEntity spirit) || caster == null || spirit.level().isClientSide()) {
+        if (!(living instanceof SpiritEntity spirit)
+                || caster == null
+                || spirit.level().isClientSide()) {
             return;
         }
         UUID ownerId = ownerId(spirit);
         if (ownerId == null || !ownerId.equals(caster.getUUID())) {
             return;
         }
-        remember(spirit, SPIRIT_DILIGENCE_SNAPSHOT, ownerId,
+        remember(
+                spirit,
+                SPIRIT_DILIGENCE_SNAPSHOT,
+                ownerId,
                 MagicRegistry.value(caster, MagicRegistry.OCCULT_SPIRIT_DILIGENCE));
-        remember(spirit, SPIRIT_BOUNTY_SNAPSHOT, ownerId,
+        remember(
+                spirit,
+                SPIRIT_BOUNTY_SNAPSHOT,
+                ownerId,
                 MagicRegistry.value(caster, MagicRegistry.OCCULT_SPIRIT_BOUNTY));
     }
 
@@ -85,8 +90,12 @@ public final class OtherworldMagic {
         if (time <= 1) {
             return time;
         }
-        double diligence = ownerValue(spirit.level(), ownerId(spirit), MagicRegistry.OCCULT_SPIRIT_DILIGENCE,
-                spirit, SPIRIT_DILIGENCE_SNAPSHOT);
+        double diligence = ownerValue(
+                spirit.level(),
+                ownerId(spirit),
+                MagicRegistry.OCCULT_SPIRIT_DILIGENCE,
+                spirit,
+                SPIRIT_DILIGENCE_SNAPSHOT);
         if (diligence <= 0.0) {
             return time;
         }
@@ -97,8 +106,8 @@ public final class OtherworldMagic {
         if (count <= 0 || count >= result.getMaxStackSize()) {
             return count;
         }
-        double bounty = ownerValue(spirit.level(), ownerId(spirit), MagicRegistry.OCCULT_SPIRIT_BOUNTY,
-                spirit, SPIRIT_BOUNTY_SNAPSHOT);
+        double bounty = ownerValue(
+                spirit.level(), ownerId(spirit), MagicRegistry.OCCULT_SPIRIT_BOUNTY, spirit, SPIRIT_BOUNTY_SNAPSHOT);
         if (bounty <= 0.0 || spirit.getRandom().nextDouble() >= bounty) {
             return count;
         }
@@ -115,7 +124,9 @@ public final class OtherworldMagic {
 
     public static boolean refundsSouls(Player player) {
         double thrift = MagicRegistry.value(player, MagicRegistry.ANIMA_SOUL_THRIFT);
-        return thrift > 0.0 && !player.level().isClientSide() && player.getRandom().nextDouble() < thrift;
+        return thrift > 0.0
+                && !player.level().isClientSide()
+                && player.getRandom().nextDouble() < thrift;
     }
 
     public static int hastenedCooldown(Player player, int cooldown) {
@@ -130,8 +141,12 @@ public final class OtherworldMagic {
     }
 
     public static int enduringDurability(MachineBlockEntity machine, @Nullable String owner, int durability) {
-        double endurance = ownerValue(machine.getLevel(), parseOwner(owner), MagicRegistry.ANIMA_WORKER_ENDURANCE,
-                machine, WORKER_ENDURANCE_SNAPSHOT);
+        double endurance = ownerValue(
+                machine.getLevel(),
+                parseOwner(owner),
+                MagicRegistry.ANIMA_WORKER_ENDURANCE,
+                machine,
+                WORKER_ENDURANCE_SNAPSHOT);
         if (endurance <= 0.0) {
             return durability;
         }
@@ -143,12 +158,15 @@ public final class OtherworldMagic {
         if (level == null || level.getGameTime() % WORKER_SNAPSHOT_INTERVAL != 0L) {
             return;
         }
-        ownerValue(level, parseOwner(owner), MagicRegistry.ANIMA_WORKER_ENDURANCE,
-                machine, WORKER_ENDURANCE_SNAPSHOT);
+        ownerValue(level, parseOwner(owner), MagicRegistry.ANIMA_WORKER_ENDURANCE, machine, WORKER_ENDURANCE_SNAPSHOT);
     }
 
-    private static double ownerValue(@Nullable Level level, @Nullable UUID ownerId, Holder<Attribute> attribute,
-                                     IAttachmentHolder holder, Supplier<AttachmentType<OwnerSnapshot>> type) {
+    private static double ownerValue(
+            @Nullable Level level,
+            @Nullable UUID ownerId,
+            Holder<Attribute> attribute,
+            IAttachmentHolder holder,
+            Supplier<AttachmentType<OwnerSnapshot>> type) {
         if (ownerId == null || !(level instanceof ServerLevel serverLevel)) {
             return 0.0;
         }
@@ -159,15 +177,16 @@ public final class OtherworldMagic {
             return value;
         }
         OwnerSnapshot snapshot = holder.getExistingDataOrNull(type);
-        if (snapshot == null || CompanionConfig.RITUAL_OWNER_OFFLINE_FULL_COST.get()
+        if (snapshot == null
+                || CompanionConfig.RITUAL_OWNER_OFFLINE_FULL_COST.get()
                 || !ownerId.equals(snapshot.owner())) {
             return 0.0;
         }
         return snapshot.value();
     }
 
-    private static void remember(IAttachmentHolder holder, Supplier<AttachmentType<OwnerSnapshot>> type,
-                                 UUID ownerId, double value) {
+    private static void remember(
+            IAttachmentHolder holder, Supplier<AttachmentType<OwnerSnapshot>> type, UUID ownerId, double value) {
         OwnerSnapshot current = holder.getExistingDataOrNull(type);
         if (current == null ? value <= 0.0 : ownerId.equals(current.owner()) && current.value() == value) {
             return;

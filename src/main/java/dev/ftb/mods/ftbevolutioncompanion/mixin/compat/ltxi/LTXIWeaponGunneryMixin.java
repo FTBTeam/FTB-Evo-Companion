@@ -3,19 +3,15 @@ package dev.ftb.mods.ftbevolutioncompanion.mixin.compat.ltxi;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-
 import dev.ftb.mods.ftbevolutioncompanion.gunnery.GunneryRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.gunnery.LtxGunnery;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
-
 import liedge.ltxindustries.item.weapon.WeaponItem;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -24,9 +20,11 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 public abstract class LTXIWeaponGunneryMixin {
     @WrapOperation(
             method = "hurtEntity",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/Entity;hurtServer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
+            at =
+                    @At(
+                            value = "INVOKE",
+                            target =
+                                    "Lnet/minecraft/world/entity/Entity;hurtServer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
     private boolean ftbevo$gunneryDamage(
             Entity target, ServerLevel level, DamageSource source, float amount, Operation<Boolean> original) {
         if (!(source.getEntity() instanceof LivingEntity shooter)) {
@@ -45,9 +43,11 @@ public abstract class LTXIWeaponGunneryMixin {
 
     @ModifyArg(
             method = "traceLightfrag",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lliedge/ltxindustries/entity/CompoundHitResult;tracePath(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lliedge/ltxindustries/lib/upgrades/Upgrades;DDIDLliedge/ltxindustries/entity/DynamicClipContext$FluidCollisionPredicate;D)Lliedge/ltxindustries/entity/CompoundHitResult;"),
+            at =
+                    @At(
+                            value = "INVOKE",
+                            target =
+                                    "Lliedge/ltxindustries/entity/CompoundHitResult;tracePath(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lliedge/ltxindustries/lib/upgrades/Upgrades;DDIDLliedge/ltxindustries/entity/DynamicClipContext$FluidCollisionPredicate;D)Lliedge/ltxindustries/entity/CompoundHitResult;"),
             index = 4)
     private double ftbevo$accuracy(double inaccuracy, @Local(argsOnly = true) Player player) {
         return inaccuracy * Math.max(0.0, 1.0 - SkillsHelper.attr(player, GunneryRegistry.GUN_ACCURACY));
@@ -55,9 +55,11 @@ public abstract class LTXIWeaponGunneryMixin {
 
     @ModifyArg(
             method = "traceLightfrag",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lliedge/ltxindustries/entity/CompoundHitResult;tracePath(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lliedge/ltxindustries/lib/upgrades/Upgrades;DDIDLliedge/ltxindustries/entity/DynamicClipContext$FluidCollisionPredicate;D)Lliedge/ltxindustries/entity/CompoundHitResult;"),
+            at =
+                    @At(
+                            value = "INVOKE",
+                            target =
+                                    "Lliedge/ltxindustries/entity/CompoundHitResult;tracePath(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lliedge/ltxindustries/lib/upgrades/Upgrades;DDIDLliedge/ltxindustries/entity/DynamicClipContext$FluidCollisionPredicate;D)Lliedge/ltxindustries/entity/CompoundHitResult;"),
             index = 5)
     private int ftbevo$piercing(int maxHits, @Local(argsOnly = true) Player player) {
         return maxHits + LtxGunnery.bonusPierce(player);

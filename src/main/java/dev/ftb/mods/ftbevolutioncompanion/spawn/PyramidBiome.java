@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion.spawn;
 
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.QuartPos;
 import net.minecraft.core.registries.Registries;
@@ -11,22 +10,20 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
-
 import net.neoforged.neoforge.event.level.LevelEvent;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class PyramidBiome {
     private static final Logger LOGGER = LoggerFactory.getLogger("PyramidBiome");
-    public static final ResourceKey<Biome> KEY = ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("ftb", "pyramid"));
+    public static final ResourceKey<Biome> KEY =
+            ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("ftb", "pyramid"));
 
     private static volatile BiomeSource overworldSource;
     private static volatile Holder<Biome> holder;
     private static int minX, maxX, minY, maxY, minZ, maxZ;
 
-    private PyramidBiome() {
-    }
+    private PyramidBiome() {}
 
     public static void onLevelLoad(LevelEvent.Load event) {
         if (!(event.getLevel() instanceof ServerLevel level)) return;
@@ -51,10 +48,14 @@ public final class PyramidBiome {
         maxY = QuartPos.fromBlock(CompanionConfig.PYRAMID_MAX_Y.get());
         overworldSource = level.getChunkSource().getGenerator().getBiomeSource();
         if (overworldSource instanceof PyramidBiomeSource marked) marked.ftbevo$setPyramidSource(true);
-        LOGGER.info("spawn pyramid biome active over blocks x {}..{} y {}..{} z {}..{}",
-                CompanionConfig.PYRAMID_MIN_X.get(), CompanionConfig.PYRAMID_MAX_X.get(),
-                CompanionConfig.PYRAMID_MIN_Y.get(), CompanionConfig.PYRAMID_MAX_Y.get(),
-                CompanionConfig.PYRAMID_MIN_Z.get(), CompanionConfig.PYRAMID_MAX_Z.get());
+        LOGGER.info(
+                "spawn pyramid biome active over blocks x {}..{} y {}..{} z {}..{}",
+                CompanionConfig.PYRAMID_MIN_X.get(),
+                CompanionConfig.PYRAMID_MAX_X.get(),
+                CompanionConfig.PYRAMID_MIN_Y.get(),
+                CompanionConfig.PYRAMID_MAX_Y.get(),
+                CompanionConfig.PYRAMID_MIN_Z.get(),
+                CompanionConfig.PYRAMID_MAX_Z.get());
     }
 
     public static void onLevelUnload(LevelEvent.Unload event) {
@@ -72,7 +73,8 @@ public final class PyramidBiome {
 
     public static Holder<Biome> overrideInBox(int quartX, int quartY, int quartZ) {
         if (overworldSource == null) return null;
-        if (quartX < minX || quartX > maxX || quartZ < minZ || quartZ > maxZ || quartY < minY || quartY > maxY) return null;
+        if (quartX < minX || quartX > maxX || quartZ < minZ || quartZ > maxZ || quartY < minY || quartY > maxY)
+            return null;
         return holder;
     }
 }

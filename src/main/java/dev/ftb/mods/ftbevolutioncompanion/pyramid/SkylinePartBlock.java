@@ -1,9 +1,7 @@
 package dev.ftb.mods.ftbevolutioncompanion.pyramid;
 
 import com.mojang.serialization.MapCodec;
-
 import dev.ftb.mods.ftbevolutioncompanion.content.CompanionContent;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -48,7 +46,8 @@ public class SkylinePartBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(
+            BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         return SkylineBlock.use(level, pos, player);
     }
 

@@ -1,13 +1,9 @@
 package dev.ftb.mods.ftbevolutioncompanion.mixin.compat.hedgecraft;
 
 import com.llamalad7.mixinextras.sugar.Local;
-
 import dev.ftb.mods.ftbevolutioncompanion.magic.hedgecraft.RootsMagic;
-
 import elucent.rootsclassic.item.StaffItem;
-
 import net.minecraft.world.entity.LivingEntity;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;

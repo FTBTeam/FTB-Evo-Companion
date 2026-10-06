@@ -17,7 +17,8 @@ public abstract class SimChamberTrainingOnlyMixin {
     protected SimChamberTileEntity.SimMode mode;
 
     @Inject(
-            method = "serverTick(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V",
+            method =
+                    "serverTick(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V",
             at = @At("HEAD"))
     private void ftbevo$forceTraining(Level level, BlockPos pos, BlockState state, CallbackInfo ci) {
         if (this.mode != SimChamberTileEntity.SimMode.TRAINING) {

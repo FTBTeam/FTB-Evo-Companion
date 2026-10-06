@@ -5,19 +5,16 @@ import dev.anima.Saronite;
 import dev.anima.SoulShades;
 import dev.anima.SoulType;
 import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
-
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 
 public final class AnimaReaping {
-    private AnimaReaping() {
-    }
+    private AnimaReaping() {}
 
     public static void onLivingDeath(LivingDeathEvent event) {
         if (!(event.getEntity() instanceof Mob mob) || !(mob.level() instanceof ServerLevel)) {

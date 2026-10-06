@@ -5,18 +5,18 @@ import dev.ftb.mods.ftbevolutioncompanion.client.FabricatorClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.FabricatorScreen;
 import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.simplywinged.ParagliderWings;
-
+import java.util.ArrayList;
+import java.util.List;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.recipe.vanilla.IJeiAnvilRecipe;
 import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
-import mezz.jei.api.registration.IRecipeRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
-
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
+import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -29,18 +29,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.ItemLore;
-
 import net.neoforged.fml.ModList;
-
 import top.theillusivec4.curios.client.screen.CuriosScreen;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @JeiPlugin
 public class FTBEvoJeiPlugin implements IModPlugin {
     private static final String SIMPLY_WINGED = "in2bubble_simply_winged";
-    private static final Identifier SOUL_EXTRACTOR = Identifier.fromNamespaceAndPath("mysticalagriculture", "soul_extractor");
+    private static final Identifier SOUL_EXTRACTOR =
+            Identifier.fromNamespaceAndPath("mysticalagriculture", "soul_extractor");
     private static final Identifier SOUL_JAR = Identifier.fromNamespaceAndPath("mysticalagriculture", "soul_jar");
 
     private static final List<WingedArmor> WINGED_ARMORS = List.of(
@@ -72,7 +68,8 @@ public class FTBEvoJeiPlugin implements IModPlugin {
             return;
         }
 
-        registration.addItemStackInfo(wings,
+        registration.addItemStackInfo(
+                wings,
                 Component.translatable("jei.ftbevolutioncompanion.pegasus.conversion"),
                 Component.translatable("jei.ftbevolutioncompanion.pegasus.flight"));
 
@@ -80,7 +77,8 @@ public class FTBEvoJeiPlugin implements IModPlugin {
         List<IJeiAnvilRecipe> anvilRecipes = new ArrayList<>();
 
         for (WingedArmor armor : WINGED_ARMORS) {
-            List<ItemStack> outputs = wings.stream().map(wing -> wingedArmorStack(armor, wing)).toList();
+            List<ItemStack> outputs =
+                    wings.stream().map(wing -> wingedArmorStack(armor, wing)).toList();
 
             anvilRecipes.add(factory.createAnvilRecipe(
                     new ItemStack(armor.armor()),
@@ -92,21 +90,30 @@ public class FTBEvoJeiPlugin implements IModPlugin {
         registration.addRecipes(RecipeTypes.ANVIL, anvilRecipes);
     }
 
-    @Override public void registerCategories(IRecipeCategoryRegistration registration) {
-        registration.addRecipeCategories(new FabricatorCategory(registration.getJeiHelpers().getGuiHelper()));
+    @Override
+    public void registerCategories(IRecipeCategoryRegistration registration) {
+        registration.addRecipeCategories(
+                new FabricatorCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
-    @Override public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+    @Override
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addCraftingStation(FabricatorCategory.TYPE, FabricatorRegistry.ITEM.get());
-        registration.getJeiHelpers().getRecipeType(SOUL_EXTRACTOR)
-                .ifPresent(type -> registration.addCraftingStation(type, new ItemStack(BuiltInRegistries.ITEM.getValue(SOUL_JAR))));
+        registration
+                .getJeiHelpers()
+                .getRecipeType(SOUL_EXTRACTOR)
+                .ifPresent(type -> registration.addCraftingStation(
+                        type, new ItemStack(BuiltInRegistries.ITEM.getValue(SOUL_JAR))));
     }
 
-    @Override public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(new FabricatorTransferHandler(registration.getTransferHelper()), FabricatorCategory.TYPE);
+    @Override
+    public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+        registration.addRecipeTransferHandler(
+                new FabricatorTransferHandler(registration.getTransferHelper()), FabricatorCategory.TYPE);
     }
 
-    @Override public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addRecipeClickArea(FabricatorScreen.class, 89, 53, 42, 12, FabricatorCategory.TYPE);
         registration.addGuiContainerHandler(CuriosScreen.class, new CuriosJeiGuiHandler());
     }
@@ -115,7 +122,8 @@ public class FTBEvoJeiPlugin implements IModPlugin {
         ItemStack stack = new ItemStack(armor.armor());
         int maxDamage = wing.getMaxDamage();
 
-        CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+        CompoundTag tag =
+                stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
         tag.putBoolean("in2bubble_winged", true);
         tag.putInt("in2bubble_elytra_damage", 0);
         tag.putInt("in2bubble_elytra_max_damage", maxDamage);
@@ -127,14 +135,20 @@ public class FTBEvoJeiPlugin implements IModPlugin {
             stack.set(DataComponents.DAMAGE, 0);
         }
 
-        stack.set(DataComponents.ITEM_NAME, Component.translatable("jei.ftbevolutioncompanion.winged_horse_armor", new ItemStack(armor.armor()).getHoverName()).withStyle(ChatFormatting.GOLD));
-        stack.set(DataComponents.LORE, new ItemLore(
-                List.of(Component.translatable("jei.ftbevolutioncompanion.winged_horse_armor.upgrade").withStyle(ChatFormatting.AQUA))));
+        stack.set(
+                DataComponents.ITEM_NAME,
+                Component.translatable(
+                                "jei.ftbevolutioncompanion.winged_horse_armor",
+                                new ItemStack(armor.armor()).getHoverName())
+                        .withStyle(ChatFormatting.GOLD));
+        stack.set(
+                DataComponents.LORE,
+                new ItemLore(List.of(Component.translatable("jei.ftbevolutioncompanion.winged_horse_armor.upgrade")
+                        .withStyle(ChatFormatting.AQUA))));
         stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
 
         return stack;
     }
 
-    private record WingedArmor(Item armor, String path) {
-    }
+    private record WingedArmor(Item armor, String path) {}
 }

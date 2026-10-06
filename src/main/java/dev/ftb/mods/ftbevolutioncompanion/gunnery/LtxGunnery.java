@@ -2,23 +2,25 @@ package dev.ftb.mods.ftbevolutioncompanion.gunnery;
 
 import dev.ftb.mods.ftbevolutioncompanion.mixin.compat.apothic.BulletModifierAffixAccessor;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
-
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.util.DamageSourceExtension;
-
 import ianm1647.apothic_compats.affix.irons_artifice.BulletModifierAffix;
 import ianm1647.apothic_compats.affix.irons_artifice.InfiniteAmmoAffix;
 import ianm1647.apothic_compats.affix.irons_artifice.MagicalBulletAffix;
-
 import io.redspace.irons_artifice.data.RecentShots;
 import io.redspace.irons_artifice.item.CowboyHatItem;
 import io.redspace.irons_artifice.item.TricorneItem;
 import io.redspace.irons_artifice.modifier.modifiers.MechanicalAccelerator;
 import io.redspace.irons_artifice.registry.ItemRegistry;
 import io.redspace.irons_artifice.registry.SoundRegistry;
-
+import java.util.ArrayDeque;
+import java.util.Comparator;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import liedge.ltxindustries.LTXITags;
 import liedge.ltxindustries.entity.HomingProjectileEntity;
 import liedge.ltxindustries.entity.LTXIEntityUtil;
@@ -26,7 +28,6 @@ import liedge.ltxindustries.entity.LTXIProjectileEntity;
 import liedge.ltxindustries.entity.damage.EquipmentDamageSource;
 import liedge.ltxindustries.item.weapon.WeaponItem;
 import liedge.ltxindustries.lib.upgrades.Upgrades;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -42,7 +43,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.Tags;
@@ -51,15 +51,9 @@ import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
-import java.util.ArrayDeque;
-import java.util.Comparator;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 public final class LtxGunnery {
-    private static final Identifier APOTHIC_GUN_DAMAGE = Identifier.fromNamespaceAndPath("apothic_compats", "gun_damage");
+    private static final Identifier APOTHIC_GUN_DAMAGE =
+            Identifier.fromNamespaceAndPath("apothic_compats", "gun_damage");
     private static final Identifier APOTHIC_BULLET_PIERCE =
             Identifier.fromNamespaceAndPath("apothic_compats", "bullet_pierce");
     private static final String FULL_MAG_TAG = "ftbevo_full_mag";
@@ -149,7 +143,8 @@ public final class LtxGunnery {
         Vec3 look = player.getViewVector(1.0F);
         double minDot = Math.cos(Math.toRadians(5.0 + 20.0 * seeking));
         Upgrades upgrades = weapon.getUpgrades(stack);
-        player.level()
+        player
+                .level()
                 .getEntities(
                         player,
                         player.getBoundingBox()
@@ -164,8 +159,8 @@ public final class LtxGunnery {
                     return toTarget.length() <= SEEKING_RANGE && look.dot(toTarget.normalize()) >= minDot;
                 })
                 .filter(player::hasLineOfSight)
-                .max(Comparator.comparingDouble(e -> look.dot(
-                        e.getBoundingBox().getCenter().subtract(eye).normalize())))
+                .max(Comparator.comparingDouble(e ->
+                        look.dot(e.getBoundingBox().getCenter().subtract(eye).normalize())))
                 .ifPresent(rocket::setTargetEntity);
     }
 

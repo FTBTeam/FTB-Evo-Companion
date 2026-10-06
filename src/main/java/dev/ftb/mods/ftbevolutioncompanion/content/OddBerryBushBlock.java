@@ -1,9 +1,7 @@
 package dev.ftb.mods.ftbevolutioncompanion.content;
 
 import com.mojang.serialization.MapCodec;
-
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -41,8 +39,8 @@ public class OddBerryBushBlock extends VegetationBlock implements BonemealableBl
     public static final IntegerProperty AGE = BlockStateProperties.AGE_2;
     public static final BooleanProperty TENDED = BooleanProperty.create("tended");
 
-    private static final TagKey<Item> BERRIES = TagKey.create(Registries.ITEM,
-            Identifier.fromNamespaceAndPath("rootsclassic", "berries"));
+    private static final TagKey<Item> BERRIES =
+            TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("rootsclassic", "berries"));
 
     private static final VoxelShape SHAPE_SPROUT = Block.column(8.0, 0.0, 6.0);
     private static final VoxelShape SHAPE_GROWN = Block.column(12.0, 0.0, 11.0);
@@ -80,7 +78,8 @@ public class OddBerryBushBlock extends VegetationBlock implements BonemealableBl
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(
+            BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
         }
@@ -88,11 +87,17 @@ public class OddBerryBushBlock extends VegetationBlock implements BonemealableBl
         if (player.isSecondaryUseActive()) {
             boolean tended = !state.getValue(TENDED);
             level.setBlock(pos, state.setValue(TENDED, tended), Block.UPDATE_CLIENTS);
-            level.playSound(null, pos, tended ? SoundEvents.CROP_PLANTED : SoundEvents.GRASS_BREAK,
-                    SoundSource.BLOCKS, 0.8f, tended ? 1.1f : 0.9f);
-            player.sendOverlayMessage(Component.translatable(tended
-                    ? "block.ftbevolutioncompanion.odd_berry_bush.tended"
-                    : "block.ftbevolutioncompanion.odd_berry_bush.wild"));
+            level.playSound(
+                    null,
+                    pos,
+                    tended ? SoundEvents.CROP_PLANTED : SoundEvents.GRASS_BREAK,
+                    SoundSource.BLOCKS,
+                    0.8f,
+                    tended ? 1.1f : 0.9f);
+            player.sendOverlayMessage(Component.translatable(
+                    tended
+                            ? "block.ftbevolutioncompanion.odd_berry_bush.tended"
+                            : "block.ftbevolutioncompanion.odd_berry_bush.wild"));
             return InteractionResult.SUCCESS;
         }
 
@@ -104,7 +109,8 @@ public class OddBerryBushBlock extends VegetationBlock implements BonemealableBl
         int picked = 1 + random.nextInt(3);
 
         for (int i = 0; i < picked; i++) {
-            BuiltInRegistries.ITEM.get(BERRIES)
+            BuiltInRegistries.ITEM
+                    .get(BERRIES)
                     .flatMap(berries -> berries.getRandomElement(random))
                     .ifPresent(berry -> popResource(level, pos, new ItemStack(berry.value())));
         }
@@ -125,7 +131,8 @@ public class OddBerryBushBlock extends VegetationBlock implements BonemealableBl
         int age = state.getValue(AGE);
 
         if (age < MAX_AGE) {
-            if (level.getRawBrightness(pos.above(), 0) >= 9 && random.nextInt(CompanionConfig.ODD_BERRY_BUSH_GROWTH_CHANCE.get()) == 0) {
+            if (level.getRawBrightness(pos.above(), 0) >= 9
+                    && random.nextInt(CompanionConfig.ODD_BERRY_BUSH_GROWTH_CHANCE.get()) == 0) {
                 level.setBlock(pos, state.setValue(AGE, age + 1), Block.UPDATE_CLIENTS);
             }
             return;
@@ -155,7 +162,8 @@ public class OddBerryBushBlock extends VegetationBlock implements BonemealableBl
         BlockPos target = pos;
 
         for (int attempt = 0; attempt < 4; attempt++) {
-            BlockPos candidate = target.offset(random.nextInt(3) - 1, random.nextInt(2) - random.nextInt(2), random.nextInt(3) - 1);
+            BlockPos candidate =
+                    target.offset(random.nextInt(3) - 1, random.nextInt(2) - random.nextInt(2), random.nextInt(3) - 1);
 
             if (level.isEmptyBlock(candidate) && sprout.canSurvive(level, candidate)) {
                 level.setBlock(candidate, sprout, Block.UPDATE_CLIENTS);

@@ -5,21 +5,18 @@ import dev.ftb.mods.ftbevolutioncompanion.skills.effect.BleedingEffect;
 import dev.ftb.mods.ftbevolutioncompanion.skills.effect.MarkedEffect;
 import dev.ftb.mods.ftbevolutioncompanion.skills.effect.PinnedEffect;
 import dev.ftb.mods.ftbevolutioncompanion.skills.effect.StunnedEffect;
-
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public final class SkillsRegistry {
     public static final String NAMESPACE = "ftb";
@@ -109,35 +106,38 @@ public final class SkillsRegistry {
     public static final DeferredHolder<Attribute, Attribute> PICKAXE_DURABILITY = attr("pickaxe_durability", 20.0);
 
     public static final DeferredHolder<MobEffect, MobEffect> STUNNED = EFFECTS.register("stunned", StunnedEffect::new);
-    public static final DeferredHolder<MobEffect, MobEffect> BLEEDING = EFFECTS.register("bleeding", BleedingEffect::new);
+    public static final DeferredHolder<MobEffect, MobEffect> BLEEDING =
+            EFFECTS.register("bleeding", BleedingEffect::new);
     public static final DeferredHolder<MobEffect, MobEffect> MARKED = EFFECTS.register("marked", MarkedEffect::new);
     public static final DeferredHolder<MobEffect, MobEffect> PINNED = EFFECTS.register("pinned", PinnedEffect::new);
 
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<SkillToggles>> TOGGLES =
-            ATTACHMENTS.register("skill_toggles",
-                    () -> AttachmentType.builder(() -> SkillToggles.DEFAULT)
-                            .serialize(SkillToggles.CODEC)
-                            .copyOnDeath()
-                            .build());
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<SkillToggles>> TOGGLES = ATTACHMENTS.register(
+            "skill_toggles",
+            () -> AttachmentType.builder(() -> SkillToggles.DEFAULT)
+                    .serialize(SkillToggles.CODEC)
+                    .copyOnDeath()
+                    .build());
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<SkillCooldowns>> COOLDOWNS =
-            ATTACHMENTS.register("skill_cooldowns",
+            ATTACHMENTS.register(
+                    "skill_cooldowns",
                     () -> AttachmentType.builder(() -> SkillCooldowns.EMPTY)
                             .serialize(SkillCooldowns.CODEC)
                             .copyOnDeath()
                             .build());
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<CombatState>> COMBAT_STATE =
-            ATTACHMENTS.register("skills_combat_state",
+            ATTACHMENTS.register(
+                    "skills_combat_state",
                     () -> AttachmentType.builder(CombatState::new).build());
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<HomingState>> HOMING_STATE =
-            ATTACHMENTS.register("homing_state",
+            ATTACHMENTS.register(
+                    "homing_state",
                     () -> AttachmentType.builder(HomingState::new).build());
 
-    private SkillsRegistry() {
-    }
+    private SkillsRegistry() {}
 
     private static DeferredHolder<Attribute, Attribute> attr(String name, double max) {
-        DeferredHolder<Attribute, Attribute> holder = ATTRIBUTES.register(name,
-                () -> new RangedAttribute("attribute.name.ftb." + name, 0.0, 0.0, max).setSyncable(true));
+        DeferredHolder<Attribute, Attribute> holder = ATTRIBUTES.register(
+                name, () -> new RangedAttribute("attribute.name.ftb." + name, 0.0, 0.0, max).setSyncable(true));
         PLAYER_ATTRIBUTES.add(holder);
         return holder;
     }

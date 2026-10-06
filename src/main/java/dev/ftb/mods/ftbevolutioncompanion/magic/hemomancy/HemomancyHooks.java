@@ -3,16 +3,13 @@ package dev.ftb.mods.ftbevolutioncompanion.magic.hemomancy;
 import com.breakinblocks.neovitae.api.soul.IAnima;
 import com.breakinblocks.neovitae.ritual.IMasterRitualStone;
 import com.breakinblocks.neovitae.ritual.RitualHelper;
-
 import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
-
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-
 import org.cyclops.evilcraft.api.broom.BroomModifier;
 import org.jspecify.annotations.Nullable;
 
@@ -20,8 +17,7 @@ public final class HemomancyHooks {
     private static final Identifier BROOM_SPEED = Identifier.fromNamespaceAndPath("evilcraft", "speed");
     private static final double WHOLE_EPSILON = 1.0E-6;
 
-    private HemomancyHooks() {
-    }
+    private HemomancyHooks() {}
 
     public static int roundRandomly(double value, RandomSource random) {
         int whole = (int) Math.floor(value);
@@ -36,7 +32,8 @@ public final class HemomancyHooks {
         if (level == null || level.isClientSide()) {
             return cost;
         }
-        double efficiency = HemomancyMagic.ritualEfficiency(level, context.master().getOwner());
+        double efficiency =
+                HemomancyMagic.ritualEfficiency(level, context.master().getOwner());
         if (efficiency <= 0.0) {
             return cost;
         }

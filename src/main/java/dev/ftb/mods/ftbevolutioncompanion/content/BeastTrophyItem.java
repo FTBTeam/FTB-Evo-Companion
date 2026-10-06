@@ -6,9 +6,8 @@ import com.geckolib.animatable.instance.AnimatableInstanceCache;
 import com.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
 import com.geckolib.animatable.manager.AnimatableManager;
 import com.geckolib.renderer.GeoItemRenderer;
-
 import dev.ftb.mods.ftbevolutioncompanion.client.BeastTrophyItemRenderer;
-
+import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -18,8 +17,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.block.Block;
 
-import java.util.function.Consumer;
-
 public class BeastTrophyItem extends BlockItem implements GeoItem {
     private final AnimatableInstanceCache geoCache = new SingletonAnimatableInstanceCache(this);
 
@@ -28,15 +25,19 @@ public class BeastTrophyItem extends BlockItem implements GeoItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(
+            ItemStack stack,
+            Item.TooltipContext context,
+            TooltipDisplay display,
+            Consumer<Component> tooltip,
+            TooltipFlag flag) {
         super.appendHoverText(stack, context, display, tooltip, flag);
 
         tooltip.accept(Component.translatable("block.ftb.beast_trophy.tooltip").withStyle(ChatFormatting.GRAY));
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-    }
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {

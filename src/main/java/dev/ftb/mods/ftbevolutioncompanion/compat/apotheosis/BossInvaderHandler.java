@@ -6,6 +6,7 @@ import dev.shadowsoffire.apotheosis.mobs.registries.InvaderRegistry;
 import dev.shadowsoffire.apotheosis.mobs.types.Invader;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
+import java.util.Set;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -14,8 +15,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
-
-import java.util.Set;
 
 public final class BossInvaderHandler {
     private static final String NAMESPACE = "ftb";
@@ -63,8 +62,7 @@ public final class BossInvaderHandler {
                 ? GenContext.forPlayerAtPos(level.getRandom(), player, mob.blockPosition())
                 : GenContext.standalone(level.getRandom(), WorldTier.HAVEN, 0.0F, level, mob.blockPosition());
         Set<LootRarity> rarities = invader.stats().keySet();
-        LootRarity rarity =
-                rarities.size() == 1 ? rarities.iterator().next() : LootRarity.random(ctx, rarities);
+        LootRarity rarity = rarities.size() == 1 ? rarities.iterator().next() : LootRarity.random(ctx, rarities);
         if (rarity == null) {
             rarity = rarities.iterator().next();
         }

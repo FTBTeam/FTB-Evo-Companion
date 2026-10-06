@@ -1,9 +1,7 @@
 package dev.ftb.mods.ftbevolutioncompanion.magic.sorcery;
 
 import at.minecraftschurli.mods.arsmagicalegacy.api.spell.SpellStat;
-
 import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
-
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -12,8 +10,7 @@ public final class ArsMagicaHooks {
     private static final Identifier DURATION = Identifier.fromNamespaceAndPath("arsmagicalegacy", "duration");
     private static final Identifier HEALING = Identifier.fromNamespaceAndPath("arsmagicalegacy", "healing");
 
-    private ArsMagicaHooks() {
-    }
+    private ArsMagicaHooks() {}
 
     public static double spellPower(LivingEntity caster, SpellStat stat, double value) {
         if (caster == null || stat == null) {

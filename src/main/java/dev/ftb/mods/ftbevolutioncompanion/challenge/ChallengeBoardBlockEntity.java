@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion.challenge;
 
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

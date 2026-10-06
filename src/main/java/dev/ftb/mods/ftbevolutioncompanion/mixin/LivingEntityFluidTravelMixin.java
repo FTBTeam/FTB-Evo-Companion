@@ -2,7 +2,6 @@ package dev.ftb.mods.ftbevolutioncompanion.mixin;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,8 +25,9 @@ public abstract class LivingEntityFluidTravelMixin {
         boolean isFalling = self.getDeltaMovement().y <= 0.0;
         double oldY = self.getY();
         double gravity = this.getEffectiveGravity();
-        boolean handled = self.getFluidInteraction().isInFluidMatching(self,
-                (entity, type, height) -> !type.isVanilla() && entity.moveInFluid(type, input, gravity));
+        boolean handled = self.getFluidInteraction()
+                .isInFluidMatching(
+                        self, (entity, type, height) -> !type.isVanilla() && entity.moveInFluid(type, input, gravity));
         if (!handled) {
             this.travelInWater(input, gravity, isFalling, oldY);
         }

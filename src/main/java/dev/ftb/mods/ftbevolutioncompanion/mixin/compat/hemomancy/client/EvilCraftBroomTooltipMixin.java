@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion.mixin.compat.hemomancy.client;
 
 import dev.ftb.mods.ftbevolutioncompanion.magic.hemomancy.client.HemomancyDisplay;
-
 import org.cyclops.evilcraft.api.broom.BroomModifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

@@ -1,14 +1,11 @@
 package dev.ftb.mods.ftbevolutioncompanion.mixin;
 
 import dev.ftb.mods.ftbevolutioncompanion.compat.oceanmobs.RiftArena;
-
 import java.util.UUID;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.entity.trialspawner.TrialSpawner;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

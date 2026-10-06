@@ -5,7 +5,6 @@ import dev.ftb.mods.ftbevolutioncompanion.skills.CombatState;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -17,14 +16,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
-
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 public final class OutgoingDamage {
     private static boolean applyingEcho;
 
-    private OutgoingDamage() {
-    }
+    private OutgoingDamage() {}
 
     public static boolean isApplyingEcho() {
         return applyingEcho;
@@ -76,9 +73,13 @@ public final class OutgoingDamage {
                     mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.SKEWER) * state.jabTargetsThisTick;
                     state.jabTargetsThisTick++;
                     double pin = SkillsHelper.attr(attacker, SkillsRegistry.PIN);
-                    if (pin > 0.0 && canReceiveDebuff(target) && attacker.getRandom().nextDouble() < pin) {
-                        target.addEffect(new MobEffectInstance(SkillsRegistry.PINNED,
-                                CompanionConfig.PIN_DURATION_TICKS.get(), 0), attacker);
+                    if (pin > 0.0
+                            && canReceiveDebuff(target)
+                            && attacker.getRandom().nextDouble() < pin) {
+                        target.addEffect(
+                                new MobEffectInstance(
+                                        SkillsRegistry.PINNED, CompanionConfig.PIN_DURATION_TICKS.get(), 0),
+                                attacker);
                     }
                 }
                 double distance = SkillsHelper.attr(attacker, SkillsRegistry.SPEAR_DISTANCE);
@@ -91,7 +92,9 @@ public final class OutgoingDamage {
             } else if (SkillsHelper.isScythe(mainHand)) {
                 mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.SCYTHE_DAMAGE);
                 double wither = SkillsHelper.attr(attacker, SkillsRegistry.WITHERING_EDGE);
-                if (wither > 0.0 && canReceiveDebuff(target) && attacker.getRandom().nextDouble() < wither) {
+                if (wither > 0.0
+                        && canReceiveDebuff(target)
+                        && attacker.getRandom().nextDouble() < wither) {
                     applyWither(attacker, target);
                 }
             } else if (SkillsHelper.isAxe(mainHand)) {
@@ -108,7 +111,8 @@ public final class OutgoingDamage {
                 if ((state.unarmedHitCounter + 1) % 3 == 0) {
                     mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.COMBO_PUNCH);
                 }
-                if (state.unarmedRampStacks > 0 && SkillsAbilities.toggles(attacker).unarmedRamp()) {
+                if (state.unarmedRampStacks > 0
+                        && SkillsAbilities.toggles(attacker).unarmedRamp()) {
                     mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.UNARMED_RAMP) * state.unarmedRampStacks;
                 }
             }
@@ -123,8 +127,8 @@ public final class OutgoingDamage {
                     state.archerRampStacks = 0;
                 }
                 if (state.archerRampStacks > 0) {
-                    mult *= 1.0 + CompanionConfig.ARCHER_RAMP_PER_STACK.get()
-                            * Math.min(state.archerRampStacks, maxStacks);
+                    mult *= 1.0
+                            + CompanionConfig.ARCHER_RAMP_PER_STACK.get() * Math.min(state.archerRampStacks, maxStacks);
                 }
             }
             ItemStack weapon = arrow.getWeaponItem();
@@ -144,7 +148,8 @@ public final class OutgoingDamage {
             event.setAmount(event.getAmount() * (float) mult + (float) bonus);
         }
 
-        if (source.isDirect() && source.getDirectEntity() == attacker
+        if (source.isDirect()
+                && source.getDirectEntity() == attacker
                 && SkillsHelper.isScythe(attacker.getMainHandItem())) {
             state.lastScytheHitDamage = event.getAmount();
         }
@@ -181,8 +186,15 @@ public final class OutgoingDamage {
         }
 
         if (hurt) {
-            level.playSound(null, target.getX(), target.getY(), target.getZ(),
-                    SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1.0F, 1.2F);
+            level.playSound(
+                    null,
+                    target.getX(),
+                    target.getY(),
+                    target.getZ(),
+                    SoundEvents.PLAYER_ATTACK_CRIT,
+                    SoundSource.PLAYERS,
+                    1.0F,
+                    1.2F);
         } else {
             target.invulnerableTime = invulnerableTime;
         }
@@ -203,10 +215,12 @@ public final class OutgoingDamage {
 
     private static void applyWither(ServerPlayer attacker, LivingEntity target) {
         MobEffectInstance current = target.getEffect(MobEffects.WITHER);
-        int amplifier = current == null ? 0
+        int amplifier = current == null
+                ? 0
                 : Math.min(current.getAmplifier() + 1, CompanionConfig.WITHERING_MAX_STACKS.get() - 1);
-        target.addEffect(new MobEffectInstance(MobEffects.WITHER,
-                CompanionConfig.WITHERING_DURATION_TICKS.get(), amplifier), attacker);
+        target.addEffect(
+                new MobEffectInstance(MobEffects.WITHER, CompanionConfig.WITHERING_DURATION_TICKS.get(), amplifier),
+                attacker);
     }
 
     private static void applyBleed(ServerPlayer attacker, LivingEntity target) {
@@ -215,9 +229,10 @@ public final class OutgoingDamage {
             return;
         }
         MobEffectInstance current = target.getEffect(SkillsRegistry.BLEEDING);
-        int amplifier = current == null ? 0
-                : Math.min(current.getAmplifier() + 1, CompanionConfig.BLEED_MAX_STACKS.get() - 1);
-        target.addEffect(new MobEffectInstance(SkillsRegistry.BLEEDING,
-                CompanionConfig.BLEED_DURATION_TICKS.get(), amplifier), attacker);
+        int amplifier =
+                current == null ? 0 : Math.min(current.getAmplifier() + 1, CompanionConfig.BLEED_MAX_STACKS.get() - 1);
+        target.addEffect(
+                new MobEffectInstance(SkillsRegistry.BLEEDING, CompanionConfig.BLEED_DURATION_TICKS.get(), amplifier),
+                attacker);
     }
 }

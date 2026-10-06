@@ -3,14 +3,12 @@ package dev.ftb.mods.ftbevolutioncompanion.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeBoardBlock;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeBoardBlockEntity;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeClientData;
 import dev.ftb.mods.ftbevolutioncompanion.challenge.ChallengeSnapshot;
 import dev.ftb.mods.ftbquests.client.ClientQuestFile;
 import dev.ftb.mods.ftbquests.quest.Chapter;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -22,11 +20,11 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.world.phys.Vec3;
-
 import org.joml.Matrix4f;
 import org.jspecify.annotations.Nullable;
 
-public class ChallengeBoardRenderer implements BlockEntityRenderer<ChallengeBoardBlockEntity, ChallengeBoardRenderState> {
+public class ChallengeBoardRenderer
+        implements BlockEntityRenderer<ChallengeBoardBlockEntity, ChallengeBoardRenderState> {
     private static final String LANG = "block.ftbevolutioncompanion.challenge_board.";
     private static final int TEXT_COLOR = 0xFFD8D8D8;
     private static final int BAR_BACKGROUND = 0xFF1A1A1A;
@@ -49,11 +47,17 @@ public class ChallengeBoardRenderer implements BlockEntityRenderer<ChallengeBoar
     }
 
     @Override
-    public void extractRenderState(ChallengeBoardBlockEntity board, ChallengeBoardRenderState state, float partialTick, Vec3 cameraPos, ModelFeatureRenderer.@Nullable CrumblingOverlay crumblingOverlay) {
+    public void extractRenderState(
+            ChallengeBoardBlockEntity board,
+            ChallengeBoardRenderState state,
+            float partialTick,
+            Vec3 cameraPos,
+            ModelFeatureRenderer.@Nullable CrumblingOverlay crumblingOverlay) {
         BlockEntityRenderer.super.extractRenderState(board, state, partialTick, cameraPos, crumblingOverlay);
 
         ChallengeSnapshot snapshot = ChallengeClientData.snapshot();
-        state.rotationAngle = board.getBlockState().getValue(ChallengeBoardBlock.FACING).toYRot() + 180F;
+        state.rotationAngle =
+                board.getBlockState().getValue(ChallengeBoardBlock.FACING).toYRot() + 180F;
         state.width = board.getWidth();
         state.height = board.getHeight();
         state.title = chapterTitle(snapshot);
@@ -65,7 +69,8 @@ public class ChallengeBoardRenderer implements BlockEntityRenderer<ChallengeBoar
             state.headline = rank.copy().append(" ").append(entry.teamName());
             state.percentText = Component.translatable(LANG + "percent", entry.percent())
                     .withStyle(entry.percent() >= 100 ? ChatFormatting.GREEN : ChatFormatting.YELLOW);
-            state.countText = Component.translatable(LANG + "quests", entry.completed(), entry.total()).withStyle(ChatFormatting.GRAY);
+            state.countText = Component.translatable(LANG + "quests", entry.completed(), entry.total())
+                    .withStyle(ChatFormatting.GRAY);
             state.progress = Math.clamp(entry.percent() / 100F, 0F, 1F);
             state.barColor = entry.percent() >= 100 ? BAR_COMPLETE : BAR_PARTIAL;
         } else {
@@ -83,7 +88,11 @@ public class ChallengeBoardRenderer implements BlockEntityRenderer<ChallengeBoar
     }
 
     @Override
-    public void submit(ChallengeBoardRenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
+    public void submit(
+            ChallengeBoardRenderState state,
+            PoseStack poseStack,
+            SubmitNodeCollector collector,
+            CameraRenderState camera) {
         poseStack.pushPose();
 
         poseStack.translate(0.5D, 0.5D, 0.5D);
@@ -129,7 +138,8 @@ public class ChallengeBoardRenderer implements BlockEntityRenderer<ChallengeBoar
         return 96;
     }
 
-    private static void quad(PoseStack.Pose pose, VertexConsumer consumer, float x0, float y0, float x1, float y1, float z, int color) {
+    private static void quad(
+            PoseStack.Pose pose, VertexConsumer consumer, float x0, float y0, float x1, float y1, float z, int color) {
         Matrix4f matrix = pose.pose();
         consumer.addVertex(matrix, x0, y1, z).setColor(color).setLight(LightCoordsUtil.FULL_BRIGHT);
         consumer.addVertex(matrix, x1, y1, z).setColor(color).setLight(LightCoordsUtil.FULL_BRIGHT);
@@ -137,7 +147,8 @@ public class ChallengeBoardRenderer implements BlockEntityRenderer<ChallengeBoar
         consumer.addVertex(matrix, x0, y0, z).setColor(color).setLight(LightCoordsUtil.FULL_BRIGHT);
     }
 
-    private void drawString(SubmitNodeCollector collector, PoseStack poseStack, Component text, float aspect, double y, float size) {
+    private void drawString(
+            SubmitNodeCollector collector, PoseStack poseStack, Component text, float aspect, double y, float size) {
         if (text.getString().isEmpty()) return;
 
         poseStack.pushPose();
@@ -155,8 +166,28 @@ public class ChallengeBoardRenderer implements BlockEntityRenderer<ChallengeBoar
         }
 
         poseStack.scale(scale, scale, 1F);
-        collector.submitText(poseStack, -len / 2F, 0, text.getVisualOrderText(), true, Font.DisplayMode.NORMAL, LightCoordsUtil.FULL_BRIGHT, TEXT_COLOR, 0, 0);
-        collector.submitText(poseStack, -len / 2F, 0, text.getVisualOrderText(), false, Font.DisplayMode.POLYGON_OFFSET, LightCoordsUtil.FULL_BRIGHT, TEXT_COLOR, 0, 0);
+        collector.submitText(
+                poseStack,
+                -len / 2F,
+                0,
+                text.getVisualOrderText(),
+                true,
+                Font.DisplayMode.NORMAL,
+                LightCoordsUtil.FULL_BRIGHT,
+                TEXT_COLOR,
+                0,
+                0);
+        collector.submitText(
+                poseStack,
+                -len / 2F,
+                0,
+                text.getVisualOrderText(),
+                false,
+                Font.DisplayMode.POLYGON_OFFSET,
+                LightCoordsUtil.FULL_BRIGHT,
+                TEXT_COLOR,
+                0,
+                0);
         poseStack.popPose();
     }
 }

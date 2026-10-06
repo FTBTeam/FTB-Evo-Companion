@@ -1,13 +1,10 @@
 package dev.ftb.mods.ftbevolutioncompanion.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-
+import java.util.List;
 import net.minecraft.world.level.levelgen.Beardifier;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-
-import java.util.List;
 
 @Mixin(Beardifier.class)
 public abstract class BeardifierMixin {

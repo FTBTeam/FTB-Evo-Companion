@@ -1,7 +1,7 @@
 package dev.ftb.mods.ftbevolutioncompanion.pyramid;
 
 import dev.ftb.mods.ftbevolutioncompanion.content.CompanionContent;
-
+import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -17,14 +17,12 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
 import org.jspecify.annotations.Nullable;
-
-import java.util.Optional;
 
 public class SkylinePartBlockEntity extends BlockEntity {
     @Nullable
     private BlockPos coreOffset;
+
     @Nullable
     private VoxelShape cachedShape;
 
@@ -76,7 +74,9 @@ public class SkylinePartBlockEntity extends BlockEntity {
         BlockPos corePos = worldPosition.offset(coreOffset);
         if (!level.isLoaded(corePos)) return Optional.empty();
         BlockState coreState = level.getBlockState(corePos);
-        return coreState.hasProperty(SkylineBlock.FACING) ? Optional.of(coreState.getValue(SkylineBlock.FACING)) : Optional.empty();
+        return coreState.hasProperty(SkylineBlock.FACING)
+                ? Optional.of(coreState.getValue(SkylineBlock.FACING))
+                : Optional.empty();
     }
 
     private Optional<Vec3i> modelOffset() {

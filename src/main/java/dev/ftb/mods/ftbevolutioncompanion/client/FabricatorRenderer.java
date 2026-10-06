@@ -28,36 +28,54 @@ import org.jspecify.annotations.Nullable;
 
 public final class FabricatorRenderer extends GeoBlockRenderer<FabricatorBlockEntity, FabricatorRenderer.State> {
     private final ItemModelResolver resolver;
+
     public FabricatorRenderer(BlockEntityRendererProvider.Context context) {
         super(context, new DefaultedBlockGeoModel<>(FTBEvolutionCompanion.id("ftb_fabricator")));
         resolver = context.itemModelResolver();
         withRenderLayer(AutoGlowingGeoLayer::new);
     }
+
     public static final class State extends BlockEntityRenderState {
         final ItemStackRenderState item = new ItemStackRenderState();
         float time;
         float facing;
         boolean hologram;
     }
-    @Override public State createRenderState() { return new State(); }
-    @Override public void extractRenderState(FabricatorBlockEntity machine, State state, float partialTick, Vec3 camera,
-                                            ModelFeatureRenderer.@Nullable CrumblingOverlay crumbling) {
+
+    @Override
+    public State createRenderState() {
+        return new State();
+    }
+
+    @Override
+    public void extractRenderState(
+            FabricatorBlockEntity machine,
+            State state,
+            float partialTick,
+            Vec3 camera,
+            ModelFeatureRenderer.@Nullable CrumblingOverlay crumbling) {
         super.extractRenderState(machine, state, partialTick, camera, crumbling);
         state.item.clear();
         state.hologram = machine.status() == FabricatorBlockEntity.Status.WORKING && machine.getLevel() != null;
-        state.facing = 180F - machine.getBlockState().getValue(FabricatorBlock.FACING).toYRot();
+        state.facing =
+                180F - machine.getBlockState().getValue(FabricatorBlock.FACING).toYRot();
         if (state.hologram) {
             state.time = (machine.getLevel().getGameTime() % 24000 + partialTick);
             if (!machine.displayItem().isEmpty()) {
-                resolver.updateForTopItem(state.item, machine.displayItem(), ItemDisplayContext.FIXED, machine.getLevel(), null, 0);
+                resolver.updateForTopItem(
+                        state.item, machine.displayItem(), ItemDisplayContext.FIXED, machine.getLevel(), null, 0);
             }
         }
     }
-    @Override protected void tryRotateByBlockstate(RenderPassInfo<State> info, PoseStack pose) {
+
+    @Override
+    protected void tryRotateByBlockstate(RenderPassInfo<State> info, PoseStack pose) {
         Direction facing = info.getOrDefaultGeckolibData(DIRECTION_FACING, Direction.NORTH);
         pose.mulPose(Axis.YP.rotationDegrees(180F - facing.toYRot()));
     }
-    @Override public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
+
+    @Override
+    public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
         super.submit(state, pose, collector, camera);
         if (!state.hologram) return;
         pose.pushPose();
@@ -73,10 +91,13 @@ public final class FabricatorRenderer extends GeoBlockRenderer<FabricatorBlockEn
         pose.translate(0, Math.sin(state.time * 0.06) * 0.025, 0);
         pose.mulPose(Axis.YP.rotationDegrees(state.time * 2.5F % 360));
         pose.scale(0.38F, 0.38F, 0.38F);
-        if (!state.item.isEmpty()) state.item.submit(pose, collector, LightCoordsUtil.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0);
+        if (!state.item.isEmpty())
+            state.item.submit(pose, collector, LightCoordsUtil.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0);
         pose.popPose();
     }
-    private static void horizontalQuad(PoseStack.Pose pose, VertexConsumer consumer, float min, float max, float y, int color) {
+
+    private static void horizontalQuad(
+            PoseStack.Pose pose, VertexConsumer consumer, float min, float max, float y, int color) {
         Matrix4f matrix = pose.pose();
         consumer.addVertex(matrix, min, y, max).setColor(color).setLight(LightCoordsUtil.FULL_BRIGHT);
         consumer.addVertex(matrix, max, y, max).setColor(color).setLight(LightCoordsUtil.FULL_BRIGHT);

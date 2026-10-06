@@ -6,14 +6,13 @@ import com.geckolib.animatable.manager.AnimatableManager;
 import com.geckolib.animation.AnimationController;
 import com.geckolib.animation.RawAnimation;
 import com.geckolib.util.GeckoLibUtil;
-
 import dev.ftb.mods.ftbevolutioncompanion.CompanionSounds;
 import dev.ftb.mods.ftbquests.quest.Chapter;
 import dev.ftb.mods.ftbquests.quest.Quest;
 import dev.ftb.mods.ftbquests.quest.ServerQuestFile;
 import dev.ftb.mods.ftbquests.quest.TeamData;
 import dev.ftb.mods.ftbquests.quest.task.Task;
-
+import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.UUIDUtil;
@@ -31,17 +30,16 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-
 import org.jspecify.annotations.Nullable;
-
-import java.util.UUID;
 
 public class SkylineBlockEntity extends BlockEntity implements GeoBlockEntity {
     public static final String CONTROLLER = "main";
     public static final String LAUNCH_ANIMATION = "objective_complete";
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("animation.ftb_skyline.idle");
-    private static final RawAnimation TRANSPORTING = RawAnimation.begin().thenLoop("animation.ftb_skyline.transporting");
-    private static final RawAnimation LAUNCH = RawAnimation.begin().thenPlay("animation.ftb_skyline.objective_complete");
+    private static final RawAnimation TRANSPORTING =
+            RawAnimation.begin().thenLoop("animation.ftb_skyline.transporting");
+    private static final RawAnimation LAUNCH =
+            RawAnimation.begin().thenPlay("animation.ftb_skyline.objective_complete");
     private static final int REMOVE_FLAGS = Block.UPDATE_ALL | Block.UPDATE_SKIP_BLOCK_ENTITY_SIDEEFFECTS;
     private static final int TRANSPORT_LINGER_TICKS = 60;
     private static final int LAUNCH_COMPLETE_TICK = 50;
@@ -54,21 +52,26 @@ public class SkylineBlockEntity extends BlockEntity implements GeoBlockEntity {
 
     @Nullable
     private UUID owner;
+
     private long activeTaskId;
     private long displayProgress;
     private boolean transporting;
     private long lastDeliveryTick;
     private long launchQuestId;
     private int launchTicks = -1;
+
     @Nullable
     private UUID launchPlayer;
 
     private boolean syncPending;
     private boolean bayRefreshPending;
+
     @Nullable
     private TeamData cachedData;
+
     @Nullable
     private Chapter cachedChapter;
+
     private long cachedDataTick = Long.MIN_VALUE;
 
     public SkylineBlockEntity(BlockPos pos, BlockState state) {
@@ -165,7 +168,9 @@ public class SkylineBlockEntity extends BlockEntity implements GeoBlockEntity {
         TeamData data = teamData();
         if (data == null || isLaunching() || !ServerQuestFile.exists()) return false;
         Task task = ServerQuestFile.getInstance().getTask(taskId);
-        if (task == null || !PyramidQuests.inChapter(task.getQuest(), chapter()) || !PyramidQuests.canDeliver(data, task)) return false;
+        if (task == null
+                || !PyramidQuests.inChapter(task.getQuest(), chapter())
+                || !PyramidQuests.canDeliver(data, task)) return false;
         activeTaskId = task.id;
         refreshProgress(data);
         sync();
@@ -174,14 +179,17 @@ public class SkylineBlockEntity extends BlockEntity implements GeoBlockEntity {
 
     public boolean launch(ServerPlayer player, long questId) {
         TeamData data = teamData();
-        if (data == null || isLaunching() || !ServerQuestFile.exists() || !(level instanceof ServerLevel serverLevel)) return false;
+        if (data == null || isLaunching() || !ServerQuestFile.exists() || !(level instanceof ServerLevel serverLevel))
+            return false;
         Quest quest = ServerQuestFile.getInstance().getQuest(questId);
-        if (quest == null || !PyramidQuests.inChapter(quest, chapter()) || !PyramidQuests.isReadyToLaunch(data, quest)) return false;
+        if (quest == null || !PyramidQuests.inChapter(quest, chapter()) || !PyramidQuests.isReadyToLaunch(data, quest))
+            return false;
         launchQuestId = quest.id;
         launchPlayer = player.getUUID();
         launchTicks = 0;
         triggerAnim(CONTROLLER, LAUNCH_ANIMATION);
-        serverLevel.playSound(null, worldPosition.above(3), CompanionSounds.SKYLINE_LAUNCH_START.get(), SoundSource.BLOCKS, 2F, 1F);
+        serverLevel.playSound(
+                null, worldPosition.above(3), CompanionSounds.SKYLINE_LAUNCH_START.get(), SoundSource.BLOCKS, 2F, 1F);
         sync();
         return true;
     }
@@ -191,14 +199,17 @@ public class SkylineBlockEntity extends BlockEntity implements GeoBlockEntity {
         Quest quest = ServerQuestFile.exists() ? ServerQuestFile.getInstance().getQuest(launchQuestId) : null;
         LaunchTask task = quest == null ? null : PyramidQuests.launchTask(quest);
         if (data != null && task != null && PyramidQuests.isReadyToLaunch(data, quest)) {
-            ServerPlayer player = launchPlayer == null ? null : serverLevel.getServer().getPlayerList().getPlayer(launchPlayer);
+            ServerPlayer player = launchPlayer == null
+                    ? null
+                    : serverLevel.getServer().getPlayerList().getPlayer(launchPlayer);
             if (player != null) {
                 ServerQuestFile.getInstance().withPlayerContext(player, () -> data.setProgress(task, 1L));
             } else {
                 data.setProgress(task, 1L);
             }
         }
-        serverLevel.playSound(null, worldPosition.above(5), CompanionSounds.SKYLINE_LIFTOFF.get(), SoundSource.BLOCKS, 3F, 1F);
+        serverLevel.playSound(
+                null, worldPosition.above(5), CompanionSounds.SKYLINE_LIFTOFF.get(), SoundSource.BLOCKS, 3F, 1F);
         Task active = activeTask();
         if (active != null && active.getQuest().id == launchQuestId) {
             activeTaskId = 0L;
@@ -322,8 +333,10 @@ public class SkylineBlockEntity extends BlockEntity implements GeoBlockEntity {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<SkylineBlockEntity>(CONTROLLER, 5,
-                test -> test.setAndContinue(test.animatable().isTransporting() ? TRANSPORTING : IDLE))
+        controllers.add(new AnimationController<SkylineBlockEntity>(
+                        CONTROLLER,
+                        5,
+                        test -> test.setAndContinue(test.animatable().isTransporting() ? TRANSPORTING : IDLE))
                 .triggerableAnim(LAUNCH_ANIMATION, LAUNCH));
     }
 

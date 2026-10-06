@@ -3,7 +3,6 @@ package dev.ftb.mods.ftbevolutioncompanion.mixin.compat.otherworld;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import dev.anima.MachineBlockEntity;
 import dev.ftb.mods.ftbevolutioncompanion.magic.otherworld.OtherworldMagic;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;

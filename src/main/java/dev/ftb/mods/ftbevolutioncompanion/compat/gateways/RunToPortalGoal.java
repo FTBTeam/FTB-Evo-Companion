@@ -1,13 +1,12 @@
 package dev.ftb.mods.ftbevolutioncompanion.compat.gateways;
 
+import java.util.EnumSet;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.EnumSet;
 
 public class RunToPortalGoal extends Goal {
     private static final double PLAYER_RANGE = 16.0;

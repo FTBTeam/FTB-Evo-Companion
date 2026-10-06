@@ -2,11 +2,8 @@ package dev.ftb.mods.ftbevolutioncompanion.mixin.compat.iceandfire;
 
 import com.iafenvoy.iceandfire.data.DragonColor;
 import com.iafenvoy.iceandfire.entity.DragonBaseEntity;
-
 import java.util.List;
-
 import net.minecraft.world.level.storage.ValueInput;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,7 +16,8 @@ public abstract class DragonVariantLoadMixin {
         DragonBaseEntity dragon = (DragonBaseEntity) (Object) this;
         List<DragonColor> colors = dragon.dragonType.colors();
         String variant = dragon.getVariant();
-        if (colors.isEmpty() || colors.stream().anyMatch(color -> color.getName().equals(variant))) {
+        if (colors.isEmpty()
+                || colors.stream().anyMatch(color -> color.getName().equals(variant))) {
             return;
         }
         dragon.setVariant(colors.getFirst().getName());

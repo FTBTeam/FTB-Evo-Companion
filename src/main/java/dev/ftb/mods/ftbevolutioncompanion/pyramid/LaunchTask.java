@@ -10,7 +10,6 @@ import dev.ftb.mods.ftbquests.quest.task.Task;
 import dev.ftb.mods.ftbquests.quest.task.TaskClient;
 import dev.ftb.mods.ftbquests.quest.task.TaskType;
 import dev.ftb.mods.ftbquests.quest.task.TaskTypes;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 
@@ -22,7 +21,9 @@ public class LaunchTask extends Task {
     }
 
     public static void register() {
-        TYPE = TaskTypes.register(FTBEvolutionCompanion.id("launch"), LaunchTask::new,
+        TYPE = TaskTypes.register(
+                FTBEvolutionCompanion.id("launch"),
+                LaunchTask::new,
                 () -> ItemIcon.ofItem(CompanionContent.SKYLINE_ITEM.get()));
     }
 
@@ -43,6 +44,7 @@ public class LaunchTask extends Task {
 
     @Override
     public void addMouseOverText(TooltipList list, TeamData teamData) {
-        list.add(Component.translatable("ftbevolutioncompanion.ftb_skyline.launch_task.tooltip").withStyle(ChatFormatting.GRAY));
+        list.add(Component.translatable("ftbevolutioncompanion.ftb_skyline.launch_task.tooltip")
+                .withStyle(ChatFormatting.GRAY));
     }
 }

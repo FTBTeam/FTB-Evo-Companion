@@ -4,20 +4,16 @@ import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.magic.hemomancy.HemomancyHooks;
 import dev.sterner.witchery.core.api.IAbility;
 import dev.sterner.witchery.feature.ability.AbilityCooldownManager;
-
+import java.text.DecimalFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
-
 import org.cyclops.evilcraft.api.broom.BroomModifier;
 import org.jspecify.annotations.Nullable;
-
-import java.text.DecimalFormat;
 
 public final class HemomancyDisplay {
     private static final DecimalFormat EV_FORMAT = new DecimalFormat("#,##0.##");
 
-    private HemomancyDisplay() {
-    }
+    private HemomancyDisplay() {}
 
     private static @Nullable Player player() {
         return Minecraft.getInstance().player;

@@ -1,16 +1,12 @@
 package dev.ftb.mods.ftbevolutioncompanion.client;
 
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
-
 import net.minecraft.client.KeyMapping;
-
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
-
 import org.lwjgl.glfw.GLFW;
 
 public final class SkillsKeys {
-    public static final KeyMapping.Category CATEGORY =
-            new KeyMapping.Category(FTBEvolutionCompanion.id("skills"));
+    public static final KeyMapping.Category CATEGORY = new KeyMapping.Category(FTBEvolutionCompanion.id("skills"));
 
     public static final KeyMapping ACTIVATE_NINJA =
             new KeyMapping("key.ftbevolutioncompanion.activate_ninja", GLFW.GLFW_KEY_V, CATEGORY);
@@ -35,8 +31,7 @@ public final class SkillsKeys {
     public static final KeyMapping ACTIVATE_LANCER =
             new KeyMapping("key.ftbevolutioncompanion.activate_lancer", GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
 
-    private SkillsKeys() {
-    }
+    private SkillsKeys() {}
 
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
         event.registerCategory(CATEGORY);

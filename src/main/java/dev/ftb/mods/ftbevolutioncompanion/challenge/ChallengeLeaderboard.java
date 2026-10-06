@@ -9,26 +9,22 @@ import dev.ftb.mods.ftbquests.quest.TeamData;
 import dev.ftb.mods.ftbteams.api.FTBTeamsAPI;
 import dev.ftb.mods.ftbteams.api.Team;
 import dev.ftb.mods.ftbteams.api.TeamManager;
-
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
-
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.server.ServerStoppedEvent;
-import net.neoforged.neoforge.event.tick.ServerTickEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
-
-import org.jspecify.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
+import org.jspecify.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class ChallengeLeaderboard {
     private static final Logger LOGGER = LoggerFactory.getLogger("ChallengeBoard");
@@ -37,23 +33,21 @@ public final class ChallengeLeaderboard {
 
     private static ChallengeSnapshot current = ChallengeSnapshot.EMPTY;
     private static List<Standing> standings = List.of();
+
     @Nullable
     private static List<UUID> announced = null;
+
     private static int ticksUntilRefresh = 0;
     private static long ticksUntilAnnounce = 0;
     private static boolean missingChapterLogged = false;
 
-    private record Ranked(UUID teamId, Component name, int percent, int completed, int total, long lastCompletion) {
-    }
+    private record Ranked(UUID teamId, Component name, int percent, int completed, int total, long lastCompletion) {}
 
-    private record Standing(UUID teamId, Component name, int percent) {
-    }
+    private record Standing(UUID teamId, Component name, int percent) {}
 
-    private record Built(ChallengeSnapshot snapshot, List<Standing> standings) {
-    }
+    private record Built(ChallengeSnapshot snapshot, List<Standing> standings) {}
 
-    private ChallengeLeaderboard() {
-    }
+    private ChallengeLeaderboard() {}
 
     public static ChallengeSnapshot current() {
         return current;
@@ -126,14 +120,17 @@ public final class ChallengeLeaderboard {
         if (!changed && announced.size() > standings.size()) changed = true;
         announced = teamIds(standings);
         if (lines.isEmpty() || (!changed && !includeUnchanged)) return;
-        Component header = Component.translatable(ANNOUNCE + (changed ? "changed" : "standings")).withStyle(ChatFormatting.GOLD);
+        Component header = Component.translatable(ANNOUNCE + (changed ? "changed" : "standings"))
+                .withStyle(ChatFormatting.GOLD);
         server.getPlayerList().broadcastSystemMessage(header, false);
         for (Component line : lines) server.getPlayerList().broadcastSystemMessage(line, false);
     }
 
     private static Component rankLine(int rank, Standing standing, int previous) {
-        if (previous == rank) return Component.translatable(ANNOUNCE + "rank", rank, standing.name(), standing.percent());
-        if (previous == 0) return Component.translatable(ANNOUNCE + "rank_new", rank, standing.name(), standing.percent());
+        if (previous == rank)
+            return Component.translatable(ANNOUNCE + "rank", rank, standing.name(), standing.percent());
+        if (previous == 0)
+            return Component.translatable(ANNOUNCE + "rank_new", rank, standing.name(), standing.percent());
         String key = previous > rank ? "rank_up" : "rank_down";
         return Component.translatable(ANNOUNCE + key, rank, standing.name(), standing.percent(), previous);
     }
@@ -152,7 +149,8 @@ public final class ChallengeLeaderboard {
     }
 
     private static String filenameOf(Chapter chapter) {
-        String name = chapter.getPath().map(path -> path.getFileName().toString()).orElse("");
+        String name =
+                chapter.getPath().map(path -> path.getFileName().toString()).orElse("");
         int dot = name.lastIndexOf('.');
         return dot > 0 ? name.substring(0, dot) : name;
     }
@@ -161,7 +159,9 @@ public final class ChallengeLeaderboard {
         Chapter chapter = findChapter(file);
         if (chapter == null) {
             if (!missingChapterLogged) {
-                LOGGER.warn("challenge chapter '{}' not found in the quest book; boards stay empty", CompanionConfig.CHALLENGE_CHAPTER.get());
+                LOGGER.warn(
+                        "challenge chapter '{}' not found in the quest book; boards stay empty",
+                        CompanionConfig.CHALLENGE_CHAPTER.get());
                 missingChapterLogged = true;
             }
             return new Built(ChallengeSnapshot.EMPTY, List.of());
@@ -190,7 +190,8 @@ public final class ChallengeLeaderboard {
             ranked.add(new Ranked(team.getId(), team.getColoredName(), percent, completed, total, lastCompletion));
         }
 
-        ranked.sort(Comparator.<Ranked>comparingInt(Ranked::percent).reversed()
+        ranked.sort(Comparator.<Ranked>comparingInt(Ranked::percent)
+                .reversed()
                 .thenComparingLong(Ranked::lastCompletion)
                 .thenComparing(r -> r.name().getString()));
 

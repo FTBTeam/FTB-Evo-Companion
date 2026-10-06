@@ -1,10 +1,8 @@
 package dev.ftb.mods.ftbevolutioncompanion.mixin.compat.hedgecraft;
 
 import dev.ftb.mods.ftbevolutioncompanion.magic.hedgecraft.CovenMagic;
-
 import dev.sterner.witchery.content.block.AltarLinkedBlockEntity;
 import dev.sterner.witchery.content.block.ritual.GoldenRitualChalkBlockEntity;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;

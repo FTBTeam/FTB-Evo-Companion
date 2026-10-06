@@ -1,7 +1,7 @@
 package dev.ftb.mods.ftbevolutioncompanion.challenge;
 
 import dev.ftb.mods.ftbevolutioncompanion.content.CompanionContent;
-
+import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -13,10 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-
 import org.jspecify.annotations.Nullable;
-
-import java.util.Optional;
 
 public class ChallengeBoardAuxBlockEntity extends BlockEntity {
     @Nullable

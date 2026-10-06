@@ -11,17 +11,13 @@ import dev.ftb.mods.ftbquests.quest.task.ItemTask;
 import dev.ftb.mods.ftbquests.quest.task.Task;
 import dev.ftb.mods.ftbteams.api.FTBTeamsAPI;
 import dev.ftb.mods.ftbteams.api.Team;
-
-import net.minecraft.server.level.ServerPlayer;
-
-import org.jspecify.annotations.Nullable;
-
 import java.util.Optional;
 import java.util.UUID;
+import net.minecraft.server.level.ServerPlayer;
+import org.jspecify.annotations.Nullable;
 
 public final class PyramidQuests {
-    private PyramidQuests() {
-    }
+    private PyramidQuests() {}
 
     @Nullable
     public static Chapter chapter() {
@@ -36,13 +32,17 @@ public final class PyramidQuests {
     @Nullable
     public static TeamData teamData(@Nullable UUID owner) {
         if (!ServerQuestFile.exists()) return null;
-        return ownerTeam(owner).map(team -> ServerQuestFile.getInstance().getOrCreateTeamData(team)).orElse(null);
+        return ownerTeam(owner)
+                .map(team -> ServerQuestFile.getInstance().getOrCreateTeamData(team))
+                .orElse(null);
     }
 
     public static boolean isMember(ServerPlayer player, @Nullable UUID owner) {
         Optional<Team> ownerTeam = ownerTeam(owner);
         if (ownerTeam.isEmpty()) return false;
-        return FTBTeamsAPI.api().getManager().getTeamForPlayer(player)
+        return FTBTeamsAPI.api()
+                .getManager()
+                .getTeamForPlayer(player)
                 .map(team -> team.getId().equals(ownerTeam.get().getId()))
                 .orElse(false);
     }
@@ -56,7 +56,8 @@ public final class PyramidQuests {
     }
 
     public static boolean isDeliverable(Task task) {
-        return (task instanceof ItemTask || task instanceof FluidTask || task instanceof EnergyTask) && task.consumesResources();
+        return (task instanceof ItemTask || task instanceof FluidTask || task instanceof EnergyTask)
+                && task.consumesResources();
     }
 
     public static boolean canDeliver(TeamData data, Task task) {

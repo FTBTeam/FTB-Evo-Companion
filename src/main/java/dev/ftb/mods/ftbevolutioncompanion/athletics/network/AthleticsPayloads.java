@@ -4,14 +4,11 @@ import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
 import dev.ftb.mods.ftbevolutioncompanion.athletics.AthleticsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.athletics.AthleticsRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.athletics.AthleticsToggles;
-
 import io.netty.buffer.ByteBuf;
-
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
-
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
@@ -49,8 +46,7 @@ public final class AthleticsPayloads {
         }
     }
 
-    private AthleticsPayloads() {
-    }
+    private AthleticsPayloads() {}
 
     public static void register(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar("1");
@@ -67,7 +63,9 @@ public final class AthleticsPayloads {
             }
         });
 
-        registrar.playToClient(SyncToggles.TYPE, SyncToggles.STREAM_CODEC,
+        registrar.playToClient(
+                SyncToggles.TYPE,
+                SyncToggles.STREAM_CODEC,
                 (payload, context) -> context.player().setData(AthleticsRegistry.TOGGLES, payload.toggles()));
     }
 }

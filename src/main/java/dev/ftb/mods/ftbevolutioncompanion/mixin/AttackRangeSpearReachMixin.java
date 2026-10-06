@@ -1,14 +1,11 @@
 package dev.ftb.mods.ftbevolutioncompanion.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
-
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.component.AttackRange;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 

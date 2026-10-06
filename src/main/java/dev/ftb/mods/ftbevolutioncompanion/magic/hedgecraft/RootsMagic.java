@@ -2,11 +2,9 @@ package dev.ftb.mods.ftbevolutioncompanion.magic.hedgecraft;
 
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
-
 import elucent.rootsclassic.component.ComponentBase;
 import elucent.rootsclassic.component.components.ComponentFlareOrchid;
 import elucent.rootsclassic.component.components.ComponentLilac;
-
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,8 +13,7 @@ import net.minecraft.world.entity.player.Player;
 public final class RootsMagic {
     private static final int MIN_RITUAL_TICKS = 20;
 
-    private RootsMagic() {
-    }
+    private RootsMagic() {}
 
     public static int potencyBonus(ComponentBase component, Entity caster, int basePotency) {
         if (component instanceof ComponentFlareOrchid || !(caster instanceof LivingEntity living)) {

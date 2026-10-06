@@ -1,17 +1,15 @@
 package dev.ftb.mods.ftbevolutioncompanion.skills;
 
+import java.util.Optional;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 
-import java.util.Optional;
-
 public final class ApothicHooks {
     private static Optional<Holder.Reference<Attribute>> lifeSteal;
 
-    private ApothicHooks() {
-    }
+    private ApothicHooks() {}
 
     public static Optional<Holder.Reference<Attribute>> lifeSteal() {
         if (lifeSteal == null) {

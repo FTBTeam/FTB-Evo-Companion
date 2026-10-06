@@ -1,12 +1,12 @@
 package dev.ftb.mods.ftbevolutioncompanion.challenge;
 
 import com.mojang.serialization.MapCodec;
-
 import dev.ftb.mods.ftbevolutioncompanion.content.CompanionContent;
 import dev.ftb.mods.ftbquests.net.OpenQuestBookMessage;
 import dev.ftb.mods.ftbquests.quest.Chapter;
 import dev.ftb.mods.ftbquests.quest.ServerQuestFile;
-
+import java.util.List;
+import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -29,13 +29,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.phys.BlockHitResult;
-
 import net.neoforged.neoforge.network.PacketDistributor;
-
 import org.jspecify.annotations.Nullable;
-
-import java.util.List;
-import java.util.Optional;
 
 public class ChallengeBoardBlock extends BaseEntityBlock {
     public static final MapCodec<ChallengeBoardBlock> CODEC = simpleCodec(ChallengeBoardBlock::new);
@@ -64,7 +59,8 @@ public class ChallengeBoardBlock extends BaseEntityBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        return defaultBlockState()
+                .setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
@@ -83,12 +79,14 @@ public class ChallengeBoardBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(
+            BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         ChallengeBoardBlockEntity board = coreAt(level, pos).orElse(null);
         if (board == null) return InteractionResult.PASS;
         if (level.isClientSide()) return InteractionResult.SUCCESS;
 
-        boolean editor = player.permissions().hasPermission(Permissions.COMMANDS_GAMEMASTER) && player.getMainHandItem().isEmpty();
+        boolean editor = player.permissions().hasPermission(Permissions.COMMANDS_GAMEMASTER)
+                && player.getMainHandItem().isEmpty();
         if (editor && player.isSecondaryUseActive()) {
             board.cycleRank();
             return InteractionResult.SUCCESS_SERVER;
@@ -114,7 +112,8 @@ public class ChallengeBoardBlock extends BaseEntityBlock {
         int leftCount = (width - 1) / 2;
         int rightCount = width - 1 - leftCount;
         BlockPos leftBottom = corePos.relative(facing.getClockWise(), leftCount);
-        BlockPos rightTop = corePos.relative(facing.getCounterClockWise(), rightCount).above(height - 1);
+        BlockPos rightTop =
+                corePos.relative(facing.getCounterClockWise(), rightCount).above(height - 1);
         return BoundingBox.fromCorners(leftBottom, rightTop);
     }
 
@@ -143,7 +142,8 @@ public class ChallengeBoardBlock extends BaseEntityBlock {
                 .toList();
         stale.forEach(pos -> level.setBlock(pos, Blocks.AIR.defaultBlockState(), REMOVE_FLAGS));
 
-        BlockState auxState = CompanionContent.CHALLENGE_BOARD_AUX.get().defaultBlockState().setValue(FACING, facing);
+        BlockState auxState =
+                CompanionContent.CHALLENGE_BOARD_AUX.get().defaultBlockState().setValue(FACING, facing);
         wanted.forEach(pos -> {
             level.setBlockAndUpdate(pos, auxState);
             if (level.getBlockEntity(pos) instanceof ChallengeBoardAuxBlockEntity aux) {
@@ -155,7 +155,8 @@ public class ChallengeBoardBlock extends BaseEntityBlock {
         return null;
     }
 
-    public static void removeAux(ServerLevel level, BlockPos corePos, ChallengeBoardBlockEntity core, Direction facing) {
+    public static void removeAux(
+            ServerLevel level, BlockPos corePos, ChallengeBoardBlockEntity core, Direction facing) {
         BoundingBox box = bounds(corePos, core.getWidth(), core.getHeight(), facing);
         List<BlockPos> aux = BlockPos.betweenClosedStream(box)
                 .filter(pos -> isAuxOf(level, pos, corePos))

@@ -3,9 +3,7 @@ package dev.ftb.mods.ftbevolutioncompanion.client;
 import com.geckolib.model.DefaultedBlockGeoModel;
 import com.geckolib.renderer.GeoBlockRenderer;
 import com.geckolib.renderer.layer.builtin.AutoGlowingGeoLayer;
-
 import dev.ftb.mods.ftbevolutioncompanion.content.BeastTrophyBlockEntity;
-
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.resources.Identifier;
@@ -17,8 +15,7 @@ public class BeastTrophyRenderer extends GeoBlockRenderer<BeastTrophyBlockEntity
         withRenderLayer(AutoGlowingGeoLayer::new);
     }
 
-    public static class State extends BlockEntityRenderState {
-    }
+    public static class State extends BlockEntityRenderState {}
 
     @Override
     public State createRenderState() {

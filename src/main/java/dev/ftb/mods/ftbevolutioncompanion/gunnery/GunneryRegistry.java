@@ -1,18 +1,15 @@
 package dev.ftb.mods.ftbevolutioncompanion.gunnery;
 
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
-
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public final class GunneryRegistry {
     public static final DeferredRegister<Attribute> ATTRIBUTES =
@@ -37,12 +34,11 @@ public final class GunneryRegistry {
     public static final DeferredHolder<Attribute, Attribute> GUN_RECOIL_CONTROL = attr("gun_recoil_control", 0.9);
     public static final DeferredHolder<Attribute, Attribute> GUN_AIR_ACCURACY = attr("gun_air_accuracy", 0.9);
 
-    private GunneryRegistry() {
-    }
+    private GunneryRegistry() {}
 
     private static DeferredHolder<Attribute, Attribute> attr(String name, double max) {
-        DeferredHolder<Attribute, Attribute> holder = ATTRIBUTES.register(name,
-                () -> new RangedAttribute("attribute.name.ftb." + name, 0.0, 0.0, max).setSyncable(true));
+        DeferredHolder<Attribute, Attribute> holder = ATTRIBUTES.register(
+                name, () -> new RangedAttribute("attribute.name.ftb." + name, 0.0, 0.0, max).setSyncable(true));
         PLAYER_ATTRIBUTES.add(holder);
         return holder;
     }

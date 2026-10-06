@@ -1,14 +1,13 @@
 package dev.ftb.mods.ftbevolutioncompanion.pyramid;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public final class PyramidLayout {
     public static final int RADIUS = 2;
@@ -17,7 +16,10 @@ public final class PyramidLayout {
     private static final int CELL_COUNT = WIDTH * WIDTH * HEIGHT;
 
     public enum Bay {
-        NONE, ITEM, FLUID, ENERGY
+        NONE,
+        ITEM,
+        FLUID,
+        ENERGY
     }
 
     private static final List<Vec3i> CELLS = new ArrayList<>();
@@ -44,8 +46,7 @@ public final class PyramidLayout {
         }
     }
 
-    private PyramidLayout() {
-    }
+    private PyramidLayout() {}
 
     public static List<Vec3i> cells() {
         return CELLS;
@@ -78,7 +79,10 @@ public final class PyramidLayout {
     }
 
     public static boolean contains(Vec3i model) {
-        return Math.abs(model.getX()) <= RADIUS && Math.abs(model.getZ()) <= RADIUS && model.getY() >= 0 && model.getY() < HEIGHT;
+        return Math.abs(model.getX()) <= RADIUS
+                && Math.abs(model.getZ()) <= RADIUS
+                && model.getY() >= 0
+                && model.getY() < HEIGHT;
     }
 
     public static Bay bay(Vec3i model) {

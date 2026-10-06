@@ -3,19 +3,18 @@ package dev.ftb.mods.ftbevolutioncompanion.skills;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
-import net.minecraft.server.level.ServerPlayer;
-
 import java.util.HashMap;
 import java.util.Map;
+import net.minecraft.server.level.ServerPlayer;
 
 public record SkillCooldowns(Map<String, Long> readyAt) {
     public static final SkillCooldowns EMPTY = new SkillCooldowns(Map.of());
 
-    public static final MapCodec<SkillCooldowns> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            Codec.unboundedMap(Codec.STRING, Codec.LONG).optionalFieldOf("ready_at", Map.of())
-                    .forGetter(SkillCooldowns::readyAt)
-    ).apply(instance, SkillCooldowns::new));
+    public static final MapCodec<SkillCooldowns> CODEC =
+            RecordCodecBuilder.mapCodec(instance -> instance.group(Codec.unboundedMap(Codec.STRING, Codec.LONG)
+                            .optionalFieldOf("ready_at", Map.of())
+                            .forGetter(SkillCooldowns::readyAt))
+                    .apply(instance, SkillCooldowns::new));
 
     public static final String CHEAT_DEATH = "cheat_death";
     public static final String LIGHTNING = "lightning";
@@ -37,7 +36,8 @@ public record SkillCooldowns(Map<String, Long> readyAt) {
     }
 
     public static void start(ServerPlayer player, String key, long ticks) {
-        Map<String, Long> next = new HashMap<>(player.getData(SkillsRegistry.COOLDOWNS).readyAt());
+        Map<String, Long> next =
+                new HashMap<>(player.getData(SkillsRegistry.COOLDOWNS).readyAt());
         next.put(key, player.level().getGameTime() + ticks);
         player.setData(SkillsRegistry.COOLDOWNS, new SkillCooldowns(Map.copyOf(next)));
     }

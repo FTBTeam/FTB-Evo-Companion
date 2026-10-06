@@ -1,12 +1,10 @@
 package dev.ftb.mods.ftbevolutioncompanion.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 

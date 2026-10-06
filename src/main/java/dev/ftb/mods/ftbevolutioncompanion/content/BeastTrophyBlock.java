@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion.content;
 
 import com.mojang.serialization.MapCodec;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -26,21 +25,16 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
 import org.jspecify.annotations.Nullable;
 
 public class BeastTrophyBlock extends BaseEntityBlock {
     public static final MapCodec<BeastTrophyBlock> CODEC = simpleCodec(BeastTrophyBlock::new);
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
-    private static final VoxelShape LOWER_SHAPE = Shapes.or(
-            Block.box(0, 0, 0, 16, 5, 16),
-            Block.box(2, 5, 2, 14, 16, 14)
-    );
-    private static final VoxelShape UPPER_SHAPE = Shapes.or(
-            Block.box(2, 0, 2, 14, 12, 14),
-            Block.box(6, 12, 6, 10, 16, 10)
-    );
+    private static final VoxelShape LOWER_SHAPE =
+            Shapes.or(Block.box(0, 0, 0, 16, 5, 16), Block.box(2, 5, 2, 14, 16, 14));
+    private static final VoxelShape UPPER_SHAPE =
+            Shapes.or(Block.box(2, 0, 2, 14, 12, 14), Block.box(6, 12, 6, 10, 16, 10));
 
     public BeastTrophyBlock(Properties properties) {
         super(properties);
@@ -76,7 +70,9 @@ public class BeastTrophyBlock extends BaseEntityBlock {
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
-        return pos.getY() < level.getMaxY() && level.getBlockState(pos.above()).canBeReplaced(context) ? defaultBlockState() : null;
+        return pos.getY() < level.getMaxY() && level.getBlockState(pos.above()).canBeReplaced(context)
+                ? defaultBlockState()
+                : null;
     }
 
     @Override
@@ -85,11 +81,20 @@ public class BeastTrophyBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction direction,
-                                     BlockPos neighbourPos, BlockState neighbourState, RandomSource random) {
+    protected BlockState updateShape(
+            BlockState state,
+            LevelReader level,
+            ScheduledTickAccess ticks,
+            BlockPos pos,
+            Direction direction,
+            BlockPos neighbourPos,
+            BlockState neighbourState,
+            RandomSource random) {
         DoubleBlockHalf half = state.getValue(HALF);
         if (direction.getAxis() == Direction.Axis.Y && (half == DoubleBlockHalf.LOWER) == (direction == Direction.UP)) {
-            return neighbourState.is(this) && neighbourState.getValue(HALF) != half ? state : Blocks.AIR.defaultBlockState();
+            return neighbourState.is(this) && neighbourState.getValue(HALF) != half
+                    ? state
+                    : Blocks.AIR.defaultBlockState();
         }
         return super.updateShape(state, level, ticks, pos, direction, neighbourPos, neighbourState, random);
     }
@@ -109,7 +114,8 @@ public class BeastTrophyBlock extends BaseEntityBlock {
             BlockPos lowerPos = pos.below();
             BlockState lower = level.getBlockState(lowerPos);
             if (lower.is(this) && lower.getValue(HALF) == DoubleBlockHalf.LOWER) {
-                level.setBlock(lowerPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL | Block.UPDATE_SUPPRESS_DROPS);
+                level.setBlock(
+                        lowerPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL | Block.UPDATE_SUPPRESS_DROPS);
                 level.levelEvent(player, 2001, lowerPos, Block.getId(lower));
             }
         }

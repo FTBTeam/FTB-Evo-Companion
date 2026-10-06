@@ -2,30 +2,25 @@ package dev.ftb.mods.ftbevolutioncompanion.magic.hedgecraft;
 
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
-
 import dev.sterner.witchery.content.block.ritual.GoldenRitualChalkBlockEntity;
 import dev.sterner.witchery.content.item.WitcheryPotionIngredient;
 import dev.sterner.witchery.core.api.SymbologySpell;
-
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
-
-import java.util.Locale;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public final class CovenMagic {
     private static final ThreadLocal<Player> RITE_STARTER = new ThreadLocal<>();
     private static final Map<String, Double> LAST_ALTAR_EFFICIENCY = new ConcurrentHashMap<>();
 
-    private CovenMagic() {
-    }
+    private CovenMagic() {}
 
     public static void onServerStopped(ServerStoppedEvent event) {
         LAST_ALTAR_EFFICIENCY.clear();
@@ -110,7 +105,9 @@ public final class CovenMagic {
             return amount;
         }
         double efficiency = MagicRegistry.value(player, MagicRegistry.WITCHERY_INFUSION_EFFICIENCY);
-        return efficiency <= 0.0 ? amount : HedgeCraftMagic.roundRandomly(player.getRandom(), amount * (1.0 - efficiency));
+        return efficiency <= 0.0
+                ? amount
+                : HedgeCraftMagic.roundRandomly(player.getRandom(), amount * (1.0 - efficiency));
     }
 
     public static float extraBottleChance(Player player, float chance) {
@@ -124,8 +121,8 @@ public final class CovenMagic {
         }
     }
 
-    public static WitcheryPotionIngredient.EffectModifier brewModifier(Entity entity,
-                                                                       WitcheryPotionIngredient.EffectModifier modifier) {
+    public static WitcheryPotionIngredient.EffectModifier brewModifier(
+            Entity entity, WitcheryPotionIngredient.EffectModifier modifier) {
         if (modifier == null || !(entity instanceof LivingEntity living)) {
             return modifier;
         }
@@ -133,8 +130,8 @@ public final class CovenMagic {
         if (bonus <= 0) {
             return modifier;
         }
-        return new WitcheryPotionIngredient.EffectModifier(modifier.getPowerAddition() + bonus,
-                modifier.getDurationAddition(), modifier.getDurationMultiplier());
+        return new WitcheryPotionIngredient.EffectModifier(
+                modifier.getPowerAddition() + bonus, modifier.getDurationAddition(), modifier.getDurationMultiplier());
     }
 
     public static int symbolLevel(ServerPlayer player, SymbologySpell spell, int level) {

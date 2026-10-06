@@ -4,18 +4,16 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import dev.anima.SpellScreen;
 import dev.ftb.mods.ftbevolutioncompanion.magic.otherworld.client.OtherworldTooltips;
-
+import java.util.List;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-import java.util.List;
-
 @Mixin(value = SpellScreen.class, remap = false)
 public abstract class AnimaSpellScreenMixin {
-    @ModifyExpressionValue(method = "extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V",
+    @ModifyExpressionValue(
+            method = "extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V",
             at = @At(value = "INVOKE", target = "Ldev/anima/Spell;cooldown()I", ordinal = 0))
     private int ftbevo$skillTooltipLines(int cooldown, @Local List<Component> lines, @Local Player player) {
         Component thrift = OtherworldTooltips.soulThrift(player);
@@ -30,7 +28,8 @@ public abstract class AnimaSpellScreenMixin {
         return 0;
     }
 
-    @ModifyExpressionValue(method = "cooling(Lnet/minecraft/world/entity/player/Player;Ldev/anima/Spell;)F",
+    @ModifyExpressionValue(
+            method = "cooling(Lnet/minecraft/world/entity/player/Player;Ldev/anima/Spell;)F",
             at = @At(value = "INVOKE", target = "Ldev/anima/Spell;cooldown()I", ordinal = 1))
     private static int ftbevo$hastenedCooldownFill(int cooldown, @Local(argsOnly = true) Player player) {
         return OtherworldTooltips.spellCooldown(player, cooldown);

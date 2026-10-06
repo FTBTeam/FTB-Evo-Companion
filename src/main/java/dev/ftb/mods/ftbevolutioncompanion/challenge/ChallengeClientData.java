@@ -3,8 +3,7 @@ package dev.ftb.mods.ftbevolutioncompanion.challenge;
 public final class ChallengeClientData {
     private static ChallengeSnapshot snapshot = ChallengeSnapshot.EMPTY;
 
-    private ChallengeClientData() {
-    }
+    private ChallengeClientData() {}
 
     public static ChallengeSnapshot snapshot() {
         return snapshot;

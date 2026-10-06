@@ -1,12 +1,13 @@
 package dev.ftb.mods.ftbevolutioncompanion.pyramid;
 
 import com.mojang.serialization.MapCodec;
-
 import dev.ftb.mods.ftbevolutioncompanion.content.CompanionContent;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.network.PyramidPayloads;
 import dev.ftb.mods.ftbquests.quest.Chapter;
 import dev.ftb.mods.ftbteams.api.Team;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -32,16 +33,10 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
 import net.neoforged.neoforge.common.util.BlockSnapshot;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.network.PacketDistributor;
-
 import org.jspecify.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 public class SkylineBlock extends BaseEntityBlock {
     public static final MapCodec<SkylineBlock> CODEC = simpleCodec(SkylineBlock::new);
@@ -96,8 +91,10 @@ public class SkylineBlock extends BaseEntityBlock {
                 problem = "blocked";
                 break;
             }
-            if (!level.isClientSide() && player != null
-                    && EventHooks.onBlockPlace(player, BlockSnapshot.create(level.dimension(), level, pos), Direction.UP)) {
+            if (!level.isClientSide()
+                    && player != null
+                    && EventHooks.onBlockPlace(
+                            player, BlockSnapshot.create(level.dimension(), level, pos), Direction.UP)) {
                 problem = "protected";
                 break;
             }
@@ -113,7 +110,8 @@ public class SkylineBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity by, ItemStack itemStack) {
+    public void setPlacedBy(
+            Level level, BlockPos pos, BlockState state, @Nullable LivingEntity by, ItemStack itemStack) {
         super.setPlacedBy(level, pos, state, by, itemStack);
         if (level.isClientSide()) return;
 
@@ -141,7 +139,8 @@ public class SkylineBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(
+            BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         return use(level, pos, player);
     }
 
@@ -153,7 +152,8 @@ public class SkylineBlock extends BaseEntityBlock {
 
         SkylineBlockEntity machine = found.get();
         if (!PyramidQuests.isMember(serverPlayer, machine.getOwner())) {
-            Component owner = PyramidQuests.ownerTeam(machine.getOwner()).map(Team::getColoredName)
+            Component owner = PyramidQuests.ownerTeam(machine.getOwner())
+                    .map(Team::getColoredName)
                     .orElse(Component.translatable(LANG + "unknown_owner"));
             serverPlayer.sendOverlayMessage(Component.translatable(LANG + "not_owner", owner));
             return InteractionResult.SUCCESS_SERVER;
@@ -165,7 +165,8 @@ public class SkylineBlock extends BaseEntityBlock {
             return InteractionResult.SUCCESS_SERVER;
         }
 
-        PacketDistributor.sendToPlayer(serverPlayer, new PyramidPayloads.OpenPyramidScreen(machine.getBlockPos(), chapter.id));
+        PacketDistributor.sendToPlayer(
+                serverPlayer, new PyramidPayloads.OpenPyramidScreen(machine.getBlockPos(), chapter.id));
         return InteractionResult.SUCCESS_SERVER;
     }
 
@@ -186,7 +187,10 @@ public class SkylineBlock extends BaseEntityBlock {
     }
 
     @Override
-    public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide() ? null : createTickerHelper(type, PyramidRegistry.SKYLINE.get(), SkylineBlockEntity::serverTick);
+    public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
+        return level.isClientSide()
+                ? null
+                : createTickerHelper(type, PyramidRegistry.SKYLINE.get(), SkylineBlockEntity::serverTick);
     }
 }

@@ -10,6 +10,10 @@ import dev.shadowsoffire.gateways.event.GateEvent;
 import dev.shadowsoffire.gateways.gate.Gateway;
 import dev.shadowsoffire.gateways.gate.GatewayRegistry;
 import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.UUID;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,11 +41,6 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.UUID;
 
 public final class TreasureGoblinEvent {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS =
@@ -119,8 +118,9 @@ public final class TreasureGoblinEvent {
         }
         ACTIVE.put(gate.getUUID(), new Active(player.getUUID(), level.dimension()));
         player.connection.send(new ClientboundSetTitlesAnimationPacket(5, 50, 10));
-        player.connection.send(new ClientboundSetTitleTextPacket(
-                Component.translatable("ftbevolutioncompanion.treasure_goblin.title").withStyle(ChatFormatting.GOLD)));
+        player.connection.send(
+                new ClientboundSetTitleTextPacket(Component.translatable("ftbevolutioncompanion.treasure_goblin.title")
+                        .withStyle(ChatFormatting.GOLD)));
         player.connection.send(new ClientboundSetSubtitleTextPacket(
                 Component.translatable("ftbevolutioncompanion.treasure_goblin.subtitle")
                         .withStyle(ChatFormatting.YELLOW)));
@@ -148,8 +148,7 @@ public final class TreasureGoblinEvent {
         accessor.ftbevo$getTargetSelector().removeAllGoals(goal -> true);
         active.goblin = goblin.getUUID();
         active.waveStart = level.getGameTime();
-        accessor.ftbevo$getGoalSelector()
-                .addGoal(0, new RunToPortalGoal(goblin, gate, GOBLIN_SPEED, active.dashAt()));
+        accessor.ftbevo$getGoalSelector().addGoal(0, new RunToPortalGoal(goblin, gate, GOBLIN_SPEED, active.dashAt()));
     }
 
     public static void onLivingDeath(LivingDeathEvent event) {
@@ -167,7 +166,9 @@ public final class TreasureGoblinEvent {
         }
         long elapsed = Math.max(0L, level.getGameTime() - active.waveStart);
         int coins = Mth.clamp(
-                Math.round(MAX_COINS - (MAX_COINS - MIN_COINS) * (elapsed / (float) ESCAPE_TICKS)), MIN_COINS, MAX_COINS);
+                Math.round(MAX_COINS - (MAX_COINS - MIN_COINS) * (elapsed / (float) ESCAPE_TICKS)),
+                MIN_COINS,
+                MAX_COINS);
         if (ShopCoins.deposit(killer, coins)) {
             killer.sendSystemMessage(Component.translatable(
                             "ftbevolutioncompanion.treasure_goblin.coins",

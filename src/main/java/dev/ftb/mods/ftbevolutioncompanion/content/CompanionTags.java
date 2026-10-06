@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion.content;
 
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
-
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -14,6 +13,5 @@ public final class CompanionTags {
     public static final TagKey<EntityType<?>> DARK_DIRT_BLACKLIST =
             TagKey.create(Registries.ENTITY_TYPE, FTBEvolutionCompanion.id("dark_dirt_blacklist"));
 
-    private CompanionTags() {
-    }
+    private CompanionTags() {}
 }

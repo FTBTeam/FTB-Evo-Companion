@@ -9,6 +9,11 @@ import com.geckolib.util.GeckoLibUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import dev.ftb.mods.ftbevolutioncompanion.CompanionSounds;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -46,12 +51,6 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import org.jspecify.annotations.Nullable;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
 public final class FabricatorBlockEntity extends BlockEntity implements MenuProvider, GeoBlockEntity {
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("animation.ftb_fabricator.idle");
     private static final RawAnimation WORKING = RawAnimation.begin().thenLoop("animation.ftb_fabricator.working");
@@ -61,16 +60,38 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
     public static final int OUTPUTS = 3;
     public static final int TANK_CAPACITY = 16000;
     public static final int ENERGY_CAPACITY = 1000000000;
-    public enum Status { IDLE, WORKING, STAGE_REQUIRED, NO_POWER, OUTPUT_FULL, NO_OWNER }
+
+    public enum Status {
+        IDLE,
+        WORKING,
+        STAGE_REQUIRED,
+        NO_POWER,
+        OUTPUT_FULL,
+        NO_OWNER
+    }
 
     private final ItemStacksResourceHandler items = new ItemStacksResourceHandler(INPUTS + OUTPUTS) {
-        @Override protected void onContentsChanged(int index, ItemStack previous) { dirty = true; syncPending = true; setChanged(); }
+        @Override
+        protected void onContentsChanged(int index, ItemStack previous) {
+            dirty = true;
+            syncPending = true;
+            setChanged();
+        }
     };
     private final FluidStacksResourceHandler fluids = new FluidStacksResourceHandler(3, TANK_CAPACITY) {
-        @Override protected void onContentsChanged(int index, FluidStack previous) { dirty = true; syncPending = true; setChanged(); }
+        @Override
+        protected void onContentsChanged(int index, FluidStack previous) {
+            dirty = true;
+            syncPending = true;
+            setChanged();
+        }
     };
     private final SimpleEnergyHandler energy = new SimpleEnergyHandler(ENERGY_CAPACITY, ENERGY_CAPACITY, 0) {
-        @Override protected void onEnergyChanged(int previous) { syncPending = true; setChanged(); }
+        @Override
+        protected void onEnergyChanged(int previous) {
+            syncPending = true;
+            setChanged();
+        }
     };
     private final ResourceHandler<ItemResource> automationItems = new PortHandler<>(items, INPUTS);
     private final ResourceHandler<FluidResource> automationFluids = new PortHandler<>(fluids, 2);
@@ -90,34 +111,79 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
     private List<RecipeHolder<FabricatorRecipe>> recipes = List.of();
     private Object recipeMap;
 
-    public FabricatorBlockEntity(BlockPos pos, BlockState state) { super(FabricatorRegistry.BLOCK_ENTITY.get(), pos, state); }
-
-    public ItemStacksResourceHandler items() { return items; }
-    public FluidStacksResourceHandler fluids() { return fluids; }
-    public SimpleEnergyHandler energy() { return energy; }
-    public ResourceHandler<ItemResource> automationItems() { return automationItems; }
-    public ResourceHandler<FluidResource> automationFluids() { return automationFluids; }
-    public Status status() { return status; }
-    public String requiredStage() { return requiredStage; }
-    public String ownerName() { return ownerName; }
-    public int progress() { return progress; }
-    public int duration() { return duration; }
-    public int powerUsage() { return powerUsage; }
-    public ItemStack displayItem() { return displayItem; }
-    @Override public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<FabricatorBlockEntity>("main", 5,
-                test -> test.setAndContinue(test.animatable().status() == Status.WORKING ? WORKING : IDLE)));
+    public FabricatorBlockEntity(BlockPos pos, BlockState state) {
+        super(FabricatorRegistry.BLOCK_ENTITY.get(), pos, state);
     }
-    @Override public AnimatableInstanceCache getAnimatableInstanceCache() { return geoCache; }
+
+    public ItemStacksResourceHandler items() {
+        return items;
+    }
+
+    public FluidStacksResourceHandler fluids() {
+        return fluids;
+    }
+
+    public SimpleEnergyHandler energy() {
+        return energy;
+    }
+
+    public ResourceHandler<ItemResource> automationItems() {
+        return automationItems;
+    }
+
+    public ResourceHandler<FluidResource> automationFluids() {
+        return automationFluids;
+    }
+
+    public Status status() {
+        return status;
+    }
+
+    public String requiredStage() {
+        return requiredStage;
+    }
+
+    public String ownerName() {
+        return ownerName;
+    }
+
+    public int progress() {
+        return progress;
+    }
+
+    public int duration() {
+        return duration;
+    }
+
+    public int powerUsage() {
+        return powerUsage;
+    }
+
+    public ItemStack displayItem() {
+        return displayItem;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<FabricatorBlockEntity>(
+                "main", 5, test -> test.setAndContinue(test.animatable().status() == Status.WORKING ? WORKING : IDLE)));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return geoCache;
+    }
 
     public boolean canConnect(@Nullable Direction side) {
         return side != null && side != getBlockState().getValue(FabricatorBlock.FACING);
     }
 
-    @Override public void setBlockState(BlockState state) {
+    @Override
+    public void setBlockState(BlockState state) {
         Direction oldFacing = getBlockState().getValue(FabricatorBlock.FACING);
         super.setBlockState(state);
-        if (level != null && oldFacing != state.getValue(FabricatorBlock.FACING)) level.invalidateCapabilities(worldPosition);
+        if (level != null && oldFacing != state.getValue(FabricatorBlock.FACING))
+            level.invalidateCapabilities(worldPosition);
     }
 
     public void setOwner(ServerPlayer player) {
@@ -148,7 +214,9 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
         if (recipeMap != currentMap) {
             recipeMap = currentMap;
             recipes = server.recipeAccess().recipeMap().byType(FabricatorRegistry.RECIPE_TYPE.get()).stream()
-                    .sorted(Comparator.comparing(holder -> holder.id().identifier().toString())).toList();
+                    .sorted(Comparator.comparing(
+                            holder -> holder.id().identifier().toString()))
+                    .toList();
             dirty = true;
         }
         Status previousStatus = status;
@@ -156,7 +224,8 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
         if (selected != null) process(server);
         boolean working = status == Status.WORKING;
         if (getBlockState().getValue(FabricatorBlock.WORKING) != working) {
-            server.setBlock(worldPosition, getBlockState().setValue(FabricatorBlock.WORKING, working), Block.UPDATE_CLIENTS);
+            server.setBlock(
+                    worldPosition, getBlockState().setValue(FabricatorBlock.WORKING, working), Block.UPDATE_CLIENTS);
         }
         if (previousStatus != status || syncPending && server.getGameTime() % 10 == 0) sync();
         if (working && server.getGameTime() % 60 == 0) {
@@ -165,7 +234,8 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
     }
 
     private FabricatorInput input() {
-        return new FabricatorInput(items.copyToList().subList(0, INPUTS), fluids.copyToList().subList(0, 2));
+        return new FabricatorInput(
+                items.copyToList().subList(0, INPUTS), fluids.copyToList().subList(0, 2));
     }
 
     private void selectRecipe(ServerLevel server) {
@@ -184,11 +254,17 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
                 continue;
             }
             selected = holder;
-            displayItem = recipe.results().isEmpty() ? ItemStack.EMPTY : recipe.results().getFirst().withCount(1).create();
+            displayItem = recipe.results().isEmpty()
+                    ? ItemStack.EMPTY
+                    : recipe.results().getFirst().withCount(1).create();
             requiredStage = recipe.stage();
             String id = holder.id().identifier().toString();
-            String signature = FabricatorRecipe.CODEC.codec().encodeStart(server.registryAccess().createSerializationContext(JsonOps.INSTANCE), recipe)
-                    .result().map(Object::toString).orElse("");
+            String signature = FabricatorRecipe.CODEC
+                    .codec()
+                    .encodeStart(server.registryAccess().createSerializationContext(JsonOps.INSTANCE), recipe)
+                    .result()
+                    .map(Object::toString)
+                    .orElse("");
             if (!id.equals(activeId) || !signature.equals(recipeSignature)) progress = 0;
             activeId = id;
             recipeSignature = signature;
@@ -206,26 +282,44 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
     private void process(ServerLevel server) {
         FabricatorRecipe recipe = selected.value();
         try (Transaction simulation = Transaction.openRoot()) {
-            if (!insertResults(recipe, simulation)) { status = Status.OUTPUT_FULL; return; }
+            if (!insertResults(recipe, simulation)) {
+                status = Status.OUTPUT_FULL;
+                return;
+            }
         }
-        if (energy.getAmountAsLong() < recipe.energyPerTick()) { status = Status.NO_POWER; return; }
+        if (energy.getAmountAsLong() < recipe.energyPerTick()) {
+            status = Status.NO_POWER;
+            return;
+        }
         if (progress + 1 >= recipe.ticks()) {
             FabricatorInput input = input();
             int[] consumedItems = recipe.itemAllocation(input);
             int[] consumedFluids = recipe.fluidAllocation(input);
-            if (consumedItems == null || consumedFluids == null) { dirty = true; progress = 0; return; }
+            if (consumedItems == null || consumedFluids == null) {
+                dirty = true;
+                progress = 0;
+                return;
+            }
             try (Transaction transaction = Transaction.openRoot()) {
-                if (!insertResults(recipe, transaction)) { status = Status.OUTPUT_FULL; return; }
+                if (!insertResults(recipe, transaction)) {
+                    status = Status.OUTPUT_FULL;
+                    return;
+                }
                 for (int i = 0; i < INPUTS; i++) {
-                    if (consumedItems[i] > 0 && items.extract(i, items.getResource(i), consumedItems[i], transaction) != consumedItems[i]) return;
+                    if (consumedItems[i] > 0
+                            && items.extract(i, items.getResource(i), consumedItems[i], transaction)
+                                    != consumedItems[i]) return;
                 }
                 for (int i = 0; i < 2; i++) {
-                    if (consumedFluids[i] > 0 && fluids.extract(i, fluids.getResource(i), consumedFluids[i], transaction) != consumedFluids[i]) return;
+                    if (consumedFluids[i] > 0
+                            && fluids.extract(i, fluids.getResource(i), consumedFluids[i], transaction)
+                                    != consumedFluids[i]) return;
                 }
                 transaction.commit();
             }
             progress = 0;
-            server.playSound(null, worldPosition, CompanionSounds.FABRICATOR_COMPLETE.get(), SoundSource.BLOCKS, 1F, 1F);
+            server.playSound(
+                    null, worldPosition, CompanionSounds.FABRICATOR_COMPLETE.get(), SoundSource.BLOCKS, 1F, 1F);
         } else {
             progress++;
         }
@@ -241,12 +335,14 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
             if (stack.isEmpty()) return false;
             int remaining = stack.getCount();
             ItemResource resource = ItemResource.of(stack);
-            for (int i = INPUTS; i < INPUTS + OUTPUTS && remaining > 0; i++) remaining -= items.insert(i, resource, remaining, transaction);
+            for (int i = INPUTS; i < INPUTS + OUTPUTS && remaining > 0; i++)
+                remaining -= items.insert(i, resource, remaining, transaction);
             if (remaining > 0) return false;
         }
         for (var template : recipe.fluidResults()) {
             FluidStack stack = template.create();
-            if (fluids.insert(2, FluidResource.of(stack), stack.getAmount(), transaction) != stack.getAmount()) return false;
+            if (fluids.insert(2, FluidResource.of(stack), stack.getAmount(), transaction) != stack.getAmount())
+                return false;
         }
         return true;
     }
@@ -254,26 +350,48 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
     private void sync() {
         syncPending = false;
         setChanged();
-        if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+        if (level != null)
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
     }
 
-    @Override public Component getDisplayName() { return Component.translatable("block.ftbevolutioncompanion.ftb_fabricator"); }
-    @Override public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) { return new FabricatorMenu(id, inventory, this); }
-    @Override public Packet<ClientGamePacketListener> getUpdatePacket() { return ClientboundBlockEntityDataPacket.create(this); }
-    @Override public CompoundTag getUpdateTag(HolderLookup.Provider registries) { return saveWithoutMetadata(registries); }
-    @Override public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("block.ftbevolutioncompanion.ftb_fabricator");
+    }
+
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+        return new FabricatorMenu(id, inventory, this);
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
         if (level instanceof ServerLevel server) {
-            for (ItemStack stack : items.copyToList()) Containers.dropItemStack(server, pos.getX(), pos.getY(), pos.getZ(), stack);
+            for (ItemStack stack : items.copyToList())
+                Containers.dropItemStack(server, pos.getX(), pos.getY(), pos.getZ(), stack);
         }
     }
-    @Override protected void saveAdditional(ValueOutput output) {
+
+    @Override
+    protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         items.serialize(output.child("items"));
         fluids.serialize(output.child("fluids"));
         energy.serialize(output.child("energy"));
         if (owner != null) output.putString("owner", owner.toString());
         output.putString("owner_name", ownerName);
-        output.store("owner_tags", Codec.STRING.listOf(), ownerTags.stream().sorted().toList());
+        output.store(
+                "owner_tags", Codec.STRING.listOf(), ownerTags.stream().sorted().toList());
         output.putInt("progress", progress);
         output.putInt("duration", duration);
         output.putInt("power_usage", powerUsage);
@@ -283,16 +401,22 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
         output.putInt("status", status.ordinal());
         output.store("display_item", ItemStack.OPTIONAL_CODEC, displayItem);
     }
-    @Override protected void loadAdditional(ValueInput input) {
+
+    @Override
+    protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         input.child("items").ifPresent(items::deserialize);
         input.child("fluids").ifPresent(fluids::deserialize);
         input.child("energy").ifPresent(energy::deserialize);
         String ownerId = input.getStringOr("owner", "");
-        try { owner = ownerId.isEmpty() ? null : UUID.fromString(ownerId); }
-        catch (IllegalArgumentException ignored) { owner = null; }
+        try {
+            owner = ownerId.isEmpty() ? null : UUID.fromString(ownerId);
+        } catch (IllegalArgumentException ignored) {
+            owner = null;
+        }
         ownerName = input.getStringOr("owner_name", "");
-        ownerTags = new HashSet<>(input.read("owner_tags", Codec.STRING.listOf()).orElse(List.of()));
+        ownerTags =
+                new HashSet<>(input.read("owner_tags", Codec.STRING.listOf()).orElse(List.of()));
         duration = Math.clamp(input.getIntOr("duration", 0), 0, 72000);
         progress = Math.clamp(input.getIntOr("progress", 0), 0, Math.max(0, duration - 1));
         powerUsage = Math.clamp(input.getIntOr("power_usage", 0), 0, ENERGY_CAPACITY);
@@ -306,12 +430,24 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
 
     private static final class PortHandler<T extends Resource> extends DelegatingResourceHandler<T> {
         private final int inputs;
-        private PortHandler(ResourceHandler<T> delegate, int inputs) { super(delegate); this.inputs = inputs; }
-        @Override public boolean isValid(int index, T resource) { return index < inputs && super.isValid(index, resource); }
-        @Override public int insert(int index, T resource, int amount, TransactionContext transaction) {
+
+        private PortHandler(ResourceHandler<T> delegate, int inputs) {
+            super(delegate);
+            this.inputs = inputs;
+        }
+
+        @Override
+        public boolean isValid(int index, T resource) {
+            return index < inputs && super.isValid(index, resource);
+        }
+
+        @Override
+        public int insert(int index, T resource, int amount, TransactionContext transaction) {
             return index < inputs ? super.insert(index, resource, amount, transaction) : 0;
         }
-        @Override public int extract(int index, T resource, int amount, TransactionContext transaction) {
+
+        @Override
+        public int extract(int index, T resource, int amount, TransactionContext transaction) {
             return index >= inputs ? super.extract(index, resource, amount, transaction) : 0;
         }
     }

@@ -1,8 +1,7 @@
 package dev.ftb.mods.ftbevolutioncompanion.compat.sgeconomy.client;
 
-import net.neoforged.neoforge.client.event.ScreenEvent;
-
 import java.lang.reflect.Method;
+import net.neoforged.neoforge.client.event.ScreenEvent;
 
 public final class CoinBagLayer {
     private static final Method EVENT_HANDLER = findEventHandler();

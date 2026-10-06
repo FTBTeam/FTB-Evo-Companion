@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbevolutioncompanion.fabricator;
 
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
+import java.util.Set;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -22,33 +23,48 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.Set;
-
 public final class FabricatorRegistry {
     private static final String MOD_ID = FTBEvolutionCompanion.MOD_ID;
     private static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MOD_ID);
     private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MOD_ID);
-    private static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MOD_ID);
+    private static final DeferredRegister<BlockEntityType<?>> ENTITIES =
+            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MOD_ID);
     private static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, MOD_ID);
-    private static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, MOD_ID);
-    private static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, MOD_ID);
+    private static final DeferredRegister<RecipeType<?>> TYPES =
+            DeferredRegister.create(Registries.RECIPE_TYPE, MOD_ID);
+    private static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
+            DeferredRegister.create(Registries.RECIPE_SERIALIZER, MOD_ID);
 
-    public static final DeferredBlock<FabricatorBlock> BLOCK = BLOCKS.registerBlock("ftb_fabricator", FabricatorBlock::new,
-            properties -> properties.mapColor(MapColor.METAL).strength(4.0F).sound(SoundType.METAL)
-                    .requiresCorrectToolForDrops().noOcclusion().pushReaction(PushReaction.BLOCK)
+    public static final DeferredBlock<FabricatorBlock> BLOCK = BLOCKS.registerBlock(
+            "ftb_fabricator",
+            FabricatorBlock::new,
+            properties -> properties
+                    .mapColor(MapColor.METAL)
+                    .strength(4.0F)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()
+                    .pushReaction(PushReaction.BLOCK)
                     .lightLevel(state -> state.getValue(FabricatorBlock.WORKING) ? 8 : 0));
-    public static final DeferredItem<FabricatorItem> ITEM = ITEMS.registerItem("ftb_fabricator",
-            properties -> new FabricatorItem(BLOCK.get(), properties), properties -> properties.useBlockDescriptionPrefix());
+    public static final DeferredItem<FabricatorItem> ITEM = ITEMS.registerItem(
+            "ftb_fabricator",
+            properties -> new FabricatorItem(BLOCK.get(), properties),
+            properties -> properties.useBlockDescriptionPrefix());
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FabricatorBlockEntity>> BLOCK_ENTITY =
-            ENTITIES.register("ftb_fabricator", () -> new BlockEntityType<>(FabricatorBlockEntity::new, Set.of(BLOCK.get())));
+            ENTITIES.register(
+                    "ftb_fabricator", () -> new BlockEntityType<>(FabricatorBlockEntity::new, Set.of(BLOCK.get())));
     public static final DeferredHolder<MenuType<?>, MenuType<FabricatorMenu>> MENU =
             MENUS.register("ftb_fabricator", () -> IMenuTypeExtension.create(FabricatorMenu::new));
     public static final DeferredHolder<RecipeType<?>, RecipeType<FabricatorRecipe>> RECIPE_TYPE =
             TYPES.register("fabricating", () -> new RecipeType<>() {
-                @Override public String toString() { return MOD_ID + ":fabricating"; }
+                @Override
+                public String toString() {
+                    return MOD_ID + ":fabricating";
+                }
             });
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<FabricatorRecipe>> SERIALIZER =
-            SERIALIZERS.register("fabricating", () -> new RecipeSerializer<>(FabricatorRecipe.CODEC, FabricatorRecipe.STREAM_CODEC));
+            SERIALIZERS.register(
+                    "fabricating", () -> new RecipeSerializer<>(FabricatorRecipe.CODEC, FabricatorRecipe.STREAM_CODEC));
 
     private FabricatorRegistry() {}
 
@@ -66,11 +82,17 @@ public final class FabricatorRegistry {
     }
 
     private static void capabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.Item.BLOCK, BLOCK_ENTITY.get(),
+        event.registerBlockEntity(
+                Capabilities.Item.BLOCK,
+                BLOCK_ENTITY.get(),
                 (machine, side) -> machine.canConnect(side) ? machine.automationItems() : null);
-        event.registerBlockEntity(Capabilities.Fluid.BLOCK, BLOCK_ENTITY.get(),
+        event.registerBlockEntity(
+                Capabilities.Fluid.BLOCK,
+                BLOCK_ENTITY.get(),
                 (machine, side) -> machine.canConnect(side) ? machine.automationFluids() : null);
-        event.registerBlockEntity(Capabilities.Energy.BLOCK, BLOCK_ENTITY.get(),
+        event.registerBlockEntity(
+                Capabilities.Energy.BLOCK,
+                BLOCK_ENTITY.get(),
                 (machine, side) -> machine.canConnect(side) ? machine.energy() : null);
     }
 

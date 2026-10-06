@@ -2,6 +2,8 @@ package dev.ftb.mods.ftbevolutioncompanion.skills.handler;
 
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
+import dev.ftb.mods.ftbevolutioncompanion.mixin.AbstractArrowInvoker;
+import dev.ftb.mods.ftbevolutioncompanion.mixin.LivingEntityAccessor;
 import dev.ftb.mods.ftbevolutioncompanion.skills.AllyCheck;
 import dev.ftb.mods.ftbevolutioncompanion.skills.ApothicHooks;
 import dev.ftb.mods.ftbevolutioncompanion.skills.CombatState;
@@ -10,10 +12,6 @@ import dev.ftb.mods.ftbevolutioncompanion.skills.SkillCooldowns;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
-
-import dev.ftb.mods.ftbevolutioncompanion.mixin.AbstractArrowInvoker;
-import dev.ftb.mods.ftbevolutioncompanion.mixin.LivingEntityAccessor;
-
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -43,7 +41,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -65,8 +62,7 @@ public final class CombatTicker {
     private static boolean applyingLightning;
     private static boolean applyingSkillDamage;
 
-    private CombatTicker() {
-    }
+    private CombatTicker() {}
 
     public static boolean isApplyingSkillDamage() {
         return applyingSkillDamage;
@@ -89,12 +85,12 @@ public final class CombatTicker {
             if (SkillsHelper.isUnarmed(attacker)) {
                 state.unarmedHitCounter++;
                 state.lastUnarmedHitTime = now;
-                state.unarmedRampStacks = Math.min(state.unarmedRampStacks + 1,
-                        CompanionConfig.UNARMED_RAMP_MAX_STACKS.get());
+                state.unarmedRampStacks =
+                        Math.min(state.unarmedRampStacks + 1, CompanionConfig.UNARMED_RAMP_MAX_STACKS.get());
                 if (SkillsHelper.attr(attacker, SkillsRegistry.FASTER_STRIKES) > 0.0
                         && SkillsAbilities.toggles(attacker).fasterStrikes()) {
-                    state.fasterStrikesStacks = Math.min(state.fasterStrikesStacks + 1,
-                            CompanionConfig.FASTER_STRIKES_MAX_STACKS.get());
+                    state.fasterStrikesStacks =
+                            Math.min(state.fasterStrikesStacks + 1, CompanionConfig.FASTER_STRIKES_MAX_STACKS.get());
                 }
             } else {
                 resetUnarmed(state);
@@ -125,11 +121,14 @@ public final class CombatTicker {
             ItemStack weapon = arrow.getWeaponItem();
             if (weapon != null && SkillsHelper.isCrossbow(weapon) && target.isAlive()) {
                 if (SkillsHelper.attr(attacker, SkillsRegistry.MARKED_FOR_DEATH) > 0.0) {
-                    target.addEffect(new MobEffectInstance(SkillsRegistry.MARKED,
-                            CompanionConfig.MARKED_DURATION_TICKS.get(), 0), attacker);
+                    target.addEffect(
+                            new MobEffectInstance(
+                                    SkillsRegistry.MARKED, CompanionConfig.MARKED_DURATION_TICKS.get(), 0),
+                            attacker);
                 }
                 double rainChance = SkillsHelper.attr(attacker, SkillsRegistry.RAIN_OF_ARROWS);
-                if (rainChance > 0.0 && SkillsAbilities.toggles(attacker).rainOfArrows()
+                if (rainChance > 0.0
+                        && SkillsAbilities.toggles(attacker).rainOfArrows()
                         && attacker.getRandom().nextDouble() < rainChance
                         && target.level() instanceof ServerLevel serverLevel) {
                     spawnRainOfArrows(serverLevel, attacker, target);
@@ -179,13 +178,17 @@ public final class CombatTicker {
         if (damage <= 0.0F) {
             return;
         }
-        AABB area = new AABB(strike.x - 3.0, strike.y - 3.0, strike.z - 3.0,
-                strike.x + 3.0, strike.y + 9.0, strike.z + 3.0);
+        AABB area = new AABB(
+                strike.x - 3.0, strike.y - 3.0, strike.z - 3.0, strike.x + 3.0, strike.y + 9.0, strike.z + 3.0);
         DamageSource source = level.damageSources().source(DamageTypes.LIGHTNING_BOLT, attacker);
         applyingLightning = true;
         try {
-            for (LivingEntity victim : level.getEntitiesOfClass(LivingEntity.class, area,
-                    entity -> entity != attacker && entity.isAlive() && !entity.isSpectator()
+            for (LivingEntity victim : level.getEntitiesOfClass(
+                    LivingEntity.class,
+                    area,
+                    entity -> entity != attacker
+                            && entity.isAlive()
+                            && !entity.isSpectator()
                             && !(entity instanceof Player other && !attacker.canHarmPlayer(other)))) {
                 int invulnerableTime = victim.invulnerableTime;
                 victim.invulnerableTime = 0;
@@ -200,7 +203,9 @@ public final class CombatTicker {
 
     private static void reapingArc(ServerPlayer attacker, LivingEntity target, float damage) {
         double fraction = SkillsHelper.attr(attacker, SkillsRegistry.REAPING_ARC);
-        if (fraction <= 0.0 || damage <= 0.0F || !SkillsAbilities.toggles(attacker).scytheArc()
+        if (fraction <= 0.0
+                || damage <= 0.0F
+                || !SkillsAbilities.toggles(attacker).scytheArc()
                 || !(attacker.level() instanceof ServerLevel level)) {
             return;
         }
@@ -218,7 +223,8 @@ public final class CombatTicker {
         int hits = 0;
         applyingSkillDamage = true;
         try {
-            for (LivingEntity victim : level.getEntitiesOfClass(LivingEntity.class,
+            for (LivingEntity victim : level.getEntitiesOfClass(
+                    LivingEntity.class,
                     attacker.getBoundingBox().inflate(radius, 1.0, radius),
                     entity -> entity != target && AllyCheck.isHostileTarget(attacker, entity))) {
                 Vec3 offset = victim.position().subtract(origin);
@@ -246,14 +252,29 @@ public final class CombatTicker {
         }
         double dx = -Math.sin(Math.toRadians(attacker.getYRot()));
         double dz = Math.cos(Math.toRadians(attacker.getYRot()));
-        level.sendParticles(ParticleTypes.SWEEP_ATTACK, attacker.getX() + dx, attacker.getY(0.5),
-                attacker.getZ() + dz, 0, dx, 0.0, dz, 0.0);
-        level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
-                SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1.0F, 0.8F);
+        level.sendParticles(
+                ParticleTypes.SWEEP_ATTACK,
+                attacker.getX() + dx,
+                attacker.getY(0.5),
+                attacker.getZ() + dz,
+                0,
+                dx,
+                0.0,
+                dz,
+                0.0);
+        level.playSound(
+                null,
+                attacker.getX(),
+                attacker.getY(),
+                attacker.getZ(),
+                SoundEvents.PLAYER_ATTACK_SWEEP,
+                SoundSource.PLAYERS,
+                1.0F,
+                0.8F);
     }
 
-    private static boolean hurtIgnoringCooldown(ServerLevel level, LivingEntity victim, DamageSource source,
-                                                float damage) {
+    private static boolean hurtIgnoringCooldown(
+            ServerLevel level, LivingEntity victim, DamageSource source, float damage) {
         int invulnerableTime = victim.invulnerableTime;
         victim.invulnerableTime = 0;
         if (victim.hurtServer(level, source, damage)) {
@@ -287,11 +308,12 @@ public final class CombatTicker {
     private static void onScytheKill(ServerPlayer killer, LivingEntity victim) {
         double rhythm = SkillsHelper.attr(killer, SkillsRegistry.REAP_RHYTHM);
         if (rhythm > 0.0 && killer.getRandom().nextDouble() < rhythm) {
-            ((LivingEntityAccessor) killer).ftbevo$setAttackStrengthTicker(
-                    (int) Math.ceil(killer.getCurrentItemAttackStrengthDelay()));
+            ((LivingEntityAccessor) killer)
+                    .ftbevo$setAttackStrengthTicker((int) Math.ceil(killer.getCurrentItemAttackStrengthDelay()));
         }
         double toll = SkillsHelper.attr(killer, SkillsRegistry.DEATHS_TOLL);
-        if (applyingSkillDamage || toll <= 0.0
+        if (applyingSkillDamage
+                || toll <= 0.0
                 || !SkillCooldowns.ready(killer, SkillCooldowns.DEATHS_TOLL)
                 || !(killer.level() instanceof ServerLevel level)) {
             return;
@@ -301,9 +323,11 @@ public final class CombatTicker {
         DamageSource source = level.damageSources().playerAttack(killer);
         applyingSkillDamage = true;
         try {
-            for (LivingEntity nearby : level.getEntitiesOfClass(LivingEntity.class,
+            for (LivingEntity nearby : level.getEntitiesOfClass(
+                    LivingEntity.class,
                     victim.getBoundingBox().inflate(radius),
-                    entity -> entity != victim && entity.distanceToSqr(victim) <= radius * radius
+                    entity -> entity != victim
+                            && entity.distanceToSqr(victim) <= radius * radius
                             && AllyCheck.isHostileTarget(killer, entity))) {
                 hurtIgnoringCooldown(level, nearby, source, damage);
             }
@@ -312,10 +336,9 @@ public final class CombatTicker {
         }
         SkillCooldowns.start(killer, SkillCooldowns.DEATHS_TOLL, CompanionConfig.DEATHS_TOLL_COOLDOWN.get());
         Vec3 center = victim.getBoundingBox().getCenter();
-        level.sendParticles(ParticleTypes.SOUL, center.x, center.y, center.z, 30,
-                radius / 3.0, 0.5, radius / 3.0, 0.05);
-        level.playSound(null, center.x, center.y, center.z,
-                SoundEvents.SOUL_ESCAPE, SoundSource.PLAYERS, 1.5F, 0.8F);
+        level.sendParticles(
+                ParticleTypes.SOUL, center.x, center.y, center.z, 30, radius / 3.0, 0.5, radius / 3.0, 0.05);
+        level.playSound(null, center.x, center.y, center.z, SoundEvents.SOUL_ESCAPE, SoundSource.PLAYERS, 1.5F, 0.8F);
     }
 
     public static void onLivingExperienceDrop(LivingExperienceDropEvent event) {
@@ -375,8 +398,8 @@ public final class CombatTicker {
         }
         int impale = (int) SkillsHelper.attr(shooter, SkillsRegistry.IMPALE);
         if (impale > 0) {
-            ((AbstractArrowInvoker) arrow).ftbevo$setPierceLevel(
-                    (byte) Math.min(Byte.MAX_VALUE, arrow.getPierceLevel() + impale));
+            ((AbstractArrowInvoker) arrow)
+                    .ftbevo$setPierceLevel((byte) Math.min(Byte.MAX_VALUE, arrow.getPierceLevel() + impale));
         }
         double ballista = SkillsHelper.attr(shooter, SkillsRegistry.BALLISTA);
         if (ballista > 0.0) {
@@ -406,8 +429,15 @@ public final class CombatTicker {
             arrow.setDeltaMovement(direction.normalize().scale(1.6));
             level.addFreshEntity(arrow);
         }
-        level.playSound(null, target.getX(), target.getY(), target.getZ(),
-                SoundEvents.CROSSBOW_SHOOT, SoundSource.PLAYERS, 1.0F, 0.8F);
+        level.playSound(
+                null,
+                target.getX(),
+                target.getY(),
+                target.getZ(),
+                SoundEvents.CROSSBOW_SHOOT,
+                SoundSource.PLAYERS,
+                1.0F,
+                0.8F);
     }
 
     private static LivingEntity findHomingTarget(ServerPlayer shooter, AbstractArrow arrow) {
@@ -418,12 +448,18 @@ public final class CombatTicker {
         direction = direction.normalize();
         Vec3 start = arrow.position();
         double range = 48.0;
-        AABB search = arrow.getBoundingBox().expandTowards(direction.scale(range)).inflate(8.0);
+        AABB search =
+                arrow.getBoundingBox().expandTowards(direction.scale(range)).inflate(8.0);
         LivingEntity best = null;
         double bestDot = 0.9;
-        for (LivingEntity candidate : shooter.level().getEntitiesOfClass(LivingEntity.class, search,
-                entity -> entity != shooter && entity.isAlive() && !entity.isSpectator()
-                        && !(entity instanceof Player other && !shooter.canHarmPlayer(other)))) {
+        for (LivingEntity candidate : shooter.level()
+                .getEntitiesOfClass(
+                        LivingEntity.class,
+                        search,
+                        entity -> entity != shooter
+                                && entity.isAlive()
+                                && !entity.isSpectator()
+                                && !(entity instanceof Player other && !shooter.canHarmPlayer(other)))) {
             Vec3 toCandidate = candidate.getBoundingBox().getCenter().subtract(start);
             double distance = toCandidate.length();
             if (distance < 1.0E-4 || distance > range) {
@@ -449,7 +485,8 @@ public final class CombatTicker {
             return false;
         }
         if (!(serverLevel.getEntity(state.targetId) instanceof LivingEntity target)
-                || !target.isAlive() || arrow.distanceTo(target) > 64.0) {
+                || !target.isAlive()
+                || arrow.distanceTo(target) > 64.0) {
             return false;
         }
         state.retargets++;
@@ -475,20 +512,30 @@ public final class CombatTicker {
                 && event.getDamageSource().getDirectEntity() instanceof LivingEntity attacker
                 && attacker != player
                 && player.getRandom().nextDouble() < stunChance) {
-            attacker.addEffect(new MobEffectInstance(SkillsRegistry.STUNNED,
-                    CompanionConfig.STUN_DURATION_TICKS.get(), 0), player);
+            attacker.addEffect(
+                    new MobEffectInstance(SkillsRegistry.STUNNED, CompanionConfig.STUN_DURATION_TICKS.get(), 0),
+                    player);
             SkillCooldowns.start(player, SkillCooldowns.SHIELD_STUN, CompanionConfig.SHIELD_STUN_COOLDOWN.get());
         }
         if (SkillsHelper.isSword(player.getUseItem())) {
-            player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
-                    SoundEvents.SHIELD_BLOCK, SoundSource.PLAYERS, 1.0F, 1.0F);
+            player.level()
+                    .playSound(
+                            null,
+                            player.getX(),
+                            player.getY(),
+                            player.getZ(),
+                            SoundEvents.SHIELD_BLOCK,
+                            SoundSource.PLAYERS,
+                            1.0F,
+                            1.0F);
             if (SkillsHelper.attr(player, SkillsRegistry.RIPOSTE) > 0.0
                     && player.getTicksUsingItem() <= CompanionConfig.RIPOSTE_PARRY_WINDOW.get()
                     && SkillCooldowns.ready(player, SkillCooldowns.RIPOSTE)
                     && event.getDamageSource().getDirectEntity() instanceof LivingEntity meleeAttacker
                     && meleeAttacker != player) {
-                meleeAttacker.addEffect(new MobEffectInstance(SkillsRegistry.STUNNED,
-                        CompanionConfig.STUN_DURATION_TICKS.get(), 0), player);
+                meleeAttacker.addEffect(
+                        new MobEffectInstance(SkillsRegistry.STUNNED, CompanionConfig.STUN_DURATION_TICKS.get(), 0),
+                        player);
                 player.getData(SkillsRegistry.COMBAT_STATE).riposteReadyUntil =
                         player.level().getGameTime() + CompanionConfig.RIPOSTE_BUFF_WINDOW.get();
                 SkillCooldowns.start(player, SkillCooldowns.RIPOSTE, CompanionConfig.RIPOSTE_COOLDOWN.get());
@@ -522,15 +569,22 @@ public final class CombatTicker {
         }
         float slamDamage = (float) (fallDamage * attrValue);
         double radius = CompanionConfig.GROUND_SLAM_RADIUS.get();
-        for (LivingEntity victim : serverLevel.getEntitiesOfClass(LivingEntity.class,
+        for (LivingEntity victim : serverLevel.getEntitiesOfClass(
+                LivingEntity.class,
                 player.getBoundingBox().inflate(radius, 2.0, radius),
                 entity -> entity != player && entity.isAlive())) {
             victim.hurtServer(serverLevel, serverLevel.damageSources().playerAttack(player), slamDamage);
-            victim.knockback(0.5 + attrValue,
-                    player.getX() - victim.getX(), player.getZ() - victim.getZ());
+            victim.knockback(0.5 + attrValue, player.getX() - victim.getX(), player.getZ() - victim.getZ());
         }
-        serverLevel.playSound(null, player.getX(), player.getY(), player.getZ(),
-                SoundEvents.MACE_SMASH_GROUND, SoundSource.PLAYERS, 1.0F, 1.0F);
+        serverLevel.playSound(
+                null,
+                player.getX(),
+                player.getY(),
+                player.getZ(),
+                SoundEvents.MACE_SMASH_GROUND,
+                SoundSource.PLAYERS,
+                1.0F,
+                1.0F);
     }
 
     private static void lancerSmash(ServerLevel level, ServerPlayer player, double fallDistance) {
@@ -556,8 +610,8 @@ public final class CombatTicker {
         double knockbackRadius = Math.max(radius, 1.5);
         applyingSkillDamage = true;
         try {
-            for (LivingEntity victim : level.getEntitiesOfClass(LivingEntity.class, search,
-                    entity -> AllyCheck.isHostileTarget(player, entity))) {
+            for (LivingEntity victim : level.getEntitiesOfClass(
+                    LivingEntity.class, search, entity -> AllyCheck.isHostileTarget(player, entity))) {
                 Vec3 offset = victim.position().subtract(impact);
                 double distance = Math.sqrt(offset.x * offset.x + offset.z * offset.z);
                 double falloff = 1.0;
@@ -570,7 +624,8 @@ public final class CombatTicker {
                 if (!hurtIgnoringCooldown(level, victim, source, (float) (damage * falloff))) {
                     continue;
                 }
-                double power = 0.7 * (knockbackRadius - distance)
+                double power = 0.7
+                        * (knockbackRadius - distance)
                         * (1.0 - victim.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
                 if (power > 0.0 && distance > 1.0E-4) {
                     victim.push(offset.x / distance * power, 0.7, offset.z / distance * power);
@@ -583,8 +638,15 @@ public final class CombatTicker {
             applyingSkillDamage = false;
         }
         level.levelEvent(2013, player.getOnPos(), 750);
-        level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                SoundEvents.MACE_SMASH_GROUND_HEAVY, SoundSource.PLAYERS, 1.0F, 1.0F);
+        level.playSound(
+                null,
+                player.getX(),
+                player.getY(),
+                player.getZ(),
+                SoundEvents.MACE_SMASH_GROUND_HEAVY,
+                SoundSource.PLAYERS,
+                1.0F,
+                1.0F);
     }
 
     public static void onPlayerTick(PlayerTickEvent.Post event) {
@@ -607,35 +669,51 @@ public final class CombatTicker {
                 && now - state.lastUnarmedHitTime > CompanionConfig.FASTER_STRIKES_TIMEOUT.get()) {
             state.unarmedRampStacks = 0;
         }
-        if (state.archerRampStacks > 0
-                && now - state.lastArcherHitTime > CompanionConfig.ARCHER_RAMP_TIMEOUT.get()) {
+        if (state.archerRampStacks > 0 && now - state.lastArcherHitTime > CompanionConfig.ARCHER_RAMP_TIMEOUT.get()) {
             state.archerRampStacks = 0;
         }
 
         double fasterStrikes = SkillsHelper.attr(player, SkillsRegistry.FASTER_STRIKES);
-        boolean fasterActive = fasterStrikes > 0.0 && state.fasterStrikesStacks > 0
+        boolean fasterActive = fasterStrikes > 0.0
+                && state.fasterStrikesStacks > 0
                 && SkillsAbilities.toggles(player).fasterStrikes();
-        applyTransient(player.getAttribute(Attributes.ATTACK_SPEED), FASTER_STRIKES_ID,
+        applyTransient(
+                player.getAttribute(Attributes.ATTACK_SPEED),
+                FASTER_STRIKES_ID,
                 fasterStrikes * state.fasterStrikesStacks,
-                AttributeModifier.Operation.ADD_MULTIPLIED_BASE, fasterActive);
+                AttributeModifier.Operation.ADD_MULTIPLIED_BASE,
+                fasterActive);
 
         double mastery = SkillsHelper.attr(player, SkillsRegistry.SHIELD_MASTERY);
         boolean masteryActive = mastery > 0.0 && player.isBlocking();
-        applyTransient(player.getAttribute(Attributes.ARMOR), SHIELD_MASTERY_ARMOR_ID,
-                mastery * 2.0, AttributeModifier.Operation.ADD_VALUE, masteryActive);
-        applyTransient(player.getAttribute(Attributes.ARMOR_TOUGHNESS), SHIELD_MASTERY_TOUGHNESS_ID,
-                mastery * 0.5, AttributeModifier.Operation.ADD_VALUE, masteryActive);
+        applyTransient(
+                player.getAttribute(Attributes.ARMOR),
+                SHIELD_MASTERY_ARMOR_ID,
+                mastery * 2.0,
+                AttributeModifier.Operation.ADD_VALUE,
+                masteryActive);
+        applyTransient(
+                player.getAttribute(Attributes.ARMOR_TOUGHNESS),
+                SHIELD_MASTERY_TOUGHNESS_ID,
+                mastery * 0.5,
+                AttributeModifier.Operation.ADD_VALUE,
+                masteryActive);
 
         double desperation = SkillsHelper.attr(player, SkillsRegistry.AXE_DESPERATION);
         boolean desperationActive = desperation > 0.0
                 && SkillsHelper.isAxe(player.getMainHandItem())
                 && SkillsHelper.healthFraction(player) < CompanionConfig.AXE_LIFESTEAL_THRESHOLD.get();
-        ApothicHooks.lifeSteal().ifPresent(lifeSteal ->
-                applyTransient(player.getAttribute(lifeSteal), AXE_DESPERATION_ID,
-                        desperation, AttributeModifier.Operation.ADD_VALUE, desperationActive));
+        ApothicHooks.lifeSteal()
+                .ifPresent(lifeSteal -> applyTransient(
+                        player.getAttribute(lifeSteal),
+                        AXE_DESPERATION_ID,
+                        desperation,
+                        AttributeModifier.Operation.ADD_VALUE,
+                        desperationActive));
 
         double recovery = SkillsHelper.attr(player, SkillsRegistry.SHIELD_RECOVERY);
-        if (recovery > 0.0 && SkillsHelper.isShield(player.getOffhandItem())
+        if (recovery > 0.0
+                && SkillsHelper.isShield(player.getOffhandItem())
                 && now - state.lastShieldHealTime >= CompanionConfig.SHIELD_HEAL_INTERVAL_TICKS.get()
                 && player.getHealth() < player.getMaxHealth()) {
             state.lastShieldHealTime = now;
@@ -646,18 +724,33 @@ public final class CombatTicker {
                 && SkillsHelper.attr(player, SkillsRegistry.LIGHTS_SHIELD) > 0.0
                 && SkillsHelper.healthFraction(player) < CompanionConfig.LIGHTS_SHIELD_THRESHOLD.get()
                 && SkillCooldowns.ready(player, SkillCooldowns.LIGHTS_SHIELD)) {
-            player.addEffect(new MobEffectInstance(MobEffects.RESISTANCE,
+            player.addEffect(new MobEffectInstance(
+                    MobEffects.RESISTANCE,
                     CompanionConfig.LIGHTS_SHIELD_RESISTANCE_TICKS.get(),
-                    CompanionConfig.LIGHTS_SHIELD_RESISTANCE_AMPLIFIER.get(), false, false, true));
-            SkillCooldowns.start(player, SkillCooldowns.LIGHTS_SHIELD,
-                    CompanionConfig.LIGHTS_SHIELD_COOLDOWN.get());
-            player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
-                    SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, 1.5F);
+                    CompanionConfig.LIGHTS_SHIELD_RESISTANCE_AMPLIFIER.get(),
+                    false,
+                    false,
+                    true));
+            SkillCooldowns.start(player, SkillCooldowns.LIGHTS_SHIELD, CompanionConfig.LIGHTS_SHIELD_COOLDOWN.get());
+            player.level()
+                    .playSound(
+                            null,
+                            player.getX(),
+                            player.getY(),
+                            player.getZ(),
+                            SoundEvents.BEACON_ACTIVATE,
+                            SoundSource.PLAYERS,
+                            1.0F,
+                            1.5F);
         }
     }
 
-    private static void applyTransient(AttributeInstance instance, Identifier id, double amount,
-                                       AttributeModifier.Operation operation, boolean active) {
+    private static void applyTransient(
+            AttributeInstance instance,
+            Identifier id,
+            double amount,
+            AttributeModifier.Operation operation,
+            boolean active) {
         if (instance == null) {
             return;
         }
@@ -718,8 +811,13 @@ public final class CombatTicker {
         int index = killer.getRandom().nextInt(event.getDrops().size());
         ItemEntity picked = event.getDrops().stream().skip(index).findFirst().orElse(null);
         if (picked != null) {
-            event.getDrops().add(new ItemEntity(picked.level(), picked.getX(), picked.getY(), picked.getZ(),
-                    picked.getItem().copy()));
+            event.getDrops()
+                    .add(new ItemEntity(
+                            picked.level(),
+                            picked.getX(),
+                            picked.getY(),
+                            picked.getZ(),
+                            picked.getItem().copy()));
         }
     }
 }

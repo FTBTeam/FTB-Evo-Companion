@@ -2,11 +2,9 @@ package dev.ftb.mods.ftbevolutioncompanion.magic.sorcery.client;
 
 import at.minecraftschurli.mods.arsmagicalegacy.api.event.ManaBurnoutCostEvent;
 import at.minecraftschurli.mods.arsmagicalegacy.api.spell.Spell;
-
 import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.magic.sorcery.SorceryMagic;
 import dev.ftb.mods.ftbevolutioncompanion.magic.sorcery.ThaumaturgeHooks;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -14,8 +12,7 @@ import net.minecraft.world.entity.player.Player;
 public final class SorceryClientDisplay {
     private static final double NOISE_SCALE = 1.0E6;
 
-    private SorceryClientDisplay() {
-    }
+    private SorceryClientDisplay() {}
 
     public static double arsManaCost(Spell spell, double mana) {
         LocalPlayer player = Minecraft.getInstance().player;

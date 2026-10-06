@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion;
 
+import java.util.Set;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -9,8 +10,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
-
-import java.util.Set;
 
 public final class XpFluidUnifier {
     private static final Identifier CANONICAL_FLUID_ID =
@@ -25,15 +24,14 @@ public final class XpFluidUnifier {
             Identifier.fromNamespaceAndPath("energizedpower", "liquid_xp"),
             Identifier.fromNamespaceAndPath("enderio", "fluid_xp_juice_still"));
 
-    private static final Set<Identifier> REPLACED_BUCKETS = Set.of(
-            Identifier.fromNamespaceAndPath("mobflowutilities", "liquid_xp_bucket"));
+    private static final Set<Identifier> REPLACED_BUCKETS =
+            Set.of(Identifier.fromNamespaceAndPath("mobflowutilities", "liquid_xp_bucket"));
 
     private static Fluid canonicalFluid;
     private static Item canonicalBucket;
     private static DeferredHolder<Fluid, Fluid> canonicalHolder;
 
-    private XpFluidUnifier() {
-    }
+    private XpFluidUnifier() {}
 
     public static Fluid canonicalFluid() {
         if (canonicalFluid == null) {

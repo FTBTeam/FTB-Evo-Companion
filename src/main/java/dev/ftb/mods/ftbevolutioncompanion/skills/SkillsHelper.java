@@ -20,8 +20,7 @@ public final class SkillsHelper {
     public static final TagKey<Item> SCYTHES =
             TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(SkillsRegistry.NAMESPACE, "scythes"));
 
-    private SkillsHelper() {
-    }
+    private SkillsHelper() {}
 
     public static double attr(LivingEntity entity, Holder<Attribute> attribute) {
         return entity.getAttribute(attribute) != null ? entity.getAttributeValue(attribute) : 0.0;

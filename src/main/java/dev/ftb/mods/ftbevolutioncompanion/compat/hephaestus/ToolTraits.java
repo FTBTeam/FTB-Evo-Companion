@@ -1,5 +1,16 @@
 package dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus;
 
+import java.lang.reflect.Constructor;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.WeakHashMap;
+import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
@@ -31,7 +42,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent;
@@ -42,21 +52,8 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockDropsEvent;
 import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Constructor;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.WeakHashMap;
-import java.util.function.Consumer;
 
 public final class ToolTraits {
     private static final Logger LOGGER = LoggerFactory.getLogger(ToolTraits.class);
@@ -109,7 +106,8 @@ public final class ToolTraits {
     private static final int NAUTICAL_LEVEL = 3;
 
     private static final ThreadLocal<Boolean> DEALING = ThreadLocal.withInitial(() -> false);
-    private static final Set<ItemStack> SUBMERGED = Collections.synchronizedSet(Collections.newSetFromMap(new WeakHashMap<>()));
+    private static final Set<ItemStack> SUBMERGED =
+            Collections.synchronizedSet(Collections.newSetFromMap(new WeakHashMap<>()));
 
     private static Constructor<?> orbConstructor;
     private static List<?> primals;
@@ -167,10 +165,12 @@ public final class ToolTraits {
         BuiltInRegistries.ATTRIBUTE.get(BLOOD_SIPHON).ifPresent(siphon -> {
             ItemAttributeModifiers modifiers =
                     stack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
-            stack.set(DataComponents.ATTRIBUTE_MODIFIERS, modifiers.withModifierAdded(
-                    siphon,
-                    new AttributeModifier(SIPHON_MODIFIER, 2.0, AttributeModifier.Operation.ADD_VALUE),
-                    EquipmentSlotGroup.MAINHAND));
+            stack.set(
+                    DataComponents.ATTRIBUTE_MODIFIERS,
+                    modifiers.withModifierAdded(
+                            siphon,
+                            new AttributeModifier(SIPHON_MODIFIER, 2.0, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND));
         });
         DataComponentType<Boolean> mending = component(BLOOD_MENDING);
         if (mending != null) {
@@ -221,7 +221,8 @@ public final class ToolTraits {
             int ticks = DRAGON_SECONDS * 20;
             target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, ticks, 2));
             target.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, ticks, 2));
-            BuiltInRegistries.MOB_EFFECT.get(FROZEN)
+            BuiltInRegistries.MOB_EFFECT
+                    .get(FROZEN)
                     .ifPresent(frozen -> target.addEffect(new MobEffectInstance(frozen, ticks, 0)));
         }
         if (traits.contains(Trait.DRAGONSTORM) && target instanceof Mob) {
@@ -233,7 +234,10 @@ public final class ToolTraits {
         }
     }
 
-    private static void deal(ServerLevel level, LivingEntity target, net.minecraft.world.damagesource.DamageSource source,
+    private static void deal(
+            ServerLevel level,
+            LivingEntity target,
+            net.minecraft.world.damagesource.DamageSource source,
             float amount) {
         if (!target.isAlive() || amount <= 0.0F) {
             return;
@@ -269,13 +273,23 @@ public final class ToolTraits {
                 }
                 struck.add(next);
                 queue.add(next);
-                arc(level, from.position().add(0, from.getBbHeight() / 2, 0), next.position().add(0, next.getBbHeight() / 2, 0));
+                arc(
+                        level,
+                        from.position().add(0, from.getBbHeight() / 2, 0),
+                        next.position().add(0, next.getBbHeight() / 2, 0));
                 deal(level, next, level.damageSources().playerAttack(player), amount);
             }
         }
         if (struck.size() > 1) {
-            level.playSound(null, first.getX(), first.getY(), first.getZ(), SoundEvents.LIGHTNING_BOLT_IMPACT,
-                    SoundSource.PLAYERS, 0.6F, 1.4F);
+            level.playSound(
+                    null,
+                    first.getX(),
+                    first.getY(),
+                    first.getZ(),
+                    SoundEvents.LIGHTNING_BOLT_IMPACT,
+                    SoundSource.PLAYERS,
+                    0.6F,
+                    1.4F);
         }
     }
 
@@ -303,7 +317,8 @@ public final class ToolTraits {
     }
 
     private static void onLivingDeath(LivingDeathEvent event) {
-        if (!(event.getSource().getEntity() instanceof Player player) || !(player.level() instanceof ServerLevel level)) {
+        if (!(event.getSource().getEntity() instanceof Player player)
+                || !(player.level() instanceof ServerLevel level)) {
             return;
         }
         if (magical(traits(player.getMainHandItem()))) {
@@ -331,7 +346,12 @@ public final class ToolTraits {
         BlockState state = event.getState();
         RandomSource random = player.getRandom();
         if (state.is(Tags.Blocks.ORES)) {
-            maybeOrb(level, event.getPos().getX() + 0.5, event.getPos().getY() + 0.5, event.getPos().getZ() + 0.5, random);
+            maybeOrb(
+                    level,
+                    event.getPos().getX() + 0.5,
+                    event.getPos().getY() + 0.5,
+                    event.getPos().getZ() + 0.5,
+                    random);
         }
         Identifier block = BuiltInRegistries.BLOCK.getKey(state.getBlock());
         if ("thaumaturge".equals(block.getNamespace()) && block.getPath().startsWith("crystal_")) {
@@ -377,7 +397,8 @@ public final class ToolTraits {
 
     private static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
         Player player = event.getEntity();
-        if (!player.isEyeInFluid(FluidTags.WATER) || !traits(player.getMainHandItem()).contains(Trait.NAUTICAL)) {
+        if (!player.isEyeInFluid(FluidTags.WATER)
+                || !traits(player.getMainHandItem()).contains(Trait.NAUTICAL)) {
             return;
         }
         float speed = event.getNewSpeed();
@@ -422,8 +443,8 @@ public final class ToolTraits {
         boostTo(event, Enchantments.LOOTING);
     }
 
-    private static void boostTo(GetEnchantmentLevelEvent event,
-            ResourceKey<net.minecraft.world.item.enchantment.Enchantment> key) {
+    private static void boostTo(
+            GetEnchantmentLevelEvent event, ResourceKey<net.minecraft.world.item.enchantment.Enchantment> key) {
         if (!event.isTargetting(key)) {
             return;
         }

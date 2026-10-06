@@ -1,33 +1,27 @@
 package dev.ftb.mods.ftbevolutioncompanion.magic.hemomancy;
 
 import com.breakinblocks.neovitae.common.event.SentientArmourEvent;
-
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
 import dev.sterner.witchery.core.api.event.VampireAfflictionEvent;
 import dev.sterner.witchery.core.api.event.WerewolfAfflictionEvent;
 import dev.sterner.witchery_forbidden_magic.core.api.event.LichdomEvent;
-
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
-
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
-
 import org.jspecify.annotations.Nullable;
-
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 public final class HemomancyMagic {
     private static final Map<UUID, Double> OFFLINE_RITUAL_EFFICIENCY = new ConcurrentHashMap<>();
 
-    private HemomancyMagic() {
-    }
+    private HemomancyMagic() {}
 
     public static void register(IEventBus modBus) {
         NeoForge.EVENT_BUS.addListener(HemomancyMagic::onSentientExpGain);
@@ -97,7 +91,8 @@ public final class HemomancyMagic {
 
     private static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
-            rememberRitualEfficiency(player.getUUID(), MagicRegistry.value(player, MagicRegistry.VITAE_RITUAL_EFFICIENCY));
+            rememberRitualEfficiency(
+                    player.getUUID(), MagicRegistry.value(player, MagicRegistry.VITAE_RITUAL_EFFICIENCY));
         }
     }
 

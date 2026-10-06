@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbevolutioncompanion.compat.starcatcher;
 
 import com.wdiscute.starcatcher.data.network.CBPlayerStructuresPayload;
-
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 public final class StarcatcherPayloads {

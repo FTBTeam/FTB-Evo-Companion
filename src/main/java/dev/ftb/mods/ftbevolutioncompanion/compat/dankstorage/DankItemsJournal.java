@@ -1,12 +1,10 @@
 package dev.ftb.mods.ftbevolutioncompanion.compat.dankstorage;
 
-import net.minecraft.core.NonNullList;
-import net.minecraft.world.item.ItemStack;
-
-import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 
 public final class DankItemsJournal extends SnapshotJournal<List<ItemStack>> {
     private final DankInventoryAccess inventory;

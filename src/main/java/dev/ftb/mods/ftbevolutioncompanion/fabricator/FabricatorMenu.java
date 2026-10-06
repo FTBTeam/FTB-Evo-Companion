@@ -18,7 +18,8 @@ public final class FabricatorMenu extends AbstractContainerMenu {
     }
 
     private static FabricatorBlockEntity requireMachine(Inventory inventory, RegistryFriendlyByteBuf buffer) {
-        if (inventory.player.level().getBlockEntity(buffer.readBlockPos()) instanceof FabricatorBlockEntity machine) return machine;
+        if (inventory.player.level().getBlockEntity(buffer.readBlockPos()) instanceof FabricatorBlockEntity machine)
+            return machine;
         throw new IllegalStateException("Fabricator menu opened without a Fabricator");
     }
 
@@ -27,25 +28,39 @@ public final class FabricatorMenu extends AbstractContainerMenu {
         this.machine = machine;
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 3; column++) {
-                addSlot(new ResourceHandlerSlot(machine.items(), machine.items()::set, row * 3 + column, 30 + column * 18, 34 + row * 18));
+                addSlot(new ResourceHandlerSlot(
+                        machine.items(), machine.items()::set, row * 3 + column, 30 + column * 18, 34 + row * 18));
             }
         }
         for (int i = 0; i < 3; i++) {
             addSlot(new ResourceHandlerSlot(machine.items(), machine.items()::set, 9 + i, 140 + i * 18, 52) {
-                @Override public boolean mayPlace(ItemStack stack) { return false; }
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    return false;
+                }
             });
         }
         for (int row = 0; row < 3; row++) {
-            for (int column = 0; column < 9; column++) addSlot(new Slot(inventory, 9 + row * 9 + column, 30 + column * 18, 132 + row * 18));
+            for (int column = 0; column < 9; column++)
+                addSlot(new Slot(inventory, 9 + row * 9 + column, 30 + column * 18, 132 + row * 18));
         }
         for (int column = 0; column < 9; column++) addSlot(new Slot(inventory, column, 30 + column * 18, 190));
     }
 
-    public FabricatorBlockEntity machine() { return machine; }
-    @Override public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(machine.getLevel(), machine.getBlockPos()), player, FabricatorRegistry.BLOCK.get());
+    public FabricatorBlockEntity machine() {
+        return machine;
     }
-    @Override public ItemStack quickMoveStack(Player player, int index) {
+
+    @Override
+    public boolean stillValid(Player player) {
+        return stillValid(
+                ContainerLevelAccess.create(machine.getLevel(), machine.getBlockPos()),
+                player,
+                FabricatorRegistry.BLOCK.get());
+    }
+
+    @Override
+    public ItemStack quickMoveStack(Player player, int index) {
         if (index < 0 || index >= slots.size()) return ItemStack.EMPTY;
         Slot slot = slots.get(index);
         if (!slot.hasItem()) return ItemStack.EMPTY;

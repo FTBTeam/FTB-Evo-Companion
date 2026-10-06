@@ -2,12 +2,9 @@ package dev.ftb.mods.ftbevolutioncompanion.mixin.compat.solar;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-
 import dev.ftb.mods.ftbevolutioncompanion.compat.solar.FixedTimeSunlight;
-
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

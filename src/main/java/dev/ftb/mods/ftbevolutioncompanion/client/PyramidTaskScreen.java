@@ -1,8 +1,8 @@
 package dev.ftb.mods.ftbevolutioncompanion.client;
 
-import dev.ftb.mods.ftbevolutioncompanion.pyramid.SkylineBlockEntity;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.LaunchTask;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.PyramidQuests;
+import dev.ftb.mods.ftbevolutioncompanion.pyramid.SkylineBlockEntity;
 import dev.ftb.mods.ftbevolutioncompanion.pyramid.network.PyramidPayloads;
 import dev.ftb.mods.ftblibrary.client.gui.WidgetType;
 import dev.ftb.mods.ftblibrary.client.gui.input.MouseButton;
@@ -21,7 +21,9 @@ import dev.ftb.mods.ftbquests.quest.Chapter;
 import dev.ftb.mods.ftbquests.quest.Quest;
 import dev.ftb.mods.ftbquests.quest.TeamData;
 import dev.ftb.mods.ftbquests.quest.task.Task;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -29,12 +31,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Items;
-
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class PyramidTaskScreen extends AbstractGroupedButtonListScreen<Quest, Task> {
     private static final String LANG = "ftbevolutioncompanion.ftb_skyline.";
@@ -56,7 +53,8 @@ public class PyramidTaskScreen extends AbstractGroupedButtonListScreen<Quest, Ta
     }
 
     private static Component chapterTitle(long chapterId) {
-        Chapter chapter = ClientQuestFile.exists() ? ClientQuestFile.getInstance().getChapter(chapterId) : null;
+        Chapter chapter =
+                ClientQuestFile.exists() ? ClientQuestFile.getInstance().getChapter(chapterId) : null;
         return chapter == null ? Component.translatable(LANG + "unknown_chapter") : chapter.getTitle();
     }
 
@@ -66,12 +64,16 @@ public class PyramidTaskScreen extends AbstractGroupedButtonListScreen<Quest, Ta
 
     private long activeTaskId() {
         var level = Minecraft.getInstance().level;
-        return level != null && level.getBlockEntity(pos) instanceof SkylineBlockEntity machine ? machine.getActiveTaskId() : 0L;
+        return level != null && level.getBlockEntity(pos) instanceof SkylineBlockEntity machine
+                ? machine.getActiveTaskId()
+                : 0L;
     }
 
     private boolean machineLaunching() {
         var level = Minecraft.getInstance().level;
-        return level != null && level.getBlockEntity(pos) instanceof SkylineBlockEntity machine && machine.isLaunching();
+        return level != null
+                && level.getBlockEntity(pos) instanceof SkylineBlockEntity machine
+                && machine.isLaunching();
     }
 
     private List<Quest> availableQuests() {
@@ -113,7 +115,8 @@ public class PyramidTaskScreen extends AbstractGroupedButtonListScreen<Quest, Ta
     public void addButtons(Panel panel) {
         super.addButtons(panel);
         if (getGroupData().isEmpty()) {
-            panel.add(new TextField(panel).setText(Component.translatable(LANG + "nothing_available").withStyle(ChatFormatting.GRAY)));
+            panel.add(new TextField(panel)
+                    .setText(Component.translatable(LANG + "nothing_available").withStyle(ChatFormatting.GRAY)));
         }
     }
 
@@ -149,7 +152,9 @@ public class PyramidTaskScreen extends AbstractGroupedButtonListScreen<Quest, Ta
         super.tick();
         var player = Minecraft.getInstance().player;
         var level = Minecraft.getInstance().level;
-        if (player == null || level == null || !(level.getBlockEntity(pos) instanceof SkylineBlockEntity)
+        if (player == null
+                || level == null
+                || !(level.getBlockEntity(pos) instanceof SkylineBlockEntity)
                 || player.position().distanceToSqr(pos.getCenter()) > MAX_DISTANCE * MAX_DISTANCE) {
             closeGui(false);
             return;
@@ -178,23 +183,27 @@ public class PyramidTaskScreen extends AbstractGroupedButtonListScreen<Quest, Ta
         @Override
         public void addWidgets() {
             if (value instanceof LaunchTask) {
-                launchButton = new SimpleTextButton(this, Component.translatable(LANG + "launch"), ItemIcon.ofItem(Items.FIREWORK_ROCKET)) {
-                    @Override
-                    public void onClicked(MouseButton button) {
-                        playClickSound();
-                        ClientPacketDistributor.sendToServer(new PyramidPayloads.LaunchPyramid(pos, value.getQuest().id));
-                    }
+                launchButton =
+                        new SimpleTextButton(
+                                this, Component.translatable(LANG + "launch"), ItemIcon.ofItem(Items.FIREWORK_ROCKET)) {
+                            @Override
+                            public void onClicked(MouseButton button) {
+                                playClickSound();
+                                ClientPacketDistributor.sendToServer(
+                                        new PyramidPayloads.LaunchPyramid(pos, value.getQuest().id));
+                            }
 
-                    @Override
-                    public WidgetType getWidgetType() {
-                        return canLaunch() ? super.getWidgetType() : WidgetType.DISABLED;
-                    }
+                            @Override
+                            public WidgetType getWidgetType() {
+                                return canLaunch() ? super.getWidgetType() : WidgetType.DISABLED;
+                            }
 
-                    @Override
-                    public void addMouseOverText(TooltipList list) {
-                        list.add(Component.translatable(canLaunch() ? LANG + "launch.ready" : LANG + "launch.not_ready"));
-                    }
-                };
+                            @Override
+                            public void addMouseOverText(TooltipList list) {
+                                list.add(Component.translatable(
+                                        canLaunch() ? LANG + "launch.ready" : LANG + "launch.not_ready"));
+                            }
+                        };
                 add(launchButton);
             }
         }
@@ -228,7 +237,8 @@ public class PyramidTaskScreen extends AbstractGroupedButtonListScreen<Quest, Ta
             if (launchButton != null && launchButton.isMouseOver()) return;
             list.add(value.getTitle());
             if (selectable && !data().isCompleted(value)) {
-                list.add(Component.translatable(value.id == activeTaskId() ? LANG + "active" : LANG + "select").withStyle(ChatFormatting.GRAY));
+                list.add(Component.translatable(value.id == activeTaskId() ? LANG + "active" : LANG + "select")
+                        .withStyle(ChatFormatting.GRAY));
             } else if (!selectable && !(value instanceof LaunchTask)) {
                 list.add(Component.translatable(LANG + "not_deliverable").withStyle(ChatFormatting.DARK_GRAY));
             }
@@ -247,14 +257,26 @@ public class PyramidTaskScreen extends AbstractGroupedButtonListScreen<Quest, Ta
 
             IconHelper.renderIconStatic(value.getIcon(), graphics, x + 4, y + (h - 16) / 2, 16, 16);
 
-            Component title = value.getTitle().copy().withStyle(done ? ChatFormatting.GREEN : active ? ChatFormatting.YELLOW : ChatFormatting.WHITE);
+            Component title = value.getTitle()
+                    .copy()
+                    .withStyle(done ? ChatFormatting.GREEN : active ? ChatFormatting.YELLOW : ChatFormatting.WHITE);
             int textX = x + 24;
             int textRight = launchButton != null ? x + launchButton.posX - 4 : x + w - 110;
-            theme.drawString(graphics, theme.trimStringToWidth(title, Math.max(20, textRight - textX)), textX, y + (h - theme.getFontHeight()) / 2 + 1, Theme.SHADOW);
+            theme.drawString(
+                    graphics,
+                    theme.trimStringToWidth(title, Math.max(20, textRight - textX)),
+                    textX,
+                    y + (h - theme.getFontHeight()) / 2 + 1,
+                    Theme.SHADOW);
 
             if (value instanceof LaunchTask || value.hideProgressNumbers() && !selectable) {
                 if (done) {
-                    theme.drawString(graphics, Component.translatable(LANG + "done").withStyle(ChatFormatting.GREEN), x + w - 60, y + (h - theme.getFontHeight()) / 2 + 1, Theme.SHADOW);
+                    theme.drawString(
+                            graphics,
+                            Component.translatable(LANG + "done").withStyle(ChatFormatting.GREEN),
+                            x + w - 60,
+                            y + (h - theme.getFontHeight()) / 2 + 1,
+                            Theme.SHADOW);
                 }
                 graphics.horizontalLine(x, x + w, y + h, 0x40808080);
                 return;
@@ -270,7 +292,8 @@ public class PyramidTaskScreen extends AbstractGroupedButtonListScreen<Quest, Ta
             if (fill > 0) {
                 IconHelper.renderIcon(done ? BAR_DONE : BAR_FILL, graphics, barX, barY, fill, 3);
             }
-            Component amount = Component.translatable(LANG + "progress", value.formatProgress(data, progress), value.formatMaxProgress())
+            Component amount = Component.translatable(
+                            LANG + "progress", value.formatProgress(data, progress), value.formatMaxProgress())
                     .withStyle(done ? ChatFormatting.GREEN : ChatFormatting.GRAY);
             theme.drawString(graphics, amount, barX + barW - theme.getStringWidth(amount), y + 3, Theme.SHADOW);
             graphics.horizontalLine(x, x + w, y + h, 0x40808080);

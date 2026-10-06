@@ -1,7 +1,8 @@
 package dev.ftb.mods.ftbevolutioncompanion.pyramid;
 
 final class PyramidShapeData {
-    static final String CELLS = String.join("",
+    static final String CELLS = String.join(
+            "",
             "-2 0 -2=0 0 0 16 4 16,2 4 0 16 6 16,0 4 2 2 6 16,2 6 2 16 10 16,4 10 4 16 16 16;",
             "-1 0 -2=0 0 0 16 6 16,12 6 0 16 8 16,0 6 2 12 8 16,0 8 2 2 10 16,2 8 8 4 14 10,2 8 12 4 12 16,0 10 4 2 14 16,2 12 14 4 16 16,0 14 10 16 16 14,0 14 14 2 16 16,4 14 14 16 16 16;",
             "0 0 -2=0 0 0 16 6 16,0 6 2 16 14 16,2 14 2 14 16 8,0 14 10 16 16 16;",
@@ -93,9 +94,7 @@ final class PyramidShapeData {
             "1 5 0=0 4 0 4 10 16;",
             "-1 5 1=12 0 0 16 10 4;",
             "0 5 1=0 4 0 16 10 4;",
-            "1 5 1=0 0 0 4 10 4;"
-    );
+            "1 5 1=0 0 0 4 10 4;");
 
-    private PyramidShapeData() {
-    }
+    private PyramidShapeData() {}
 }

@@ -5,14 +5,12 @@ import dev.ftb.mods.ftbquests.quest.task.EnergyTask;
 import dev.ftb.mods.ftbquests.quest.task.FluidTask;
 import dev.ftb.mods.ftbquests.quest.task.ItemTask;
 import dev.ftb.mods.ftbquests.quest.task.Task;
-
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
-
 import org.jspecify.annotations.Nullable;
 
 public final class PyramidHandlers {
@@ -108,14 +106,18 @@ public final class PyramidHandlers {
         @Override
         public boolean isValid(int index, ItemResource resource) {
             ItemTask task = target(ItemTask.class);
-            return task != null && machine.deliveryData(task) != null && !resource.isEmpty() && task.test(resource.toStack());
+            return task != null
+                    && machine.deliveryData(task) != null
+                    && !resource.isEmpty()
+                    && task.test(resource.toStack());
         }
 
         @Override
         public int insert(int index, ItemResource resource, int amount, TransactionContext transaction) {
             ItemTask task = target(ItemTask.class);
             TeamData data = machine.deliveryData(task);
-            if (task == null || data == null || amount <= 0 || resource.isEmpty() || !task.test(resource.toStack())) return 0;
+            if (task == null || data == null || amount <= 0 || resource.isEmpty() || !task.test(resource.toStack()))
+                return 0;
             int accepted = (int) Math.min(amount, space(data, task, pending.amount()));
             if (accepted > 0) {
                 pending.add(accepted, transaction);
@@ -190,7 +192,9 @@ public final class PyramidHandlers {
         public long getAmountAsLong() {
             EnergyTask task = target(EnergyTask.class);
             TeamData data = machine.deliveryData(task);
-            return task == null || data == null ? 0L : Math.min(task.getMaxProgress(), data.getProgress(task) + pending.amount());
+            return task == null || data == null
+                    ? 0L
+                    : Math.min(task.getMaxProgress(), data.getProgress(task) + pending.amount());
         }
 
         @Override

@@ -1,22 +1,18 @@
 package dev.ftb.mods.ftbevolutioncompanion.magic.sorcery;
 
 import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
-
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.lang.reflect.RecordComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.NeoForge;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.lang.reflect.RecordComponent;
 
 public final class ThaumaturgeHooks {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThaumaturgeHooks.class);
@@ -29,8 +25,7 @@ public final class ThaumaturgeHooks {
     private static volatile int powerIndex = -1;
     private static volatile boolean packFailureLogged;
 
-    private ThaumaturgeHooks() {
-    }
+    private ThaumaturgeHooks() {}
 
     public static Object onFocusCast(LivingEntity caster, Object pack) {
         if (!(caster instanceof ServerPlayer player) || pack == null) {
@@ -78,8 +73,8 @@ public final class ThaumaturgeHooks {
             Method playerAccessor = type.getMethod("player");
             @SuppressWarnings("unchecked")
             Class<Event> eventType = (Class<Event>) type.asSubclass(Event.class);
-            NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, false, eventType,
-                    event -> onResearchCompleted(event, playerAccessor));
+            NeoForge.EVENT_BUS.addListener(
+                    EventPriority.LOWEST, false, eventType, event -> onResearchCompleted(event, playerAccessor));
         } catch (ReflectiveOperationException | ClassCastException e) {
             LOGGER.warn("Could not listen for Thaumaturge research completion", e);
         }

@@ -2,12 +2,10 @@ package dev.ftb.mods.ftbevolutioncompanion.magic.otherworld.client;
 
 import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
 import dev.ftb.mods.ftbevolutioncompanion.magic.otherworld.OtherworldMagic;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-
 import org.jspecify.annotations.Nullable;
 
 public final class OtherworldTooltips {
@@ -16,8 +14,7 @@ public final class OtherworldTooltips {
 
     private static final int SPELL_SCREEN_COOLDOWN_SHOWN_FROM = 100;
 
-    private OtherworldTooltips() {
-    }
+    private OtherworldTooltips() {}
 
     public static int spellCooldown(@Nullable Player player, int cooldown) {
         return player == null ? cooldown : OtherworldMagic.hastenedCooldown(player, cooldown);
@@ -43,7 +40,8 @@ public final class OtherworldTooltips {
         if (thrift <= 0.0) {
             return null;
         }
-        return Component.translatable(SOUL_THRIFT, percent(Math.min(thrift, 1.0))).withStyle(ChatFormatting.DARK_AQUA);
+        return Component.translatable(SOUL_THRIFT, percent(Math.min(thrift, 1.0)))
+                .withStyle(ChatFormatting.DARK_AQUA);
     }
 
     private static String seconds(int ticks) {
