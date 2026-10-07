@@ -37,6 +37,7 @@
     "compat.colossalreactors.ColossalReactorsFluidTransactionMixin",
     "compat.hostilenetworks.SimChamberMenuModeLockMixin",
     "compat.hostilenetworks.SimChamberTrainingOnlyMixin",
+    "compat.puffish.PuffishDealDamageRemainderMixin",
     "compat.hephaestus.HephaestusHarvestTierMixin",
     "compat.hephaestus.HephaestusToolHarvestMixin",
     "compat.hephaestus.HephaestusToolRecalculateMixin",

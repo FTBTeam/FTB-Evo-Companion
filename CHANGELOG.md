@@ -1,5 +1,11 @@
 # Changelog
 
+## [26.1.2.7]
+
+### Fixed
+
+- Skill XP from dealing damage dropping the leftover fraction of every hit, so weak hits like shotgun pellets on the Ender Dragon gave no Gunnery XP at all
+
 ## [26.1.2.6]
 
 ### Removed
