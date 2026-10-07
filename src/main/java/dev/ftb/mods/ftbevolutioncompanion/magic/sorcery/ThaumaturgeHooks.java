@@ -1,11 +1,11 @@
 package dev.ftb.mods.ftbevolutioncompanion.magic.sorcery;
 
 import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.lang.reflect.RecordComponent;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.EventPriority;
@@ -19,22 +19,17 @@ public final class ThaumaturgeHooks {
     private static final String MOD_ID = "thaumaturge";
     private static final String RESEARCH_COMPLETED_EVENT =
             "com.leclowndu93150.thaumaturge.api.research.ResearchEvent$Completed";
+    private static final String SPELL_CAST_PRE_EVENT =
+            "com.leclowndu93150.thaumaturge.api.spell.event.SpellCastEvent$Pre";
+    private static final String SPELL_CAST_POST_EVENT =
+            "com.leclowndu93150.thaumaturge.api.spell.event.SpellCastEvent$Post";
+    private static final String CHANNELED_STYLE = "CHANNELED";
+    private static final long CHANNEL_AWARD_INTERVAL = 20L;
 
-    private static volatile Constructor<?> packConstructor;
-    private static volatile Method[] packAccessors;
-    private static volatile int powerIndex = -1;
-    private static volatile boolean packFailureLogged;
+    private static final Map<UUID, Long> CHANNEL_AWARDS = new ConcurrentHashMap<>();
+    private static volatile boolean spellFailureLogged;
 
     private ThaumaturgeHooks() {}
-
-    public static Object onFocusCast(LivingEntity caster, Object pack) {
-        if (!(caster instanceof ServerPlayer player) || pack == null) {
-            return pack;
-        }
-        MagicRegistry.award(player, MagicRegistry.SPELLS_CAST);
-        double power = MagicRegistry.value(player, MagicRegistry.THAUM_FOCUS_POWER);
-        return power > 0.0 ? scalePower(pack, (float) (1.0 + power)) : pack;
-    }
 
     public static int wardWarp(ServerPlayer player, int amount) {
         if (amount <= 0 || player == null) {
@@ -80,6 +75,27 @@ public final class ThaumaturgeHooks {
         }
     }
 
+    static void registerSpellListeners() {
+        try {
+            Class<?> pre = Class.forName(SPELL_CAST_PRE_EVENT);
+            Class<?> post = Class.forName(SPELL_CAST_POST_EVENT);
+            Method caster = pre.getMethod("caster");
+            Method style = pre.getMethod("style");
+            Method power = pre.getMethod("power");
+            Method setPower = pre.getMethod("setPower", float.class);
+            @SuppressWarnings("unchecked")
+            Class<Event> preType = (Class<Event>) pre.asSubclass(Event.class);
+            @SuppressWarnings("unchecked")
+            Class<Event> postType = (Class<Event>) post.asSubclass(Event.class);
+            NeoForge.EVENT_BUS.addListener(
+                    EventPriority.NORMAL, false, preType, event -> onSpellCast(event, caster, power, setPower));
+            NeoForge.EVENT_BUS.addListener(
+                    EventPriority.LOWEST, false, postType, event -> onSpellCompleted(event, caster, style));
+        } catch (ReflectiveOperationException | ClassCastException e) {
+            LOGGER.warn("Could not listen for Thaumaturge spell casts", e);
+        }
+    }
+
     private static void onResearchCompleted(Event event, Method playerAccessor) {
         try {
             if (playerAccessor.invoke(event) instanceof ServerPlayer player) {
@@ -90,49 +106,43 @@ public final class ThaumaturgeHooks {
         }
     }
 
-    private static Object scalePower(Object pack, float factor) {
+    private static void onSpellCast(Event event, Method caster, Method power, Method setPower) {
         try {
-            resolvePackType(pack.getClass());
-            Method[] accessors = packAccessors;
-            Object[] values = new Object[accessors.length];
-            for (int i = 0; i < accessors.length; i++) {
-                values[i] = accessors[i].invoke(pack);
+            if (!(caster.invoke(event) instanceof ServerPlayer player)) {
+                return;
             }
-            values[powerIndex] = (Float) values[powerIndex] * factor;
-            return packConstructor.newInstance(values);
+            double bonus = MagicRegistry.value(player, MagicRegistry.THAUM_FOCUS_POWER);
+            if (bonus > 0.0) {
+                setPower.invoke(event, (Float) power.invoke(event) * (float) (1.0 + bonus));
+            }
         } catch (ReflectiveOperationException | RuntimeException e) {
-            if (!packFailureLogged) {
-                packFailureLogged = true;
-                LOGGER.warn("Could not scale Thaumaturge focus power", e);
-            }
-            return pack;
+            logSpellFailure(e);
         }
     }
 
-    private static void resolvePackType(Class<?> type) throws ReflectiveOperationException {
-        if (packConstructor != null) {
-            return;
-        }
-        RecordComponent[] components = type.getRecordComponents();
-        if (components == null) {
-            throw new NoSuchMethodException(type.getName() + " is not a record");
-        }
-        Method[] accessors = new Method[components.length];
-        Class<?>[] types = new Class<?>[components.length];
-        int power = -1;
-        for (int i = 0; i < components.length; i++) {
-            accessors[i] = components[i].getAccessor();
-            types[i] = components[i].getType();
-            if ("power".equals(components[i].getName()) && types[i] == float.class) {
-                power = i;
+    private static void onSpellCompleted(Event event, Method caster, Method style) {
+        try {
+            if (!(caster.invoke(event) instanceof ServerPlayer player)) {
+                return;
             }
+            if (style.invoke(event) instanceof Enum<?> castStyle && CHANNELED_STYLE.equals(castStyle.name())) {
+                long now = player.level().getGameTime();
+                Long last = CHANNEL_AWARDS.get(player.getUUID());
+                if (last != null && now - last < CHANNEL_AWARD_INTERVAL && now >= last) {
+                    return;
+                }
+                CHANNEL_AWARDS.put(player.getUUID(), now);
+            }
+            MagicRegistry.award(player, MagicRegistry.SPELLS_CAST);
+        } catch (ReflectiveOperationException | RuntimeException e) {
+            logSpellFailure(e);
         }
-        if (power < 0) {
-            throw new NoSuchFieldException(type.getName() + ".power");
+    }
+
+    private static void logSpellFailure(Exception e) {
+        if (!spellFailureLogged) {
+            spellFailureLogged = true;
+            LOGGER.warn("Could not apply Thaumaturge spell bonuses", e);
         }
-        Constructor<?> constructor = type.getDeclaredConstructor(types);
-        packAccessors = accessors;
-        powerIndex = power;
-        packConstructor = constructor;
     }
 }

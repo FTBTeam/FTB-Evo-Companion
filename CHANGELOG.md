@@ -1,5 +1,13 @@
 # Changelog
 
+## [26.1.2.5]
+
+### Fixed
+
+- Crash on launch with Thaumaturge 1.0.1
+- Focus Power skills not boosting Thaumaturge spells, and casting Thaumaturge spells not giving Magic skill XP
+- Magical Hephaestus tools not spawning aspect orbs when mining ores
+
 ## [26.1.2.4]
 
 ### Fixed

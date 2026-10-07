@@ -11,6 +11,7 @@ public final class SorceryMagic {
     public static void register(IEventBus modBus) {
         NeoForge.EVENT_BUS.addListener(SorceryMagic::onManaBurnoutCost);
         ThaumaturgeHooks.registerResearchListener();
+        ThaumaturgeHooks.registerSpellListeners();
     }
 
     public static void onManaBurnoutCost(ManaBurnoutCostEvent event) {

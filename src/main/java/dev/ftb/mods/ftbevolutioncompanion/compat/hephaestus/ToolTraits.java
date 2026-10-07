@@ -95,7 +95,7 @@ public final class ToolTraits {
     private static final Identifier FROZEN = Identifier.fromNamespaceAndPath("iceandfire", "frozen");
     private static final Identifier SIPHON_MODIFIER = Identifier.fromNamespaceAndPath("ftb", "demonic_blood_siphon");
     private static final String ORB_CLASS = "com.leclowndu93150.thaumaturge.content.wands.EntityAspectOrb";
-    private static final String ASPECTS_CLASS = "com.leclowndu93150.thaumaturge.api.aspect.TCAspects";
+    private static final String ASPECTS_CLASS = "com.leclowndu93150.thaumaturge.api.aspect.TTAspects";
 
     private static final float ORB_CHANCE = 0.01F;
     private static final float RUNIC_CHANCE = 0.15F;
