@@ -100,7 +100,8 @@ public final class PyramidHandlers {
         public long getCapacityAsLong(int index, ItemResource resource) {
             ItemTask task = target(ItemTask.class);
             TeamData data = machine.deliveryData(task);
-            if (task == null || data == null || resource.isEmpty() || !task.test(resource.toStack())) return 0L;
+            if (task == null || data == null) return 0L;
+            if (!resource.isEmpty() && !task.test(resource.toStack())) return 0L;
             return space(data, task, pending.amount());
         }
 
@@ -154,7 +155,8 @@ public final class PyramidHandlers {
         public long getCapacityAsLong(int index, FluidResource resource) {
             FluidTask task = target(FluidTask.class);
             TeamData data = machine.deliveryData(task);
-            if (task == null || data == null || !matches(task, resource)) return 0L;
+            if (task == null || data == null) return 0L;
+            if (!resource.isEmpty() && !matches(task, resource)) return 0L;
             return space(data, task, pending.amount());
         }
 
