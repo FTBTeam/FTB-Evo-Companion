@@ -148,8 +148,19 @@ public class SkylineBlockEntity extends BlockEntity implements GeoBlockEntity {
         return data;
     }
 
-    void commitDelivery(long amount) {
-        Task task = activeTask();
+    @Nullable
+    <T extends Task> T bayTarget(Class<T> type) {
+        Task active = activeTask();
+        if (active == null) return null;
+        if (type.isInstance(active) && deliveryData(active) != null) return type.cast(active);
+        for (Task task : active.getQuest().getTasksAsList()) {
+            if (type.isInstance(task) && deliveryData(task) != null) return type.cast(task);
+        }
+        return null;
+    }
+
+    void commitDelivery(long taskId, long amount) {
+        Task task = ServerQuestFile.exists() ? ServerQuestFile.getInstance().getTask(taskId) : null;
         TeamData data = deliveryData(task);
         if (task == null || data == null || level == null) return;
         data.setProgress(task, data.getProgress(task) + amount);
@@ -158,7 +169,7 @@ public class SkylineBlockEntity extends BlockEntity implements GeoBlockEntity {
             transporting = true;
             syncPending = true;
         }
-        if (data.isCompleted(task)) {
+        if (data.isCompleted(task) && task.id == activeTaskId) {
             advance(data, task.getQuest());
         }
         refreshProgress(data);

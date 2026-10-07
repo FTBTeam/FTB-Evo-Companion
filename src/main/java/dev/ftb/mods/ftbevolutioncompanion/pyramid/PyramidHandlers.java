@@ -37,8 +37,7 @@ public final class PyramidHandlers {
 
     @Nullable
     private <T extends Task> T target(Class<T> type) {
-        Task task = machine.activeTask();
-        return type.isInstance(task) ? type.cast(task) : null;
+        return machine.bayTarget(type);
     }
 
     private long space(TeamData data, Task task, long pending) {
@@ -47,13 +46,15 @@ public final class PyramidHandlers {
 
     private final class Pending extends SnapshotJournal<Long> {
         private long amount;
+        private long taskId;
 
         long amount() {
             return amount;
         }
 
-        void add(long delta, TransactionContext transaction) {
+        void add(Task task, long delta, TransactionContext transaction) {
             updateSnapshots(transaction);
+            taskId = task.id;
             amount += delta;
         }
 
@@ -72,7 +73,7 @@ public final class PyramidHandlers {
             long delivered = amount;
             amount = 0L;
             if (delivered > 0L) {
-                machine.commitDelivery(delivered);
+                machine.commitDelivery(taskId, delivered);
             }
         }
     }
@@ -120,7 +121,7 @@ public final class PyramidHandlers {
                 return 0;
             int accepted = (int) Math.min(amount, space(data, task, pending.amount()));
             if (accepted > 0) {
-                pending.add(accepted, transaction);
+                pending.add(task, accepted, transaction);
             }
             return accepted;
         }
@@ -170,7 +171,7 @@ public final class PyramidHandlers {
             if (task == null || data == null || amount <= 0 || !matches(task, resource)) return 0;
             int accepted = (int) Math.min(amount, space(data, task, pending.amount()));
             if (accepted > 0) {
-                pending.add(accepted, transaction);
+                pending.add(task, accepted, transaction);
             }
             return accepted;
         }
@@ -211,7 +212,7 @@ public final class PyramidHandlers {
             long limit = Math.min(task.getMaxInput(), space(data, task, pending.amount()));
             int accepted = (int) Math.min(amount, limit);
             if (accepted > 0) {
-                pending.add(accepted, transaction);
+                pending.add(task, accepted, transaction);
             }
             return accepted;
         }

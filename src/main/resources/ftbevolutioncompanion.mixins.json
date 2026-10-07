@@ -146,6 +146,7 @@
     "compat.yungscavebiomes.SandstormDimensionMixin"
   ],
   "client": [
+    "compat.ltxi.LTXIJeiFluidSlotMixin",
     "compat.hats.client.HatClientPacketsMixin",
     "compat.otherworld.client.OccultismJeiPluginMixin",
     "compat.sfm.client.SfmJeiPluginMixin",
