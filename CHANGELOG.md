@@ -1,5 +1,11 @@
 # Changelog
 
+## [26.1.2.4]
+
+### Fixed
+
+- Pipez item pipes not feeding the FTB Skyline
+
 ## [26.1.2.3]
 
 ### Fixed
