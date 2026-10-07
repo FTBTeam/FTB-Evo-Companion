@@ -1,5 +1,12 @@
 # Changelog
 
+## [26.1.2.3]
+
+### Fixed
+
+- Lootr containers looking up and copying their loot data every tick, adding server lag and memory use
+- Ars Magica Legacy resending the Life Ward state of every living entity to clients every tick
+
 ## [26.1.2.2]
 
 ### Fixed

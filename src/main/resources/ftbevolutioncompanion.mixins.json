@@ -139,6 +139,8 @@
     "compat.hemomancy.WitcheryNecromancyMixin",
     "compat.sorcery.ArsSpellPowerMixin",
     "compat.sorcery.ArsMagicXpMixin",
+    "compat.sorcery.ArsLifeWardSyncMixin",
+    "compat.lootr.LootrInstanceTickMixin",
     "compat.sorcery.ArsThornsDeadAttackerMixin",
     "compat.sorcery.ThaumFocusPowerMixin",
     "compat.sorcery.ThaumWarpWardMixin",
