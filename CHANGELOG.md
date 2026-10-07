@@ -1,5 +1,11 @@
 # Changelog
 
+## [26.1.2.6]
+
+### Removed
+
+- The SG Economy coin display fix, which SG Economy now does itself and which would have crashed the game with the updated mod
+
 ## [26.1.2.5]
 
 ### Fixed

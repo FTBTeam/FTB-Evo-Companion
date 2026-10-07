@@ -29,7 +29,6 @@ import dev.ftb.mods.ftbevolutioncompanion.compat.iris.IrisGeckoGlow;
 import dev.ftb.mods.ftbevolutioncompanion.compat.jei.RecipeSyncTypes;
 import dev.ftb.mods.ftbevolutioncompanion.compat.oceanmobs.RiftArena;
 import dev.ftb.mods.ftbevolutioncompanion.compat.powerarmor.PowerArmorRecipeSync;
-import dev.ftb.mods.ftbevolutioncompanion.compat.sgeconomy.client.CoinBagLayer;
 import dev.ftb.mods.ftbevolutioncompanion.compat.starcatcher.StarcatcherPayloads;
 import dev.ftb.mods.ftbevolutioncompanion.compat.streams.StreamsRemoval;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
@@ -190,7 +189,6 @@ public class FTBEvolutionCompanion {
             NeoForge.EVENT_BUS.addListener(SkillsClientHandler::onLeftClickEmpty);
             NeoForge.EVENT_BUS.addListener(SkillsClientHandler::onLeftClickBlock);
             NeoForge.EVENT_BUS.addListener(WingTooltips::onItemTooltip);
-            NeoForge.EVENT_BUS.addListener(CoinBagLayer::onRenderForeground);
             eventBus.addListener(ChallengeBoardClient::onRegisterRenderers);
             NeoForge.EVENT_BUS.addListener(ChallengeBoardClient::onLoggingOut);
             NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, RecipeSyncClient::onRecipesReceived);
