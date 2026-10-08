@@ -1,5 +1,12 @@
 # Changelog
 
+## [26.1.2.12]
+
+### Fixed
+
+- Crash on startup when Ars Magica Legacy is not installed
+- Warnings and errors in the log when Thaumaturge is not installed
+
 ## [26.1.2.11]
 
 ### Changed

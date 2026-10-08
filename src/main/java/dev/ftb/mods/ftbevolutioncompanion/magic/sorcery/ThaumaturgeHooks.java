@@ -76,6 +76,9 @@ public final class ThaumaturgeHooks {
     }
 
     static void registerSpellListeners() {
+        if (!ModList.get().isLoaded(MOD_ID)) {
+            return;
+        }
         try {
             Class<?> pre = Class.forName(SPELL_CAST_PRE_EVENT);
             Class<?> post = Class.forName(SPELL_CAST_POST_EVENT);

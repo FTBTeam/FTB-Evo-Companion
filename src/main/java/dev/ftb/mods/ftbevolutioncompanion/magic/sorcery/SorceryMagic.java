@@ -3,13 +3,16 @@ package dev.ftb.mods.ftbevolutioncompanion.magic.sorcery;
 import at.minecraftschurli.mods.arsmagicalegacy.api.event.ManaBurnoutCostEvent;
 import dev.ftb.mods.ftbevolutioncompanion.magic.MagicRegistry;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.NeoForge;
 
 public final class SorceryMagic {
     private SorceryMagic() {}
 
     public static void register(IEventBus modBus) {
-        NeoForge.EVENT_BUS.addListener(SorceryMagic::onManaBurnoutCost);
+        if (ModList.get().isLoaded("arsmagicalegacy")) {
+            NeoForge.EVENT_BUS.addListener(SorceryMagic::onManaBurnoutCost);
+        }
         ThaumaturgeHooks.registerResearchListener();
         ThaumaturgeHooks.registerSpellListeners();
     }
