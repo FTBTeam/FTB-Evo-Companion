@@ -4,13 +4,11 @@
 
 ### Changed
 
-- The XyCraft Flare Rod no longer needs XyCraft's experimental features + added complimentary shader compat
-
-## [26.1.2.10]
+- The XyCraft Flare Rod no longer needs XyCraft's experimental features, so new worlds no longer have them turned on and no longer show the experimental settings warning
 
 ### Fixed
 
-- Experimental XyCraft Flares enabled
+- XyCraft Flares and the beams between them not showing with an Iris shaderpack on
 
 ## [26.1.2.9]
 
