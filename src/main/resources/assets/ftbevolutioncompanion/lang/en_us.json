@@ -248,6 +248,7 @@
   "attribute.name.ftb.ars_cost_reduction": "Ars Magica Cost Reduction",
   "attribute.name.ftb.ars_spell_power": "Ars Magica Spell Power",
   "attribute.name.ftb.ars_xp_gain": "Ars Magica XP Gain",
+  "attributes.thaumaturge.vis_discount": "Vis Discount",
   "attribute.name.ftb.thaum_focus_power": "Focus Power",
   "attribute.name.ftb.thaum_warp_ward": "Warp Ward",
   "attribute.name.ftb.thaum_infusion_stability": "Infusion Stability",

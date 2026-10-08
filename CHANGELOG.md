@@ -4,7 +4,11 @@
 
 ### Changed
 
-- Thaumaturge support, including the Thaumium and Void Metal tool materials and their molten fluids, only loads when Thaumaturge is installed
+- internally registered player attibutes for puffskill magic bonuses
+
+### Fixed
+
+- Players on worlds that had Thaumaturge no longer lose their saved attributes, such as Paraglider stamina vessels, after it is removed
 
 ## [26.1.2.12]
 

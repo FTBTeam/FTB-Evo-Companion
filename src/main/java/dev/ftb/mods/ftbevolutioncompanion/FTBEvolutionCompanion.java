@@ -31,6 +31,7 @@ import dev.ftb.mods.ftbevolutioncompanion.compat.oceanmobs.RiftArena;
 import dev.ftb.mods.ftbevolutioncompanion.compat.powerarmor.PowerArmorRecipeSync;
 import dev.ftb.mods.ftbevolutioncompanion.compat.starcatcher.StarcatcherPayloads;
 import dev.ftb.mods.ftbevolutioncompanion.compat.streams.StreamsRemoval;
+import dev.ftb.mods.ftbevolutioncompanion.compat.thaumaturge.ThaumaturgePlaceholders;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.content.CompanionContent;
 import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorRegistry;
@@ -141,6 +142,7 @@ public class FTBEvolutionCompanion {
         SkillsRegistry.EFFECTS.register(eventBus);
         SkillsRegistry.ATTACHMENTS.register(eventBus);
         MagicRegistry.ATTRIBUTES.register(eventBus);
+        ThaumaturgePlaceholders.register(eventBus);
         MagicRegistry.STATS.register(eventBus);
         eventBus.addListener(MagicRegistry::onEntityAttributeModification);
         eventBus.addListener(MagicRegistry::onCommonSetup);
