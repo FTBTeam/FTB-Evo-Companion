@@ -140,6 +140,7 @@
     "compat.hemomancy.WitcheryNecromancyMixin",
     "compat.sorcery.ArsSpellPowerMixin",
     "compat.sorcery.ArsMagicXpMixin",
+    "compat.sorcery.ArsMagicaAltarEmptyStackMixin",
     "compat.sorcery.ArsLifeWardSyncMixin",
     "compat.lootr.LootrInstanceTickMixin",
     "compat.sorcery.ArsThornsDeadAttackerMixin",

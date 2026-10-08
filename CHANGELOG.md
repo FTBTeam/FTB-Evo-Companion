@@ -1,5 +1,11 @@
 # Changelog
 
+## [26.1.2.9]
+
+### Fixed
+
+- Client crash when an Ars Magica Legacy altar uses up a dropped ingredient during spell crafting (FTBTesting/Testing-Issues#4627)
+
 ## [26.1.2.8]
 
 ### Added
