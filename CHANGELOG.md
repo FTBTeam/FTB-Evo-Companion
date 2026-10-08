@@ -5,6 +5,7 @@
 ### Fixed
 
 - Client crash when an Ars Magica Legacy altar uses up a dropped ingredient during spell crafting (FTBTesting/Testing-Issues#4627)
+- Disconnect when opening a XyCraft tank valve with Sophisticated Inventory Interactions installed
 
 ## [26.1.2.8]
 
