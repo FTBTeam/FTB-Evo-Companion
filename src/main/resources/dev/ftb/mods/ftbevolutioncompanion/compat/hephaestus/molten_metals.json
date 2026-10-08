@@ -142,12 +142,14 @@
   {
     "name": "molten_thaumium",
     "colour": "0x50417B",
-    "temperature": 1000
+    "temperature": 1000,
+    "requires": "thaumaturge"
   },
   {
     "name": "molten_void_metal",
     "colour": "0x1F1232",
-    "temperature": 1600
+    "temperature": 1600,
+    "requires": "thaumaturge"
   },
   {
     "name": "molten_hellforged",

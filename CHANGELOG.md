@@ -1,5 +1,11 @@
 # Changelog
 
+## [26.1.2.13]
+
+### Changed
+
+- Thaumaturge support, including the Thaumium and Void Metal tool materials and their molten fluids, only loads when Thaumaturge is installed
+
 ## [26.1.2.12]
 
 ### Fixed

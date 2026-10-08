@@ -3,8 +3,10 @@ package dev.ftb.mods.ftbevolutioncompanion.mixin.compat.sorcery.client;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import dev.ftb.mods.ftbevolutioncompanion.magic.sorcery.client.SorceryClientDisplay;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 
+@Pseudo
 @Mixin(targets = "com.leclowndu93150.thaumaturge.client.render.research.RecipeDisplayWidget", remap = false)
 public abstract class ThaumResearchInstabilityMixin {
     @ModifyExpressionValue(

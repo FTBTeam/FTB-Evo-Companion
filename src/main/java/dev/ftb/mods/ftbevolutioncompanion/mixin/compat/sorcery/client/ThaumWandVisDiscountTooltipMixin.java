@@ -3,9 +3,11 @@ package dev.ftb.mods.ftbevolutioncompanion.mixin.compat.sorcery.client;
 import dev.ftb.mods.ftbevolutioncompanion.magic.sorcery.client.SorceryClientDisplay;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
+@Pseudo
 @Mixin(targets = "com.leclowndu93150.thaumaturge.content.wands.ItemWand", remap = false)
 public abstract class ThaumWandVisDiscountTooltipMixin {
     @ModifyArg(

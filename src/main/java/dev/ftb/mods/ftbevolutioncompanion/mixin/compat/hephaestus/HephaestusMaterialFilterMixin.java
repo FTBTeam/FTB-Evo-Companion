@@ -14,7 +14,7 @@ public abstract class HephaestusMaterialFilterMixin {
     private void ftbevo$dropRemovedMaterials(Map<Object, Object> materials, CallbackInfo ci) {
         materials.keySet().removeIf(key -> {
             Identifier id = HephaestusTools.materialId(key);
-            return id != null && HephaestusTools.REMOVED_MATERIALS.contains(id.getPath());
+            return id != null && HephaestusTools.removedMaterial(id.getPath());
         });
     }
 }

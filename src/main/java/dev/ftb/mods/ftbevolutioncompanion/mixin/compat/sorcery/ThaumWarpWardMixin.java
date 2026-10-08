@@ -4,9 +4,11 @@ import com.llamalad7.mixinextras.sugar.Local;
 import dev.ftb.mods.ftbevolutioncompanion.magic.sorcery.ThaumaturgeHooks;
 import net.minecraft.server.level.ServerPlayer;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
+@Pseudo
 @Mixin(targets = "com.leclowndu93150.thaumaturge.content.warp.WarpManager", remap = false)
 public abstract class ThaumWarpWardMixin {
     @ModifyVariable(

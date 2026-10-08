@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
@@ -66,6 +67,10 @@ public final class MoltenMetals {
                     .getAsJsonArray();
             for (JsonElement element : array) {
                 JsonObject object = element.getAsJsonObject();
+                if (object.has("requires")
+                        && !ModList.get().isLoaded(object.get("requires").getAsString())) {
+                    continue;
+                }
                 entries.add(new Entry(
                         object.get("name").getAsString(),
                         Integer.decode(object.get("colour").getAsString()),
