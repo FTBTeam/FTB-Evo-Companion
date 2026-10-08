@@ -147,7 +147,8 @@
     "compat.sorcery.ThaumWarpWardMixin",
     "compat.sorcery.ThaumInfusionStabilityMixin",
     "compat.sorcery.ApothEnchantmentMenuMixin",
-    "compat.yungscavebiomes.SandstormDimensionMixin"
+    "compat.yungscavebiomes.SandstormDimensionMixin",
+    "compat.xycraft.XyCraftForcedFeaturesMixin"
   ],
   "client": [
     "compat.ltxi.LTXIJeiFluidSlotMixin",
