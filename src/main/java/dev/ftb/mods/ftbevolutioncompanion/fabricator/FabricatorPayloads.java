@@ -7,7 +7,10 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 public final class FabricatorPayloads {
     private FabricatorPayloads() {}
@@ -29,8 +32,31 @@ public final class FabricatorPayloads {
         }
     }
 
+    public record ClearTank(int menuId, int tank) implements CustomPacketPayload {
+        public static final Type<ClearTank> TYPE = new Type<>(FTBEvolutionCompanion.id("fabricator_clear_tank"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, ClearTank> CODEC = StreamCodec.composite(
+                ByteBufCodecs.VAR_INT, ClearTank::menuId, ByteBufCodecs.VAR_INT, ClearTank::tank, ClearTank::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
     public static void register(RegisterPayloadHandlersEvent event) {
-        event.registrar("1").playToServer(Transfer.TYPE, Transfer.CODEC, (payload, context) -> {
+        PayloadRegistrar registrar = event.registrar("1");
+        registrar.playToServer(ClearTank.TYPE, ClearTank.CODEC, (payload, context) -> {
+            if (!(context.player() instanceof ServerPlayer player)
+                    || !(player.containerMenu instanceof FabricatorMenu menu)
+                    || menu.containerId != payload.menuId
+                    || !menu.stillValid(player)) return;
+            FabricatorBlockEntity machine = menu.machine();
+            if (machine.clearInputTank(payload.tank)) {
+                player.level()
+                        .playSound(null, machine.getBlockPos(), SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 0.6F, 1F);
+            }
+        });
+        registrar.playToServer(Transfer.TYPE, Transfer.CODEC, (payload, context) -> {
             if (!(context.player() instanceof ServerPlayer player)
                     || !(player.containerMenu instanceof FabricatorMenu menu)
                     || menu.containerId != payload.menuId

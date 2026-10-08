@@ -123,6 +123,16 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
         return fluids;
     }
 
+    public boolean clearInputTank(int tank) {
+        if (tank < 0 || tank >= 2 || fluids.getAmountAsInt(tank) <= 0) return false;
+        try (Transaction transaction = Transaction.openRoot()) {
+            int drained = fluids.extract(tank, fluids.getResource(tank), fluids.getAmountAsInt(tank), transaction);
+            if (drained <= 0) return false;
+            transaction.commit();
+        }
+        return true;
+    }
+
     public SimpleEnergyHandler energy() {
         return energy;
     }

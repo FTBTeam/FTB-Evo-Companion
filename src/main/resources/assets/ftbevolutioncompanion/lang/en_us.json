@@ -222,6 +222,7 @@
   "fabricator.ftbevolutioncompanion.owner": "Owner: %s",
   "fabricator.ftbevolutioncompanion.owner_stage": "Owner: %s \u2022 Requires: %s",
   "fabricator.ftbevolutioncompanion.empty": "Empty",
+  "fabricator.ftbevolutioncompanion.clear_tank": "Shift-click to empty this tank",
   "fabricator.ftbevolutioncompanion.fluid_input": "Input: %s \u2014 %s / %s mB",
   "fabricator.ftbevolutioncompanion.fluid_output": "Output: %s \u2014 %s / %s mB",
   "fabricator.ftbevolutioncompanion.input_contents": "In: %s",

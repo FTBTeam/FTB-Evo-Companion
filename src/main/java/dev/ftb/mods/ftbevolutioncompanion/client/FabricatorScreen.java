@@ -3,14 +3,19 @@ package dev.ftb.mods.ftbevolutioncompanion.client;
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
 import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorBlockEntity;
 import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorMenu;
+import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorPayloads;
 import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorRecipe;
+import java.util.List;
 import java.util.Locale;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 public final class FabricatorScreen extends AbstractContainerScreen<FabricatorMenu> {
@@ -77,12 +82,52 @@ public final class FabricatorScreen extends AbstractContainerScreen<FabricatorMe
         }
     }
 
+    private int tankAt(double mouseX, double mouseY) {
+        int x = (int) mouseX - leftPos;
+        int y = (int) mouseY - topPos;
+        if (y < 70 || y > 94) return -1;
+        for (int tank = 0; tank < 3; tank++) {
+            if (x >= 91 + tank * 23 && x <= 109 + tank * 23) return tank;
+        }
+        return -1;
+    }
+
+    @Override
+    public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+        int tank = tankAt(event.x(), event.y());
+        if (tank >= 0 && tank < 2 && event.button() == 0 && event.hasShiftDown()) {
+            if (menu.machine().fluids().getAmountAsInt(tank) > 0) {
+                ClientPacketDistributor.sendToServer(new FabricatorPayloads.ClearTank(menu.containerId, tank));
+            }
+            return true;
+        }
+        return super.mouseClicked(event, doubleClick);
+    }
+
     @Override
     protected void extractTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
         super.extractTooltip(graphics, mouseX, mouseY);
         int x = mouseX - leftPos;
         int y = mouseY - topPos;
         FabricatorBlockEntity machine = menu.machine();
+        int hoveredTank = tankAt(mouseX, mouseY);
+        if (hoveredTank >= 0 && hoveredTank < 2 && machine.fluids().getAmountAsInt(hoveredTank) > 0) {
+            FluidStack fluid = machine.fluids()
+                    .getResource(hoveredTank)
+                    .toStack(machine.fluids().getAmountAsInt(hoveredTank));
+            graphics.setComponentTooltipForNextFrame(
+                    font,
+                    List.of(
+                            Component.translatable(
+                                    LANG + "fluid_input",
+                                    fluid.getHoverName(),
+                                    fluid.getAmount(),
+                                    FabricatorBlockEntity.TANK_CAPACITY),
+                            Component.translatable(LANG + "clear_tank").withStyle(ChatFormatting.GRAY)),
+                    mouseX,
+                    mouseY);
+            return;
+        }
         Component tooltip = null;
         if (x >= 10 && x <= 21 && y >= 32 && y <= 88) {
             tooltip = Component.translatable(

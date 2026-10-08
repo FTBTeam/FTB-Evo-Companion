@@ -1,5 +1,11 @@
 # Changelog
 
+## [26.1.2.8]
+
+### Added
+
+- Shift-clicking a Fabricator input tank empties it, so a wrong fluid no longer gets stuck (FTBTesting/Testing-Issues#4643)
+
 ## [26.1.2.7]
 
 ### Fixed
