@@ -1,5 +1,17 @@
 # Changelog
 
+## [26.1.2.11]
+
+### Changed
+
+- The XyCraft Flare Rod no longer needs XyCraft's experimental features + added complimentary shader compat
+
+## [26.1.2.10]
+
+### Fixed
+
+- Experimental XyCraft Flares enabled
+
 ## [26.1.2.9]
 
 ### Fixed

@@ -161,6 +161,8 @@ dependencies {
 	compileOnly "curse.maven:evilcraft-74610:${evilcraft_curse_file_id}"
 	compileOnly "curse.maven:cyclops-core-232758:${cyclopscore_curse_file_id}"
 	compileOnly "curse.maven:occultism-361026:${occultism_curse_file_id}"
+	compileOnly "curse.maven:xycraft-653786:${xycraft_core_curse_file_id}"
+	compileOnly "curse.maven:xycraft-machines-653791:${xycraft_machines_curse_file_id}"
 	compileOnly "curse.maven:apothic-enchanting-1063926:${apothic_enchanting_curse_file_id}"
 	compileOnly "curse.maven:placebo-283644:${placebo_curse_file_id}"
 	compileOnly "curse.maven:hostile-neural-networks-552574:${hostilenetworks_curse_file_id}"

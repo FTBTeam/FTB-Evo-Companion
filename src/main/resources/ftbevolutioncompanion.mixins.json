@@ -148,7 +148,8 @@
     "compat.sorcery.ThaumInfusionStabilityMixin",
     "compat.sorcery.ApothEnchantmentMenuMixin",
     "compat.yungscavebiomes.SandstormDimensionMixin",
-    "compat.xycraft.XyCraftForcedFeaturesMixin",
+    "compat.xycraft.ItemRequiredFeaturesAccessor",
+    "compat.xycraft.XyCraftFlareRodFeatureMixin",
     "compat.xycraft.XyCraftTankEmptyResourceMixin"
   ],
   "client": [
@@ -177,7 +178,8 @@
     "compat.sorcery.client.ThaumJeiInstabilityMixin",
     "compat.sorcery.client.ThaumWandVisDiscountTooltipMixin",
     "compat.otherworld.client.AnimaSpellScreenMixin",
-    "compat.otherworld.client.AnimaSoulFocusTooltipMixin"
+    "compat.otherworld.client.AnimaSoulFocusTooltipMixin",
+    "compat.xycraft.client.LevelRendererXyCraftLaserMixin"
   ],
   "injectors": {
     "defaultRequire": 1
