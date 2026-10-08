@@ -148,6 +148,7 @@
     "compat.sorcery.ThaumInfusionStabilityMixin",
     "compat.sorcery.ApothEnchantmentMenuMixin",
     "compat.yungscavebiomes.SandstormDimensionMixin",
+    "compat.xycraft.XyCraftForcedFeaturesMixin",
     "compat.xycraft.XyCraftTankEmptyResourceMixin"
   ],
   "client": [
