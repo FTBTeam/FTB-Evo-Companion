@@ -150,7 +150,11 @@
     "compat.yungscavebiomes.SandstormDimensionMixin",
     "compat.xycraft.ItemRequiredFeaturesAccessor",
     "compat.xycraft.XyCraftFlareRodFeatureMixin",
-    "compat.xycraft.XyCraftTankEmptyResourceMixin"
+    "compat.xycraft.XyCraftTankEmptyResourceMixin",
+    "compat.powerarmor.ArmorTableSlotPersistenceMixin",
+    "compat.powerarmor.ArmorTableMarkDirtyMixin",
+    "compat.agritech.PlanterExportMixin",
+    "compat.agritech.AdvancedPlanterExportMixin"
   ],
   "client": [
     "compat.ltxi.LTXIJeiFluidSlotMixin",
@@ -183,7 +187,8 @@
     "compat.dynamicresources.client.ModernFixBakedRegistryHashMapMixin",
     "compat.dynamicresources.client.ModernFixBlockStateModelMapMixin",
     "compat.dynamicresources.client.FunctionalStorageFramedModelMixin",
-    "compat.dynamicresources.client.ColossalReactorsTurbineModelMixin"
+    "compat.dynamicresources.client.ColossalReactorsTurbineModelMixin",
+    "compat.buildingwand.client.PlannerWorldIdSanitizeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

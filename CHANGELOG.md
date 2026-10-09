@@ -1,5 +1,13 @@
 # Changelog
 
+## [26.1.2.16]
+
+### Fixed
+
+- Power Armor's Armor Modification Table no longer loses its armor piece when the chunk unloads (FTBTeam/FTB-Modpack-Issues#13502)
+- Full Agritech planters keep exporting into the inventory below (FTBTeam/FTB-Modpack-Issues#13499)
+- Singleplayer worlds with characters like `?` in their name no longer disconnect on join (FTBTeam/FTB-Modpack-Issues#13506)
+
 ## [26.1.2.15]
 
 ### Added

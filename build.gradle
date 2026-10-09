@@ -181,6 +181,9 @@ dependencies {
 	compileOnly "curse.maven:ice-and-fire-1040076:${iceandfire_curse_file_id}"
 	compileOnly "curse.maven:uranus-1010827:${uranus_curse_file_id}"
 	compileOnly "curse.maven:lootr-361276:${lootr_curse_file_id}"
+	compileOnly "curse.maven:power-armor-renostalgized-1368563:${power_armor_curse_file_id}"
+	compileOnly "curse.maven:porting-dead-libs-1173919:${portingdeadlibs_curse_file_id}"
+	compileOnly "curse.maven:agritech-evolved-1287394:${agritechevolved_curse_file_id}"
 	compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
 }
 
