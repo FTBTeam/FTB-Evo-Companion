@@ -1,5 +1,11 @@
 # Changelog
 
+## [26.1.2.15]
+
+### Added
+
+- additional compat for dynamic resources
+
 ## [26.1.2.14]
 
 ### Fixed

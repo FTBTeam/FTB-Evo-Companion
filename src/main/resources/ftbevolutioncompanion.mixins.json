@@ -179,7 +179,11 @@
     "compat.sorcery.client.ThaumWandVisDiscountTooltipMixin",
     "compat.otherworld.client.AnimaSpellScreenMixin",
     "compat.otherworld.client.AnimaSoulFocusTooltipMixin",
-    "compat.xycraft.client.LevelRendererXyCraftLaserMixin"
+    "compat.xycraft.client.LevelRendererXyCraftLaserMixin",
+    "compat.dynamicresources.client.ModernFixBakedRegistryHashMapMixin",
+    "compat.dynamicresources.client.ModernFixBlockStateModelMapMixin",
+    "compat.dynamicresources.client.FunctionalStorageFramedModelMixin",
+    "compat.dynamicresources.client.ColossalReactorsTurbineModelMixin"
   ],
   "injectors": {
     "defaultRequire": 1
