@@ -1,5 +1,12 @@
 # Changelog
 
+## [26.1.2.18]
+
+### Fixed
+
+- JEI improved compat for jetpacks
+- Crash with Stellaris 2.0.7 when a Stellaris fluid slot is used; Oritech oil is accepted by its fluid slots and machines again
+
 ## [26.1.2.17]
 
 ### Added

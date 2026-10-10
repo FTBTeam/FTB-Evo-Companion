@@ -154,7 +154,8 @@
     "compat.powerarmor.ArmorTableSlotPersistenceMixin",
     "compat.powerarmor.ArmorTableMarkDirtyMixin",
     "compat.agritech.PlanterExportMixin",
-    "compat.agritech.AdvancedPlanterExportMixin"
+    "compat.agritech.AdvancedPlanterExportMixin",
+    "compat.ironjetpacks.JetpackTierIngredientDisplayMixin"
   ],
   "client": [
     "compat.ltxi.LTXIJeiFluidSlotMixin",

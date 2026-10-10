@@ -10,13 +10,13 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(targets = "org.exodusstudio.stellaris.common.menus.slot.SpecificFluidContainerSlot", remap = false)
 public abstract class StellarisFluidSlotOilMixin {
     @WrapOperation(
-            method = "mayPlace",
+            method = "accepts",
             at =
                     @At(
                             value = "INVOKE",
                             target =
                                     "Lnet/minecraft/world/level/material/Fluid;isSame(Lnet/minecraft/world/level/material/Fluid;)Z"))
-    private boolean ftbevo$acceptOritechOil(Fluid actual, Fluid expected, Operation<Boolean> original) {
+    private static boolean ftbevo$acceptOritechOil(Fluid actual, Fluid expected, Operation<Boolean> original) {
         return original.call(actual, expected) || StellarisOilUnifier.isOritechOilFor(actual, expected);
     }
 }
