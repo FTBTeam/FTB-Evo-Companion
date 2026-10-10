@@ -91,6 +91,7 @@ public final class SkillsRegistry {
     public static final DeferredHolder<Attribute, Attribute> LANCER = attr("lancer", 1.0);
     public static final DeferredHolder<Attribute, Attribute> LANCER_RADIUS = attr("lancer_radius", 5.0);
     public static final DeferredHolder<Attribute, Attribute> LANCER_DAMAGE = attr("lancer_damage", 3.0);
+    public static final DeferredHolder<Attribute, Attribute> LANCER_COOLDOWN = attr("lancer_cooldown", 0.9);
 
     public static final DeferredHolder<Attribute, Attribute> SCYTHE_DAMAGE = attr("scythe_damage", 5.0);
     public static final DeferredHolder<Attribute, Attribute> SCYTHE_DURABILITY = attr("scythe_durability", 20.0);

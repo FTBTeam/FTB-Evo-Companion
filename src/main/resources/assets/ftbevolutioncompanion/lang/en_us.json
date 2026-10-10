@@ -59,6 +59,7 @@
   "attribute.name.ftb.lancer": "Lancer",
   "attribute.name.ftb.lancer_radius": "Shockwave Radius",
   "attribute.name.ftb.lancer_damage": "Shockwave Damage",
+  "attribute.name.ftb.lancer_cooldown": "Lancer Cooldown Reduction",
   "attribute.name.ftb.scythe_damage": "Scythe Damage",
   "attribute.name.ftb.scythe_durability": "Scythe Care",
   "attribute.name.ftb.reaping_arc": "Reaping Arc",

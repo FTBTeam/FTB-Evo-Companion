@@ -59,11 +59,11 @@ public final class TreasureGoblinEvent {
     private static final long COOLDOWN_TICKS = 2L * 60L * 60L * 20L;
     private static final double FIGHT_RANGE = 16.0;
     private static final int MIN_HOSTILES = 3;
-    private static final int ESCAPE_TICKS = 200;
+    private static final int ESCAPE_TICKS = 400;
     private static final int DASH_TICKS = 80;
     private static final int MAX_COINS = 50;
     private static final int MIN_COINS = 1;
-    private static final double GOBLIN_SPEED = 1.4;
+    private static final double GOBLIN_SPEED = 1.1;
     private static final double ESCAPE_DISTANCE_SQ = 2.25;
 
     private static final Map<UUID, Active> ACTIVE = new HashMap<>();

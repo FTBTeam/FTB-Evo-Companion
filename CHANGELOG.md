@@ -1,5 +1,15 @@
 # Changelog
 
+## [26.1.2.17]
+
+### Added
+
+- Lancer cooldown reduction skill attribute, so spear skills can shorten the Lancer cooldown
+
+### Changed
+
+- Treasure Goblin escape window 10 s -> 20 s, and its run speed multiplier 1.4 -> 1.1
+
 ## [26.1.2.16]
 
 ### Fixed

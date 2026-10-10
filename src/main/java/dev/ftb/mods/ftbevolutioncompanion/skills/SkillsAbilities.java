@@ -82,7 +82,7 @@ public final class SkillsAbilities {
         CombatState state = player.getData(SkillsRegistry.COMBAT_STATE);
         state.lancerLeapPending = true;
         state.lancerLeapStart = player.level().getGameTime();
-        SkillCooldowns.start(player, SkillCooldowns.LANCER, CompanionConfig.LANCER_COOLDOWN.get());
+        SkillCooldowns.start(player, SkillCooldowns.LANCER, lancerCooldown(player));
         player.level()
                 .playSound(
                         null,
@@ -252,5 +252,14 @@ public final class SkillsAbilities {
         if (event.getEntity() instanceof ServerPlayer player) {
             syncToggles(player);
         }
+    }
+
+    private static int lancerCooldown(ServerPlayer player) {
+        int cooldown = CompanionConfig.LANCER_COOLDOWN.get();
+        double reduction = SkillsHelper.attr(player, SkillsRegistry.LANCER_COOLDOWN);
+        if (cooldown <= 0 || reduction <= 0.0) {
+            return cooldown;
+        }
+        return Math.max(1, (int) Math.round(cooldown * (1.0 - reduction)));
     }
 }
