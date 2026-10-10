@@ -1,35 +1,23 @@
 # Changelog
 
-## [26.1.2.18]
-
-### Fixed
-
-- JEI improved compat for jetpacks
-- Crash with Stellaris 2.0.7 when a Stellaris fluid slot is used; Oritech oil is accepted by its fluid slots and machines again
-
-## [26.1.2.17]
+## [26.1.2.15]
 
 ### Added
 
+- additional compat for dynamic resources
 - Lancer cooldown reduction skill attribute, so spear skills can shorten the Lancer cooldown
 
 ### Changed
 
 - Treasure Goblin escape window 10 s -> 20 s, and its run speed multiplier 1.4 -> 1.1
 
-## [26.1.2.16]
-
 ### Fixed
 
 - Power Armor's Armor Modification Table no longer loses its armor piece when the chunk unloads (FTBTeam/FTB-Modpack-Issues#13502)
+- JEI improved compat for jetpacks
+- Crash with Stellaris 2.0.7 when a Stellaris fluid slot is used; Oritech oil is accepted by its fluid slots and machines again
 - Full Agritech planters keep exporting into the inventory below (FTBTeam/FTB-Modpack-Issues#13499)
 - Singleplayer worlds with characters like `?` in their name no longer disconnect on join (FTBTeam/FTB-Modpack-Issues#13506)
-
-## [26.1.2.15]
-
-### Added
-
-- additional compat for dynamic resources
 
 ## [26.1.2.14]
 
