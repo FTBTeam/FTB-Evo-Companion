@@ -12,6 +12,7 @@
     "ArmorSlotParagliderMixin",
     "ArsMagicaPiercingStatMixin",
     "AttackRangeSpearReachMixin",
+    "BaseSpawnerMissingEquipmentMixin",
     "BeardifierMixin",
     "BlockMixin",
     "BrokenSpawnerLootModifierMixin",

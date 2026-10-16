@@ -7,6 +7,7 @@
 - Server crash when an Applied Flux storage bus reads FE from a Flux Accessor on the same network; the storage bus no longer moves FE while an energy transfer is already in progress (FTBTeam/FTB-Modpack-Issues#13706)
 - EnderIO Wired and Wireless Chargers using power without charging items from other mods, such as the Scannable scanner; the charge now stays on the item (FTBTeam/FTB-Modpack-Issues#13704)
 - Game crashing when holding a Dank with Bridging Mod's placement assist active, because Bridging Mod called a Dank Storage method that no longer exists (FTBTeam/FTB-Modpack-Issues#13703)
+- Spawners in existing worlds flooding the server log with equipment errors when their mob was saved holding an item from a mod that is no longer in the pack; the missing items are dropped from the spawner's saved mob the first time it loads
 
 ### Removed
 
