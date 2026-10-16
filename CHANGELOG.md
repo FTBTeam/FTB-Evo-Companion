@@ -2,11 +2,16 @@
 
 ## [26.1.2.22]
 
+### Fixed
+
+- Server crash when an Applied Flux storage bus reads FE from a Flux Accessor on the same network; the storage bus no longer moves FE while an energy transfer is already in progress (FTBTeam/FTB-Modpack-Issues#13706)
+
 ### Removed
 
 - Energy Meter recursion guard, since Energy Meter 0.5.1 stops a meter from forwarding energy back into itself
 - Stellaris oil mixins for the Pumpjack, Fuel Refinery and Refinery fluid slot, since Stellaris 2.0.8 accepts any `c:oil` fluid and the Pumpjack fluid is now set with `oilConfig.pumpjackFluid`
 - Power Armor support (Armor Modification Table persistence, Solar module charging, JEI recipes, keybind and recipe sync), since Power Armor is no longer in the pack
+- Witchery Arthana save and load fix, since Witchery now keeps a placed Arthana's dagger and no longer saves an empty one
 
 ## [26.1.2.21]
 
