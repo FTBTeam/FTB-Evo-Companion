@@ -25,6 +25,8 @@
     "EnderIOFilterSlotPickupMixin",
     "EnderIOLimitedFilterCountMixin",
     "EnderIOXpFluidMixin",
+    "EnderIOWiredChargerWriteBackMixin",
+    "EnderIOWirelessChargerWriteBackMixin",
     "EnderIOVatFluidAccessMixin",
     "EnderIOEvolutionVatFluidAccessMixin",
     "EnergizedPowerXpDrainMixin",

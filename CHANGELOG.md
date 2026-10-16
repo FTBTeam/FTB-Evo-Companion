@@ -5,6 +5,7 @@
 ### Fixed
 
 - Server crash when an Applied Flux storage bus reads FE from a Flux Accessor on the same network; the storage bus no longer moves FE while an energy transfer is already in progress (FTBTeam/FTB-Modpack-Issues#13706)
+- EnderIO Wired and Wireless Chargers using power without charging items from other mods, such as the Scannable scanner; the charge now stays on the item (FTBTeam/FTB-Modpack-Issues#13704)
 
 ### Removed
 
