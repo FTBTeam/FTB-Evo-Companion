@@ -12,7 +12,6 @@ import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsKeys;
 import dev.ftb.mods.ftbevolutioncompanion.client.BeastTrophyClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.ChallengeBoardClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.FabricatorClient;
-import dev.ftb.mods.ftbevolutioncompanion.client.MoltenMetalsClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.PyramidClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.RecipeSyncClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsClientHandler;
@@ -22,7 +21,7 @@ import dev.ftb.mods.ftbevolutioncompanion.compat.apotheosis.BossInvaderHandler;
 import dev.ftb.mods.ftbevolutioncompanion.compat.curios.CuriosReloadFix;
 import dev.ftb.mods.ftbevolutioncompanion.compat.gateways.TreasureGoblinEvent;
 import dev.ftb.mods.ftbevolutioncompanion.compat.hats.GiveHatCommand;
-import dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus.MoltenMetals;
+import dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus.MoltenMetalAliases;
 import dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus.ToolTraits;
 import dev.ftb.mods.ftbevolutioncompanion.compat.iceandfire.IceAndFireClaimProtection;
 import dev.ftb.mods.ftbevolutioncompanion.compat.incendium.IncendiumEntityDispatch;
@@ -94,7 +93,7 @@ public class FTBEvolutionCompanion {
         CompanionContent.FTB_BLOCKS.register(eventBus);
         CompanionContent.FTB_ITEMS.register(eventBus);
         CompanionContent.FTB_BLOCK_ENTITIES.register(eventBus);
-        MoltenMetals.register(eventBus);
+        MoltenMetalAliases.register(eventBus);
         ToolTraits.register();
         eventBus.addListener(CompanionContent::onBuildCreativeTabs);
         ChallengeRegistry.BLOCK_ENTITIES.register(eventBus);
@@ -192,7 +191,6 @@ public class FTBEvolutionCompanion {
 
         if (dist == Dist.CLIENT) {
             FabricatorClient.register(eventBus);
-            eventBus.addListener(MoltenMetalsClient::onRegisterFluidModels);
             eventBus.addListener(AthleticsKeys::onRegisterKeyMappings);
             NeoForge.EVENT_BUS.addListener(AthleticsClientHandler::onClientTick);
             eventBus.addListener(SkillsKeys::onRegisterKeyMappings);

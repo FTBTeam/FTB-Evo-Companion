@@ -1,5 +1,14 @@
 # Changelog
 
+## [26.1.2.21]
+
+### Removed
+
+- Thaumaturge mixins for warp wards, infusion stability, research and JEI instability display and the wand vis discount tooltip, since Thaumaturge is no longer in the pack
+- FTB Ultimine drop release fix, since FTB Ultimine 26.1.2.6 always drops what a failed break collected
+- The 58 Hephaestus molten metal fluids (`ftb:molten_*`) and their buckets, since Hephaestus 1.0.16 adds the same fluids as `hephaestus:molten_*`. Fluids, fluid blocks and buckets saved under the old ids turn into the Hephaestus ones when a world loads
+- Thaumium and Void Metal Hephaestus Tools materials being hidden without Thaumaturge, since Hephaestus Tools 1.0.7 only loads them when Thaumaturge is installed
+
 ## [26.1.2.20]
 
 ### Fixed

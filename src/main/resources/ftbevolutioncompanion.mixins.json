@@ -150,8 +150,6 @@
     "compat.sorcery.ArsLifeWardSyncMixin",
     "compat.lootr.LootrInstanceTickMixin",
     "compat.sorcery.ArsThornsDeadAttackerMixin",
-    "compat.sorcery.ThaumWarpWardMixin",
-    "compat.sorcery.ThaumInfusionStabilityMixin",
     "compat.sorcery.ApothEnchantmentMenuMixin",
     "compat.yungscavebiomes.SandstormDimensionMixin",
     "compat.xycraft.ItemRequiredFeaturesAccessor",
@@ -170,8 +168,7 @@
     "compat.sorcery.ArsMagicDigBlockEntityDropMixin",
     "compat.powerarmor.SolarModuleChargeAllPiecesMixin",
     "compat.occultism.OccultismTakeItemMixin",
-    "compat.occultism.OccultismComparatorRoundTripMixin",
-    "compat.ultimine.UltimineReleaseDropsMixin"
+    "compat.occultism.OccultismComparatorRoundTripMixin"
   ],
   "client": [
     "compat.ltxi.LTXIJeiFluidSlotMixin",
@@ -198,9 +195,6 @@
     "compat.hemomancy.client.NeoVitaeRitualDivinerMixin",
     "compat.hemomancy.client.WitcheryAbilityHudMixin",
     "compat.sorcery.client.ArsSpellManaCostTooltipMixin",
-    "compat.sorcery.client.ThaumResearchInstabilityMixin",
-    "compat.sorcery.client.ThaumJeiInstabilityMixin",
-    "compat.sorcery.client.ThaumWandVisDiscountTooltipMixin",
     "compat.otherworld.client.AnimaSpellScreenMixin",
     "compat.otherworld.client.AnimaSoulFocusTooltipMixin",
     "compat.xycraft.client.LevelRendererXyCraftLaserMixin",
