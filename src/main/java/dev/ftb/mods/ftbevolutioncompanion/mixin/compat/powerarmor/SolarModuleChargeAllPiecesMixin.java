@@ -20,9 +20,6 @@ public abstract class SolarModuleChargeAllPiecesMixin {
                                     "Lnet/minecraft/world/item/ItemStack;getCapability(Lnet/neoforged/neoforge/capabilities/ItemCapability;Ljava/lang/Object;)Ljava/lang/Object;"))
     private Object ftbevo$useEachPiecesOwnStack(
             ItemStack piece, ItemCapability<?, ?> capability, Object context, Operation<Object> original) {
-        if (piece.isEmpty()) {
-            return null;
-        }
         return original.call(piece, capability, ItemAccess.forStack(piece));
     }
 }
