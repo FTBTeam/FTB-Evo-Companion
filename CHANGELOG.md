@@ -1,5 +1,12 @@
 # Changelog
 
+## [26.1.2.22]
+
+### Removed
+
+- Energy Meter recursion guard, since Energy Meter 0.5.1 stops a meter from forwarding energy back into itself
+- Stellaris oil mixins for the Pumpjack, Fuel Refinery and Refinery fluid slot, since Stellaris 2.0.8 accepts any `c:oil` fluid and the Pumpjack fluid is now set with `oilConfig.pumpjackFluid`
+
 ## [26.1.2.21]
 
 ### Removed
