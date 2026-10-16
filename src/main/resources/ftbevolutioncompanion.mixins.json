@@ -38,6 +38,7 @@
     "MobFlowPadMotionSyncMixin",
     "compat.ae2.MeteoriteNetherLakeMixin",
     "compat.appflux.FEStorageNestedTransactionMixin",
+    "compat.bridging.BridgingDankSelectedItemMixin",
     "compat.colossalreactors.ColossalReactorsFluidTransactionMixin",
     "compat.colossalreactors.ColossalReactorsTurbinePortQuickMoveMixin",
     "compat.drones.DroneAssemblerItemHolderMixin",
