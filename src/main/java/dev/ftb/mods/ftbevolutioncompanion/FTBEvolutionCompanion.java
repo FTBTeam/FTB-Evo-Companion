@@ -29,7 +29,6 @@ import dev.ftb.mods.ftbevolutioncompanion.compat.iris.IrisGeckoGlow;
 import dev.ftb.mods.ftbevolutioncompanion.compat.jei.RecipeSyncTypes;
 import dev.ftb.mods.ftbevolutioncompanion.compat.nutritional.VampireNutritionLock;
 import dev.ftb.mods.ftbevolutioncompanion.compat.oceanmobs.RiftArena;
-import dev.ftb.mods.ftbevolutioncompanion.compat.powerarmor.PowerArmorRecipeSync;
 import dev.ftb.mods.ftbevolutioncompanion.compat.removed.RemovedMods;
 import dev.ftb.mods.ftbevolutioncompanion.compat.streams.StreamsRemoval;
 import dev.ftb.mods.ftbevolutioncompanion.compat.thaumaturge.ThaumaturgePlaceholders;
@@ -117,8 +116,6 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(TreasureGoblinEvent::onServerTick);
         NeoForge.EVENT_BUS.addListener(IncendiumEntityDispatch::onServerTick);
         NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, CuriosReloadFix::onDatapackSync);
-        eventBus.addListener(PowerArmorRecipeSync::register);
-        NeoForge.EVENT_BUS.addListener(PowerArmorRecipeSync::onDatapackSync);
         PyramidRegistry.BLOCK_ENTITIES.register(eventBus);
         eventBus.addListener(PyramidRegistry::onRegisterCapabilities);
         eventBus.addListener(PyramidPayloads::register);
