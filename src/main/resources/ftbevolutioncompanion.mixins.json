@@ -38,6 +38,7 @@
     "MobAccessor",
     "MobFlowPadMotionSyncMixin",
     "compat.ae2.MeteoriteNetherLakeMixin",
+    "compat.advancedae.QuantumComputerJobLoadMixin",
     "compat.appflux.FEStorageNestedTransactionMixin",
     "compat.bridging.BridgingDankSelectedItemMixin",
     "compat.oritech.OritechFertilizerScreenMixin",
