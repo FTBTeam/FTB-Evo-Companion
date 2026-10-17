@@ -12,6 +12,7 @@ import dev.ftb.mods.ftbevolutioncompanion.client.AthleticsKeys;
 import dev.ftb.mods.ftbevolutioncompanion.client.BeastTrophyClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.ChallengeBoardClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.FabricatorClient;
+import dev.ftb.mods.ftbevolutioncompanion.client.KeybindDefaults;
 import dev.ftb.mods.ftbevolutioncompanion.client.PyramidClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.RecipeSyncClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsClientHandler;
@@ -190,6 +191,7 @@ public class FTBEvolutionCompanion {
             FabricatorClient.register(eventBus);
             eventBus.addListener(AthleticsKeys::onRegisterKeyMappings);
             NeoForge.EVENT_BUS.addListener(AthleticsClientHandler::onClientTick);
+            NeoForge.EVENT_BUS.addListener(KeybindDefaults::onClientTick);
             eventBus.addListener(SkillsKeys::onRegisterKeyMappings);
             NeoForge.EVENT_BUS.addListener(SkillsClientHandler::onClientTick);
             NeoForge.EVENT_BUS.addListener(SkillsClientHandler::onLeftClickEmpty);
