@@ -41,6 +41,8 @@
     "compat.appflux.FEStorageNestedTransactionMixin",
     "compat.bridging.BridgingDankSelectedItemMixin",
     "compat.oritech.OritechFertilizerScreenMixin",
+    "compat.productivefarming.ExternalCropYieldMaturityMixin",
+    "compat.productivefarming.ProductiveCropYieldMaturityMixin",
     "compat.replication.ReplicationServerGuideMixin",
     "compat.titanium.TitaniumSlotFilterMixin",
     "compat.colossalreactors.ColossalReactorsFluidTransactionMixin",

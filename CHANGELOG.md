@@ -5,6 +5,7 @@
 ### Fixed
 
 - Game freezing when shift-clicking an item into a Replication machine slot that does not accept it, such as a Memory Chip into the Identification Chamber or Redstone Blocks into the Disintegrator; shift-click now skips those slots and moves the item into one that accepts it. This affected every machine built on Titanium 4.0.12 (FTBTeam/FTB-Modpack-Issues#13712)
+- Potatoes, Carrots and other crops with a Productive Farming yield stat dropping extra crops when broken before they are fully grown; the yield bonus now only applies to fully grown crops (FTBTesting/Testing-Issues#4756)
 
 ## [26.1.2.22]
 
