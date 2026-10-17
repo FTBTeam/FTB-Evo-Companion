@@ -168,6 +168,7 @@
     "compat.occultism.OccultismComparatorRoundTripMixin"
   ],
   "client": [
+    "compat.extendedae.client.ExtendedAESetAmountTooltipMixin",
     "compat.ltxi.LTXIJeiFluidSlotMixin",
     "compat.hats.client.HatClientPacketsMixin",
     "compat.evilcraft.client.VengeanceSpiritInnerRenderStateMixin",
