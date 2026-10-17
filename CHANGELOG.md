@@ -1,5 +1,11 @@
 # Changelog
 
+## [26.1.2.23]
+
+### Changed
+
+- Fake players (machines and other automation that act as a player) can no longer use watering cans; any item in the `ftb:watering_cans` tag is blocked
+
 ## [26.1.2.22]
 
 ### Fixed
