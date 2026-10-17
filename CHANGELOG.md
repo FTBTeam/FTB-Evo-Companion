@@ -8,6 +8,7 @@
 - Advanced AE Quantum Computer losing its in-progress crafting jobs, and the items in them, when the world is reloaded or the area is unloaded; saved jobs and the Quantum Computer's settings now load correctly (FTBTeam/FTB-Modpack-Issues#13660)
 - Damage Reflection reflecting a player's own damage back onto them, which hurt players after every Apothic Gateways wave (FTBTeam/FTB-Modpack-Issues#13692)
 - Cloud in a Bottle and the Athletics extra jump skills using up both double jumps on one press; each source now gives its own jump (FTBTeam/FTB-Modpack-Issues#13710)
+- Pipes and AE2 Pattern Providers putting items and fluids into the FTB Fabricator's output slots and output tank, and pulling from its inputs; automation now only inserts into inputs and only extracts from outputs (FTBTeam/FTB-Modpack-Issues#13716)
 
 ## [26.1.2.22]
 
