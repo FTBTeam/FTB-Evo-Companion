@@ -9,6 +9,7 @@
 - Damage Reflection reflecting a player's own damage back onto them, which hurt players after every Apothic Gateways wave (FTBTeam/FTB-Modpack-Issues#13692)
 - Cloud in a Bottle and the Athletics extra jump skills using up both double jumps on one press; each source now gives its own jump (FTBTeam/FTB-Modpack-Issues#13710)
 - Pipes and AE2 Pattern Providers putting items and fluids into the FTB Fabricator's output slots and output tank, and pulling from its inputs; automation now only inserts into inputs and only extracts from outputs (FTBTeam/FTB-Modpack-Issues#13716)
+- Ars Magica Legacy Falling Star damaging its own caster; the caster is now spared, as the spell's book page says and as Fire Rain and Blizzard already do (FTBTeam/FTB-Modpack-Issues#13723)
 
 ## [26.1.2.22]
 

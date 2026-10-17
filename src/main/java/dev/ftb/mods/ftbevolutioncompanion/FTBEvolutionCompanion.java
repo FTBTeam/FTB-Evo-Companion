@@ -19,6 +19,7 @@ import dev.ftb.mods.ftbevolutioncompanion.client.SkillsClientHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsKeys;
 import dev.ftb.mods.ftbevolutioncompanion.client.WingTooltips;
 import dev.ftb.mods.ftbevolutioncompanion.compat.apotheosis.BossInvaderHandler;
+import dev.ftb.mods.ftbevolutioncompanion.compat.arsmagicalegacy.FallingStarCasterGuard;
 import dev.ftb.mods.ftbevolutioncompanion.compat.curios.CuriosReloadFix;
 import dev.ftb.mods.ftbevolutioncompanion.compat.gateways.TreasureGoblinEvent;
 import dev.ftb.mods.ftbevolutioncompanion.compat.hats.GiveHatCommand;
@@ -165,6 +166,7 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(SkillsCommand::onRegisterCommands);
         NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, MiningSkillXp::onBlockBreak);
         NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, SelfReflectionGuard::onIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, FallingStarCasterGuard::onIncomingDamage);
         NeoForge.EVENT_BUS.addListener(OutgoingDamage::onIncomingDamage);
         NeoForge.EVENT_BUS.addListener(IncomingDamage::onIncomingDamage);
         NeoForge.EVENT_BUS.addListener(IncomingDamage::onDamagePre);
