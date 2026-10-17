@@ -33,7 +33,6 @@ import dev.ftb.mods.ftbevolutioncompanion.compat.oceanmobs.RiftArena;
 import dev.ftb.mods.ftbevolutioncompanion.compat.removed.RemovedMods;
 import dev.ftb.mods.ftbevolutioncompanion.compat.streams.StreamsRemoval;
 import dev.ftb.mods.ftbevolutioncompanion.compat.thaumaturge.ThaumaturgePlaceholders;
-import dev.ftb.mods.ftbevolutioncompanion.compat.wateringcan.FakePlayerWateringCans;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.content.CompanionContent;
 import dev.ftb.mods.ftbevolutioncompanion.fabricator.FabricatorRegistry;
@@ -105,10 +104,6 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(ChallengeBoardCommand::onRegisterCommands);
         NeoForge.EVENT_BUS.addListener(GiveHatCommand::onRegisterCommands);
         NeoForge.EVENT_BUS.addListener(VampireNutritionLock::onPlayerTick);
-        NeoForge.EVENT_BUS.addListener(FakePlayerWateringCans::onRightClickItem);
-        NeoForge.EVENT_BUS.addListener(FakePlayerWateringCans::onRightClickBlock);
-        NeoForge.EVENT_BUS.addListener(FakePlayerWateringCans::onUseItemStart);
-        NeoForge.EVENT_BUS.addListener(FakePlayerWateringCans::onUseItemTick);
         NeoForge.EVENT_BUS.addListener(EventPriority.LOW, BossInvaderHandler::onFinalizeSpawn);
         NeoForge.EVENT_BUS.addListener(BossInvaderHandler::onEntityJoinLevel);
         NeoForge.EVENT_BUS.addListener(RiftArena::onSpawnPlacementCheck);

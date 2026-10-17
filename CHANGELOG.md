@@ -2,9 +2,9 @@
 
 ## [26.1.2.23]
 
-### Changed
+### Fixed
 
-- Fake players (machines and other automation that act as a player) can no longer use watering cans; any item in the `ftb:watering_cans` tag is blocked
+- Game freezing when shift-clicking an item into a Replication machine slot that does not accept it, such as a Memory Chip into the Identification Chamber or Redstone Blocks into the Disintegrator; shift-click now skips those slots and moves the item into one that accepts it. This affected every machine built on Titanium 4.0.12 (FTBTeam/FTB-Modpack-Issues#13712)
 
 ## [26.1.2.22]
 

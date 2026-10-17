@@ -42,6 +42,7 @@
     "compat.bridging.BridgingDankSelectedItemMixin",
     "compat.oritech.OritechFertilizerScreenMixin",
     "compat.replication.ReplicationServerGuideMixin",
+    "compat.titanium.TitaniumSlotFilterMixin",
     "compat.colossalreactors.ColossalReactorsFluidTransactionMixin",
     "compat.colossalreactors.ColossalReactorsTurbinePortQuickMoveMixin",
     "compat.drones.DroneAssemblerItemHolderMixin",
