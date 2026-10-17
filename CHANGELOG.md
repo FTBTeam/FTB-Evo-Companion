@@ -5,6 +5,7 @@
 ### Fixed
 
 - Server crash when an Applied Flux storage bus reads FE from a Flux Accessor on the same network; the storage bus no longer moves FE while an energy transfer is already in progress (FTBTeam/FTB-Modpack-Issues#13706)
+- Work around for stalling threshold export bus
 - EnderIO Wired and Wireless Chargers using power without charging items from other mods, such as the Scannable scanner; the charge now stays on the item (FTBTeam/FTB-Modpack-Issues#13704)
 - Game crashing when holding a Dank with Bridging Mod's placement assist active, because Bridging Mod called a Dank Storage method that no longer exists (FTBTeam/FTB-Modpack-Issues#13703)
 - Disconnect when opening an Oritech Fertilizer, which used the Destroyer's screen; it now opens its own Fertilizer screen (FTBTeam/FTB-Modpack-Issues#13694)
