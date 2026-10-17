@@ -5,6 +5,7 @@ import dev.ftb.mods.ftbevolutioncompanion.athletics.network.AthleticsPayloads;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
@@ -20,8 +21,19 @@ public final class AthleticsClientHandler {
     private static int jumpsUsed;
     private static int dashesUsed;
     private static int clingTicks;
+    private static long artifactsJumpTick = Long.MIN_VALUE;
+    private static long extraJumpTick = Long.MIN_VALUE;
 
     private AthleticsClientHandler() {}
+
+    public static void onArtifactsDoubleJump(Player player) {
+        long now = player.level().getGameTime();
+        artifactsJumpTick = now;
+        if (extraJumpTick == now && jumpsUsed > 0) {
+            jumpsUsed--;
+            extraJumpTick = Long.MIN_VALUE;
+        }
+    }
 
     public static void onClientTick(ClientTickEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
@@ -100,10 +112,12 @@ public final class AthleticsClientHandler {
     }
 
     private static void tryExtraJump(LocalPlayer player) {
-        if (!isAirborne(player) || jumpsUsed >= AthleticsAbilities.maxExtraJumps(player)) {
+        long now = player.level().getGameTime();
+        if (!isAirborne(player) || artifactsJumpTick == now || jumpsUsed >= AthleticsAbilities.maxExtraJumps(player)) {
             return;
         }
         jumpsUsed++;
+        extraJumpTick = now;
         if (AthleticsAbilities.isWallClinging(player)) {
             clingTicks = 0;
         }

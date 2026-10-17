@@ -30,6 +30,7 @@ import dev.ftb.mods.ftbevolutioncompanion.compat.iris.IrisGeckoGlow;
 import dev.ftb.mods.ftbevolutioncompanion.compat.jei.RecipeSyncTypes;
 import dev.ftb.mods.ftbevolutioncompanion.compat.nutritional.VampireNutritionLock;
 import dev.ftb.mods.ftbevolutioncompanion.compat.oceanmobs.RiftArena;
+import dev.ftb.mods.ftbevolutioncompanion.compat.puffish.SelfReflectionGuard;
 import dev.ftb.mods.ftbevolutioncompanion.compat.removed.RemovedMods;
 import dev.ftb.mods.ftbevolutioncompanion.compat.streams.StreamsRemoval;
 import dev.ftb.mods.ftbevolutioncompanion.compat.thaumaturge.ThaumaturgePlaceholders;
@@ -163,6 +164,7 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(SkillsAbilities::onPlayerChangedDimension);
         NeoForge.EVENT_BUS.addListener(SkillsCommand::onRegisterCommands);
         NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, MiningSkillXp::onBlockBreak);
+        NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, SelfReflectionGuard::onIncomingDamage);
         NeoForge.EVENT_BUS.addListener(OutgoingDamage::onIncomingDamage);
         NeoForge.EVENT_BUS.addListener(IncomingDamage::onIncomingDamage);
         NeoForge.EVENT_BUS.addListener(IncomingDamage::onDamagePre);
