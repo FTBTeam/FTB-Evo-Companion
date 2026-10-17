@@ -1,6 +1,6 @@
 # Changelog
 
-## [26.1.2.22]
+## [26.1.2.21]
 
 ### Fixed
 
@@ -14,19 +14,14 @@
 
 ### Removed
 
-- Energy Meter recursion guard, since Energy Meter 0.5.1 stops a meter from forwarding energy back into itself
-- Stellaris oil mixins for the Pumpjack, Fuel Refinery and Refinery fluid slot, since Stellaris 2.0.8 accepts any `c:oil` fluid and the Pumpjack fluid is now set with `oilConfig.pumpjackFluid`
-- Power Armor support (Armor Modification Table persistence, Solar module charging, JEI recipes, keybind and recipe sync), since Power Armor is no longer in the pack
-- Witchery Arthana save and load fix, since Witchery now keeps a placed Arthana's dagger and no longer saves an empty one
-
-## [26.1.2.21]
-
-### Removed
-
 - Thaumaturge mixins for warp wards, infusion stability, research and JEI instability display and the wand vis discount tooltip, since Thaumaturge is no longer in the pack
 - FTB Ultimine drop release fix, since FTB Ultimine 26.1.2.6 always drops what a failed break collected
 - The 58 Hephaestus molten metal fluids (`ftb:molten_*`) and their buckets, since Hephaestus 1.0.16 adds the same fluids as `hephaestus:molten_*`. Fluids, fluid blocks and buckets saved under the old ids turn into the Hephaestus ones when a world loads
 - Thaumium and Void Metal Hephaestus Tools materials being hidden without Thaumaturge, since Hephaestus Tools 1.0.7 only loads them when Thaumaturge is installed
+- Energy Meter recursion guard, since Energy Meter 0.5.1 stops a meter from forwarding energy back into itself
+- Stellaris oil mixins for the Pumpjack, Fuel Refinery and Refinery fluid slot, since Stellaris 2.0.8 accepts any `c:oil` fluid and the Pumpjack fluid is now set with `oilConfig.pumpjackFluid`
+- Power Armor support (Armor Modification Table persistence, Solar module charging, JEI recipes, keybind and recipe sync), since Power Armor is no longer in the pack
+- Witchery Arthana save and load fix, since Witchery now keeps a placed Arthana's dagger and no longer saves an empty one
 
 ## [26.1.2.20]
 
