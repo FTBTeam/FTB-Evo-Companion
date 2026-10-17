@@ -41,6 +41,7 @@
     "compat.appflux.FEStorageNestedTransactionMixin",
     "compat.bridging.BridgingDankSelectedItemMixin",
     "compat.oritech.OritechFertilizerScreenMixin",
+    "compat.replication.ReplicationServerGuideMixin",
     "compat.colossalreactors.ColossalReactorsFluidTransactionMixin",
     "compat.colossalreactors.ColossalReactorsTurbinePortQuickMoveMixin",
     "compat.drones.DroneAssemblerItemHolderMixin",

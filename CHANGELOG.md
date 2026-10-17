@@ -9,6 +9,7 @@
 - EnderIO Wired and Wireless Chargers using power without charging items from other mods, such as the Scannable scanner; the charge now stays on the item (FTBTeam/FTB-Modpack-Issues#13704)
 - Game crashing when holding a Dank with Bridging Mod's placement assist active, because Bridging Mod called a Dank Storage method that no longer exists (FTBTeam/FTB-Modpack-Issues#13703)
 - Disconnect when opening an Oritech Fertilizer, which used the Destroyer's screen; it now opens its own Fertilizer screen (FTBTeam/FTB-Modpack-Issues#13694)
+- Dedicated servers failing to start because Replication builds its GuideME guide during mod loading, which loads client-only classes; the guide is now only built on clients
 - GuideME's Open Guide key and Logistics Networks' Primary and Secondary Interaction keys being unbound on installs made before the pack set their defaults; on first launch they are set to G, left click and right click if they are still unbound
 - Spawners in existing worlds flooding the server log with equipment errors when their mob was saved holding an item from a mod that is no longer in the pack; the missing items are dropped from the spawner's saved mob the first time it loads
 
