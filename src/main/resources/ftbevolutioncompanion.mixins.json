@@ -195,7 +195,8 @@
     "compat.dynamicresources.client.ModernFixBakedRegistryHashMapMixin",
     "compat.dynamicresources.client.ModernFixBlockStateModelMapMixin",
     "compat.dynamicresources.client.FunctionalStorageFramedModelMixin",
-    "compat.dynamicresources.client.ColossalReactorsTurbineModelMixin"
+    "compat.dynamicresources.client.ColossalReactorsTurbineModelMixin",
+    "compat.dynamicresources.client.EnderIOConduitStaleBakerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
