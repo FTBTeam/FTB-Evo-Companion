@@ -14,6 +14,7 @@
 ### Removed
 
 - Six fixes that are now in the mods themselves: the Ars Magica Legacy altar empty-stack crash, config-before-load crash, empty Life Ward resync and Dig spell losing block entity contents (Ars Magica Legacy 1.7.1, MinecraftschurliMods/Ars-Magica-Legacy#503, #504, #505), the Oritech Fertilizer opening the Destroyer screen (Oritech 2.0.0-exp12), and the Crafting Station side slot stack clamp (Crafting Station JEI 2.2.1)
+- The Replication dedicated server GuideME fix, now in Replication 1.2.8 (Buuz135/Replication#120)
 
 ## [26.1.2.22]
 

@@ -42,7 +42,6 @@
     "compat.bridging.BridgingDankSelectedItemMixin",
     "compat.productivefarming.ExternalCropYieldMaturityMixin",
     "compat.productivefarming.ProductiveCropYieldMaturityMixin",
-    "compat.replication.ReplicationServerGuideMixin",
     "compat.colossalreactors.ColossalReactorsFluidTransactionMixin",
     "compat.colossalreactors.ColossalReactorsTurbinePortQuickMoveMixin",
     "compat.drones.DroneAssemblerItemHolderMixin",
