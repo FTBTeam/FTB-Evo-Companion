@@ -11,6 +11,10 @@
 - Pipes and AE2 Pattern Providers putting items and fluids into the FTB Fabricator's output slots and output tank, and pulling from its inputs; automation now only inserts into inputs and only extracts from outputs (FTBTeam/FTB-Modpack-Issues#13716)
 - Ars Magica Legacy Falling Star damaging its own caster; the caster is now spared, as the spell's book page says and as Fire Rain and Blizzard already do (FTBTeam/FTB-Modpack-Issues#13723)
 
+### Removed
+
+- Six fixes that are now in the mods themselves: the Ars Magica Legacy altar empty-stack crash, config-before-load crash, empty Life Ward resync and Dig spell losing block entity contents (Ars Magica Legacy 1.7.1, MinecraftschurliMods/Ars-Magica-Legacy#503, #504, #505), the Oritech Fertilizer opening the Destroyer screen (Oritech 2.0.0-exp12), and the Crafting Station side slot stack clamp (Crafting Station JEI 2.2.1)
+
 ## [26.1.2.22]
 
 ### Fixed
