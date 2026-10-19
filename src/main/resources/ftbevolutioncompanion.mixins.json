@@ -84,6 +84,8 @@
     "ItemMixin",
     "ItemStackMixin",
     "JigsawPlacementRotationMixin",
+    "LayerLightSectionStorageInvoker",
+    "LightEngineMissingSectionGuardMixin",
     "LivingEntityFluidTravelMixin",
     "LivingEntityAccessor",
     "LivingEntityDeadDamageMixin",
