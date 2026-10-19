@@ -168,7 +168,6 @@
   ],
   "client": [
     "compat.extendedae.client.ExtendedAESetAmountTooltipMixin",
-    "compat.ltxi.LTXIJeiFluidSlotMixin",
     "compat.hats.client.HatClientPacketsMixin",
     "compat.artifacts.client.DoubleJumpMixin",
     "compat.evilcraft.client.VengeanceSpiritInnerRenderStateMixin",
