@@ -1,0 +1,9 @@
+{
+  "effects": [
+    {
+      "type": "ftbevolutioncompanion:freeze",
+      "seconds": 15,
+      "amplifier": 2
+    }
+  ]
+}

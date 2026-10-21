@@ -23,8 +23,8 @@ import dev.ftb.mods.ftbevolutioncompanion.compat.arsmagicalegacy.FallingStarCast
 import dev.ftb.mods.ftbevolutioncompanion.compat.curios.CuriosReloadFix;
 import dev.ftb.mods.ftbevolutioncompanion.compat.gateways.TreasureGoblinEvent;
 import dev.ftb.mods.ftbevolutioncompanion.compat.hats.GiveHatCommand;
+import dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus.HephaestusTraits;
 import dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus.MoltenMetalAliases;
-import dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus.ToolTraits;
 import dev.ftb.mods.ftbevolutioncompanion.compat.iceandfire.IceAndFireClaimProtection;
 import dev.ftb.mods.ftbevolutioncompanion.compat.incendium.IncendiumEntityDispatch;
 import dev.ftb.mods.ftbevolutioncompanion.compat.iris.IrisGeckoGlow;
@@ -96,7 +96,7 @@ public class FTBEvolutionCompanion {
         CompanionContent.FTB_ITEMS.register(eventBus);
         CompanionContent.FTB_BLOCK_ENTITIES.register(eventBus);
         MoltenMetalAliases.register(eventBus);
-        ToolTraits.register();
+        HephaestusTraits.register(eventBus);
         eventBus.addListener(CompanionContent::onBuildCreativeTabs);
         ChallengeRegistry.BLOCK_ENTITIES.register(eventBus);
         eventBus.addListener(ChallengePayloads::register);

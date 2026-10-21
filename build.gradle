@@ -185,6 +185,7 @@ dependencies {
 	compileOnly "curse.maven:porting-dead-libs-1173919:${portingdeadlibs_curse_file_id}"
 	compileOnly "curse.maven:agritech-evolved-1287394:${agritechevolved_curse_file_id}"
 	compileOnly "curse.maven:iron-jetpacks-284497:${ironjetpacks_curse_file_id}"
+	compileOnly "curse.maven:hephaestus-tools-1725286:${hephaestus_tools_curse_file_id}"
 	compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
 }
 

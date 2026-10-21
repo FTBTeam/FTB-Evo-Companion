@@ -12,8 +12,14 @@
 - Ars Magica Legacy Falling Star damaging its own caster; the caster is now spared, as the spell's book page says and as Fire Rain and Blizzard already do (FTBTeam/FTB-Modpack-Issues#13723)
 - Client crash ("zip file closed") when resource packs or the High Contrast setting change while in a world near Ender IO conduits; a conduit drawn mid-reload is skipped for that frame instead of crashing (FTBTeam/FTB-Modpack-Issues#13731)
 
+### Changed
+
+- Hephaestus Tools traits Demonic, Nautical, Dragonfire, Dragonfrost and Dragonstorm are now data traits on Hephaestus Tools 1.0.9's own trait system, so they show in the tool tooltip, the part tooltip and the Workbench like the built-in traits; the materials that carry them are set in the pack's material files
+
 ### Removed
 
+- Hephaestus Tools mixins for the gold tier remap, harvest tag checks, tool recalculation, trait tooltips and removed materials, all handled by Hephaestus Tools 1.0.9 itself or by pack data now (titammods/hephaestustools#10, #11, #15)
+- Magical and Magically Jagged tool traits, whose Thaumium and Void Metal materials only load with Thaumaturge
 - Six fixes that are now in the mods themselves: the Ars Magica Legacy altar empty-stack crash, config-before-load crash, empty Life Ward resync and Dig spell losing block entity contents (Ars Magica Legacy 1.7.1, MinecraftschurliMods/Ars-Magica-Legacy#503, #504, #505), the Oritech Fertilizer opening the Destroyer screen (Oritech 2.0.0-exp12), and the Crafting Station side slot stack clamp (Crafting Station JEI 2.2.1)
 - The Replication dedicated server GuideME fix, now in Replication 1.2.8 (Buuz135/Replication#120)
 
