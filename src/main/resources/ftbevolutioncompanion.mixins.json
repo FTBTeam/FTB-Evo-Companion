@@ -57,6 +57,7 @@
     "compat.iceandfire.DragonVariantLoadMixin",
     "compat.apothic.BulletModifierAffixAccessor",
     "compat.apothic.MultiShotAffixMixin",
+    "compat.apothic.InvaderWaveDimensionFallbackMixin",
     "compat.ltxi.LTXIAuroraGunneryMixin",
     "compat.ltxi.LTXIDaybreakSeekingMixin",
     "compat.ltxi.LTXIExtendedInputGunneryMixin",

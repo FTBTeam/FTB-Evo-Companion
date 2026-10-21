@@ -5,6 +5,7 @@
 ### Fixed
 
 - Iron Furnaces factory Auto Split turning one metal's FTBIC Crushed Ore, Washed Ore or Refined Concentrate into another metal's; Auto Split now only balances stacks of the same metal (FTBTeam/FTB-Modpack-Issues#13805)
+- Apothic Gateways imploding with "not enough space" on their random invader wave when opened in the Mining Dimension or another non-vanilla dimension; the wave now picks an invader as if in the matching vanilla dimension (Mining Dimension uses Overworld invaders) (FTBTeam/FTB-Modpack-Issues#13788)
 
 ### Changed
 
