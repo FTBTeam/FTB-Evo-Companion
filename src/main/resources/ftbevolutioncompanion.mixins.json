@@ -156,6 +156,7 @@
     "compat.agritech.AdvancedPlanterExportMixin",
     "compat.agritech.BiomassBurnerCompactedBlockMixin",
     "compat.ironjetpacks.JetpackTierIngredientDisplayMixin",
+    "compat.ironfurnaces.IronFurnacesSplitComponentsMixin",
     "compat.iceandfire.EggInIceUpdateTagMixin",
     "compat.justdirethings.PocketGeneratorSelfInsertMixin",
     "compat.occultism.OccultismTakeItemMixin",
