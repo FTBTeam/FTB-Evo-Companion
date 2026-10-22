@@ -193,7 +193,8 @@
     "compat.dynamicresources.client.ModernFixBlockStateModelMapMixin",
     "compat.dynamicresources.client.FunctionalStorageFramedModelMixin",
     "compat.dynamicresources.client.ColossalReactorsTurbineModelMixin",
-    "compat.dynamicresources.client.EnderIOConduitStaleBakerMixin"
+    "compat.dynamicresources.client.EnderIOConduitStaleBakerMixin",
+    "compat.dynamicresources.client.CtmQuadDeduplicatorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

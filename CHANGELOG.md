@@ -1,5 +1,12 @@
 # Changelog
 
+## [26.1.2.25]
+
+### Fixed
+
+- Temp fix for MF & CTM dynamic resources
+- Challenge Board leaderboard never reaching 100% for a team that finished the chapter; repeatable quests now count as complete once done, even after they reset (FTBTeam/FTB-Modpack-Issues#13784)
+
 ## [26.1.2.24]
 
 ### Fixed
