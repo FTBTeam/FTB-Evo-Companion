@@ -6,6 +6,7 @@
 
 - Temp fix for MF & CTM dynamic resources
 - Challenge Board leaderboard never reaching 100% for a team that finished the chapter; repeatable quests now count as complete once done, even after they reset (FTBTeam/FTB-Modpack-Issues#13784)
+- Applied Flux Flux Accessors, FE Export Buses and pipes pulling from a Flux Accessor getting no FE from energy storage behind an FE Storage Bus; Storage Bus FE now flows like FE in FE Storage Cells, and FE Import Buses no longer lose FE sent to a Storage Bus (FTBTeam/FTB-Modpack-Issues#13825)
 
 ## [26.1.2.24]
 
