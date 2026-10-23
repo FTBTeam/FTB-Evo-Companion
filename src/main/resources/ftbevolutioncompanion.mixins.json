@@ -38,6 +38,8 @@
     "MobFlowPadMotionSyncMixin",
     "compat.ae2.MeteoriteNetherLakeMixin",
     "compat.advancedae.QuantumComputerJobLoadMixin",
+    "compat.appflux.FEStackExportProbeMixin",
+    "compat.appflux.FEStackImportProbeMixin",
     "compat.appflux.FEStorageNestedTransactionMixin",
     "compat.bridging.BridgingDankSelectedItemMixin",
     "compat.productivefarming.ExternalCropYieldMaturityMixin",
