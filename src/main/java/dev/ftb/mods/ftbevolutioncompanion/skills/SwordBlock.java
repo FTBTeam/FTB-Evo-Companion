@@ -17,7 +17,8 @@ public final class SwordBlock {
     public static boolean canBlock(LivingEntity entity, ItemStack stack) {
         return entity instanceof Player player
                 && SkillsHelper.isSword(stack)
-                && SkillsHelper.attr(player, SkillsRegistry.SWORD_BLOCK) > 0.0;
+                && SkillsHelper.attr(player, SkillsRegistry.SWORD_BLOCK) > 0.0
+                && SkillsAbilities.toggles(player).swordBlock();
     }
 
     public static BlocksAttacks component(LivingEntity entity) {

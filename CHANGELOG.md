@@ -2,6 +2,10 @@
 
 ## [26.1.2.25]
 
+### Added
+
+- Toggle Sword Block keybind, unbound by default; with Sword Block off, right-clicking with a sword uses an off-hand bow instead of blocking (FTBTeam/FTB-Modpack-Issues#13781)
+
 ### Fixed
 
 - Temp fix for MF & CTM dynamic resources

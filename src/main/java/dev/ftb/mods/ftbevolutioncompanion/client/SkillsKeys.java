@@ -28,6 +28,8 @@ public final class SkillsKeys {
             new KeyMapping("key.ftbevolutioncompanion.toggle_piercing_strike", GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
     public static final KeyMapping TOGGLE_SCYTHE_ARC =
             new KeyMapping("key.ftbevolutioncompanion.toggle_scythe_arc", GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
+    public static final KeyMapping TOGGLE_SWORD_BLOCK =
+            new KeyMapping("key.ftbevolutioncompanion.toggle_sword_block", GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
     public static final KeyMapping ACTIVATE_LANCER =
             new KeyMapping("key.ftbevolutioncompanion.activate_lancer", GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
 
@@ -45,6 +47,7 @@ public final class SkillsKeys {
         event.register(TOGGLE_RAIN_OF_ARROWS);
         event.register(TOGGLE_PIERCING_STRIKE);
         event.register(TOGGLE_SCYTHE_ARC);
+        event.register(TOGGLE_SWORD_BLOCK);
         event.register(ACTIVATE_LANCER);
     }
 }

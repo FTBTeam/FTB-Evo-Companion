@@ -29,6 +29,7 @@ public final class SkillsClientHandler {
         sendToggle(SkillsKeys.TOGGLE_RAIN_OF_ARROWS, SkillToggles.Toggle.RAIN_OF_ARROWS);
         sendToggle(SkillsKeys.TOGGLE_PIERCING_STRIKE, SkillToggles.Toggle.PIERCING_STRIKE);
         sendToggle(SkillsKeys.TOGGLE_SCYTHE_ARC, SkillToggles.Toggle.SCYTHE_ARC);
+        sendToggle(SkillsKeys.TOGGLE_SWORD_BLOCK, SkillToggles.Toggle.SWORD_BLOCK);
 
         while (SkillsKeys.ACTIVATE_NINJA.consumeClick()) {
             ClientPacketDistributor.sendToServer(new SkillsPayloads.ActivateSkill(SkillsAbilities.ACTIVATE_NINJA));
@@ -75,6 +76,7 @@ public final class SkillsClientHandler {
                 || SkillsKeys.TOGGLE_RAIN_OF_ARROWS.consumeClick()
                 || SkillsKeys.TOGGLE_PIERCING_STRIKE.consumeClick()
                 || SkillsKeys.TOGGLE_SCYTHE_ARC.consumeClick()
+                || SkillsKeys.TOGGLE_SWORD_BLOCK.consumeClick()
                 || SkillsKeys.ACTIVATE_LANCER.consumeClick()) {}
     }
 }

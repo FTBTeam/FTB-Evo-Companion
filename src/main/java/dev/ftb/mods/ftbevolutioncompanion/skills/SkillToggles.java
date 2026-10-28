@@ -16,8 +16,10 @@ public record SkillToggles(
         boolean blademaster,
         boolean rainOfArrows,
         boolean piercingStrike,
-        boolean scytheArc) {
-    public static final SkillToggles DEFAULT = new SkillToggles(true, true, true, true, true, true, true, true, true);
+        boolean scytheArc,
+        boolean swordBlock) {
+    public static final SkillToggles DEFAULT =
+            new SkillToggles(true, true, true, true, true, true, true, true, true, true);
 
     public static final MapCodec<SkillToggles> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                     Codec.BOOL.optionalFieldOf("faster_strikes", true).forGetter(SkillToggles::fasterStrikes),
@@ -28,7 +30,8 @@ public record SkillToggles(
                     Codec.BOOL.optionalFieldOf("blademaster", true).forGetter(SkillToggles::blademaster),
                     Codec.BOOL.optionalFieldOf("rain_of_arrows", true).forGetter(SkillToggles::rainOfArrows),
                     Codec.BOOL.optionalFieldOf("piercing_strike", true).forGetter(SkillToggles::piercingStrike),
-                    Codec.BOOL.optionalFieldOf("scythe_arc", true).forGetter(SkillToggles::scytheArc))
+                    Codec.BOOL.optionalFieldOf("scythe_arc", true).forGetter(SkillToggles::scytheArc),
+                    Codec.BOOL.optionalFieldOf("sword_block", true).forGetter(SkillToggles::swordBlock))
             .apply(instance, SkillToggles::new));
 
     public static final StreamCodec<ByteBuf, SkillToggles> STREAM_CODEC = StreamCodec.composite(
@@ -50,6 +53,8 @@ public record SkillToggles(
             SkillToggles::piercingStrike,
             ByteBufCodecs.BOOL,
             SkillToggles::scytheArc,
+            ByteBufCodecs.BOOL,
+            SkillToggles::swordBlock,
             SkillToggles::new);
 
     public enum Toggle {
@@ -61,7 +66,8 @@ public record SkillToggles(
         BLADEMASTER("blademaster"),
         RAIN_OF_ARROWS("rain_of_arrows"),
         PIERCING_STRIKE("piercing_strike"),
-        SCYTHE_ARC("scythe_arc");
+        SCYTHE_ARC("scythe_arc"),
+        SWORD_BLOCK("sword_block");
 
         private final String key;
 
@@ -90,6 +96,7 @@ public record SkillToggles(
             case RAIN_OF_ARROWS -> rainOfArrows;
             case PIERCING_STRIKE -> piercingStrike;
             case SCYTHE_ARC -> scytheArc;
+            case SWORD_BLOCK -> swordBlock;
         };
     }
 
@@ -103,6 +110,7 @@ public record SkillToggles(
                 toggle == Toggle.BLADEMASTER ? !blademaster : blademaster,
                 toggle == Toggle.RAIN_OF_ARROWS ? !rainOfArrows : rainOfArrows,
                 toggle == Toggle.PIERCING_STRIKE ? !piercingStrike : piercingStrike,
-                toggle == Toggle.SCYTHE_ARC ? !scytheArc : scytheArc);
+                toggle == Toggle.SCYTHE_ARC ? !scytheArc : scytheArc,
+                toggle == Toggle.SWORD_BLOCK ? !swordBlock : swordBlock);
     }
 }
