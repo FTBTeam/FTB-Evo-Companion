@@ -6,6 +6,7 @@ import dev.ftb.mods.ftbevolutioncompanion.skills.SkillCooldowns;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
+import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 public final class OutgoingDamage {
@@ -28,6 +30,14 @@ public final class OutgoingDamage {
 
     public static boolean isApplyingEcho() {
         return applyingEcho;
+    }
+
+    private static double unarmedArmorBypass(ServerPlayer attacker) {
+        int tier = WorldTier.getTier(attacker).ordinal();
+        return Math.min(
+                1.0,
+                CompanionConfig.UNARMED_ARMOR_BYPASS_BASE.get()
+                        + CompanionConfig.UNARMED_ARMOR_BYPASS_PER_TIER.get() * tier);
     }
 
     public static void onIncomingDamage(LivingIncomingDamageEvent event) {
@@ -111,6 +121,12 @@ public final class OutgoingDamage {
                     mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.DUAL_WIELD);
                 }
             } else if (SkillsHelper.isUnarmed(attacker)) {
+                float armorKept = (float) (1.0 - unarmedArmorBypass(attacker));
+                if (armorKept < 1.0F) {
+                    event.getContainer()
+                            .addModifier(
+                                    DamageContainer.Reduction.ARMOR, (container, reduction) -> reduction * armorKept);
+                }
                 if ((state.unarmedHitCounter + 1) % 3 == 0) {
                     mult *= 1.0 + SkillsHelper.attr(attacker, SkillsRegistry.COMBO_PUNCH);
                 }

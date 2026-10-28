@@ -60,6 +60,8 @@ public final class CompanionConfig {
     public static final ModConfigSpec.DoubleValue RAIN_OF_ARROWS_RADIUS;
     public static final ModConfigSpec.DoubleValue RAIN_OF_ARROWS_HEIGHT;
     public static final ModConfigSpec.IntValue PIERCING_STRIKE_INTERVAL;
+    public static final ModConfigSpec.DoubleValue UNARMED_ARMOR_BYPASS_BASE;
+    public static final ModConfigSpec.DoubleValue UNARMED_ARMOR_BYPASS_PER_TIER;
     public static final ModConfigSpec.IntValue RIPOSTE_PARRY_WINDOW;
     public static final ModConfigSpec.DoubleValue RIPOSTE_DAMAGE_MULT;
     public static final ModConfigSpec.IntValue RIPOSTE_BUFF_WINDOW;
@@ -347,6 +349,14 @@ public final class CompanionConfig {
 
         PIERCING_STRIKE_INTERVAL = builder.comment("Every Nth sword hit ignores the target's armor.")
                 .defineInRange("piercing_strike_interval", 3, 2, 100);
+
+        UNARMED_ARMOR_BYPASS_BASE = builder.comment(
+                        "Fraction of the target's armor reduction that unarmed hits ignore in the Haven world tier.")
+                .defineInRange("unarmed_armor_bypass_base", 0.2, 0.0, 1.0);
+
+        UNARMED_ARMOR_BYPASS_PER_TIER = builder.comment(
+                        "Extra fraction of armor reduction that unarmed hits ignore for each world tier above Haven.")
+                .defineInRange("unarmed_armor_bypass_per_tier", 0.15, 0.0, 1.0);
 
         RIPOSTE_PARRY_WINDOW = builder.comment(
                         "Ticks after raising a sword block during which a blocked melee hit counts as a parry.")

@@ -5,6 +5,7 @@
 ### Added
 
 - Toggle Sword Block keybind, unbound by default; with Sword Block off, right-clicking with a sword uses an off-hand bow instead of blocking (FTBTeam/FTB-Modpack-Issues#13781)
+- Unarmed hits ignore part of the target's armor, scaling with the attacker's Apotheosis world tier: 20% in Haven, 35% in Frontier, 50% in Ascent, 65% in Summit and 80% in Pinnacle, set by `unarmed_armor_bypass_base` and `unarmed_armor_bypass_per_tier` (FTBTeam/FTB-Modpack-Issues#13887)
 
 ### Changed
 
