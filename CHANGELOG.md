@@ -7,6 +7,7 @@
 - Temp fix for MF & CTM dynamic resources
 - Challenge Board leaderboard never reaching 100% for a team that finished the chapter; repeatable quests now count as complete once done, even after they reset (FTBTeam/FTB-Modpack-Issues#13784)
 - Ice and Fire dragons gaining another set of boss health, armor and damage bonuses every time they are released from a Dragon Horn; a released dragon now keeps the boss stats it already had (FTBTeam/FTB-Modpack-Issues#13820)
+- Applied Flux Flux Accessors, FE Export Buses and pipes pulling from a Flux Accessor getting no FE from energy storage behind an FE Storage Bus; the storage bus guard added for FTBTeam/FTB-Modpack-Issues#13706 is removed, since Applied Flux 1.0.4 now handles that case itself (FTBTeam/FTB-Modpack-Issues#13825)
 
 ## [26.1.2.24]
 
