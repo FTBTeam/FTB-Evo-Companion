@@ -18,7 +18,7 @@ public abstract class LTXIAuroraGunneryMixin {
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lliedge/ltxindustries/entity/CompoundHitResult;tracePath(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lliedge/ltxindustries/lib/upgrades/Upgrades;DDIDLliedge/ltxindustries/entity/DynamicClipContext$FluidCollisionPredicate;Ljava/util/function/ToDoubleFunction;)Lliedge/ltxindustries/entity/CompoundHitResult;"),
+                                    "Lliedge/ltxindustries/entity/CompoundHitResult;tracePath(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lliedge/ltxindustries/lib/upgrades/Upgrades;DDIDLjava/util/function/ToDoubleFunction;)Lliedge/ltxindustries/entity/CompoundHitResult;"),
             index = 4)
     private double ftbevo$accuracy(double inaccuracy, @Local(argsOnly = true) Player player) {
         return inaccuracy * Math.max(0.0, 1.0 - SkillsHelper.attr(player, GunneryRegistry.GUN_ACCURACY));
@@ -30,7 +30,7 @@ public abstract class LTXIAuroraGunneryMixin {
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lliedge/ltxindustries/entity/CompoundHitResult;tracePath(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lliedge/ltxindustries/lib/upgrades/Upgrades;DDIDLliedge/ltxindustries/entity/DynamicClipContext$FluidCollisionPredicate;Ljava/util/function/ToDoubleFunction;)Lliedge/ltxindustries/entity/CompoundHitResult;"),
+                                    "Lliedge/ltxindustries/entity/CompoundHitResult;tracePath(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lliedge/ltxindustries/lib/upgrades/Upgrades;DDIDLjava/util/function/ToDoubleFunction;)Lliedge/ltxindustries/entity/CompoundHitResult;"),
             index = 5)
     private int ftbevo$piercing(int maxHits, @Local(argsOnly = true) Player player) {
         return maxHits + LtxGunnery.bonusPierce(player);

@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import dev.ftb.mods.ftbevolutioncompanion.gunnery.LtxGunnery;
-import liedge.ltxindustries.entity.HomingProjectileEntity;
+import liedge.ltxindustries.entity.DaybreakRocket;
 import liedge.ltxindustries.item.weapon.DaybreakItem;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -28,7 +28,7 @@ public abstract class LTXIDaybreakSeekingMixin {
             Operation<Boolean> original,
             @Local(argsOnly = true) ItemStack stack,
             @Local(argsOnly = true) Player player) {
-        if (entity instanceof HomingProjectileEntity rocket) {
+        if (entity instanceof DaybreakRocket rocket) {
             LtxGunnery.seekTarget(player, stack, (DaybreakItem) (Object) this, rocket);
         }
         return original.call(level, entity);

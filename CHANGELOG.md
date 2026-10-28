@@ -1,5 +1,87 @@
 # Changelog
 
+## [26.1.2.23]
+
+### Fixed
+
+- Potatoes, Carrots and other crops with a Productive Farming yield stat dropping extra crops when broken before they are fully grown; the yield bonus now only applies to fully grown crops (FTBTesting/Testing-Issues#4756)
+- Advanced AE Quantum Computer losing its in-progress crafting jobs, and the items in them, when the world is reloaded or the area is unloaded; saved jobs and the Quantum Computer's settings now load correctly (FTBTeam/FTB-Modpack-Issues#13660)
+- Damage Reflection reflecting a player's own damage back onto them, which hurt players after every Apothic Gateways wave (FTBTeam/FTB-Modpack-Issues#13692)
+- Cloud in a Bottle and the Athletics extra jump skills using up both double jumps on one press; each source now gives its own jump (FTBTeam/FTB-Modpack-Issues#13710)
+- Pipes and AE2 Pattern Providers putting items and fluids into the FTB Fabricator's output slots and output tank, and pulling from its inputs; automation now only inserts into inputs and only extracts from outputs (FTBTeam/FTB-Modpack-Issues#13716)
+- Ars Magica Legacy Falling Star damaging its own caster; the caster is now spared, as the spell's book page says and as Fire Rain and Blizzard already do (FTBTeam/FTB-Modpack-Issues#13723)
+- Client crash ("zip file closed") when resource packs or the High Contrast setting change while in a world near Ender IO conduits; a conduit drawn mid-reload is skipped for that frame instead of crashing (FTBTeam/FTB-Modpack-Issues#13731)
+
+### Removed
+
+- Six fixes that are now in the mods themselves: the Ars Magica Legacy altar empty-stack crash, config-before-load crash, empty Life Ward resync and Dig spell losing block entity contents (Ars Magica Legacy 1.7.1, MinecraftschurliMods/Ars-Magica-Legacy#503, #504, #505), the Oritech Fertilizer opening the Destroyer screen (Oritech 2.0.0-exp12), and the Crafting Station side slot stack clamp (Crafting Station JEI 2.2.1)
+- The Replication dedicated server GuideME fix, now in Replication 1.2.8 (Buuz135/Replication#120)
+
+## [26.1.2.22]
+
+### Fixed
+
+- Dedicated servers failing to start because Replication builds its GuideME guide during mod loading, which loads client-only classes; the guide is now only built on clients
+
+## [26.1.2.21]
+
+### Fixed
+
+- Server crash when an Applied Flux storage bus reads FE from a Flux Accessor on the same network; the storage bus no longer moves FE while an energy transfer is already in progress (FTBTeam/FTB-Modpack-Issues#13706)
+- Work around for stalling threshold export bus
+- EnderIO Wired and Wireless Chargers using power without charging items from other mods, such as the Scannable scanner; the charge now stays on the item (FTBTeam/FTB-Modpack-Issues#13704)
+- Game crashing when holding a Dank with Bridging Mod's placement assist active, because Bridging Mod called a Dank Storage method that no longer exists (FTBTeam/FTB-Modpack-Issues#13703)
+- Disconnect when opening an Oritech Fertilizer, which used the Destroyer's screen; it now opens its own Fertilizer screen (FTBTeam/FTB-Modpack-Issues#13694)
+- GuideME's Open Guide key and Logistics Networks' Primary and Secondary Interaction keys being unbound on installs made before the pack set their defaults; on first launch they are set to G, left click and right click if they are still unbound
+- Spawners in existing worlds flooding the server log with equipment errors when their mob was saved holding an item from a mod that is no longer in the pack; the missing items are dropped from the spawner's saved mob the first time it loads
+
+### Removed
+
+- Thaumaturge mixins for warp wards, infusion stability, research and JEI instability display and the wand vis discount tooltip, since Thaumaturge is no longer in the pack
+- FTB Ultimine drop release fix, since FTB Ultimine 26.1.2.6 always drops what a failed break collected
+- The 58 Hephaestus molten metal fluids (`ftb:molten_*`) and their buckets, since Hephaestus 1.0.16 adds the same fluids as `hephaestus:molten_*`. Fluids, fluid blocks and buckets saved under the old ids turn into the Hephaestus ones when a world loads
+- Thaumium and Void Metal Hephaestus Tools materials being hidden without Thaumaturge, since Hephaestus Tools 1.0.7 only loads them when Thaumaturge is installed
+- Energy Meter recursion guard, since Energy Meter 0.5.1 stops a meter from forwarding energy back into itself
+- Stellaris oil mixins for the Pumpjack, Fuel Refinery and Refinery fluid slot, since Stellaris 2.0.8 accepts any `c:oil` fluid and the Pumpjack fluid is now set with `oilConfig.pumpjackFluid`
+- Power Armor support (Armor Modification Table persistence, Solar module charging, JEI recipes, keybind and recipe sync), since Power Armor is no longer in the pack
+- Witchery Arthana save and load fix, since Witchery now keeps a placed Arthana's dagger and no longer saves an empty one
+
+## [26.1.2.20]
+
+### Fixed
+
+- Items and XP orbs disappearing everywhere on the server until a restart after an FTB Ultimine break failed partway; the break now always drops what it collected
+
+## [26.1.2.19]
+
+### Added
+
+- Plunder (`ftb:axe_plunder`) skill attribute: when you kill with an axe in your main hand, its Fortune adds twice its level as Looting, up to your Plunder
+- Thrown weapon skill attributes for the new Thrown Weapons path in the Ranged tree: `ftb:thrown_damage`, `ftb:thrown_velocity`, `ftb:thrown_durability`, `ftb:run_through` (extra pierce), `ftb:thrown_pin`, `ftb:ricochet` (hits bounce to nearby enemies), `ftb:doom` (blindness, Slowness IV and bonus damage against wounded targets, on a cooldown) and `ftb:volley` (chance to throw extra copies). Thrown weapons are the `ftb:thrown_weapons` item tag and `ftb:thrown_projectiles` entity tag, plus any trident
+
+### Changed
+
+- Incendium mob and entity functions are run from one pass over loaded entities each tick instead of the datapack clock's `@e` scans; the pack's clock falls back to the scans when the companion is not loaded
+
+### Removed
+
+- Architectural Building Wand world id fix, no longer needed with Building Wand 1.3
+
+### Fixed
+
+- Modular Drones made in the Drone Assembler disappearing on save or relog, from the inventory and from the drone slot; the assembler now creates the drone from the registered item, so it saves (FTBTeam/FTB-Modpack-Issues#13553)
+- Client crash entity render edgecase
+- Crash when loading a world with FrostBear 2.0.0; igloo guardian spawns are still disabled
+- Crash on startup with GeOre 8.1.0 and Growth Accelerator Tiers; Growth Accelerator Tiers now hooks budding GeOre growth at the right spot again
+- Server crash loop when an edge case between Energy Meter and an EnderIO energy conduits
+- Players near an Ice and Fire ice dragon egg being disconnected when it freezes over
+- Temp JDT Fix for pocket gen
+- Client crash while joining a world when Ars Magica Legacy read its server config before it loaded
+- Ars Magica Legacy Dig spells deleting blocks that drop from their block entity, such as AE2 cables and terminals
+- Power Armor Solar module only charging the piece it is fitted to; it now charges every powered armor piece you wear
+- Occultism storage refusing to give items whose data changes when sent to the client, such as some affixed Apothic Compats curios
+- EvilCraft Spiked Plates generating blood from entities in the `ftbevolutioncompanion:spiked_plate_blacklist` entity tag, such as training dummies that never die
+
 ## [26.1.2.18]
 
 ### Added

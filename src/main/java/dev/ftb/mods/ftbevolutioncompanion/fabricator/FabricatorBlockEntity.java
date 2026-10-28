@@ -46,6 +46,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.transfer.DelegatingResourceHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.TransferPreconditions;
 import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
@@ -503,6 +504,26 @@ public final class FabricatorBlockEntity extends BlockEntity implements MenuProv
         @Override
         public int extract(int index, T resource, int amount, TransactionContext transaction) {
             return index >= inputs ? super.extract(index, resource, amount, transaction) : 0;
+        }
+
+        @Override
+        public int insert(T resource, int amount, TransactionContext transaction) {
+            TransferPreconditions.checkNonEmptyNonNegative(resource, amount);
+            int inserted = 0;
+            for (int index = 0; index < inputs && inserted < amount; index++) {
+                inserted += insert(index, resource, amount - inserted, transaction);
+            }
+            return inserted;
+        }
+
+        @Override
+        public int extract(T resource, int amount, TransactionContext transaction) {
+            TransferPreconditions.checkNonEmptyNonNegative(resource, amount);
+            int extracted = 0;
+            for (int index = inputs; index < size() && extracted < amount; index++) {
+                extracted += extract(index, resource, amount - extracted, transaction);
+            }
+            return extracted;
         }
     }
 }

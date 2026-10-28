@@ -58,6 +58,7 @@ public final class SkillsRegistry {
     public static final DeferredHolder<Attribute, Attribute> LIGHTNING_STRIKES = attr("lightning_strikes", 1.0);
     public static final DeferredHolder<Attribute, Attribute> BLOODLUST = attr("bloodlust", 100.0);
     public static final DeferredHolder<Attribute, Attribute> AXE_DURABILITY = attr("axe_durability", 20.0);
+    public static final DeferredHolder<Attribute, Attribute> AXE_PLUNDER = attr("axe_plunder", 20.0);
 
     public static final DeferredHolder<Attribute, Attribute> SHIELD_STUN = attr("shield_stun", 1.0);
     public static final DeferredHolder<Attribute, Attribute> SHIELD_RECOVERY = attr("shield_recovery", 1.0);
@@ -92,6 +93,15 @@ public final class SkillsRegistry {
     public static final DeferredHolder<Attribute, Attribute> LANCER_RADIUS = attr("lancer_radius", 5.0);
     public static final DeferredHolder<Attribute, Attribute> LANCER_DAMAGE = attr("lancer_damage", 3.0);
     public static final DeferredHolder<Attribute, Attribute> LANCER_COOLDOWN = attr("lancer_cooldown", 0.9);
+
+    public static final DeferredHolder<Attribute, Attribute> THROWN_DAMAGE = attr("thrown_damage", 5.0);
+    public static final DeferredHolder<Attribute, Attribute> THROWN_VELOCITY = attr("thrown_velocity", 2.0);
+    public static final DeferredHolder<Attribute, Attribute> THROWN_DURABILITY = attr("thrown_durability", 20.0);
+    public static final DeferredHolder<Attribute, Attribute> RUN_THROUGH = attr("run_through", 5.0);
+    public static final DeferredHolder<Attribute, Attribute> THROWN_PIN = attr("thrown_pin", 1.0);
+    public static final DeferredHolder<Attribute, Attribute> RICOCHET = attr("ricochet", 5.0);
+    public static final DeferredHolder<Attribute, Attribute> DOOM = attr("doom", 5.0);
+    public static final DeferredHolder<Attribute, Attribute> VOLLEY = attr("volley", 1.0);
 
     public static final DeferredHolder<Attribute, Attribute> SCYTHE_DAMAGE = attr("scythe_damage", 5.0);
     public static final DeferredHolder<Attribute, Attribute> SCYTHE_DURABILITY = attr("scythe_durability", 20.0);

@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 public abstract class LTXITracePathSeekingMixin {
     @ModifyVariable(
             method =
-                    "tracePath(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lliedge/ltxindustries/lib/upgrades/Upgrades;DDIDLliedge/ltxindustries/entity/DynamicClipContext$FluidCollisionPredicate;Ljava/util/function/ToDoubleFunction;)Lliedge/ltxindustries/entity/CompoundHitResult;",
+                    "tracePath(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lliedge/ltxindustries/lib/upgrades/Upgrades;DDIDLjava/util/function/ToDoubleFunction;)Lliedge/ltxindustries/entity/CompoundHitResult;",
             at = @At("HEAD"),
             argsOnly = true)
     private static ToDoubleFunction<Entity> ftbevo$seeking(

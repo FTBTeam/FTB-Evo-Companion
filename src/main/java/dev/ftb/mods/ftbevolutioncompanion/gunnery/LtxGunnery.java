@@ -22,10 +22,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import liedge.ltxindustries.LTXITags;
-import liedge.ltxindustries.entity.HomingProjectileEntity;
 import liedge.ltxindustries.entity.LTXIEntityUtil;
 import liedge.ltxindustries.entity.LTXIProjectileEntity;
-import liedge.ltxindustries.entity.damage.EquipmentDamageSource;
+import liedge.ltxindustries.entity.UpgradesAwareEntity;
+import liedge.ltxindustries.entity.damage.LTXIDamageSource;
 import liedge.ltxindustries.item.weapon.WeaponItem;
 import liedge.ltxindustries.lib.upgrades.Upgrades;
 import net.minecraft.ChatFormatting;
@@ -48,7 +48,9 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.entity.EntityInvulnerabilityCheckEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 public final class LtxGunnery {
@@ -69,6 +71,8 @@ public final class LtxGunnery {
         NeoForge.EVENT_BUS.addListener(LtxGunnery::onEntityJoin);
         NeoForge.EVENT_BUS.addListener(LtxGunnery::onInvulnerabilityCheck);
         NeoForge.EVENT_BUS.addListener(LtxGunnery::onLogout);
+        NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, LtxGunnery::onIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(LtxGunnery::onDamaged);
     }
 
     public static void fire(Player player, ItemStack stack, WeaponItem weapon, Runnable shot) {
@@ -105,7 +109,9 @@ public final class LtxGunnery {
     }
 
     public static void onHit(LivingEntity shooter, Entity target, DamageSource source) {
-        if (!(source instanceof EquipmentDamageSource equipment) || !(target instanceof LivingEntity living)) {
+        if (!(source instanceof LTXIDamageSource equipment)
+                || equipment.getWeaponItem() == null
+                || !(target instanceof LivingEntity living)) {
             return;
         }
         AffixHelper.streamAffixes(equipment.getWeaponItem()).forEach(inst -> {
@@ -134,9 +140,9 @@ public final class LtxGunnery {
         return 0.0;
     }
 
-    public static void seekTarget(Player player, ItemStack stack, WeaponItem weapon, HomingProjectileEntity rocket) {
+    public static void seekTarget(Player player, ItemStack stack, WeaponItem weapon, UpgradesAwareEntity rocket) {
         double seeking = Math.min(1.0, SkillsHelper.attr(player, GunneryRegistry.GUN_SEEKING));
-        if (seeking <= 0.0 || rocket.getTargetEntity() != null) {
+        if (seeking <= 0.0 || rocket.getTarget() != null) {
             return;
         }
         Vec3 eye = player.getEyePosition();
@@ -161,12 +167,12 @@ public final class LtxGunnery {
                 .filter(player::hasLineOfSight)
                 .max(Comparator.comparingDouble(e ->
                         look.dot(e.getBoundingBox().getCenter().subtract(eye).normalize())))
-                .ifPresent(rocket::setTargetEntity);
+                .ifPresent(e -> rocket.setTarget((LivingEntity) e));
     }
 
     private static void onKill(LivingDeathEvent event) {
         DamageSource source = event.getSource();
-        if (!source.is(LTXITags.DamageTypes.WEAPONS) || !(source.getEntity() instanceof Player player)) {
+        if (!source.is(LTXITags.DamageTypes.WEAPONS_OR_GADGETS) || !(source.getEntity() instanceof Player player)) {
             return;
         }
         ItemStack hat = player.getItemBySlot(EquipmentSlot.HEAD);
@@ -207,13 +213,42 @@ public final class LtxGunnery {
     }
 
     private static void onInvulnerabilityCheck(EntityInvulnerabilityCheckEvent event) {
-        if (event.getSource() instanceof EquipmentDamageSource source
-                && source.is(LTXITags.DamageTypes.WEAPONS)
+        if (event.getSource() instanceof LTXIDamageSource source
+                && source.is(LTXITags.DamageTypes.WEAPONS_OR_GADGETS)
                 && hasAffix(source.getWeaponItem(), MagicalBulletAffix.class)) {
             DamageSourceExtension extension = (DamageSourceExtension) event.getSource();
             extension.addTag(Tags.DamageTypes.IS_MAGIC);
             extension.addTag(DamageTypeTags.BYPASSES_ARMOR);
         }
+    }
+
+    private static void onIncomingDamage(LivingIncomingDamageEvent event) {
+        LivingEntity shooter = weaponShooter(event.getSource());
+        if (shooter != null) {
+            event.setAmount(modifyDamage(shooter, event.getSource(), event.getAmount()));
+        }
+    }
+
+    private static void onDamaged(LivingDamageEvent.Post event) {
+        LivingEntity shooter = weaponShooter(event.getSource());
+        if (shooter == null) {
+            return;
+        }
+        LivingEntity target = event.getEntity();
+        onHit(shooter, target, event.getSource());
+        double knockback = SkillsHelper.attr(shooter, GunneryRegistry.GUN_KNOCKBACK);
+        if (knockback > 0.0 && target != shooter) {
+            target.knockback(knockback, shooter.getX() - target.getX(), shooter.getZ() - target.getZ());
+        }
+    }
+
+    private static LivingEntity weaponShooter(DamageSource source) {
+        return source instanceof LTXIDamageSource ltxi
+                        && ltxi.getWeaponItem() != null
+                        && ltxi.getWeaponItem().getItem() instanceof WeaponItem
+                        && source.getEntity() instanceof LivingEntity shooter
+                ? shooter
+                : null;
     }
 
     private static void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
@@ -241,7 +276,8 @@ public final class LtxGunnery {
     }
 
     private static boolean hasAffix(ItemStack stack, Class<? extends Affix> type) {
-        return !stack.isEmpty()
+        return stack != null
+                && !stack.isEmpty()
                 && AffixHelper.streamAffixes(stack).map(AffixInstance::getAffix).anyMatch(type::isInstance);
     }
 

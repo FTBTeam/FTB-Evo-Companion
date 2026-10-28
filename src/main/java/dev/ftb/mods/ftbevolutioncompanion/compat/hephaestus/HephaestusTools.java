@@ -3,7 +3,6 @@ package dev.ftb.mods.ftbevolutioncompanion.compat.hephaestus;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
@@ -13,7 +12,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.fml.ModList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,13 +20,9 @@ public final class HephaestusTools {
     private static final String ROOT = "com.titammods.hephaestus_tools.";
     private static final Identifier CONSTRUCTION = Identifier.fromNamespaceAndPath("hephaestus_tools", "construction");
     public static final Set<String> REMOVED_MATERIALS = Set.of("lumium", "signalum", "constantan");
-    public static final Map<String, String> MATERIAL_REQUIRES =
-            Map.of("thaumium", "thaumaturge", "void_metal", "thaumaturge");
 
     public static boolean removedMaterial(String path) {
-        String mod = MATERIAL_REQUIRES.get(path);
-        return REMOVED_MATERIALS.contains(path)
-                || (mod != null && !ModList.get().isLoaded(mod));
+        return REMOVED_MATERIALS.contains(path);
     }
 
     private static Object[] tiers;
