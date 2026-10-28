@@ -163,7 +163,8 @@
     "compat.occultism.OccultismComparatorRoundTripMixin",
     "compat.replication.ReplicatorNoFailureMixin",
     "compat.ae2.CuriosItemLocatorMixin",
-    "compat.ae2wtlib.WUTHandlerCuriosMixin"
+    "compat.ae2wtlib.WUTHandlerCuriosMixin",
+    "compat.reliquary.OversizedHandlerEmptyStackMixin"
   ],
   "client": [
     "compat.extendedae.client.ExtendedAESetAmountTooltipMixin",

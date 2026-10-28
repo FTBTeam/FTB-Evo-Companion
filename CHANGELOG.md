@@ -13,6 +13,7 @@
 
 ### Fixed
 
+- A Reliquary Rending Gale on an active Pedestal crashing the server when its feather charge runs out; any Reliquary item can now empty its stored charge slot (FTBTeam/FTB-Modpack-Issues#13873)
 - AE2 wireless terminals and portable cells in a Curios slot keep what you put in their crafting grid and their settings, and the terminal hotkey opens a Wireless Crafting or Universal Terminal in a Curios slot as the full crafting terminal instead of the plain ME terminal (FTBTeam/FTB-Modpack-Issues#13633)
 - Temp fix for MF & CTM dynamic resources
 - Challenge Board leaderboard never reaching 100% for a team that finished the chapter; repeatable quests now count as complete once done, even after they reset (FTBTeam/FTB-Modpack-Issues#13784)
