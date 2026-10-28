@@ -161,7 +161,9 @@
     "compat.justdirethings.PocketGeneratorSelfInsertMixin",
     "compat.occultism.OccultismTakeItemMixin",
     "compat.occultism.OccultismComparatorRoundTripMixin",
-    "compat.replication.ReplicatorNoFailureMixin"
+    "compat.replication.ReplicatorNoFailureMixin",
+    "compat.ae2.CuriosItemLocatorMixin",
+    "compat.ae2wtlib.WUTHandlerCuriosMixin"
   ],
   "client": [
     "compat.extendedae.client.ExtendedAESetAmountTooltipMixin",

@@ -13,6 +13,7 @@
 
 ### Fixed
 
+- AE2 wireless terminals and portable cells in a Curios slot keep what you put in their crafting grid and their settings, and the terminal hotkey opens a Wireless Crafting or Universal Terminal in a Curios slot as the full crafting terminal instead of the plain ME terminal (FTBTeam/FTB-Modpack-Issues#13633)
 - Temp fix for MF & CTM dynamic resources
 - Challenge Board leaderboard never reaching 100% for a team that finished the chapter; repeatable quests now count as complete once done, even after they reset (FTBTeam/FTB-Modpack-Issues#13784)
 - Ice and Fire dragons gaining another set of boss health, armor and damage bonuses every time they are released from a Dragon Horn; a released dragon now keeps the boss stats it already had (FTBTeam/FTB-Modpack-Issues#13820)

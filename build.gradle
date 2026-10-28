@@ -81,6 +81,8 @@ configurations {
 	geckolibArtifact { transitive = false }
 	enderIoArtifact { transitive = false }
 	compileOnly.extendsFrom enderIoArtifact
+	ae2wtlibArtifact { transitive = false }
+	compileOnly.extendsFrom ae2wtlibArtifact
 }
 
 repositories {
@@ -141,6 +143,13 @@ dependencies {
 			include 'META-INF/jarjar/com.enderio.endercore-*.jar'
 		}.files
 	})
+	ae2wtlibArtifact "curse.maven:ae2wtlib-459929:${ae2wtlib_curse_file_id}"
+	compileOnly files(provider {
+		zipTree(configurations.ae2wtlibArtifact.singleFile).matching {
+			include 'META-INF/jarjar/de.mari_023.ae2wtlib_api-*.jar'
+		}.files
+	})
+	compileOnly "curse.maven:ae2-223794:${ae2_curse_file_id}"
 	implementation "dev.ftb.mods:ftb-library-neoforge:${ftb_library_version}"
 	compileOnly "dev.ftb.mods:ftb-teams-neoforge:${ftb_teams_version}"
 	localRuntime "dev.ftb.mods:ftb-teams-neoforge:${ftb_teams_version}"
