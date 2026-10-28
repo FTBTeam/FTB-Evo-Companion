@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbevolutioncompanion.skills.handler;
 
 import dev.ftb.mods.ftbevolutioncompanion.FTBEvolutionCompanion;
+import dev.ftb.mods.ftbevolutioncompanion.LootTableDropTracker;
 import dev.ftb.mods.ftbevolutioncompanion.config.CompanionConfig;
 import dev.ftb.mods.ftbevolutioncompanion.mixin.AbstractArrowInvoker;
 import dev.ftb.mods.ftbevolutioncompanion.mixin.LivingEntityAccessor;
@@ -13,6 +14,7 @@ import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsAbilities;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsHelper;
 import dev.ftb.mods.ftbevolutioncompanion.skills.SkillsRegistry;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -951,24 +953,30 @@ public final class CombatTicker {
     }
 
     public static void onLivingDrops(LivingDropsEvent event) {
-        if (!(event.getSource().getEntity() instanceof ServerPlayer killer)
+        if (event.getEntity() instanceof Player
+                || !(event.getSource().getEntity() instanceof ServerPlayer killer)
                 || !SkillsHelper.isSword(killer.getMainHandItem())) {
             return;
         }
         double chance = SkillsHelper.attr(killer, SkillsRegistry.SHAKEDOWN);
-        if (chance <= 0.0 || event.getDrops().isEmpty() || killer.getRandom().nextDouble() >= chance) {
+        if (chance <= 0.0) {
             return;
         }
-        int index = killer.getRandom().nextInt(event.getDrops().size());
-        ItemEntity picked = event.getDrops().stream().skip(index).findFirst().orElse(null);
-        if (picked != null) {
-            event.getDrops()
-                    .add(new ItemEntity(
-                            picked.level(),
-                            picked.getX(),
-                            picked.getY(),
-                            picked.getZ(),
-                            picked.getItem().copy()));
+        List<ItemEntity> lootDrops = ((LootTableDropTracker) event.getEntity())
+                .ftbevo$lootTableDrops().stream()
+                        .filter(drop ->
+                                !drop.getItem().isEmpty() && event.getDrops().contains(drop))
+                        .toList();
+        if (lootDrops.isEmpty() || killer.getRandom().nextDouble() >= chance) {
+            return;
         }
+        ItemEntity picked = lootDrops.get(killer.getRandom().nextInt(lootDrops.size()));
+        event.getDrops()
+                .add(new ItemEntity(
+                        picked.level(),
+                        picked.getX(),
+                        picked.getY(),
+                        picked.getZ(),
+                        picked.getItem().copy()));
     }
 }

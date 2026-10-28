@@ -83,6 +83,7 @@
     "LivingEntityFluidTravelMixin",
     "LivingEntityAccessor",
     "LivingEntityDeadDamageMixin",
+    "LivingEntityLootTableDropsMixin",
     "LivingEntityMixin",
     "MeteoritePlacerMixin",
     "MeteoriteStructureMixin",
