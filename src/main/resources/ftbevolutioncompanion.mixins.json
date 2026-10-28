@@ -162,6 +162,7 @@
     "compat.occultism.OccultismTakeItemMixin",
     "compat.occultism.OccultismComparatorRoundTripMixin",
     "compat.replication.ReplicatorNoFailureMixin",
+    "compat.mffs.RemoteControllerUntrackedChunkMixin",
     "compat.ae2.CuriosItemLocatorMixin",
     "compat.ae2wtlib.WUTHandlerCuriosMixin",
     "compat.reliquary.OversizedHandlerEmptyStackMixin",

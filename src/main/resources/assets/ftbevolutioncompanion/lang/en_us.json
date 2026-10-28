@@ -339,5 +339,6 @@
   "trait.ftbevolutioncompanion.nautical.desc": "No penalty underwater, and Fortune III and Looting III while submerged.",
   "trait.ftbevolutioncompanion.dragonfire.desc": "Sets targets ablaze and pulls them toward you.",
   "trait.ftbevolutioncompanion.dragonfrost.desc": "Freezes and slows targets.",
-  "trait.ftbevolutioncompanion.dragonstorm.desc": "Lightning arcs to nearby enemies."
+  "trait.ftbevolutioncompanion.dragonstorm.desc": "Lightning arcs to nearby enemies.",
+  "message.ftbevolutioncompanion.mffs.remote_out_of_range": "The linked projector is too far away to open."
 }

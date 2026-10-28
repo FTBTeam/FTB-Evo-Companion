@@ -20,6 +20,7 @@
 - Challenge Board leaderboard never reaching 100% for a team that finished the chapter; repeatable quests now count as complete once done, even after they reset (FTBTeam/FTB-Modpack-Issues#13784)
 - Ice and Fire dragons gaining another set of boss health, armor and damage bonuses every time they are released from a Dragon Horn; a released dragon now keeps the boss stats it already had (FTBTeam/FTB-Modpack-Issues#13820)
 - Applied Flux Flux Accessors, FE Export Buses and pipes pulling from a Flux Accessor getting no FE from energy storage behind an FE Storage Bus; the storage bus guard added for FTBTeam/FTB-Modpack-Issues#13706 is removed, since Applied Flux 1.0.4 now handles that case itself (FTBTeam/FTB-Modpack-Issues#13825)
+- MFFS Remote Controller disconnecting you when the linked projector is in a loaded chunk outside your view distance; it now says the projector is too far away instead (FTBTeam/FTB-Modpack-Issues#13829)
 - Shakedown copying an item from a player's inventory on PvP kills, and copying a mob's held items and armor; it now never procs on players and only copies drops from the mob's loot table (FTBTeam/FTB-Modpack-Issues#13818)
 - Simply Winged no longer writes a log line on every entity interaction, which caused long server freezes when Clickers or players interacted with mobs quickly (FTBTeam/FTB-Modpack-Issues#13896)
 
