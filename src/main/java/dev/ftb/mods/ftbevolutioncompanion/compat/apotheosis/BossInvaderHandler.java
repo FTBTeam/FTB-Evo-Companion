@@ -30,6 +30,9 @@ public final class BossInvaderHandler {
         }
         Mob mob = event.getEntity();
         EntitySpawnReason reason = event.getSpawnType();
+        if (reason == EntitySpawnReason.LOAD) {
+            return;
+        }
         if (reason == EntitySpawnReason.SPAWNER
                 || (reason == EntitySpawnReason.TRIAL_SPAWNER && !RiftArena.isRiftWeaver(mob.getType()))) {
             mob.getPersistentData().putBoolean(CHECKED_KEY, true);

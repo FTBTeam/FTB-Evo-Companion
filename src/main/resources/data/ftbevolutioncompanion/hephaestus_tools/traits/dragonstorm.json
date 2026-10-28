@@ -1,0 +1,9 @@
+{
+  "effects": [
+    {
+      "type": "ftbevolutioncompanion:chain_lightning",
+      "targets": 10,
+      "range": 10.0
+    }
+  ]
+}

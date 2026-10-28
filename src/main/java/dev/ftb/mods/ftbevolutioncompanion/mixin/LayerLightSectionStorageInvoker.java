@@ -1,0 +1,11 @@
+package dev.ftb.mods.ftbevolutioncompanion.mixin;
+
+import net.minecraft.world.level.lighting.LayerLightSectionStorage;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Invoker;
+
+@Mixin(LayerLightSectionStorage.class)
+public interface LayerLightSectionStorageInvoker {
+    @Invoker("storingLightForSection")
+    boolean ftbevo$storingLightForSection(long sectionNode);
+}

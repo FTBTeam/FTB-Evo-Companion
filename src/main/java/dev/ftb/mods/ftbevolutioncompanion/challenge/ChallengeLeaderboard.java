@@ -179,8 +179,11 @@ public final class ChallengeLeaderboard {
             long lastCompletion = Long.MAX_VALUE;
             for (Quest quest : chapter.getQuests()) {
                 total++;
-                progressSum += data.getRelativeProgress(quest);
-                if (!data.isCompleted(quest)) continue;
+                if (!data.isCompleted(quest) && data.getCompletionCount(quest) == 0) {
+                    progressSum += data.getRelativeProgress(quest);
+                    continue;
+                }
+                progressSum += 100;
                 completed++;
                 long when = data.getCompletedTime(quest.id).map(Date::getTime).orElse(0L);
                 lastCompletion = lastCompletion == Long.MAX_VALUE ? when : Math.max(lastCompletion, when);
