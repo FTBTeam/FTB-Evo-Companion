@@ -19,12 +19,14 @@ public abstract class HorseUseHandlerParagliderMixin {
 
     @WrapOperation(
             method = "onEntityInteract",
-            at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;info(Ljava/lang/String;[Ljava/lang/Object;)V"))
+            at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;info(Ljava/lang/String;[Ljava/lang/Object;)V"),
+            require = 0)
     private static void ftbevo$silenceInteractLog(
             Logger logger, String message, Object[] args, Operation<Void> original) {}
 
     @WrapOperation(
             method = "onEntityInteract",
-            at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;info(Ljava/lang/String;Ljava/lang/Object;)V"))
+            at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;info(Ljava/lang/String;Ljava/lang/Object;)V"),
+            require = 0)
     private static void ftbevo$silenceHandledLog(Logger logger, String message, Object arg, Operation<Void> original) {}
 }
