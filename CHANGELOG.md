@@ -7,6 +7,7 @@
 - Temp fix for MF & CTM dynamic resources
 - Challenge Board leaderboard never reaching 100% for a team that finished the chapter; repeatable quests now count as complete once done, even after they reset (FTBTeam/FTB-Modpack-Issues#13784)
 - Ice and Fire dragons gaining another set of boss health, armor and damage bonuses every time they are released from a Dragon Horn; a released dragon now keeps the boss stats it already had (FTBTeam/FTB-Modpack-Issues#13820)
+- Witchery Wild Bramble spreading when broken with a golden tool other than the Golden Axe; any tool in `witchery:gold_tools` (golden axe, pickaxe, shovel, hoe, sword, spear and the Arthana) now breaks it without spreading (FTBTeam/FTB-Modpack-Issues#13810)
 
 ## [26.1.2.24]
 
