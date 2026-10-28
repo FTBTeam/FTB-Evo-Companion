@@ -164,7 +164,8 @@
     "compat.replication.ReplicatorNoFailureMixin",
     "compat.ae2.CuriosItemLocatorMixin",
     "compat.ae2wtlib.WUTHandlerCuriosMixin",
-    "compat.reliquary.OversizedHandlerEmptyStackMixin"
+    "compat.reliquary.OversizedHandlerEmptyStackMixin",
+    "compat.witchery.RitualOwnerProfileMixin"
   ],
   "client": [
     "compat.extendedae.client.ExtendedAESetAmountTooltipMixin",

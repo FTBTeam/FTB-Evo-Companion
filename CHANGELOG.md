@@ -13,6 +13,7 @@
 
 ### Fixed
 
+- A Witchery Ritual of Binding started by a fake player, such as a Just Dire Things Clicker, binding the Statue of Hobgoblin Patron to that fake player, which disconnected nearby players and deleted the statue; the statue now binds to the player who owns the fake player (FTBTeam/FTB-Modpack-Issues#13883)
 - A Reliquary Rending Gale on an active Pedestal crashing the server when its feather charge runs out; any Reliquary item can now empty its stored charge slot (FTBTeam/FTB-Modpack-Issues#13873)
 - AE2 wireless terminals and portable cells in a Curios slot keep what you put in their crafting grid and their settings, and the terminal hotkey opens a Wireless Crafting or Universal Terminal in a Curios slot as the full crafting terminal instead of the plain ME terminal (FTBTeam/FTB-Modpack-Issues#13633)
 - Temp fix for MF & CTM dynamic resources
