@@ -106,14 +106,16 @@ public final class FabricatorCategory implements IRecipeCategory<RecipeHolder<Fa
         graphics.text(font, "→", 107, 27, 0xFF2CA8AF, false);
         graphics.text(
                 font,
-                Component.translatable(LANG + "recipe_power", recipe.energyPerTick(), recipe.ticks() / 20F),
+                Component.translatable(
+                        LANG + "recipe_power", String.format("%,d", recipe.energyPerTick()), recipe.ticks() / 20F),
                 4,
                 72,
                 0xFF444444,
                 false);
         graphics.text(
                 font,
-                Component.translatable(LANG + "recipe_energy", (long) recipe.energyPerTick() * recipe.ticks()),
+                Component.translatable(
+                        LANG + "recipe_energy", String.format("%,d", (long) recipe.energyPerTick() * recipe.ticks())),
                 4,
                 84,
                 0xFF444444,

@@ -1,5 +1,11 @@
 # Changelog
 
+## [26.1.2.27]
+
+### Changed
+
+- FTB Fabricator energy, power and tick numbers in JEI, Jade and the machine screen use thousands separators
+
 ## [26.1.2.26]
 
 ### Fixed

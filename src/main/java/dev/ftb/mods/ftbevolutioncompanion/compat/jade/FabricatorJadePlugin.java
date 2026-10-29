@@ -84,13 +84,15 @@ public final class FabricatorJadePlugin implements IWailaPlugin {
             if (!data.contains("status")) return;
             tooltip.add(Component.translatable(LANG + "status." + data.getStringOr("status", "idle")));
             tooltip.add(Component.translatable(
-                    LANG + "energy", data.getIntOr("energy", 0), FabricatorBlockEntity.ENERGY_CAPACITY));
+                    LANG + "energy",
+                    String.format("%,d", data.getIntOr("energy", 0)),
+                    String.format("%,d", FabricatorBlockEntity.ENERGY_CAPACITY)));
             if (data.getIntOr("duration", 0) > 0)
                 tooltip.add(Component.translatable(
                         LANG + "process",
-                        data.getIntOr("progress", 0),
-                        data.getIntOr("duration", 0),
-                        data.getIntOr("usage", 0)));
+                        String.format("%,d", data.getIntOr("progress", 0)),
+                        String.format("%,d", data.getIntOr("duration", 0)),
+                        String.format("%,d", data.getIntOr("usage", 0))));
             if (!data.getStringOr("stage", "").isEmpty())
                 tooltip.add(Component.translatable(
                         LANG + "stage", FabricatorRecipe.stageName(data.getStringOr("stage", ""))));

@@ -131,10 +131,15 @@ public final class FabricatorScreen extends AbstractContainerScreen<FabricatorMe
         Component tooltip = null;
         if (x >= 10 && x <= 21 && y >= 32 && y <= 88) {
             tooltip = Component.translatable(
-                    LANG + "energy", machine.energy().getAmountAsInt(), FabricatorBlockEntity.ENERGY_CAPACITY);
+                    LANG + "energy",
+                    String.format("%,d", machine.energy().getAmountAsInt()),
+                    String.format("%,d", FabricatorBlockEntity.ENERGY_CAPACITY));
         } else if (x >= 89 && x <= 131 && y >= 53 && y <= 65) {
             tooltip = Component.translatable(
-                    LANG + "process", machine.progress(), machine.duration(), machine.powerUsage());
+                    LANG + "process",
+                    String.format("%,d", machine.progress()),
+                    String.format("%,d", machine.duration()),
+                    String.format("%,d", machine.powerUsage()));
         } else if (y >= 70 && y <= 94) {
             for (int tank = 0; tank < 3; tank++) {
                 if (x < 91 + tank * 23 || x > 109 + tank * 23) continue;
