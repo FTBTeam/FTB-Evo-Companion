@@ -43,10 +43,19 @@ public abstract class DankInventoryTransactionMixin {
         if (amount <= 0 || slot < 0 || slot >= items.size()) return;
         ItemStack existing = items.get(slot);
         if (existing.isEmpty()) return;
-        if (!resource.isEmpty() && !resource.matches(existing)) {
+        if (resource.isEmpty()) return;
+        if (!resource.matches(existing)) {
             cir.setReturnValue(0);
             return;
         }
         inventory.ftbevo$journal().updateSnapshots(transaction);
+        int extracted = Math.min(amount, existing.getCount());
+        items.set(
+                slot,
+                extracted == existing.getCount()
+                        ? ItemStack.EMPTY
+                        : existing.copyWithCount(existing.getCount() - extracted));
+        inventory.ftbevo$save();
+        cir.setReturnValue(extracted);
     }
 }

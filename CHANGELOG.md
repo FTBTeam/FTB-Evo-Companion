@@ -5,6 +5,7 @@
 ### Fixed
 
 - Armadillo Infestation farms not spawning silverfish (FTBTeam/FTB-Modpack-Issues#13862)
+- AE2 only pulling one stack at a time from a Dank, so autocrafts needing more than a stack failed (FTBTeam/FTB-Modpack-Issues#13910)
 
 ## [26.1.2.25]
 
