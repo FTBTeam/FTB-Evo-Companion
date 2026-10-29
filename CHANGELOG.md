@@ -1,5 +1,11 @@
 # Changelog
 
+## [26.1.2.26]
+
+### Fixed
+
+- Armadillo Infestation farms not spawning silverfish (FTBTeam/FTB-Modpack-Issues#13862)
+
 ## [26.1.2.25]
 
 ### Added

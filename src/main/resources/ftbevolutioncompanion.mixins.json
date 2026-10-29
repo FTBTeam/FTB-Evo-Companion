@@ -63,6 +63,7 @@
     "compat.ltxi.LTXITracePathSeekingMixin",
     "compat.ltxi.LTXIVeinMineSkillXpMixin",
     "compat.ltxi.LTXIWeaponGunneryMixin",
+    "compat.ltxi.LTXIZeroDamageShieldMixin",
     "compat.oceanmobs.RiftWeaverBossMixin",
     "compat.oceanmobs.RiftWeaverModeHeightMixin",
     "compat.oceanmobs.RiftWeaverReinforceMixin",
