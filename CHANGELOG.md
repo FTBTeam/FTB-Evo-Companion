@@ -6,6 +6,12 @@
 
 - FTB Fabricator energy, power and tick numbers in JEI, Jade and the machine screen use thousands separators
 
+### Fixed
+
+- Client memory climbing until the game lagged while wearing Quantum Armor (FTBTeam/FTB-Modpack-Issues#13934)
+- FTB Skyline, FTB Fabricator and Beast Trophy items slowly using more client memory over a long session
+- Paradox Machine restoring mobs with their held items and armor, which let players duplicate items
+
 ## [26.1.2.26]
 
 ### Fixed

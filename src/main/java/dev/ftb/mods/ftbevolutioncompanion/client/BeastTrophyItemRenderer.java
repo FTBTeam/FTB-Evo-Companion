@@ -19,6 +19,11 @@ public class BeastTrophyItemRenderer extends GeoItemRenderer<BeastTrophyItem> {
         withRenderLayer(new AutoGlowingGeoLayer<>(this));
     }
 
+    @Override
+    public long getInstanceId(BeastTrophyItem animatable, RenderData renderData) {
+        return 0L;
+    }
+
     private static float scaleFor(ItemDisplayContext context) {
         return switch (context) {
             case GUI, FIXED -> 0.5F;

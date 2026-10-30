@@ -15,6 +15,11 @@ public final class FabricatorItemRenderer extends GeoItemRenderer<FabricatorItem
     }
 
     @Override
+    public long getInstanceId(FabricatorItem animatable, RenderData renderData) {
+        return 0L;
+    }
+
+    @Override
     public void adjustRenderPose(RenderPassInfo<GeoRenderState> pass) {
         super.adjustRenderPose(pass);
         pass.poseStack().translate(0F, -0.5F, 0F);

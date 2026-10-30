@@ -19,6 +19,11 @@ public class SkylineItemRenderer extends GeoItemRenderer<SkylineItem> {
         withRenderLayer(new AutoGlowingGeoLayer<>(this));
     }
 
+    @Override
+    public long getInstanceId(SkylineItem animatable, RenderData renderData) {
+        return 0L;
+    }
+
     private static float scaleFor(ItemDisplayContext context) {
         return switch (context) {
             case GUI -> 0.22F;
