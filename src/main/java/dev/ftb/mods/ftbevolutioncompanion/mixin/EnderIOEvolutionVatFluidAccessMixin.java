@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Pseudo
 @Mixin(targets = "com.sakurain.enderio_evolution.EnderIOEvolution", remap = false)
 public abstract class EnderIOEvolutionVatFluidAccessMixin {
-    @Inject(method = "lambda$registerCapabilities$10", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "vatExternalFluid", at = @At("RETURN"), cancellable = true, require = 0)
     private static void ftbevo$enforceTankAccess(CallbackInfoReturnable<ResourceHandler<FluidResource>> cir) {
         ResourceHandler<FluidResource> storage = cir.getReturnValue();
         if (storage != null) {
