@@ -11,6 +11,7 @@
 - Client memory climbing until the game lagged while wearing Quantum Armor (FTBTeam/FTB-Modpack-Issues#13934)
 - FTB Skyline, FTB Fabricator and Beast Trophy items slowly using more client memory over a long session
 - Paradox Machine restoring mobs with their held items and armor, which let players duplicate items
+- Players disconnecting when opening a wireless pattern encoding terminal whose slots held an item with a registry component, such as an Ars Magica Infinity Orb; ae2wtlib's terminal and magnet card now save their slots with registry context (FTBTeam/FTB-Modpack-Issues#13935)
 
 ## [26.1.2.26]
 
