@@ -15,6 +15,7 @@
 - Client memory climbing until the game lagged while wearing Quantum Armor (FTBTeam/FTB-Modpack-Issues#13934)
 - FTB Skyline, FTB Fabricator and Beast Trophy items slowly using more client memory over a long session
 - Paradox Machine restoring mobs with their held items and armor, which let players duplicate items
+- Players disconnecting when opening a wireless pattern encoding terminal whose slots held an item with a registry component, such as an Ars Magica Infinity Orb; ae2wtlib's terminal and magnet card now save their slots with registry context (FTBTeam/FTB-Modpack-Issues#13935)
 - FTB Armory metal blocks upgrading a Spawner that has not reached the previous tier: Adamantite needs Thundering Spawner Upgrade Rune stats, Aeternium needs Adamantite stats and Aurichalcum needs Aeternium stats (FTBTeam/FTB-Modpack-Issues#13838)
 - Witchery Witches Oven using up a Neo Vitae Lava Crystal after one burn instead of keeping it in the fuel slot (FTBTeam/FTB-Modpack-Issues#13942)
 - EnderIO capacitors not going into the Powah Energizing Orb or other non-EnderIO blocks by right-click: the EnderIO Evolution batch install only reacts to EnderIO machines now (FTBTeam/FTB-Modpack-Issues#13861)

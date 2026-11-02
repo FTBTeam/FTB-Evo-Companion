@@ -170,6 +170,8 @@
     "compat.mffs.RemoteControllerUntrackedChunkMixin",
     "compat.ae2.CuriosItemLocatorMixin",
     "compat.ae2wtlib.WUTHandlerCuriosMixin",
+    "compat.ae2wtlib.WETMenuHostRegistryContextMixin",
+    "compat.ae2wtlib.MagnetHostRegistryContextMixin",
     "compat.reliquary.OversizedHandlerEmptyStackMixin",
     "compat.witchery.OvenFuelRemainderMixin",
     "compat.witchery.RitualOwnerProfileMixin"
