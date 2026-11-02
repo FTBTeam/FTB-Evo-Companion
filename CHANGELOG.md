@@ -2,6 +2,10 @@
 
 ## [26.1.2.27]
 
+### Added
+
+- Armory Overclock upgrade for LTX Industries machines, made in the Fabricator from Adamantite, Aeternium and Aurichalcum. It stacks with the Power Supply Unit: rank I is x1.33 speed for x1.5 energy, rank II x1.67 speed for x2 energy, rank III x2 speed for x3 energy (FTBTeam/FTB-Modpack-Issues#13940)
+
 ### Changed
 
 - FTB Fabricator energy, power and tick numbers in JEI, Jade and the machine screen use thousands separators
@@ -11,6 +15,9 @@
 - Client memory climbing until the game lagged while wearing Quantum Armor (FTBTeam/FTB-Modpack-Issues#13934)
 - FTB Skyline, FTB Fabricator and Beast Trophy items slowly using more client memory over a long session
 - Paradox Machine restoring mobs with their held items and armor, which let players duplicate items
+- FTB Armory metal blocks upgrading a Spawner that has not reached the previous tier: Adamantite needs Thundering Spawner Upgrade Rune stats, Aeternium needs Adamantite stats and Aurichalcum needs Aeternium stats (FTBTeam/FTB-Modpack-Issues#13838)
+- Witchery Witches Oven using up a Neo Vitae Lava Crystal after one burn instead of keeping it in the fuel slot (FTBTeam/FTB-Modpack-Issues#13942)
+- EnderIO capacitors not going into the Powah Energizing Orb or other non-EnderIO blocks by right-click: the EnderIO Evolution batch install only reacts to EnderIO machines now (FTBTeam/FTB-Modpack-Issues#13861)
 
 ## [26.1.2.26]
 

@@ -1,0 +1,54 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "ltxi"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "ftbarmory"
+    }
+  ],
+  "type": "ltxi:fabricating",
+  "energy_required": 15000000,
+  "group": "machine/armory_overclock",
+  "item_inputs": [
+    {
+      "ingredient": {
+        "neoforge:ingredient_type": "neoforge:components",
+        "components": {
+          "ltxi:upgrade": {
+            "rank": 1,
+            "upgrade": "ftbevolutioncompanion:armory_overclock"
+          }
+        },
+        "items": "ltxi:upgrade_module"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": "#c:plates/aeternium"
+    },
+    {
+      "count": 2,
+      "ingredient": "#c:gears/aeternium"
+    },
+    {
+      "count": 2,
+      "ingredient": "ltxi:t3_circuit"
+    },
+    {
+      "ingredient": "ltxi:large_voltaic_cell"
+    }
+  ],
+  "result": {
+    "components": {
+      "ltxi:upgrade": {
+        "rank": 2,
+        "upgrade": "ftbevolutioncompanion:armory_overclock"
+      }
+    },
+    "count": 1,
+    "id": "ltxi:upgrade_module"
+  }
+}

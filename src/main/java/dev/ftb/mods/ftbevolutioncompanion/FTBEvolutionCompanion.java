@@ -18,6 +18,7 @@ import dev.ftb.mods.ftbevolutioncompanion.client.RecipeSyncClient;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsClientHandler;
 import dev.ftb.mods.ftbevolutioncompanion.client.SkillsKeys;
 import dev.ftb.mods.ftbevolutioncompanion.client.WingTooltips;
+import dev.ftb.mods.ftbevolutioncompanion.compat.apotheosis.ArmorySpawnerTiers;
 import dev.ftb.mods.ftbevolutioncompanion.compat.apotheosis.BossInvaderHandler;
 import dev.ftb.mods.ftbevolutioncompanion.compat.arsmagicalegacy.FallingStarCasterGuard;
 import dev.ftb.mods.ftbevolutioncompanion.compat.curios.CuriosReloadFix;
@@ -108,6 +109,7 @@ public class FTBEvolutionCompanion {
         NeoForge.EVENT_BUS.addListener(VampireNutritionLock::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(EventPriority.LOW, BossInvaderHandler::onFinalizeSpawn);
         NeoForge.EVENT_BUS.addListener(BossInvaderHandler::onEntityJoinLevel);
+        NeoForge.EVENT_BUS.addListener(EventPriority.HIGH, ArmorySpawnerTiers::onRightClickBlock);
         NeoForge.EVENT_BUS.addListener(RiftArena::onSpawnPlacementCheck);
         NeoForge.EVENT_BUS.addListener(RecipeSyncTypes::onDatapackSync);
         StreamsRemoval.register(eventBus);

@@ -336,5 +336,8 @@
   "trait.ftbevolutioncompanion.nautical.desc": "Sem penalidade debaixo d'água, com Fortuna III e Saque III enquanto estiver submerso.",
   "trait.ftbevolutioncompanion.dragonfire.desc": "Incendeia os alvos e os puxa para perto de você.",
   "trait.ftbevolutioncompanion.dragonfrost.desc": "Congela os alvos e os deixa mais lentos.",
-  "trait.ftbevolutioncompanion.dragonstorm.desc": "Relâmpagos atingem inimigos próximos em cadeia."
+  "trait.ftbevolutioncompanion.dragonstorm.desc": "Relâmpagos atingem inimigos próximos em cadeia.",
+  "ftbevolutioncompanion.spawner_tier.requires_previous": "Este Gerador precisa ser melhorado ao nível de %s primeiro",
+  "upgrade.ftbevolutioncompanion.armory_overclock": "Overclock do Armory",
+  "upgrade.ftbevolutioncompanion.armory_overclock.desc": "Bobinas de metal do Armory ajustadas além dos limites de fábrica. Funciona junto com uma Fonte de Alimentação."
 }

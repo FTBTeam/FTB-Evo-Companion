@@ -1,0 +1,46 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "ltxi"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "ftbarmory"
+    }
+  ],
+  "type": "ltxi:fabricating",
+  "energy_required": 5000000,
+  "group": "machine/armory_overclock",
+  "item_inputs": [
+    {
+      "ingredient": "ltxi:empty_upgrade_module"
+    },
+    {
+      "count": 4,
+      "ingredient": "#c:plates/adamantite"
+    },
+    {
+      "count": 2,
+      "ingredient": "#c:gears/adamantite"
+    },
+    {
+      "count": 2,
+      "ingredient": "ltxi:t2_circuit"
+    },
+    {
+      "count": 2,
+      "ingredient": "ltxi:medium_voltaic_cell"
+    }
+  ],
+  "result": {
+    "components": {
+      "ltxi:upgrade": {
+        "rank": 1,
+        "upgrade": "ftbevolutioncompanion:armory_overclock"
+      }
+    },
+    "count": 1,
+    "id": "ltxi:upgrade_module"
+  }
+}

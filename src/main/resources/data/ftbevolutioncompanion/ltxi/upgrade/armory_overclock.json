@@ -1,0 +1,102 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "ltxi"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "ftbarmory"
+    }
+  ],
+  "display": {
+    "category": "machine",
+    "title": {
+      "color": "#E8B04A",
+      "translate": "upgrade.ftbevolutioncompanion.armory_overclock"
+    },
+    "description": {
+      "translate": "upgrade.ftbevolutioncompanion.armory_overclock.desc"
+    },
+    "icon": {
+      "type": "item",
+      "id": "ftbarmory:aurichalcum_overclocker_upgrade"
+    },
+    "tooltips": [
+      {
+        "type": "custom_args",
+        "args": [
+          {
+            "type": "value",
+            "format": "multiplicative",
+            "sentiment": "positive",
+            "value": {
+              "type": "lookup",
+              "values": [
+                1.33,
+                1.67,
+                2.0
+              ]
+            }
+          }
+        ],
+        "key": "upgrade_effect.ltxi.machine_speed"
+      },
+      {
+        "type": "custom_args",
+        "args": [
+          {
+            "type": "value",
+            "format": "multiplicative",
+            "sentiment": "negative",
+            "value": {
+              "type": "lookup",
+              "values": [
+                1.5,
+                2.0,
+                3.0
+              ]
+            }
+          }
+        ],
+        "key": "upgrade_effect.ltxi.energy_usage",
+        "style": {
+          "color": "#8BD1F0"
+        }
+      }
+    ]
+  },
+  "effects": {
+    "ltxi:ticks_per_operation": [
+      {
+        "op": "multiply",
+        "value": {
+          "type": "lookup",
+          "values": [
+            0.75,
+            0.6,
+            0.5
+          ]
+        }
+      }
+    ],
+    "ltxi:energy_usage": [
+      {
+        "op": "multiply",
+        "value": {
+          "type": "lookup",
+          "values": [
+            1.5,
+            2.0,
+            3.0
+          ]
+        }
+      }
+    ]
+  },
+  "exclusive_set": "#ftbevolutioncompanion:armory_overclock",
+  "max_rank": 3,
+  "users": {
+    "block_entities": "#ltxi:upgradable/standard"
+  }
+}
