@@ -12,6 +12,7 @@
     "ArmorSlotParagliderMixin",
     "ArsMagicaPiercingStatMixin",
     "AttackRangeSpearReachMixin",
+    "BaseSpawnerAccessor",
     "BaseSpawnerMissingEquipmentMixin",
     "BeardifierMixin",
     "BlockMixin",
@@ -28,6 +29,7 @@
     "EnderIOWiredChargerWriteBackMixin",
     "EnderIOWirelessChargerWriteBackMixin",
     "EnderIOVatFluidAccessMixin",
+    "EnderIOEvolutionBatchInstallMixin",
     "EnderIOEvolutionVatFluidAccessMixin",
     "EnergizedPowerXpDrainMixin",
     "EnergizedPowerXpFurnaceMixin",
@@ -171,6 +173,7 @@
     "compat.ae2wtlib.WETMenuHostRegistryContextMixin",
     "compat.ae2wtlib.MagnetHostRegistryContextMixin",
     "compat.reliquary.OversizedHandlerEmptyStackMixin",
+    "compat.witchery.OvenFuelRemainderMixin",
     "compat.witchery.RitualOwnerProfileMixin"
   ],
   "client": [

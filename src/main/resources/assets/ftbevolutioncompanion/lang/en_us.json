@@ -340,5 +340,8 @@
   "trait.ftbevolutioncompanion.dragonfire.desc": "Sets targets ablaze and pulls them toward you.",
   "trait.ftbevolutioncompanion.dragonfrost.desc": "Freezes and slows targets.",
   "trait.ftbevolutioncompanion.dragonstorm.desc": "Lightning arcs to nearby enemies.",
-  "message.ftbevolutioncompanion.mffs.remote_out_of_range": "The linked projector is too far away to open."
+  "message.ftbevolutioncompanion.mffs.remote_out_of_range": "The linked projector is too far away to open.",
+  "ftbevolutioncompanion.spawner_tier.requires_previous": "This Spawner must be upgraded to %s level first",
+  "upgrade.ftbevolutioncompanion.armory_overclock": "Armory Overclock",
+  "upgrade.ftbevolutioncompanion.armory_overclock.desc": "Armory metal coils tuned past factory limits. Works alongside a Power Supply Unit."
 }
