@@ -5,6 +5,7 @@
 ### Fixed
 
 - Iron Jetpacks recipes moved from JEI into an AE2 Pattern Encoding Terminal filling the grid with Undefined capacitors, thrusters and jetpacks.
+- Energized Power cables delivering more energy than they pull out, so an Oritech generator boxed in cables could make millions of FE per tick (FTBTeam/FTB-Modpack-Issues#13985)
 
 ## [26.1.2.27]
 
