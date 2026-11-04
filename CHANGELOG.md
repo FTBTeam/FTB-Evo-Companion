@@ -1,5 +1,11 @@
 # Changelog
 
+## [26.1.2.28]
+
+### Fixed
+
+- Iron Jetpacks recipes moved from JEI into an AE2 Pattern Encoding Terminal filling the grid with Undefined capacitors, thrusters and jetpacks.
+
 ## [26.1.2.27]
 
 ### Added
