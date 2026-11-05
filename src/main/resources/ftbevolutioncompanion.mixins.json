@@ -161,7 +161,6 @@
     "compat.agritech.BiomassBurnerCompactedBlockMixin",
     "compat.ironjetpacks.JetpackTierIngredientDisplayMixin",
     "compat.ironfurnaces.IronFurnacesSplitComponentsMixin",
-    "compat.iceandfire.EggInIceUpdateTagMixin",
     "compat.justdirethings.PocketGeneratorSelfInsertMixin",
     "compat.justdirethings.ParadoxMachineGearStripMixin",
     "compat.occultism.OccultismTakeItemMixin",
@@ -177,6 +176,7 @@
     "compat.witchery.RitualOwnerProfileMixin"
   ],
   "client": [
+    "compat.hephaestus.client.WorkbenchSwapSlotMixin",
     "compat.extendedae.client.ExtendedAESetAmountTooltipMixin",
     "compat.hats.client.HatClientPacketsMixin",
     "compat.artifacts.client.DoubleJumpMixin",
