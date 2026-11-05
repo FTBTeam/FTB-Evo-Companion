@@ -162,7 +162,6 @@
     "compat.agritech.BiomassBurnerCompactedBlockMixin",
     "compat.ironjetpacks.JetpackTierIngredientDisplayMixin",
     "compat.ironfurnaces.IronFurnacesSplitComponentsMixin",
-    "compat.iceandfire.EggInIceUpdateTagMixin",
     "compat.justdirethings.PocketGeneratorSelfInsertMixin",
     "compat.justdirethings.ParadoxMachineGearStripMixin",
     "compat.occultism.OccultismTakeItemMixin",
@@ -179,6 +178,7 @@
   ],
   "client": [
     "compat.ae2.client.EncodingHelperComponentIngredientMixin",
+    "compat.hephaestus.client.WorkbenchSwapSlotMixin",
     "compat.extendedae.client.ExtendedAESetAmountTooltipMixin",
     "compat.hats.client.HatClientPacketsMixin",
     "compat.artifacts.client.DoubleJumpMixin",

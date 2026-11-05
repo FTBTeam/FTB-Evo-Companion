@@ -4,6 +4,8 @@
 
 ### Fixed
 
+- Hephaestus Tools Workbench not showing the part slot for a tool at full durability, so a part could only be swapped after the tool took damage (FTBTeam/FTB-Modpack-Issues#13963)
+- Game crashing on load with Ice and Fire CE 2.2: the Dragon Egg in Ice fix is removed, since Ice and Fire now handles empty and unknown egg colours itself
 - Iron Jetpacks recipes moved from JEI into an AE2 Pattern Encoding Terminal filling the grid with Undefined capacitors, thrusters and jetpacks.
 - Energized Power cables delivering more energy than they pull out, so an Oritech generator boxed in cables could make millions of FE per tick (FTBTeam/FTB-Modpack-Issues#13985)
 
