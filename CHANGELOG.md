@@ -5,7 +5,10 @@
 ### Fixed
 
 - Iron Jetpacks recipes moved from JEI into an AE2 Pattern Encoding Terminal filling the grid with Undefined capacitors, thrusters and jetpacks.
-- Energized Power cables delivering more energy than they pull out, so an Oritech generator boxed in cables could make millions of FE per tick (FTBTeam/FTB-Modpack-Issues#13985)
+
+### Removed
+
+- Ice and Fire mixins for ice dragon egg colour data and prey damage on the client, both handled by Ice and Fire CE 2.2 itself now
 
 ## [26.1.2.27]
 
