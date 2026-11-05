@@ -176,6 +176,7 @@
   ],
   "client": [
     "compat.ae2.client.EncodingHelperComponentIngredientMixin",
+    "compat.hephaestus.client.WorkbenchSwapSlotMixin",
     "compat.extendedae.client.ExtendedAESetAmountTooltipMixin",
     "compat.hats.client.HatClientPacketsMixin",
     "compat.artifacts.client.DoubleJumpMixin",
