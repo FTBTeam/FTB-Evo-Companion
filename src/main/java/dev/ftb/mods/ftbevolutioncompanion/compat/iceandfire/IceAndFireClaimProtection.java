@@ -66,7 +66,8 @@ public final class IceAndFireClaimProtection {
         if (chunk == null) {
             return false;
         }
-        return !chunk.getTeamData().allowMobGriefing() && !isOwnedByTeamMember(entity, chunk.getTeamData().getTeam());
+        return !chunk.getTeamData().allowMobGriefing()
+                && !isOwnedByTeamMember(entity, chunk.getTeamData().getTeam());
     }
 
     private static boolean isOwnedByTeamMember(Entity entity, Team team) {
