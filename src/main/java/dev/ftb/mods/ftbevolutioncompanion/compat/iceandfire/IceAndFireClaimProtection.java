@@ -3,9 +3,13 @@ package dev.ftb.mods.ftbevolutioncompanion.compat.iceandfire;
 import dev.ftb.mods.ftbchunks.api.ClaimedChunk;
 import dev.ftb.mods.ftbchunks.api.FTBChunksAPI;
 import dev.ftb.mods.ftblibrary.math.ChunkDimPos;
+import dev.ftb.mods.ftbteams.api.Team;
 import java.lang.reflect.Method;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.EventPriority;
@@ -44,7 +48,7 @@ public final class IceAndFireClaimProtection {
                 }
                 BlockPos pos = BlockPos.containing(
                         (double) targetX.invoke(event), (double) targetY.invoke(event), (double) targetZ.invoke(event));
-                if (isProtected(entity.level(), pos)) {
+                if (isProtected(entity, pos)) {
                     ((ICancellableEvent) event).setCanceled(true);
                 }
             } catch (ReflectiveOperationException e) {
@@ -53,11 +57,26 @@ public final class IceAndFireClaimProtection {
         });
     }
 
-    private static boolean isProtected(Level level, BlockPos pos) {
+    private static boolean isProtected(Entity entity, BlockPos pos) {
+        Level level = entity.level();
         if (level.isClientSide() || !FTBChunksAPI.api().isManagerLoaded()) {
             return false;
         }
         ClaimedChunk chunk = FTBChunksAPI.api().getManager().getChunk(new ChunkDimPos(level, pos));
-        return chunk != null && !chunk.getTeamData().allowMobGriefing();
+        if (chunk == null) {
+            return false;
+        }
+        return !chunk.getTeamData().allowMobGriefing() && !isOwnedByTeamMember(entity, chunk.getTeamData().getTeam());
+    }
+
+    private static boolean isOwnedByTeamMember(Entity entity, Team team) {
+        if (!(entity instanceof OwnableEntity ownable)) {
+            return false;
+        }
+        EntityReference<LivingEntity> owner = ownable.getOwnerReference();
+        if (owner == null) {
+            return false;
+        }
+        return team.getRankForPlayer(owner.getUUID()).isMemberOrBetter();
     }
 }
