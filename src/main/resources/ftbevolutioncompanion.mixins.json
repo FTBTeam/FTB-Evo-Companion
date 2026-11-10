@@ -30,6 +30,7 @@
     "EnderIOWirelessChargerWriteBackMixin",
     "EnderIOVatFluidAccessMixin",
     "EnderIOEvolutionBatchInstallMixin",
+    "EnderIOEvolutionEternalPowerRemovalMixin",
     "EnderIOEvolutionVatFluidAccessMixin",
     "EnergizedPowerXpDrainMixin",
     "EnergizedPowerXpFurnaceMixin",

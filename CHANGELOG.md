@@ -1,5 +1,11 @@
 # Changelog
 
+## [26.1.2.29]
+
+### Removed
+
+- Ender IO Evolution Eternal Creative Power blocks already placed in a world are removed when their chunk loads (FTBTeam/FTB-Modpack-Issues#14041)
+
 ## [26.1.2.28]
 
 ### Fixed
