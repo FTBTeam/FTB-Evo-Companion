@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
             "net.p3pp3rf1y.sophisticatedcore.upgrades.xppump.XpPumpUpgradeWrapper",
             "net.p3pp3rf1y.sophisticatedcore.upgrades.cooking.AutoCookingUpgradeWrapper",
             "net.p3pp3rf1y.sophisticatedcore.upgrades.magnet.MagnetUpgradeWrapper",
-            "net.p3pp3rf1y.sophisticatedcore.upgrades.tank.TankUpgradeWrapper"
+            "net.p3pp3rf1y.sophisticatedcore.upgrades.tank.TankContainerHandler"
         },
         remap = false)
 public abstract class SophisticatedCoreXpFluidMixin {

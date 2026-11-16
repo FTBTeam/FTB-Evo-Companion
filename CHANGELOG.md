@@ -1,5 +1,11 @@
 # Changelog
 
+## [26.1.2.30]
+
+### Fixed
+
+- Crash with Sophisticated Core 1.5.39, which moved the Tank Upgrade's Experience Bottle handling to a new class. The XP fluid unification follows it there, so bottles filled from or emptied into a Tank Upgrade still use the pack's single XP fluid
+
 ## [26.1.2.29]
 
 ### Fixed
