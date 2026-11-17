@@ -1,5 +1,12 @@
 # Changelog
 
+## [26.1.2.31]
+
+### Changed
+
+- Faster world loading and resource reloads
+- Advanced Loot Info no longer delays server start or `/reload`
+
 ## [26.1.2.30]
 
 ### Fixed
