@@ -7,6 +7,10 @@
 - Faster world loading and resource reloads
 - Advanced Loot Info no longer delays server start or `/reload`
 
+### Fixed
+
+- Client crash when opening the output side config of an Advanced AE machine next to an Oritech Portable Tank (pedroksl/AE2AddonLib#7)
+
 ## [26.1.2.30]
 
 ### Fixed
