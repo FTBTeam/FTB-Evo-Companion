@@ -44,6 +44,7 @@
     "compat.ali.AdvancedLootInfoDeferredReadMixin",
     "compat.advancedae.QuantumComputerJobLoadMixin",
     "compat.advancedae.QuantumArmorStackIdMixin",
+    "compat.advancedae.OutputDirectionAdjacentBlockPosMixin",
     "compat.bridging.BridgingDankSelectedItemMixin",
     "compat.productivefarming.ExternalCropYieldMaturityMixin",
     "compat.productivefarming.ProductiveCropYieldMaturityMixin",
