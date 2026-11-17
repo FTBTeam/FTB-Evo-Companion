@@ -1,5 +1,11 @@
 # Changelog
 
+## [26.1.2.32]
+
+### Fixed
+
+- Server crash when a pipe, a neighbouring block or the Vat itself read the fluid tanks of an Ender IO Vat (FTBTeam/FTB-Modpack-Issues#14093)
+
 ## [26.1.2.31]
 
 ### Changed

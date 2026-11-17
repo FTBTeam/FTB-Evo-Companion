@@ -15,9 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class EnderIOEvolutionVatFluidAccessMixin {
     @Inject(method = "vatExternalFluid", at = @At("RETURN"), cancellable = true, require = 0)
     private static void ftbevo$enforceTankAccess(CallbackInfoReturnable<ResourceHandler<FluidResource>> cir) {
-        ResourceHandler<FluidResource> storage = cir.getReturnValue();
-        if (storage != null) {
-            cir.setReturnValue(new ExternalResourceStorageView<>((ResourceStorage<FluidResource>) storage));
+        if (cir.getReturnValue() instanceof ResourceStorage<FluidResource> storage) {
+            cir.setReturnValue(new ExternalResourceStorageView<>(storage));
         }
     }
 }
